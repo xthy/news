@@ -737,7 +737,15 @@ Respond in JSON format:
     const response = callChatGPT(prompt);
 
     try {
-      const summary = JSON.parse(response);
+      // Remove markdown code block wrapper if present
+      let cleanedResponse = response.trim();
+      if (cleanedResponse.startsWith('```json')) {
+        cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
+      } else if (cleanedResponse.startsWith('```')) {
+        cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+      }
+
+      const summary = JSON.parse(cleanedResponse);
       return {
         headline: 'Global News Headlines',
         bullets: summary.bullets || [],
@@ -745,9 +753,10 @@ Respond in JSON format:
       };
     } catch (e) {
       // Fallback if JSON parsing fails
+      Logger.log('JSON parse error: ' + e.toString());
       return {
         headline: 'Global News Headlines',
-        bullets: [response.substring(0, 200)],
+        bullets: ['Unable to generate summary - check OpenAI response format'],
         economicTrends: ''
       };
     }
@@ -890,7 +899,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🏛️ 트럼프 대통령 동향* (${trumpActivity.newsCount}건)`
+        text: '*🏛️ 트럼프 대통령 동향*'
       }
     });
 
@@ -919,17 +928,20 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*📑 Top English Articles (${englishArticles.length})*`
+        text: '*📑 Top headline*'
       }
     });
 
     englishArticles.forEach((article, index) => {
-      const emoji = getEmojiForCategory(article.category);
+      // Hide source if it's Google News
+      const shouldShowSource = !article.source.toLowerCase().includes('google news');
+      const sourceText = shouldShowSource ? `_${article.source}_ | ` : '';
+
       blocks.push({
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `${emoji} *${index + 1}. <${article.link}|${article.title}>*\n_${article.source}_ | ${formatTimeAgo(article.publishedAt)}`
+          text: `*${index + 1}. <${article.link}|${article.title}>*\n${sourceText}${formatTimeAgo(article.publishedAt)}`
         }
       });
     });
@@ -943,17 +955,21 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*📑 주요 한글 기사 (${koreanArticles.length})*`
+        text: '*📑 주요 한글 기사*'
       }
     });
 
     koreanArticles.forEach((article, index) => {
-      const emoji = getEmojiForCategory(article.category);
+      // Hide source if it's Google News or Naver News
+      const shouldShowSource = !article.source.toLowerCase().includes('google news') &&
+                               !article.source.includes('네이버');
+      const sourceText = shouldShowSource ? `_${article.source}_ | ` : '';
+
       blocks.push({
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `${emoji} *${index + 1}. <${article.link}|${article.title}>*\n_${article.source}_ | ${formatTimeAgo(article.publishedAt)}`
+          text: `*${index + 1}. <${article.link}|${article.title}>*\n${sourceText}${formatTimeAgo(article.publishedAt)}`
         }
       });
     });
@@ -982,10 +998,13 @@ function formatMarketData(marketData) {
   if (marketData.usStocks && marketData.usStocks.length > 0) {
     text += '*미국 증시*\n';
     marketData.usStocks.forEach(stock => {
-      if (stock) {
+      if (stock && stock.price != null && !isNaN(stock.price)) {
         const dayEmoji = stock.dayChange >= 0 ? '📈' : '📉';
         const weekEmoji = stock.weekChange >= 0 ? '⬆️' : '⬇️';
-        text += `${dayEmoji} ${stock.name}: ${stock.price.toFixed(2)} (일간 ${stock.dayChange.toFixed(2)}% ${weekEmoji} 주간 ${stock.weekChange.toFixed(2)}%)\n`;
+        const price = stock.price.toFixed(2);
+        const dayChange = (stock.dayChange != null && !isNaN(stock.dayChange)) ? stock.dayChange.toFixed(2) : '0.00';
+        const weekChange = (stock.weekChange != null && !isNaN(stock.weekChange)) ? stock.weekChange.toFixed(2) : '0.00';
+        text += `${dayEmoji} ${stock.name}: ${price} (일간 ${dayChange}% ${weekEmoji} 주간 ${weekChange}%)\n`;
       }
     });
     text += '\n';
@@ -995,9 +1014,11 @@ function formatMarketData(marketData) {
   if (marketData.koreaStocks && marketData.koreaStocks.length > 0) {
     text += '*한국 증시*\n';
     marketData.koreaStocks.forEach(stock => {
-      if (stock) {
+      if (stock && stock.price != null && !isNaN(stock.price)) {
         const dayEmoji = stock.dayChange >= 0 ? '📈' : '📉';
-        text += `${dayEmoji} ${stock.name}: ${stock.price.toFixed(2)} (${stock.dayChange >= 0 ? '+' : ''}${stock.dayChange.toFixed(2)}%)\n`;
+        const price = stock.price.toFixed(2);
+        const dayChange = (stock.dayChange != null && !isNaN(stock.dayChange)) ? stock.dayChange.toFixed(2) : '0.00';
+        text += `${dayEmoji} ${stock.name}: ${price} (${stock.dayChange >= 0 ? '+' : ''}${dayChange}%)\n`;
       }
     });
     text += '\n';
@@ -1007,9 +1028,11 @@ function formatMarketData(marketData) {
   if (marketData.forex && marketData.forex.length > 0) {
     text += '*환율*\n';
     marketData.forex.forEach(fx => {
-      if (fx) {
+      if (fx && fx.price != null && !isNaN(fx.price)) {
         const emoji = fx.dayChange >= 0 ? '📈' : '📉';
-        text += `${emoji} USD/KRW: ${fx.price.toFixed(2)} (${fx.dayChange >= 0 ? '+' : ''}${fx.dayChange.toFixed(2)}%)\n`;
+        const price = fx.price.toFixed(2);
+        const dayChange = (fx.dayChange != null && !isNaN(fx.dayChange)) ? fx.dayChange.toFixed(2) : '0.00';
+        text += `${emoji} USD/KRW: ${price} (${fx.dayChange >= 0 ? '+' : ''}${dayChange}%)\n`;
       }
     });
     text += '\n';
@@ -1019,9 +1042,11 @@ function formatMarketData(marketData) {
   if (marketData.crypto && marketData.crypto.length > 0) {
     text += '*암호화폐*\n';
     marketData.crypto.forEach(crypto => {
-      if (crypto) {
+      if (crypto && crypto.price != null && !isNaN(crypto.price)) {
         const emoji = crypto.dayChange >= 0 ? '🚀' : '⬇️';
-        text += `${emoji} Bitcoin: $${crypto.price.toFixed(0)} (${crypto.dayChange >= 0 ? '+' : ''}${crypto.dayChange.toFixed(2)}%)\n`;
+        const price = crypto.price.toFixed(0);
+        const dayChange = (crypto.dayChange != null && !isNaN(crypto.dayChange)) ? crypto.dayChange.toFixed(2) : '0.00';
+        text += `${emoji} Bitcoin: $${price} (${crypto.dayChange >= 0 ? '+' : ''}${dayChange}%)\n`;
       }
     });
   }
