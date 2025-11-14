@@ -115,6 +115,34 @@ const NEWS_SOURCES = [
     type: 'newsapi',
     category: 'business',
     query: 'private equity OR venture capital OR M&A OR "Bain Capital" OR McKinsey OR BCG OR "Boston Consulting"'
+  },
+
+  // Google News
+  {
+    name: 'Google News - Business',
+    type: 'rss',
+    url: 'https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtVnVHZ0pWVXlnQVAB',
+    category: 'business'
+  },
+  {
+    name: 'Google News - Economy',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=economy+OR+market+OR+finance&hl=en-US&gl=US&ceid=US:en',
+    category: 'economy'
+  },
+
+  // Naver News
+  {
+    name: '네이버 뉴스 - 경제',
+    type: 'naver',
+    category: 'economy',
+    query: '사모펀드 OR 벤처캐피탈 OR M&A OR 인수합병'
+  },
+  {
+    name: '네이버 뉴스 - 금융',
+    type: 'naver',
+    category: 'finance',
+    query: '금융시장 OR 주식시장 OR 채권시장'
   }
 ];
 
@@ -177,6 +205,8 @@ function fetchAllNews() {
         articles = fetchRSSFeed(source);
       } else if (source.type === 'newsapi') {
         articles = fetchNewsAPI(source);
+      } else if (source.type === 'naver') {
+        articles = fetchNaverNews(source);
       }
 
       // Filter by time
@@ -297,6 +327,31 @@ function fetchNewsAPI(source) {
 }
 
 /**
+ * Fetch from Naver News API
+ */
+function fetchNaverNews(source) {
+  // Note: This requires Naver API credentials
+  // For now, we'll use Naver News RSS as an alternative
+  try {
+    const query = encodeURIComponent(source.query);
+    // Naver News RSS feed URL
+    const url = `https://news.naver.com/main/list.naver?mode=LSD&mid=sec&sid1=101`;
+
+    // Alternative: Search results RSS (if available)
+    const searchUrl = `https://openapi.naver.com/v1/search/news.xml?query=${query}&display=10&sort=date`;
+
+    // Since we need API keys for Naver, we'll return empty for now
+    // Users should add their Naver API credentials to use this feature
+    Logger.log('Naver News API requires credentials - skipping for now');
+    return [];
+
+  } catch (error) {
+    Logger.log(`Naver News error: ${error.toString()}`);
+    return [];
+  }
+}
+
+/**
  * Helper function to get element text
  */
 function getElementText(element, childName) {
@@ -315,21 +370,39 @@ function parseDate(dateStr) {
 // ==================== ARTICLE PROCESSING ====================
 
 /**
+ * Detect language of article (Korean vs English)
+ */
+function detectLanguage(text) {
+  if (!text) return 'en';
+
+  // Check for Korean characters (Hangul)
+  const koreanRegex = /[\uAC00-\uD7AF\u1100-\u11FF\u3130-\u318F]/;
+  const hasKorean = koreanRegex.test(text);
+
+  return hasKorean ? 'ko' : 'en';
+}
+
+/**
  * Process articles: filter, deduplicate, score, and prioritize
  */
 function processArticles(articles) {
-  // 1. Score articles based on relevance
+  // 1. Detect language for each article
+  articles.forEach(article => {
+    article.language = detectLanguage(article.title + ' ' + (article.description || ''));
+  });
+
+  // 2. Score articles based on relevance
   articles.forEach(article => {
     article.score = scoreArticle(article);
   });
 
-  // 2. Sort by score
+  // 3. Sort by score
   articles.sort((a, b) => b.score - a.score);
 
-  // 3. Remove duplicates and similar articles
+  // 4. Remove duplicates and similar articles
   const uniqueArticles = removeDuplicates(articles);
 
-  // 4. Return top articles
+  // 5. Return top articles
   return uniqueArticles.slice(0, CONFIG.TOTAL_TOP_ARTICLES);
 }
 
@@ -645,20 +718,20 @@ function generateAISummary(articles, marketData, trumpActivity) {
       `${i + 1}. [${a.source}] ${a.title}`
     ).join('\n');
 
-    const prompt = `당신은 Private Equity 전문가를 위한 뉴스 분석가입니다.
-다음 글로벌 뉴스들을 분석하여 한국어로 요약해주세요:
+    const prompt = `You are a news analyst for Private Equity professionals.
+Analyze the following global news and provide a summary in English:
 
 ${articlesContext}
 
-다음 형식으로 응답해주세요:
-1. 3-4개의 핵심 bullet points (각 50자 이내)
-2. 글로벌 경제 동향 분석 (150자 이내)
+Please respond in the following format:
+1. 3-4 key bullet points (max 100 characters each)
+2. Global economic trends analysis (max 300 characters)
 
-특히 PE/VC, M&A, 경제정책, 금융시장 동향에 집중해주세요.
-JSON 형식으로 응답:
+Focus on PE/VC, M&A, economic policy, and financial market trends.
+Respond in JSON format:
 {
   "bullets": ["bullet1", "bullet2", "bullet3"],
-  "trends": "경제 동향 분석..."
+  "trends": "economic trends analysis..."
 }`;
 
     const response = callChatGPT(prompt);
@@ -666,14 +739,14 @@ JSON 형식으로 응답:
     try {
       const summary = JSON.parse(response);
       return {
-        headline: '오늘의 글로벌 뉴스 헤드라인',
+        headline: 'Global News Headlines',
         bullets: summary.bullets || [],
         economicTrends: summary.trends || ''
       };
     } catch (e) {
       // Fallback if JSON parsing fails
       return {
-        headline: '오늘의 글로벌 뉴스 헤드라인',
+        headline: 'Global News Headlines',
         bullets: [response.substring(0, 200)],
         economicTrends: ''
       };
@@ -682,8 +755,8 @@ JSON 형식으로 응답:
   } catch (error) {
     Logger.log(`AI summary error: ${error.toString()}`);
     return {
-      headline: '오늘의 글로벌 뉴스 헤드라인',
-      bullets: ['AI 요약을 생성하는 중 오류가 발생했습니다'],
+      headline: 'Global News Headlines',
+      bullets: ['Error generating AI summary'],
       economicTrends: ''
     };
   }
@@ -700,7 +773,7 @@ function callChatGPT(prompt, maxTokens = 500) {
     messages: [
       {
         role: 'system',
-        content: 'You are a financial analyst specializing in private equity and global markets. Provide concise, actionable insights in Korean.'
+        content: 'You are a financial analyst specializing in private equity and global markets. Provide concise, actionable insights in English.'
       },
       {
         role: 'user',
@@ -760,12 +833,12 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   blocks.push({ type: 'divider' });
 
-  // AI Summary
+  // AI Summary (in English)
   blocks.push({
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: '*🎯 주요 뉴스 요약*'
+      text: '*🎯 Key Headlines Summary*'
     }
   });
 
@@ -784,7 +857,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*📊 글로벌 경제 동향*\n${aiSummary.economicTrends}`
+        text: `*📊 Global Market Trends*\n${aiSummary.economicTrends}`
       }
     });
   }
@@ -836,25 +909,55 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
     blocks.push({ type: 'divider' });
   }
 
-  // Top Articles
-  blocks.push({
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: `*📑 주요 기사 Top ${articles.length}*`
-    }
-  });
+  // Separate articles by language
+  const englishArticles = articles.filter(a => a.language === 'en');
+  const koreanArticles = articles.filter(a => a.language === 'ko');
 
-  articles.forEach((article, index) => {
-    const emoji = getEmojiForCategory(article.category);
+  // English Articles
+  if (englishArticles.length > 0) {
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `${emoji} *${index + 1}. <${article.link}|${article.title}>*\n_${article.source}_ | ${formatTimeAgo(article.publishedAt)}`
+        text: `*📑 Top English Articles (${englishArticles.length})*`
       }
     });
-  });
+
+    englishArticles.forEach((article, index) => {
+      const emoji = getEmojiForCategory(article.category);
+      blocks.push({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `${emoji} *${index + 1}. <${article.link}|${article.title}>*\n_${article.source}_ | ${formatTimeAgo(article.publishedAt)}`
+        }
+      });
+    });
+
+    blocks.push({ type: 'divider' });
+  }
+
+  // Korean Articles
+  if (koreanArticles.length > 0) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*📑 주요 한글 기사 (${koreanArticles.length})*`
+      }
+    });
+
+    koreanArticles.forEach((article, index) => {
+      const emoji = getEmojiForCategory(article.category);
+      blocks.push({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `${emoji} *${index + 1}. <${article.link}|${article.title}>*\n_${article.source}_ | ${formatTimeAgo(article.publishedAt)}`
+        }
+      });
+    });
+  }
 
   // Footer
   blocks.push({ type: 'divider' });
