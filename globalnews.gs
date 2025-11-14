@@ -43,64 +43,6 @@ const CONFIG = {
 // ==================== NEWS SOURCES ====================
 
 const NEWS_SOURCES = [
-  // US Major News
-  {
-    name: 'The New York Times',
-    type: 'rss',
-    url: 'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml',
-    category: 'business'
-  },
-  {
-    name: 'The Wall Street Journal',
-    type: 'rss',
-    url: 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml',
-    category: 'markets'
-  },
-  {
-    name: 'Financial Times',
-    type: 'rss',
-    url: 'https://www.ft.com/?format=rss',
-    category: 'business'
-  },
-  {
-    name: 'Bloomberg',
-    type: 'rss',
-    url: 'https://feeds.bloomberg.com/markets/news.rss',
-    category: 'markets'
-  },
-  {
-    name: 'Reuters Business',
-    type: 'rss',
-    url: 'https://www.reutersagency.com/feed/?taxonomy=best-topics&post_type=best',
-    category: 'business'
-  },
-  {
-    name: 'The Economist',
-    type: 'rss',
-    url: 'https://www.economist.com/business/rss.xml',
-    category: 'business'
-  },
-
-  // Korean Major News
-  {
-    name: '조선일보',
-    type: 'rss',
-    url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/economy/',
-    category: 'economy'
-  },
-  {
-    name: '중앙일보',
-    type: 'rss',
-    url: 'https://koreajoongangdaily.joins.com/news/rss',
-    category: 'business'
-  },
-  {
-    name: '한국경제',
-    type: 'rss',
-    url: 'https://www.hankyung.com/feed/economy',
-    category: 'economy'
-  },
-
   // Tech & Innovation
   {
     name: 'TechCrunch',
@@ -109,7 +51,7 @@ const NEWS_SOURCES = [
     category: 'tech'
   },
 
-  // Google News
+  // Google News - English
   {
     name: 'Google News - Business',
     type: 'rss',
@@ -122,19 +64,25 @@ const NEWS_SOURCES = [
     url: 'https://news.google.com/rss/search?q=economy+OR+market+OR+finance&hl=en-US&gl=US&ceid=US:en',
     category: 'economy'
   },
-
-  // Naver News
   {
-    name: '네이버 뉴스 - 경제',
-    type: 'naver',
-    category: 'economy',
-    query: '사모펀드 OR 벤처캐피탈 OR M&A OR 인수합병'
+    name: 'Google News - Private Equity',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=private+equity+OR+M%26A+OR+venture+capital&hl=en-US&gl=US&ceid=US:en',
+    category: 'business'
+  },
+
+  // Google News - Korean
+  {
+    name: 'Google News - 경제',
+    type: 'rss',
+    url: 'https://news.google.com/rss/topics/CAAqJQgKIh9DQkFTRVFvSUwyMHZNRGx6TVdZU0JXdHZMVWxTS0FBUAE',
+    category: 'economy'
   },
   {
-    name: '네이버 뉴스 - 금융',
-    type: 'naver',
-    category: 'finance',
-    query: '금융시장 OR 주식시장 OR 채권시장'
+    name: 'Google News - 금융',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=%EA%B8%88%EC%9C%B5+OR+%EC%A3%BC%EC%8B%9D%EC%8B%9C%EC%9E%A5&hl=ko&gl=KR&ceid=KR:ko',
+    category: 'finance'
   }
 ];
 
@@ -556,37 +504,56 @@ function fetchYahooFinanceData(symbol) {
     const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?range=1mo&interval=1d`;
 
     const response = UrlFetchApp.fetch(url, {
-      muteHttpExceptions: true
+      muteHttpExceptions: true,
+      followRedirects: true
     });
 
     if (response.getResponseCode() !== 200) {
+      Logger.log(`Yahoo Finance HTTP error for ${symbol}: ${response.getResponseCode()}`);
       return null;
     }
 
     const json = JSON.parse(response.getContentText());
+
+    // Check if response has expected structure
+    if (!json.chart || !json.chart.result || json.chart.result.length === 0) {
+      Logger.log(`Yahoo Finance invalid response for ${symbol}`);
+      return null;
+    }
+
     const result = json.chart.result[0];
-
     const meta = result.meta;
+
+    if (!meta || !result.indicators || !result.indicators.quote || result.indicators.quote.length === 0) {
+      Logger.log(`Yahoo Finance incomplete data for ${symbol}`);
+      return null;
+    }
+
     const quotes = result.indicators.quote[0];
-    const timestamps = result.timestamp;
 
-    // Get last 20 trading days for trends
-    const recentPrices = quotes.close.slice(-20);
-    const currentPrice = meta.regularMarketPrice;
-    const previousClose = meta.previousClose;
+    if (!quotes.close || quotes.close.length === 0) {
+      Logger.log(`Yahoo Finance no price data for ${symbol}`);
+      return null;
+    }
 
-    const dayChange = ((currentPrice - previousClose) / previousClose) * 100;
+    // Get last 20 trading days for trends (filter out null values)
+    const allPrices = quotes.close.filter(p => p != null && !isNaN(p));
+    const recentPrices = allPrices.slice(-20);
+    const currentPrice = meta.regularMarketPrice || allPrices[allPrices.length - 1];
+    const previousClose = meta.previousClose || allPrices[allPrices.length - 2] || currentPrice;
+
+    const dayChange = previousClose ? ((currentPrice - previousClose) / previousClose) * 100 : 0;
     const weekChange = calculateChange(recentPrices, 5);
     const monthChange = calculateChange(recentPrices, 20);
 
     return {
       symbol: symbol,
-      name: meta.symbol,
+      name: meta.symbol || symbol,
       price: currentPrice,
       dayChange: dayChange,
       weekChange: weekChange,
       monthChange: monthChange,
-      currency: meta.currency
+      currency: meta.currency || 'USD'
     };
 
   } catch (error) {
@@ -599,9 +566,10 @@ function fetchYahooFinanceData(symbol) {
  * Calculate percentage change over period
  */
 function calculateChange(prices, days) {
-  if (prices.length < days) return 0;
+  if (!prices || prices.length < 2 || prices.length < days) return 0;
   const current = prices[prices.length - 1];
   const previous = prices[prices.length - days];
+  if (!current || !previous || previous === 0) return 0;
   return ((current - previous) / previous) * 100;
 }
 
@@ -647,38 +615,40 @@ function fetchTrumpActivity() {
 }
 
 /**
- * Search for Trump-related news
+ * Search for Trump-related news using Google News RSS
  */
 function searchTrumpNews() {
   try {
-    const query = 'Trump OR "Donald Trump" OR "President Trump"';
-    const fromDate = new Date(Date.now() - CONFIG.NEWS_HOURS_BACK * 60 * 60 * 1000);
-    const fromDateStr = Utilities.formatDate(fromDate, 'UTC', 'yyyy-MM-dd');
+    const url = 'https://news.google.com/rss/search?q=Trump+OR+%22Donald+Trump%22&hl=en-US&gl=US&ceid=US:en';
 
-    if (!CONFIG.NEWS_API_KEY || CONFIG.NEWS_API_KEY === 'YOUR_NEWS_API_KEY_HERE') {
+    const response = UrlFetchApp.fetch(url, {
+      muteHttpExceptions: true,
+      followRedirects: true
+    });
+
+    if (response.getResponseCode() !== 200) {
       return [];
     }
 
-    const url = `https://newsapi.org/v2/everything?` +
-      `q=${encodeURIComponent(query)}&` +
-      `from=${fromDateStr}&` +
-      `sortBy=publishedAt&` +
-      `language=en&` +
-      `pageSize=10&` +
-      `apiKey=${CONFIG.NEWS_API_KEY}`;
+    const xml = response.getContentText();
+    const document = XmlService.parse(xml);
+    const root = document.getRootElement();
+    const items = root.getChild('channel').getChildren('item');
 
-    const response = UrlFetchApp.fetch(url);
-    const data = JSON.parse(response.getContentText());
+    const articles = [];
+    items.slice(0, 10).forEach(item => {
+      try {
+        articles.push({
+          title: getElementText(item, 'title'),
+          link: getElementText(item, 'link'),
+          source: 'Google News'
+        });
+      } catch (e) {
+        // Skip malformed items
+      }
+    });
 
-    if (data.status !== 'ok') {
-      return [];
-    }
-
-    return data.articles.map(article => ({
-      title: article.title,
-      link: article.url,
-      source: article.source.name
-    }));
+    return articles;
 
   } catch (error) {
     Logger.log(`Trump news search error: ${error.toString()}`);
