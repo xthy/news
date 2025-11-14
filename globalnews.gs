@@ -109,14 +109,6 @@ const NEWS_SOURCES = [
     category: 'tech'
   },
 
-  // Alternative: Using News API for broader coverage
-  {
-    name: 'News API - Business',
-    type: 'newsapi',
-    category: 'business',
-    query: 'private equity OR venture capital OR M&A OR "Bain Capital" OR McKinsey OR BCG OR "Boston Consulting"'
-  },
-
   // Google News
   {
     name: 'Google News - Business',
