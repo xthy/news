@@ -1033,21 +1033,44 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       }
     });
 
-    // Combine all articles into one section to remove blank lines between articles
-    const articlesText = englishArticles.map((article, index) => {
-      // Hide source if it's Google News
+    // Split articles into chunks to avoid Slack's 3000 char limit per block
+    const CHARS_PER_BLOCK = 2800; // Safety margin
+    let currentChunk = [];
+    let currentLength = 0;
+
+    englishArticles.forEach((article, index) => {
       const shouldShowSource = !article.source.toLowerCase().includes('google news');
       const sourceText = shouldShowSource ? `\n_${article.source}_` : '';
-      return `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
-    }).join('\n');
+      const articleText = `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
+      const articleLength = articleText.length + 1; // +1 for newline
 
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: articlesText
+      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
+        // Push current chunk as a block
+        blocks.push({
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: currentChunk.join('\n')
+          }
+        });
+        currentChunk = [articleText];
+        currentLength = articleLength;
+      } else {
+        currentChunk.push(articleText);
+        currentLength += articleLength;
       }
     });
+
+    // Push remaining chunk
+    if (currentChunk.length > 0) {
+      blocks.push({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: currentChunk.join('\n')
+        }
+      });
+    }
 
     blocks.push({ type: 'divider' });
   }
@@ -1062,22 +1085,45 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       }
     });
 
-    // Combine all articles into one section to remove blank lines between articles
-    const articlesText = koreanArticles.map((article, index) => {
-      // Hide source if it's Google News or Naver News
+    // Split articles into chunks to avoid Slack's 3000 char limit per block
+    const CHARS_PER_BLOCK = 2800; // Safety margin
+    let currentChunk = [];
+    let currentLength = 0;
+
+    koreanArticles.forEach((article, index) => {
       const shouldShowSource = !article.source.toLowerCase().includes('google news') &&
                                !article.source.includes('네이버');
       const sourceText = shouldShowSource ? `\n_${article.source}_` : '';
-      return `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
-    }).join('\n');
+      const articleText = `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
+      const articleLength = articleText.length + 1; // +1 for newline
 
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: articlesText
+      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
+        // Push current chunk as a block
+        blocks.push({
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: currentChunk.join('\n')
+          }
+        });
+        currentChunk = [articleText];
+        currentLength = articleLength;
+      } else {
+        currentChunk.push(articleText);
+        currentLength += articleLength;
       }
     });
+
+    // Push remaining chunk
+    if (currentChunk.length > 0) {
+      blocks.push({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: currentChunk.join('\n')
+        }
+      });
+    }
   }
 
   // Footer
