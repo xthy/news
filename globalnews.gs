@@ -500,8 +500,9 @@ function fetchStockData(symbols) {
  */
 function fetchYahooFinanceData(symbol) {
   try {
-    // Using Yahoo Finance query API
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?range=1mo&interval=1d`;
+    // Using Yahoo Finance query API - encode symbol for URL
+    const encodedSymbol = encodeURIComponent(symbol);
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodedSymbol}?range=1mo&interval=1d`;
 
     const response = UrlFetchApp.fetch(url, {
       muteHttpExceptions: true,
@@ -685,7 +686,7 @@ function generateAISummary(articles, marketData, trumpActivity) {
     const marketContext = formatMarketContextForAI(marketData);
 
     const prompt = `You are an executive assistant for a senior Private Equity/Venture Capital professional.
-Your role is to analyze today's global news and provide a comprehensive daily briefing.
+Your role is to analyze today's global news and provide a comprehensive daily briefing in professional English.
 
 === TODAY'S MARKET DATA ===
 ${marketContext}
@@ -694,37 +695,59 @@ ${marketContext}
 ${articlesContext}
 
 === YOUR TASK ===
-Provide a professional executive briefing with the following structure:
+Provide a professional executive briefing with the following structure (ALL IN ENGLISH):
 
-1. **Today's Key Insights** (3-4 bullets, each ~100 chars)
+1. **Today's Key Insights** (5-6 bullets, each 150-200 chars)
+   - Write RICH, DETAILED insights with context and implications
    - What happened today that PE/VC investors MUST know?
-   - Focus on deals, M&A, funding rounds, exits, market movements
+   - Include specific details: company names, deal sizes, valuations, strategic rationale
+   - Focus on deals, M&A, funding rounds, exits, IPOs, market movements
+   - Explain WHY each insight matters for PE/VC investment decisions
+   - Example: "Bain Capital acquired XYZ Corp for $2B, marking 15x MOIC - signals strong exit environment in enterprise software sector"
 
-2. **Macro-Economic Impact** (150-200 chars)
-   - Interest rates, inflation, monetary policy changes
-   - How these affect PE/VC valuations and deal flow
+2. **Macro-Economic Impact** (600-800 chars)
+   - Comprehensive analysis of macro factors affecting PE/VC
+   - Interest rates, inflation, monetary policy changes, central bank actions
+   - Credit market conditions, lending standards, debt availability
+   - Public market valuations and multiples trends
+   - Currency movements and geopolitical factors
+   - HOW these specifically affect PE/VC valuations, deal flow, exit opportunities, and fundraising
+   - Connect today's news to broader investment implications
 
-3. **Deal & M&A Highlights** (if any major deals mentioned)
-   - Notable transactions, valuations, strategic rationale
+3. **Deal & M&A Highlights** (500-700 chars if relevant deals, or empty string)
+   - Detailed analysis of notable transactions mentioned in news
+   - Include: deal size, valuation multiples, buyer/seller strategy
+   - Type of transaction: LBO, growth equity, venture rounds, exits
+   - What these deals signal about market conditions
+   - Sector-specific trends emerging from deals
 
-4. **Sector Spotlight** (if any sector stands out)
-   - Which industries are hot/cold today and why
+4. **Sector Spotlight** (500-700 chars if relevant, or empty string)
+   - Which industries/sectors are hot or cold today and WHY
+   - Regulatory changes, technological shifts, consumer trends
+   - Investment opportunities or risks emerging
+   - Valuation trends by sector
+   - Portfolio company implications
 
-5. **Regional Trends** (brief)
-   - US/Europe/Asia highlights if relevant
+5. **Regional Trends** (500-700 chars if relevant, or empty string)
+   - Geographic analysis: US, Europe, Asia, emerging markets
+   - Regional regulatory changes, political developments
+   - Capital flows and cross-border deal activity
+   - Regional economic indicators and their PE/VC implications
+
+IMPORTANT: Write in professional business English throughout. Be substantive and analytical, not superficial.
 
 Respond in JSON format:
 {
-  "insights": ["insight1", "insight2", "insight3", "insight4"],
-  "macroEconomic": "macro analysis...",
-  "deals": "deal highlights or empty string if none",
-  "sectors": "sector analysis or empty string if none",
-  "regional": "regional trends or empty string if none"
+  "insights": ["insight1", "insight2", "insight3", "insight4", "insight5", "insight6"],
+  "macroEconomic": "comprehensive macro analysis (600-800 chars)...",
+  "deals": "detailed deal analysis (500-700 chars) or empty string if none",
+  "sectors": "sector analysis (500-700 chars) or empty string if none",
+  "regional": "regional trends analysis (500-700 chars) or empty string if none"
 }
 
-Be concise, actionable, and focus on what matters for PE/VC decision-making.`;
+Focus on what matters for PE/VC decision-making with rich context and analysis.`;
 
-    const response = callChatGPT(prompt, 1500);
+    const response = callChatGPT(prompt, 2500);
 
     try {
       // Remove markdown code block wrapper if present
@@ -956,7 +979,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: '*📈 주요 시장 지표*'
+      text: '*📈 Market Indicators*'
     }
   });
 
@@ -977,7 +1000,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '*🏛️ 트럼프 대통령 동향*'
+        text: '*🏛️ Trump Administration Updates*'
       }
     });
 
@@ -1010,18 +1033,20 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       }
     });
 
-    englishArticles.forEach((article, index) => {
+    // Combine all articles into one section to remove blank lines between articles
+    const articlesText = englishArticles.map((article, index) => {
       // Hide source if it's Google News
       const shouldShowSource = !article.source.toLowerCase().includes('google news');
-      const sourceText = shouldShowSource ? `_${article.source}_ | ` : '';
+      const sourceText = shouldShowSource ? `\n_${article.source}_` : '';
+      return `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
+    }).join('\n');
 
-      blocks.push({
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: `*${index + 1}. <${article.link}|${article.title}>*\n${sourceText}${formatTimeAgo(article.publishedAt)}`
-        }
-      });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: articlesText
+      }
     });
 
     blocks.push({ type: 'divider' });
@@ -1033,23 +1058,25 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '*📑 주요 한글 기사*'
+        text: '*📑 Korean News*'
       }
     });
 
-    koreanArticles.forEach((article, index) => {
+    // Combine all articles into one section to remove blank lines between articles
+    const articlesText = koreanArticles.map((article, index) => {
       // Hide source if it's Google News or Naver News
       const shouldShowSource = !article.source.toLowerCase().includes('google news') &&
                                !article.source.includes('네이버');
-      const sourceText = shouldShowSource ? `_${article.source}_ | ` : '';
+      const sourceText = shouldShowSource ? `\n_${article.source}_` : '';
+      return `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
+    }).join('\n');
 
-      blocks.push({
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: `*${index + 1}. <${article.link}|${article.title}>*\n${sourceText}${formatTimeAgo(article.publishedAt)}`
-        }
-      });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: articlesText
+      }
     });
   }
 
@@ -1074,7 +1101,7 @@ function formatMarketData(marketData) {
 
   // US Stocks
   if (marketData.usStocks && marketData.usStocks.length > 0) {
-    text += '*미국 증시*\n';
+    text += '*US Markets*\n';
     marketData.usStocks.forEach(stock => {
       if (stock && stock.price != null && !isNaN(stock.price)) {
         const dayEmoji = stock.dayChange >= 0 ? '📈' : '📉';
@@ -1082,7 +1109,7 @@ function formatMarketData(marketData) {
         const price = stock.price.toFixed(2);
         const dayChange = (stock.dayChange != null && !isNaN(stock.dayChange)) ? stock.dayChange.toFixed(2) : '0.00';
         const weekChange = (stock.weekChange != null && !isNaN(stock.weekChange)) ? stock.weekChange.toFixed(2) : '0.00';
-        text += `${dayEmoji} ${stock.name}: ${price} (일간 ${dayChange}% ${weekEmoji} 주간 ${weekChange}%)\n`;
+        text += `${dayEmoji} ${stock.name}: ${price} (Day ${dayChange}% ${weekEmoji} Week ${weekChange}%)\n`;
       }
     });
     text += '\n';
@@ -1090,7 +1117,7 @@ function formatMarketData(marketData) {
 
   // Korea Stocks
   if (marketData.koreaStocks && marketData.koreaStocks.length > 0) {
-    text += '*한국 증시*\n';
+    text += '*Korea Markets*\n';
     marketData.koreaStocks.forEach(stock => {
       if (stock && stock.price != null && !isNaN(stock.price)) {
         const dayEmoji = stock.dayChange >= 0 ? '📈' : '📉';
@@ -1104,7 +1131,7 @@ function formatMarketData(marketData) {
 
   // Forex
   if (marketData.forex && marketData.forex.length > 0) {
-    text += '*환율*\n';
+    text += '*FX*\n';
     marketData.forex.forEach(fx => {
       if (fx && fx.price != null && !isNaN(fx.price)) {
         const emoji = fx.dayChange >= 0 ? '📈' : '📉';
@@ -1118,7 +1145,7 @@ function formatMarketData(marketData) {
 
   // Crypto
   if (marketData.crypto && marketData.crypto.length > 0) {
-    text += '*암호화폐*\n';
+    text += '*Crypto*\n';
     marketData.crypto.forEach(crypto => {
       if (crypto && crypto.price != null && !isNaN(crypto.price)) {
         const emoji = crypto.dayChange >= 0 ? '🚀' : '⬇️';
@@ -1129,7 +1156,7 @@ function formatMarketData(marketData) {
     });
   }
 
-  return text || '시장 데이터를 불러올 수 없습니다.';
+  return text || 'Market data unavailable';
 }
 
 /**
