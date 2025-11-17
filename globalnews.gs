@@ -675,28 +675,56 @@ function generateAISummary(articles, marketData, trumpActivity) {
   }
 
   try {
-    // Prepare context for GPT
-    const articlesContext = articles.slice(0, 15).map((a, i) =>
-      `${i + 1}. [${a.source}] ${a.title}`
-    ).join('\n');
+    // Prepare rich context for GPT with descriptions
+    const articlesContext = articles.slice(0, 20).map((a, i) => {
+      const desc = a.description ? `\n   ${a.description.substring(0, 150)}...` : '';
+      return `${i + 1}. [${a.source}] ${a.title}${desc}`;
+    }).join('\n\n');
 
-    const prompt = `You are a news analyst for Private Equity professionals.
-Analyze the following global news and provide a summary in English:
+    // Prepare market context
+    const marketContext = formatMarketContextForAI(marketData);
 
+    const prompt = `You are an executive assistant for a senior Private Equity/Venture Capital professional.
+Your role is to analyze today's global news and provide a comprehensive daily briefing.
+
+=== TODAY'S MARKET DATA ===
+${marketContext}
+
+=== TODAY'S NEWS HEADLINES ===
 ${articlesContext}
 
-Please respond in the following format:
-1. 3-4 key bullet points (max 100 characters each)
-2. Global economic trends analysis (max 300 characters)
+=== YOUR TASK ===
+Provide a professional executive briefing with the following structure:
 
-Focus on PE/VC, M&A, economic policy, and financial market trends.
+1. **Today's Key Insights** (3-4 bullets, each ~100 chars)
+   - What happened today that PE/VC investors MUST know?
+   - Focus on deals, M&A, funding rounds, exits, market movements
+
+2. **Macro-Economic Impact** (150-200 chars)
+   - Interest rates, inflation, monetary policy changes
+   - How these affect PE/VC valuations and deal flow
+
+3. **Deal & M&A Highlights** (if any major deals mentioned)
+   - Notable transactions, valuations, strategic rationale
+
+4. **Sector Spotlight** (if any sector stands out)
+   - Which industries are hot/cold today and why
+
+5. **Regional Trends** (brief)
+   - US/Europe/Asia highlights if relevant
+
 Respond in JSON format:
 {
-  "bullets": ["bullet1", "bullet2", "bullet3"],
-  "trends": "economic trends analysis..."
-}`;
+  "insights": ["insight1", "insight2", "insight3", "insight4"],
+  "macroEconomic": "macro analysis...",
+  "deals": "deal highlights or empty string if none",
+  "sectors": "sector analysis or empty string if none",
+  "regional": "regional trends or empty string if none"
+}
 
-    const response = callChatGPT(prompt);
+Be concise, actionable, and focus on what matters for PE/VC decision-making.`;
+
+    const response = callChatGPT(prompt, 1500);
 
     try {
       // Remove markdown code block wrapper if present
@@ -710,16 +738,22 @@ Respond in JSON format:
       const summary = JSON.parse(cleanedResponse);
       return {
         headline: 'Global News Headlines',
-        bullets: summary.bullets || [],
-        economicTrends: summary.trends || ''
+        insights: summary.insights || [],
+        macroEconomic: summary.macroEconomic || '',
+        deals: summary.deals || '',
+        sectors: summary.sectors || '',
+        regional: summary.regional || ''
       };
     } catch (e) {
       // Fallback if JSON parsing fails
       Logger.log('JSON parse error: ' + e.toString());
       return {
         headline: 'Global News Headlines',
-        bullets: ['Unable to generate summary - check OpenAI response format'],
-        economicTrends: ''
+        insights: ['Unable to generate summary - check OpenAI response format'],
+        macroEconomic: '',
+        deals: '',
+        sectors: '',
+        regional: ''
       };
     }
 
@@ -727,10 +761,56 @@ Respond in JSON format:
     Logger.log(`AI summary error: ${error.toString()}`);
     return {
       headline: 'Global News Headlines',
-      bullets: ['Error generating AI summary'],
-      economicTrends: ''
+      insights: ['Error generating AI summary'],
+      macroEconomic: '',
+      deals: '',
+      sectors: '',
+      regional: ''
     };
   }
+}
+
+/**
+ * Format market data for AI context
+ */
+function formatMarketContextForAI(marketData) {
+  let context = '';
+
+  // US Markets
+  if (marketData.usStocks && marketData.usStocks.length > 0) {
+    context += 'US Markets: ';
+    marketData.usStocks.forEach(stock => {
+      if (stock && stock.price != null) {
+        const change = stock.dayChange >= 0 ? `+${stock.dayChange.toFixed(2)}%` : `${stock.dayChange.toFixed(2)}%`;
+        context += `${stock.name} ${change}, `;
+      }
+    });
+    context = context.slice(0, -2) + '\n';
+  }
+
+  // Korea Markets
+  if (marketData.koreaStocks && marketData.koreaStocks.length > 0) {
+    context += 'Korea Markets: ';
+    marketData.koreaStocks.forEach(stock => {
+      if (stock && stock.price != null) {
+        const change = stock.dayChange >= 0 ? `+${stock.dayChange.toFixed(2)}%` : `${stock.dayChange.toFixed(2)}%`;
+        context += `${stock.name} ${change}, `;
+      }
+    });
+    context = context.slice(0, -2) + '\n';
+  }
+
+  // Crypto
+  if (marketData.crypto && marketData.crypto.length > 0) {
+    marketData.crypto.forEach(crypto => {
+      if (crypto && crypto.price != null) {
+        const change = crypto.dayChange >= 0 ? `+${crypto.dayChange.toFixed(2)}%` : `${crypto.dayChange.toFixed(2)}%`;
+        context += `Bitcoin: $${crypto.price.toFixed(0)} (${change})\n`;
+      }
+    });
+  }
+
+  return context || 'Market data unavailable';
 }
 
 /**
@@ -804,31 +884,67 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   blocks.push({ type: 'divider' });
 
-  // AI Summary (in English)
+  // AI Summary - Executive Briefing
   blocks.push({
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: '*🎯 Key Headlines Summary*'
+      text: '*🎯 Today\'s Key Insights*'
     }
   });
 
-  aiSummary.bullets.forEach(bullet => {
+  // Key insights
+  if (aiSummary.insights && aiSummary.insights.length > 0) {
+    const insightsText = aiSummary.insights.map(i => `• ${i}`).join('\n');
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `• ${bullet}`
+        text: insightsText
       }
     });
-  });
+  }
 
-  if (aiSummary.economicTrends) {
+  // Macro-economic impact
+  if (aiSummary.macroEconomic) {
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*📊 Global Market Trends*\n${aiSummary.economicTrends}`
+        text: `*📊 Macro-Economic Impact*\n${aiSummary.macroEconomic}`
+      }
+    });
+  }
+
+  // Deal highlights
+  if (aiSummary.deals) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*💼 Deal & M&A Highlights*\n${aiSummary.deals}`
+      }
+    });
+  }
+
+  // Sector spotlight
+  if (aiSummary.sectors) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*🏭 Sector Spotlight*\n${aiSummary.sectors}`
+      }
+    });
+  }
+
+  // Regional trends
+  if (aiSummary.regional) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*🌍 Regional Trends*\n${aiSummary.regional}`
       }
     });
   }
@@ -1208,9 +1324,12 @@ function quickTest() {
   };
 
   const aiSummary = {
-    headline: '오늘의 글로벌 뉴스 헤드라인',
-    bullets: ['테스트 요약 1', '테스트 요약 2'],
-    economicTrends: '테스트 경제 동향'
+    headline: 'Global News Headlines',
+    insights: ['Test insight 1', 'Test insight 2'],
+    macroEconomic: 'Test macro economic analysis',
+    deals: 'Test deal highlights',
+    sectors: 'Test sector spotlight',
+    regional: 'Test regional trends'
   };
 
   const message = formatSlackMessage(aiSummary, sampleArticles, sampleMarket, sampleTrump);
