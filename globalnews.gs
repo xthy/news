@@ -43,15 +43,101 @@ const CONFIG = {
 // ==================== NEWS SOURCES ====================
 
 const NEWS_SOURCES = [
-  // Tech & Innovation
+  // US Major News - Premium Quality
   {
-    name: 'TechCrunch',
+    name: 'Financial Times',
     type: 'rss',
-    url: 'https://techcrunch.com/feed/',
+    url: 'https://www.ft.com/world?format=rss',
+    category: 'business'
+  },
+  {
+    name: 'The Wall Street Journal',
+    type: 'rss',
+    url: 'https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml',
+    category: 'business'
+  },
+  {
+    name: 'The New York Times',
+    type: 'rss',
+    url: 'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml',
+    category: 'business'
+  },
+  {
+    name: 'Bloomberg',
+    type: 'rss',
+    url: 'https://feeds.bloomberg.com/markets/news.rss',
+    category: 'markets'
+  },
+  {
+    name: 'Reuters',
+    type: 'rss',
+    url: 'https://www.reutersagency.com/feed/?taxonomy=best-topics&post_type=best',
+    category: 'business'
+  },
+  {
+    name: 'CNN Business',
+    type: 'rss',
+    url: 'http://rss.cnn.com/rss/money_news_economy.rss',
+    category: 'business'
+  },
+  {
+    name: 'The Economist',
+    type: 'rss',
+    url: 'https://www.economist.com/business/rss.xml',
+    category: 'business'
+  },
+
+  // Europe
+  {
+    name: 'BBC News - Business',
+    type: 'rss',
+    url: 'http://feeds.bbci.co.uk/news/business/rss.xml',
+    category: 'business'
+  },
+
+  // Korea Major News
+  {
+    name: '조선일보',
+    type: 'rss',
+    url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/economy/',
+    category: 'economy'
+  },
+  {
+    name: '중앙일보',
+    type: 'rss',
+    url: 'https://koreajoongangdaily.joins.com/news/rss',
+    category: 'business'
+  },
+  {
+    name: '한국경제',
+    type: 'rss',
+    url: 'https://www.hankyung.com/feed/economy',
+    category: 'economy'
+  },
+
+  // Asia
+  {
+    name: 'Nikkei Asia',
+    type: 'rss',
+    url: 'https://asia.nikkei.com/rss/feed/nar',
+    category: 'business'
+  },
+  {
+    name: 'South China Morning Post',
+    type: 'rss',
+    url: 'https://www.scmp.com/rss/91/feed',
+    category: 'business'
+  },
+
+  // Tech & Innovation (quality sources)
+  {
+    name: 'MIT Technology Review',
+    type: 'rss',
+    url: 'https://www.technologyreview.com/feed/',
     category: 'tech'
   },
 
-  // Google News - English
+  // Supplementary - Google News for broader coverage
   {
     name: 'Google News - Business',
     type: 'rss',
@@ -61,28 +147,8 @@ const NEWS_SOURCES = [
   {
     name: 'Google News - Economy',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=economy+OR+market+OR+finance&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=economy+OR+policy+OR+regulation&hl=en-US&gl=US&ceid=US:en',
     category: 'economy'
-  },
-  {
-    name: 'Google News - Private Equity',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=private+equity+OR+M%26A+OR+venture+capital&hl=en-US&gl=US&ceid=US:en',
-    category: 'business'
-  },
-
-  // Google News - Korean
-  {
-    name: 'Google News - 경제',
-    type: 'rss',
-    url: 'https://news.google.com/rss/topics/CAAqJQgKIh9DQkFTRVFvSUwyMHZNRGx6TVdZU0JXdHZMVWxTS0FBUAE',
-    category: 'economy'
-  },
-  {
-    name: 'Google News - 금융',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%EA%B8%88%EC%9C%B5+OR+%EC%A3%BC%EC%8B%9D%EC%8B%9C%EC%9E%A5&hl=ko&gl=KR&ceid=KR:ko',
-    category: 'finance'
   }
 ];
 
@@ -347,39 +413,56 @@ function processArticles(articles) {
 }
 
 /**
- * Score article based on keywords and relevance
+ * Score article based on keywords and relevance for business leaders
  */
 function scoreArticle(article) {
   let score = 1;
   const text = (article.title + ' ' + (article.description || '')).toLowerCase();
 
-  // PE/VC keywords
-  const peKeywords = [
-    'private equity', 'pe firm', 'venture capital', 'vc funding',
-    'm&a', 'merger', 'acquisition', 'buyout', 'lbo',
-    'bain', 'bcg', 'mckinsey', 'consulting',
-    'portfolio company', 'exit strategy', 'ipo'
+  // Economic & Policy keywords (highest priority)
+  const economicPolicyKeywords = [
+    'fed', 'federal reserve', 'interest rate', 'inflation', 'gdp', 'economy',
+    'stock market', 'bond', 'treasury', 'recession', 'growth',
+    'central bank', 'monetary policy', 'fiscal policy', 'tax',
+    'regulation', 'policy', 'trade', 'tariff', 'sanctions'
   ];
 
-  // Economic keywords
-  const economicKeywords = [
-    'fed', 'interest rate', 'inflation', 'gdp', 'economy',
-    'stock market', 'bond', 'treasury', 'recession',
-    'central bank', 'monetary policy', 'fiscal policy'
+  // Corporate & Business keywords
+  const businessKeywords = [
+    'm&a', 'merger', 'acquisition', 'deal', 'partnership',
+    'ipo', 'earnings', 'revenue', 'profit', 'valuation',
+    'restructuring', 'bankruptcy', 'investment'
   ];
 
-  // Leadership keywords
+  // Leadership & Strategy keywords
   const leadershipKeywords = [
     'ceo', 'cfo', 'executive', 'leadership', 'board',
-    'strategy', 'transformation', 'innovation'
+    'strategy', 'transformation', 'innovation', 'disruption'
+  ];
+
+  // Geopolitical keywords
+  const geopoliticalKeywords = [
+    'china', 'us-china', 'trump', 'biden', 'election',
+    'war', 'conflict', 'diplomacy', 'trade war', 'brexit',
+    'eu', 'europe', 'asia', 'japan', 'korea'
+  ];
+
+  // Technology & Innovation keywords
+  const techKeywords = [
+    'ai', 'artificial intelligence', 'technology', 'tech',
+    'digital', 'automation', 'blockchain', 'semiconductor'
   ];
 
   // Score based on keyword presence
-  peKeywords.forEach(keyword => {
+  economicPolicyKeywords.forEach(keyword => {
     if (text.includes(keyword)) score += 3;
   });
 
-  economicKeywords.forEach(keyword => {
+  businessKeywords.forEach(keyword => {
+    if (text.includes(keyword)) score += 2.5;
+  });
+
+  geopoliticalKeywords.forEach(keyword => {
     if (text.includes(keyword)) score += 2;
   });
 
@@ -387,9 +470,16 @@ function scoreArticle(article) {
     if (text.includes(keyword)) score += 1.5;
   });
 
+  techKeywords.forEach(keyword => {
+    if (text.includes(keyword)) score += 1.5;
+  });
+
   // Boost for major publications
-  const majorPubs = ['Financial Times', 'Wall Street Journal', 'Bloomberg', 'The Economist'];
-  if (majorPubs.includes(article.source)) {
+  const majorPubs = [
+    'Financial Times', 'Wall Street Journal', 'Bloomberg', 'The Economist',
+    'New York Times', 'Reuters', 'CNN', 'BBC'
+  ];
+  if (majorPubs.some(pub => article.source.includes(pub))) {
     score *= 1.3;
   }
 
@@ -547,9 +637,20 @@ function fetchYahooFinanceData(symbol) {
     const weekChange = calculateChange(recentPrices, 5);
     const monthChange = calculateChange(recentPrices, 20);
 
+    // Map symbols to full names
+    const symbolNames = {
+      '^GSPC': 'S&P 500',
+      '^DJI': 'Dow Jones',
+      '^IXIC': 'NASDAQ',
+      '^KS11': 'KOSPI',
+      '^KQ11': 'KOSDAQ',
+      'BTC-USD': 'Bitcoin',
+      'KRW=X': 'USD/KRW'
+    };
+
     return {
       symbol: symbol,
-      name: meta.symbol || symbol,
+      name: symbolNames[symbol] || meta.symbol || symbol,
       price: currentPrice,
       dayChange: dayChange,
       weekChange: weekChange,
@@ -685,7 +786,7 @@ function generateAISummary(articles, marketData, trumpActivity) {
     // Prepare market context
     const marketContext = formatMarketContextForAI(marketData);
 
-    const prompt = `You are an executive assistant for a senior Private Equity/Venture Capital professional.
+    const prompt = `You are an executive assistant for global business leaders and C-suite executives.
 Your role is to analyze today's global news and provide a comprehensive daily briefing in professional English.
 
 === TODAY'S MARKET DATA ===
@@ -699,53 +800,51 @@ Provide a professional executive briefing with the following structure (ALL IN E
 
 1. **Today's Key Insights** (5-6 bullets, each 150-200 chars)
    - Write RICH, DETAILED insights with context and implications
-   - What happened today that PE/VC investors MUST know?
-   - Include specific details: company names, deal sizes, valuations, strategic rationale
-   - Focus on deals, M&A, funding rounds, exits, IPOs, market movements
-   - Explain WHY each insight matters for PE/VC investment decisions
-   - Example: "Bain Capital acquired XYZ Corp for $2B, marking 15x MOIC - signals strong exit environment in enterprise software sector"
+   - What happened today that business leaders MUST know?
+   - Include specific details: companies, governments, leaders, key decisions, strategic moves
+   - Focus on: economic policy, government regulations, geopolitical shifts, major corporate actions, market movements, technological breakthroughs
+   - Explain WHY each insight matters for business strategy and decision-making
+   - Example: "Fed signals policy shift as inflation cools to 2.5% - likely rate cuts in Q2 will ease financing costs for corporate expansion"
 
-2. **Macro-Economic Impact** (600-800 chars)
-   - Comprehensive analysis of macro factors affecting PE/VC
-   - Interest rates, inflation, monetary policy changes, central bank actions
-   - Credit market conditions, lending standards, debt availability
-   - Public market valuations and multiples trends
-   - Currency movements and geopolitical factors
-   - HOW these specifically affect PE/VC valuations, deal flow, exit opportunities, and fundraising
-   - Connect today's news to broader investment implications
+2. **Macro-Economic & Policy Impact** (600-800 chars)
+   - Comprehensive analysis of economic and policy factors affecting business
+   - Interest rates, inflation, monetary policy, fiscal policy, central bank actions
+   - Government regulations, trade policies, tax changes
+   - Credit markets, currency movements, commodity prices
+   - Geopolitical developments and their economic impact
+   - HOW these specifically affect corporate strategy, investment decisions, operations, and growth
+   - Connect today's news to broader business implications
 
-3. **Deal & M&A Highlights** (500-700 chars if relevant deals, or empty string)
-   - Detailed analysis of notable transactions mentioned in news
-   - Include: deal size, valuation multiples, buyer/seller strategy
-   - Type of transaction: LBO, growth equity, venture rounds, exits
-   - What these deals signal about market conditions
-   - Sector-specific trends emerging from deals
+3. **Corporate & Market Highlights** (500-700 chars if relevant, or empty string)
+   - Major corporate actions: M&A, restructuring, strategic pivots, leadership changes
+   - Market movements and what they signal
+   - Significant deals or partnerships and their strategic rationale
+   - Industry consolidation or disruption trends
 
-4. **Sector Spotlight** (500-700 chars if relevant, or empty string)
-   - Which industries/sectors are hot or cold today and WHY
-   - Regulatory changes, technological shifts, consumer trends
-   - Investment opportunities or risks emerging
-   - Valuation trends by sector
-   - Portfolio company implications
+4. **Sector & Industry Spotlight** (500-700 chars if relevant, or empty string)
+   - Which industries/sectors are seeing major developments and WHY
+   - Regulatory changes, technological shifts, consumer trends affecting sectors
+   - Opportunities or risks emerging for businesses
+   - Innovation and disruption patterns
 
-5. **Regional Trends** (500-700 chars if relevant, or empty string)
-   - Geographic analysis: US, Europe, Asia, emerging markets
-   - Regional regulatory changes, political developments
-   - Capital flows and cross-border deal activity
-   - Regional economic indicators and their PE/VC implications
+5. **Regional & Geopolitical Trends** (500-700 chars if relevant, or empty string)
+   - Geographic analysis: US, Europe, Asia (China, Japan, Korea), emerging markets
+   - Political developments, policy changes, regulatory shifts by region
+   - Trade relationships, cross-border implications
+   - Regional economic indicators and their global impact
 
-IMPORTANT: Write in professional business English throughout. Be substantive and analytical, not superficial.
+IMPORTANT: Write in professional business English throughout. Be substantive, analytical, and actionable for business leaders.
 
 Respond in JSON format:
 {
   "insights": ["insight1", "insight2", "insight3", "insight4", "insight5", "insight6"],
-  "macroEconomic": "comprehensive macro analysis (600-800 chars)...",
-  "deals": "detailed deal analysis (500-700 chars) or empty string if none",
-  "sectors": "sector analysis (500-700 chars) or empty string if none",
-  "regional": "regional trends analysis (500-700 chars) or empty string if none"
+  "macroEconomic": "comprehensive macro & policy analysis (600-800 chars)...",
+  "deals": "corporate & market highlights (500-700 chars) or empty string if none",
+  "sectors": "sector & industry analysis (500-700 chars) or empty string if none",
+  "regional": "regional & geopolitical trends (500-700 chars) or empty string if none"
 }
 
-Focus on what matters for PE/VC decision-making with rich context and analysis.`;
+Focus on what matters for business leaders' strategic decisions with rich context and analysis.`;
 
     const response = callChatGPT(prompt, 2500);
 
@@ -847,7 +946,7 @@ function callChatGPT(prompt, maxTokens = 500) {
     messages: [
       {
         role: 'system',
-        content: 'You are a financial analyst specializing in private equity and global markets. Provide concise, actionable insights in English.'
+        content: 'You are an executive analyst for global business leaders. Provide substantive, actionable insights on economics, policy, and strategic business developments in professional English.'
       },
       {
         role: 'user',
@@ -901,7 +1000,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
     type: 'context',
     elements: [{
       type: 'mrkdwn',
-      text: `${today} | Private Equity Professional Brief`
+      text: `${today} | Global Business Leaders Brief`
     }]
   });
 
@@ -928,46 +1027,46 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
     });
   }
 
-  // Macro-economic impact
+  // Macro-economic & policy impact
   if (aiSummary.macroEconomic) {
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*📊 Macro-Economic Impact*\n${aiSummary.macroEconomic}`
+        text: `*📊 Macro-Economic & Policy Impact*\n${aiSummary.macroEconomic}`
       }
     });
   }
 
-  // Deal highlights
+  // Corporate & market highlights
   if (aiSummary.deals) {
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*💼 Deal & M&A Highlights*\n${aiSummary.deals}`
+        text: `*💼 Corporate & Market Highlights*\n${aiSummary.deals}`
       }
     });
   }
 
-  // Sector spotlight
+  // Sector & industry spotlight
   if (aiSummary.sectors) {
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🏭 Sector Spotlight*\n${aiSummary.sectors}`
+        text: `*🏭 Sector & Industry Spotlight*\n${aiSummary.sectors}`
       }
     });
   }
 
-  // Regional trends
+  // Regional & geopolitical trends
   if (aiSummary.regional) {
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🌍 Regional Trends*\n${aiSummary.regional}`
+        text: `*🌍 Regional & Geopolitical Trends*\n${aiSummary.regional}`
       }
     });
   }
@@ -1019,17 +1118,13 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
     blocks.push({ type: 'divider' });
   }
 
-  // Separate articles by language
-  const englishArticles = articles.filter(a => a.language === 'en');
-  const koreanArticles = articles.filter(a => a.language === 'ko');
-
-  // English Articles
-  if (englishArticles.length > 0) {
+  // All Articles (no language separation)
+  if (articles.length > 0) {
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '*📑 Top headline*'
+        text: '*📑 Top Headlines*'
       }
     });
 
@@ -1038,59 +1133,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
     let currentChunk = [];
     let currentLength = 0;
 
-    englishArticles.forEach((article, index) => {
-      const shouldShowSource = !article.source.toLowerCase().includes('google news');
-      const sourceText = shouldShowSource ? `\n_${article.source}_` : '';
-      const articleText = `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
-      const articleLength = articleText.length + 1; // +1 for newline
-
-      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
-        // Push current chunk as a block
-        blocks.push({
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: currentChunk.join('\n')
-          }
-        });
-        currentChunk = [articleText];
-        currentLength = articleLength;
-      } else {
-        currentChunk.push(articleText);
-        currentLength += articleLength;
-      }
-    });
-
-    // Push remaining chunk
-    if (currentChunk.length > 0) {
-      blocks.push({
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: currentChunk.join('\n')
-        }
-      });
-    }
-
-    blocks.push({ type: 'divider' });
-  }
-
-  // Korean Articles
-  if (koreanArticles.length > 0) {
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*📑 Korean News*'
-      }
-    });
-
-    // Split articles into chunks to avoid Slack's 3000 char limit per block
-    const CHARS_PER_BLOCK = 2800; // Safety margin
-    let currentChunk = [];
-    let currentLength = 0;
-
-    koreanArticles.forEach((article, index) => {
+    articles.forEach((article, index) => {
       const shouldShowSource = !article.source.toLowerCase().includes('google news') &&
                                !article.source.includes('네이버');
       const sourceText = shouldShowSource ? `\n_${article.source}_` : '';
