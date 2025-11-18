@@ -1006,14 +1006,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   blocks.push({ type: 'divider' });
 
-  // AI Summary - Executive Briefing
-  blocks.push({
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: '*🎯 Today\'s Key Insights*'
-    }
-  });
+  // AI Summary - Executive Briefing (combine title and content in single blocks)
 
   // Key insights
   if (aiSummary.insights && aiSummary.insights.length > 0) {
@@ -1022,7 +1015,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: insightsText
+        text: `*🎯 Today's Key Insights*\n${insightsText}`
       }
     });
   }
@@ -1073,36 +1066,20 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   blocks.push({ type: 'divider' });
 
-  // Market Data
-  blocks.push({
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: '*📈 Market Indicators*'
-    }
-  });
-
+  // Market Data (combine title and content)
   const marketText = formatMarketData(marketData);
   blocks.push({
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: marketText
+      text: `*📈 Market Indicators*\n${marketText}`
     }
   });
 
   blocks.push({ type: 'divider' });
 
-  // Trump Activity
+  // Trump Activity (combine title and content)
   if (trumpActivity.newsCount > 0) {
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*🏛️ Trump Administration Updates*'
-      }
-    });
-
     const trumpText = trumpActivity.headlines
       .map(h => `• <${h.link}|${h.title}>`)
       .join('\n');
@@ -1111,7 +1088,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: trumpText
+        text: `*🏛️ Trump Administration Updates*\n${trumpText}`
       }
     });
 
@@ -1120,18 +1097,11 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   // All Articles (no language separation)
   if (articles.length > 0) {
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*📑 Top Headlines*'
-      }
-    });
-
     // Split articles into chunks to avoid Slack's 3000 char limit per block
     const CHARS_PER_BLOCK = 2800; // Safety margin
-    let currentChunk = [];
-    let currentLength = 0;
+    const titleText = '*📑 Top Headlines*\n';
+    let currentChunk = [titleText];
+    let currentLength = titleText.length;
 
     articles.forEach((article, index) => {
       const shouldShowSource = !article.source.toLowerCase().includes('google news') &&
@@ -1140,7 +1110,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       const articleText = `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
       const articleLength = articleText.length + 1; // +1 for newline
 
-      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
+      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 1) {
         // Push current chunk as a block
         blocks.push({
           type: 'section',
