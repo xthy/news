@@ -71,7 +71,7 @@ const NEWS_SOURCES = [
   {
     name: 'Reuters',
     type: 'rss',
-    url: 'https://www.reutersagency.com/feed/?taxonomy=best-topics&post_type=best',
+    url: 'https://feeds.reuters.com/reuters/businessNews',
     category: 'business'
   },
   {
@@ -97,22 +97,16 @@ const NEWS_SOURCES = [
 
   // Korea Major News
   {
-    name: '조선일보',
+    name: '연합뉴스',
     type: 'rss',
-    url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/economy/',
+    url: 'https://www.yonhapnewsagency.co.kr/rss/economy.xml',
     category: 'economy'
   },
   {
-    name: '중앙일보',
+    name: 'KBS News',
     type: 'rss',
-    url: 'https://koreajoongangdaily.joins.com/news/rss',
+    url: 'http://world.kbs.co.kr/rss/rss_news.htm?lang=e',
     category: 'business'
-  },
-  {
-    name: '한국경제',
-    type: 'rss',
-    url: 'https://www.hankyung.com/feed/economy',
-    category: 'economy'
   },
 
   // Asia
@@ -123,9 +117,33 @@ const NEWS_SOURCES = [
     category: 'business'
   },
   {
+    name: 'The Japan Times',
+    type: 'rss',
+    url: 'https://www.japantimes.co.jp/feed/topstories/',
+    category: 'business'
+  },
+  {
+    name: 'Japan Today',
+    type: 'rss',
+    url: 'https://japantoday.com/feed',
+    category: 'business'
+  },
+  {
     name: 'South China Morning Post',
     type: 'rss',
     url: 'https://www.scmp.com/rss/91/feed',
+    category: 'business'
+  },
+  {
+    name: 'China Daily',
+    type: 'rss',
+    url: 'http://www.chinadaily.com.cn/rss/china_rss.xml',
+    category: 'business'
+  },
+  {
+    name: 'Global Times',
+    type: 'rss',
+    url: 'https://www.globaltimes.cn/rss/outbrain.xml',
     category: 'business'
   },
 
