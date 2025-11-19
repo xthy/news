@@ -71,7 +71,7 @@ const NEWS_SOURCES = [
   {
     name: 'Reuters',
     type: 'rss',
-    url: 'https://www.reutersagency.com/feed/?taxonomy=best-topics&post_type=best',
+    url: 'https://feeds.reuters.com/reuters/businessNews',
     category: 'business'
   },
   {
@@ -97,22 +97,16 @@ const NEWS_SOURCES = [
 
   // Korea Major News
   {
-    name: '조선일보',
+    name: '연합뉴스',
     type: 'rss',
-    url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/economy/',
+    url: 'https://www.yonhapnewsagency.co.kr/rss/economy.xml',
     category: 'economy'
   },
   {
-    name: '중앙일보',
+    name: 'KBS News',
     type: 'rss',
-    url: 'https://koreajoongangdaily.joins.com/news/rss',
+    url: 'http://world.kbs.co.kr/rss/rss_news.htm?lang=e',
     category: 'business'
-  },
-  {
-    name: '한국경제',
-    type: 'rss',
-    url: 'https://www.hankyung.com/feed/economy',
-    category: 'economy'
   },
 
   // Asia
@@ -123,9 +117,33 @@ const NEWS_SOURCES = [
     category: 'business'
   },
   {
+    name: 'The Japan Times',
+    type: 'rss',
+    url: 'https://www.japantimes.co.jp/feed/topstories/',
+    category: 'business'
+  },
+  {
+    name: 'Japan Today',
+    type: 'rss',
+    url: 'https://japantoday.com/feed',
+    category: 'business'
+  },
+  {
     name: 'South China Morning Post',
     type: 'rss',
     url: 'https://www.scmp.com/rss/91/feed',
+    category: 'business'
+  },
+  {
+    name: 'China Daily',
+    type: 'rss',
+    url: 'http://www.chinadaily.com.cn/rss/china_rss.xml',
+    category: 'business'
+  },
+  {
+    name: 'Global Times',
+    type: 'rss',
+    url: 'https://www.globaltimes.cn/rss/outbrain.xml',
     category: 'business'
   },
 
@@ -984,7 +1002,8 @@ function callChatGPT(prompt, maxTokens = 500) {
  */
 function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
   const blocks = [];
-  const today = Utilities.formatDate(new Date(), 'GMT+9', 'yyyy년 MM월 dd일 EEEE');
+  const today = Utilities.formatDate(new Date(), 'GMT+9', 'yyyy-MM-dd EEEE');
+  const marketDate = Utilities.formatDate(new Date(), 'GMT+9', 'yyyy-MM-dd');
 
   // Header
   blocks.push({
@@ -1000,8 +1019,27 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
     type: 'context',
     elements: [{
       type: 'mrkdwn',
-      text: `${today} | Global Business Leaders Brief`
+      text: `${today}`
     }]
+  });
+
+  blocks.push({ type: 'divider' });
+
+  // Market Data FIRST
+  blocks.push({
+    type: 'section',
+    text: {
+      type: 'mrkdwn',
+      text: `*📈 Market Indicators* (as of ${marketDate})`
+    }
+  });
+  const marketText = formatMarketData(marketData);
+  blocks.push({
+    type: 'section',
+    text: {
+      type: 'mrkdwn',
+      text: marketText
+    }
   });
 
   blocks.push({ type: 'divider' });
@@ -1010,12 +1048,19 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   // Key insights
   if (aiSummary.insights && aiSummary.insights.length > 0) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*🎯 Today's Key Insights*'
+      }
+    });
     const insightsText = aiSummary.insights.map(i => `• ${i}`).join('\n');
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🎯 Today's Key Insights*\n${insightsText}`
+        text: insightsText
       }
     });
   }
@@ -1026,7 +1071,14 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*📊 Macro-Economic & Policy Impact*\n${aiSummary.macroEconomic}`
+        text: '*📊 Macro-Economic & Policy Impact*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.macroEconomic
       }
     });
   }
@@ -1037,7 +1089,14 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*💼 Corporate & Market Highlights*\n${aiSummary.deals}`
+        text: '*💼 Corporate & Market Highlights*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.deals
       }
     });
   }
@@ -1048,7 +1107,14 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🏭 Sector & Industry Spotlight*\n${aiSummary.sectors}`
+        text: '*🏭 Sector & Industry Spotlight*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.sectors
       }
     });
   }
@@ -1059,58 +1125,44 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🌍 Regional & Geopolitical Trends*\n${aiSummary.regional}`
+        text: '*🌍 Regional & Geopolitical Trends*'
       }
     });
-  }
-
-  blocks.push({ type: 'divider' });
-
-  // Market Data (combine title and content)
-  const marketText = formatMarketData(marketData);
-  blocks.push({
-    type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: `*📈 Market Indicators*\n${marketText}`
-    }
-  });
-
-  blocks.push({ type: 'divider' });
-
-  // Trump Activity (combine title and content)
-  if (trumpActivity.newsCount > 0) {
-    const trumpText = trumpActivity.headlines
-      .map(h => `• <${h.link}|${h.title}>`)
-      .join('\n');
-
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🏛️ Trump Administration Updates*\n${trumpText}`
+        text: aiSummary.regional
       }
     });
-
-    blocks.push({ type: 'divider' });
   }
+
+  blocks.push({ type: 'divider' });
 
   // All Articles (no language separation)
   if (articles.length > 0) {
+    // Add title as separate block first
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*📑 Top Headlines*'
+      }
+    });
+
     // Split articles into chunks to avoid Slack's 3000 char limit per block
     const CHARS_PER_BLOCK = 2800; // Safety margin
-    const titleText = '*📑 Top Headlines*\n';
-    let currentChunk = [titleText];
-    let currentLength = titleText.length;
+    let currentChunk = [];
+    let currentLength = 0;
 
     articles.forEach((article, index) => {
       const shouldShowSource = !article.source.toLowerCase().includes('google news') &&
                                !article.source.includes('네이버');
-      const sourceText = shouldShowSource ? `\n_${article.source}_` : '';
-      const articleText = `*${index + 1}. <${article.link}|${article.title}>*${sourceText}`;
+      const sourceText = shouldShowSource ? ` - _${article.source}_` : '';
+      const articleText = `*${index + 1}.* <${article.link}|${article.title}>${sourceText}`;
       const articleLength = articleText.length + 1; // +1 for newline
 
-      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 1) {
+      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
         // Push current chunk as a block
         blocks.push({
           type: 'section',
@@ -1137,6 +1189,31 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
         }
       });
     }
+  }
+
+  // Trump Activity at the bottom
+  if (trumpActivity.newsCount > 0) {
+    blocks.push({ type: 'divider' });
+
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*🏛️ Trump Administration Updates*'
+      }
+    });
+
+    const trumpText = trumpActivity.headlines
+      .map(h => `• <${h.link}|${h.title}>`)
+      .join('\n');
+
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: trumpText
+      }
+    });
   }
 
   // Footer
@@ -1180,9 +1257,11 @@ function formatMarketData(marketData) {
     marketData.koreaStocks.forEach(stock => {
       if (stock && stock.price != null && !isNaN(stock.price)) {
         const dayEmoji = stock.dayChange >= 0 ? '📈' : '📉';
+        const weekEmoji = stock.weekChange >= 0 ? '⬆️' : '⬇️';
         const price = stock.price.toFixed(2);
         const dayChange = (stock.dayChange != null && !isNaN(stock.dayChange)) ? stock.dayChange.toFixed(2) : '0.00';
-        text += `${dayEmoji} ${stock.name}: ${price} (${stock.dayChange >= 0 ? '+' : ''}${dayChange}%)\n`;
+        const weekChange = (stock.weekChange != null && !isNaN(stock.weekChange)) ? stock.weekChange.toFixed(2) : '0.00';
+        text += `${dayEmoji} ${stock.name}: ${price} (Day ${dayChange}% ${weekEmoji} Week ${weekChange}%)\n`;
       }
     });
     text += '\n';
@@ -1193,10 +1272,12 @@ function formatMarketData(marketData) {
     text += '*FX*\n';
     marketData.forex.forEach(fx => {
       if (fx && fx.price != null && !isNaN(fx.price)) {
-        const emoji = fx.dayChange >= 0 ? '📈' : '📉';
+        const dayEmoji = fx.dayChange >= 0 ? '📈' : '📉';
+        const weekEmoji = fx.weekChange >= 0 ? '⬆️' : '⬇️';
         const price = fx.price.toFixed(2);
         const dayChange = (fx.dayChange != null && !isNaN(fx.dayChange)) ? fx.dayChange.toFixed(2) : '0.00';
-        text += `${emoji} USD/KRW: ${price} (${fx.dayChange >= 0 ? '+' : ''}${dayChange}%)\n`;
+        const weekChange = (fx.weekChange != null && !isNaN(fx.weekChange)) ? fx.weekChange.toFixed(2) : '0.00';
+        text += `${dayEmoji} USD/KRW: ${price} (Day ${dayChange}% ${weekEmoji} Week ${weekChange}%)\n`;
       }
     });
     text += '\n';
@@ -1207,10 +1288,12 @@ function formatMarketData(marketData) {
     text += '*Crypto*\n';
     marketData.crypto.forEach(crypto => {
       if (crypto && crypto.price != null && !isNaN(crypto.price)) {
-        const emoji = crypto.dayChange >= 0 ? '🚀' : '⬇️';
+        const dayEmoji = crypto.dayChange >= 0 ? '🚀' : '⬇️';
+        const weekEmoji = crypto.weekChange >= 0 ? '⬆️' : '⬇️';
         const price = crypto.price.toFixed(0);
         const dayChange = (crypto.dayChange != null && !isNaN(crypto.dayChange)) ? crypto.dayChange.toFixed(2) : '0.00';
-        text += `${emoji} Bitcoin: $${price} (${crypto.dayChange >= 0 ? '+' : ''}${dayChange}%)\n`;
+        const weekChange = (crypto.weekChange != null && !isNaN(crypto.weekChange)) ? crypto.weekChange.toFixed(2) : '0.00';
+        text += `${dayEmoji} Bitcoin: $${price} (Day ${dayChange}% ${weekEmoji} Week ${weekChange}%)\n`;
       }
     });
   }
