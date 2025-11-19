@@ -1052,7 +1052,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '*🎯 Today's Key Insights*'
+        text: "*🎯 Today's Key Insights*"
       }
     });
     const insightsText = aiSummary.insights.map(i => `• ${i}`).join('\n');
