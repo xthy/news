@@ -1025,13 +1025,20 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   blocks.push({ type: 'divider' });
 
-  // Market Data FIRST (combine title and content)
+  // Market Data FIRST
+  blocks.push({
+    type: 'section',
+    text: {
+      type: 'mrkdwn',
+      text: `*📈 Market Indicators* (as of ${marketDate})`
+    }
+  });
   const marketText = formatMarketData(marketData);
   blocks.push({
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: `*📈 Market Indicators* (as of ${marketDate})\n${marketText}`
+      text: marketText
     }
   });
 
@@ -1041,12 +1048,19 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   // Key insights
   if (aiSummary.insights && aiSummary.insights.length > 0) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*🎯 Today's Key Insights*'
+      }
+    });
     const insightsText = aiSummary.insights.map(i => `• ${i}`).join('\n');
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🎯 Today's Key Insights*\n${insightsText}`
+        text: insightsText
       }
     });
   }
@@ -1057,7 +1071,14 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*📊 Macro-Economic & Policy Impact*\n${aiSummary.macroEconomic}`
+        text: '*📊 Macro-Economic & Policy Impact*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.macroEconomic
       }
     });
   }
@@ -1068,7 +1089,14 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*💼 Corporate & Market Highlights*\n${aiSummary.deals}`
+        text: '*💼 Corporate & Market Highlights*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.deals
       }
     });
   }
@@ -1079,7 +1107,14 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🏭 Sector & Industry Spotlight*\n${aiSummary.sectors}`
+        text: '*🏭 Sector & Industry Spotlight*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.sectors
       }
     });
   }
@@ -1090,7 +1125,14 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🌍 Regional & Geopolitical Trends*\n${aiSummary.regional}`
+        text: '*🌍 Regional & Geopolitical Trends*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.regional
       }
     });
   }
@@ -1099,11 +1141,19 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
 
   // All Articles (no language separation)
   if (articles.length > 0) {
+    // Add title as separate block first
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*📑 Top Headlines*'
+      }
+    });
+
     // Split articles into chunks to avoid Slack's 3000 char limit per block
     const CHARS_PER_BLOCK = 2800; // Safety margin
-    const titleText = '*📑 Top Headlines*\n';
-    let currentChunk = [titleText];
-    let currentLength = titleText.length;
+    let currentChunk = [];
+    let currentLength = 0;
 
     articles.forEach((article, index) => {
       const shouldShowSource = !article.source.toLowerCase().includes('google news') &&
@@ -1112,7 +1162,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       const articleText = `*${index + 1}.* <${article.link}|${article.title}>${sourceText}`;
       const articleLength = articleText.length + 1; // +1 for newline
 
-      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 1) {
+      if (currentLength + articleLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
         // Push current chunk as a block
         blocks.push({
           type: 'section',
@@ -1141,9 +1191,17 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
     }
   }
 
-  // Trump Activity at the bottom (combine title and content)
+  // Trump Activity at the bottom
   if (trumpActivity.newsCount > 0) {
     blocks.push({ type: 'divider' });
+
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*🏛️ Trump Administration Updates*'
+      }
+    });
 
     const trumpText = trumpActivity.headlines
       .map(h => `• <${h.link}|${h.title}>`)
@@ -1153,7 +1211,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🏛️ Trump Administration Updates*\n${trumpText}`
+        text: trumpText
       }
     });
   }
