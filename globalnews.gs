@@ -137,7 +137,7 @@ const NEWS_SOURCES = [
     category: 'tech'
   },
 
-  // Supplementary - Google News for premium content (FT, WSJ, NYT, Economist, etc.)
+  // Supplementary - Google News for broader coverage
   {
     name: 'Google News - Business',
     type: 'rss',
@@ -150,16 +150,28 @@ const NEWS_SOURCES = [
     url: 'https://news.google.com/rss/search?q=economy+OR+policy+OR+regulation&hl=en-US&gl=US&ceid=US:en',
     category: 'economy'
   },
+
+  // Premium US Sources via Google News (FT, WSJ, NYT, Bloomberg, Economist, CNN)
   {
-    name: 'Google News - Markets',
+    name: 'Google News - Premium US',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=stock+market+OR+fed+OR+central+bank&hl=en-US&gl=US&ceid=US:en',
-    category: 'markets'
+    url: 'https://news.google.com/rss/search?q=when:24h+(source:"Financial Times"+OR+source:"Wall Street Journal"+OR+source:"New York Times"+OR+source:"Bloomberg"+OR+source:"The Economist"+OR+source:"CNN")&hl=en-US&gl=US&ceid=US:en',
+    category: 'business'
   },
+
+  // Asia Sources via Google News (Nikkei, Japan Times, SCMP, China Daily, Global Times)
   {
-    name: 'Google News - Asia Business',
+    name: 'Google News - Asia Premium',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=asia+business+OR+china+OR+japan+OR+korea&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=when:24h+(source:"Nikkei Asia"+OR+source:"Japan Times"+OR+source:"South China Morning Post"+OR+source:"China Daily"+OR+source:"Global Times")&hl=en-US&gl=US&ceid=US:en',
+    category: 'business'
+  },
+
+  // Korea Sources via Google News (연합뉴스, KBS, 조선일보, 중앙일보, 한국경제)
+  {
+    name: 'Google News - Korea Premium',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=when:24h+korea+(source:"Yonhap"+OR+source:"KBS"+OR+source:"Korea Herald"+OR+source:"Korea Times"+OR+source:"Chosun")&hl=en-US&gl=US&ceid=US:en',
     category: 'business'
   }
 ];
@@ -492,8 +504,24 @@ function scoreArticle(article) {
     'Guardian', 'Axios', 'South China Morning Post', 'Al Jazeera',
     'Korea Herald', 'Korea Times', 'Straits Times'
   ];
+
+  // Premium sources (may come via Google News)
+  const premiumPubs = [
+    'Financial Times', 'Wall Street Journal', 'New York Times', 'Bloomberg',
+    'The Economist', 'CNN', 'Nikkei', 'Japan Times', 'China Daily',
+    'Global Times', 'Yonhap', 'KBS', 'Chosun', 'JoongAng'
+  ];
+
+  // Check both source field and article text for publication names
+  const articleText = (article.title + ' ' + (article.description || '')).toLowerCase();
+
   if (majorPubs.some(pub => article.source.includes(pub))) {
     score *= 1.3;
+  } else if (premiumPubs.some(pub =>
+    article.source.includes(pub) ||
+    articleText.includes(pub.toLowerCase())
+  )) {
+    score *= 1.5; // Higher boost for premium sources
   }
 
   return score;
