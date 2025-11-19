@@ -43,47 +43,35 @@ const CONFIG = {
 // ==================== NEWS SOURCES ====================
 
 const NEWS_SOURCES = [
-  // US Major News - Premium Quality
+  // US Major News - Working RSS Feeds
   {
-    name: 'Financial Times',
+    name: 'Associated Press',
     type: 'rss',
-    url: 'https://www.ft.com/world?format=rss',
+    url: 'https://feedx.net/rss/ap.xml',
     category: 'business'
   },
   {
-    name: 'The Wall Street Journal',
+    name: 'Reuters Business',
     type: 'rss',
-    url: 'https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml',
+    url: 'https://www.reutersagency.com/feed/?taxonomy=best-topics&post_type=best',
     category: 'business'
   },
   {
-    name: 'The New York Times',
+    name: 'CNBC',
     type: 'rss',
-    url: 'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml',
+    url: 'https://www.cnbc.com/id/10001147/device/rss/rss.html',
     category: 'business'
   },
   {
-    name: 'Bloomberg',
+    name: 'MarketWatch',
     type: 'rss',
-    url: 'https://feeds.bloomberg.com/markets/news.rss',
+    url: 'https://feeds.content.dowjones.io/public/rss/mw_topstories',
     category: 'markets'
   },
   {
-    name: 'Reuters',
+    name: 'Axios Business',
     type: 'rss',
-    url: 'https://feeds.reuters.com/reuters/businessNews',
-    category: 'business'
-  },
-  {
-    name: 'CNN Business',
-    type: 'rss',
-    url: 'http://rss.cnn.com/rss/money_news_economy.rss',
-    category: 'business'
-  },
-  {
-    name: 'The Economist',
-    type: 'rss',
-    url: 'https://www.economist.com/business/rss.xml',
+    url: 'https://api.axios.com/feed/business',
     category: 'business'
   },
 
@@ -94,40 +82,28 @@ const NEWS_SOURCES = [
     url: 'http://feeds.bbci.co.uk/news/business/rss.xml',
     category: 'business'
   },
-
-  // Korea Major News
   {
-    name: '연합뉴스',
+    name: 'The Guardian Business',
     type: 'rss',
-    url: 'https://www.yonhapnewsagency.co.kr/rss/economy.xml',
-    category: 'economy'
+    url: 'https://www.theguardian.com/business/rss',
+    category: 'business'
+  },
+
+  // Korea News
+  {
+    name: 'Korea Herald',
+    type: 'rss',
+    url: 'http://www.koreaherald.com/rss/020100000000.xml',
+    category: 'business'
   },
   {
-    name: 'KBS News',
+    name: 'Korea Times Business',
     type: 'rss',
-    url: 'http://world.kbs.co.kr/rss/rss_news.htm?lang=e',
+    url: 'https://www.koreatimes.co.kr/www/rss/biz.xml',
     category: 'business'
   },
 
   // Asia
-  {
-    name: 'Nikkei Asia',
-    type: 'rss',
-    url: 'https://asia.nikkei.com/rss/feed/nar',
-    category: 'business'
-  },
-  {
-    name: 'The Japan Times',
-    type: 'rss',
-    url: 'https://www.japantimes.co.jp/feed/topstories/',
-    category: 'business'
-  },
-  {
-    name: 'Japan Today',
-    type: 'rss',
-    url: 'https://japantoday.com/feed',
-    category: 'business'
-  },
   {
     name: 'South China Morning Post',
     type: 'rss',
@@ -135,23 +111,29 @@ const NEWS_SOURCES = [
     category: 'business'
   },
   {
-    name: 'China Daily',
+    name: 'The Straits Times',
     type: 'rss',
-    url: 'http://www.chinadaily.com.cn/rss/china_rss.xml',
+    url: 'https://www.straitstimes.com/news/business/rss.xml',
     category: 'business'
   },
   {
-    name: 'Global Times',
+    name: 'Al Jazeera Economy',
     type: 'rss',
-    url: 'https://www.globaltimes.cn/rss/outbrain.xml',
+    url: 'https://www.aljazeera.com/xml/rss/all.xml',
     category: 'business'
   },
 
-  // Tech & Innovation (quality sources)
+  // Tech & Innovation
   {
-    name: 'MIT Technology Review',
+    name: 'TechCrunch',
     type: 'rss',
-    url: 'https://www.technologyreview.com/feed/',
+    url: 'https://techcrunch.com/feed/',
+    category: 'tech'
+  },
+  {
+    name: 'Ars Technica',
+    type: 'rss',
+    url: 'https://feeds.arstechnica.com/arstechnica/index',
     category: 'tech'
   },
 
@@ -167,6 +149,30 @@ const NEWS_SOURCES = [
     type: 'rss',
     url: 'https://news.google.com/rss/search?q=economy+OR+policy+OR+regulation&hl=en-US&gl=US&ceid=US:en',
     category: 'economy'
+  },
+
+  // Premium US Sources via Google News (FT, WSJ, NYT, Bloomberg, Economist, CNN)
+  {
+    name: 'Google News - Premium US',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=when:24h+(source:"Financial Times"+OR+source:"Wall Street Journal"+OR+source:"New York Times"+OR+source:"Bloomberg"+OR+source:"The Economist"+OR+source:"CNN")&hl=en-US&gl=US&ceid=US:en',
+    category: 'business'
+  },
+
+  // Asia Sources via Google News (Nikkei, Japan Times, SCMP, China Daily, Global Times)
+  {
+    name: 'Google News - Asia Premium',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=when:24h+(source:"Nikkei Asia"+OR+source:"Japan Times"+OR+source:"South China Morning Post"+OR+source:"China Daily"+OR+source:"Global Times")&hl=en-US&gl=US&ceid=US:en',
+    category: 'business'
+  },
+
+  // Korea Sources via Google News (연합뉴스, KBS, 조선일보, 중앙일보, 한국경제)
+  {
+    name: 'Google News - Korea Premium',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=when:24h+korea+(source:"Yonhap"+OR+source:"KBS"+OR+source:"Korea Herald"+OR+source:"Korea Times"+OR+source:"Chosun")&hl=en-US&gl=US&ceid=US:en',
+    category: 'business'
   }
 ];
 
@@ -494,11 +500,28 @@ function scoreArticle(article) {
 
   // Boost for major publications
   const majorPubs = [
-    'Financial Times', 'Wall Street Journal', 'Bloomberg', 'The Economist',
-    'New York Times', 'Reuters', 'CNN', 'BBC'
+    'Associated Press', 'Reuters', 'BBC', 'CNBC', 'MarketWatch',
+    'Guardian', 'Axios', 'South China Morning Post', 'Al Jazeera',
+    'Korea Herald', 'Korea Times', 'Straits Times'
   ];
+
+  // Premium sources (may come via Google News)
+  const premiumPubs = [
+    'Financial Times', 'Wall Street Journal', 'New York Times', 'Bloomberg',
+    'The Economist', 'CNN', 'Nikkei', 'Japan Times', 'China Daily',
+    'Global Times', 'Yonhap', 'KBS', 'Chosun', 'JoongAng'
+  ];
+
+  // Check both source field and article text for publication names
+  const articleText = (article.title + ' ' + (article.description || '')).toLowerCase();
+
   if (majorPubs.some(pub => article.source.includes(pub))) {
     score *= 1.3;
+  } else if (premiumPubs.some(pub =>
+    article.source.includes(pub) ||
+    articleText.includes(pub.toLowerCase())
+  )) {
+    score *= 1.5; // Higher boost for premium sources
   }
 
   return score;
@@ -1052,7 +1075,7 @@ function formatSlackMessage(aiSummary, articles, marketData, trumpActivity) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '*🎯 Today's Key Insights*'
+        text: "*🎯 Today's Key Insights*"
       }
     });
     const insightsText = aiSummary.insights.map(i => `• ${i}`).join('\n');
