@@ -1497,10 +1497,25 @@ function extractGoogleNewsSource(title, description, link) {
 
 // ===== 키워드 관련성 검증 함수 =====
 function checkKeywordRelevance(article) {
-  var content = (article.title + ' ' + (article.description || '')).toLowerCase();
   var keywordTerms = KEYWORD_RELEVANCE_CHECK[article.keyword] || [article.keyword.toLowerCase()];
-  
-  // 관련 키워드가 하나라도 포함되어 있는지 확인
+
+  // JOBKOREA 그룹은 제목에만 키워드가 있어야 함 (본문 언급만으로는 부족)
+  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '리멤버', '그리팅'];
+  var isJobkoreaGroup = jobkoreaKeywords.indexOf(article.keyword) !== -1;
+
+  if (isJobkoreaGroup) {
+    // JOBKOREA 그룹: 제목에만 키워드가 있는지 확인
+    var title = article.title.toLowerCase();
+    for (var i = 0; i < keywordTerms.length; i++) {
+      if (title.includes(keywordTerms[i].toLowerCase())) {
+        return true;
+      }
+    }
+    return false; // 제목에 없으면 제외
+  }
+
+  // 일반 키워드: 제목 + 본문에서 확인
+  var content = (article.title + ' ' + (article.description || '')).toLowerCase();
   for (var i = 0; i < keywordTerms.length; i++) {
     if (content.includes(keywordTerms[i].toLowerCase())) {
       return true;
