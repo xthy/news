@@ -37,7 +37,7 @@ const CONFIG = {
   PE_SPECIFIC_NEWS: 5,           // Curated to 5 most important
 
   // Pre-GPT candidate pool (for GPT to choose from)
-  CANDIDATE_POOL_SIZE: 25        // Fetch 25 candidates, GPT picks top 5
+  CANDIDATE_POOL_SIZE: 25,        // Fetch 25 candidates, GPT picks top 5
 
   // Market Data
   MARKET_SYMBOLS: {
