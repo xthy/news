@@ -760,9 +760,22 @@ function fetchRSSFeed(source) {
           }
         }
 
+        const title = cleanTitle(getElementText(item, 'title'));
+
+        // Validate title - filter out empty or meaningless titles
+        if (!title || title.length < 3) continue;
+
+        const titleLower = title.toLowerCase().trim();
+        const invalidTitles = [
+          '-', '--', '---',  // Just dashes
+          'deals', 'news', 'article',  // Generic single words
+          'untitled', 'no title', '[no title]'
+        ];
+        if (invalidTitles.includes(titleLower)) continue;
+
         const article = {
           source: extractSourceName(source.name, link),
-          title: cleanTitle(getElementText(item, 'title')),
+          title: title,
           link: link,
           description: cleanDescription(getElementText(item, 'description') || getElementText(item, 'summary')),
           publishedAt: parseDate(getElementText(item, 'pubDate') || getElementText(item, 'published') || getElementText(item, 'updated')),
@@ -1676,17 +1689,9 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     type: 'header',
     text: {
       type: 'plain_text',
-      text: '📰 Daily Global News Intelligence',
+      text: '📊 Global Business & Markets Brief',
       emoji: true
     }
-  });
-
-  blocks.push({
-    type: 'context',
-    elements: [{
-      type: 'mrkdwn',
-      text: `${today} | Sources: WSJ, FT, Bloomberg, NYT, Reuters, Economist + Korea Media`
-    }]
   });
 
   blocks.push({ type: 'divider' });
@@ -1823,53 +1828,17 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
         emoji: true
       }
     });
-    
-    blocks.push({
-      type: 'context',
-      elements: [{
-        type: 'mrkdwn',
-        text: `Top ${globalArticles.length} stories from international business press`
-      }]
-    });
 
-    const globalLines = globalArticles.map((a, i) => 
+    const globalLines = globalArticles.map((a, i) =>
       `*${i + 1}.* <${a.link}|${a.title}>`
     );
 
     addArticleBlocks(blocks, globalLines);
-    
-    blocks.push({ type: 'divider' });
-  }
-
-  // ==================== SECTION 2: KOREA HEADLINES ====================
-  if (koreaArticles.length > 0) {
-    blocks.push({
-      type: 'header',
-      text: {
-        type: 'plain_text',
-        text: '🇰🇷 Korea Business & Markets',
-        emoji: true
-      }
-    });
-
-    blocks.push({
-      type: 'context',
-      elements: [{
-        type: 'mrkdwn',
-        text: `Top ${koreaArticles.length} stories from Korean business media`
-      }]
-    });
-
-    const koreaLines = koreaArticles.map((a, i) =>
-      `*${i + 1}.* <${a.link}|${a.title}>`
-    );
-
-    addArticleBlocks(blocks, koreaLines);
 
     blocks.push({ type: 'divider' });
   }
 
-  // ==================== SECTION 3: PE/M&A NEWS ====================
+  // ==================== SECTION 2: PE/M&A NEWS ====================
   if (peArticles.length > 0) {
     blocks.push({
       type: 'header',
@@ -1880,19 +1849,31 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
       }
     });
 
-    blocks.push({
-      type: 'context',
-      elements: [{
-        type: 'mrkdwn',
-        text: `Top ${peArticles.length} deals, transactions & PE activity`
-      }]
-    });
-
     const peLines = peArticles.map((a, i) =>
       `*${i + 1}.* <${a.link}|${a.title}>`
     );
 
     addArticleBlocks(blocks, peLines);
+
+    blocks.push({ type: 'divider' });
+  }
+
+  // ==================== SECTION 3: KOREA HEADLINES ====================
+  if (koreaArticles.length > 0) {
+    blocks.push({
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: '🇰🇷 Korea Business & Markets',
+        emoji: true
+      }
+    });
+
+    const koreaLines = koreaArticles.map((a, i) =>
+      `*${i + 1}.* <${a.link}|${a.title}>`
+    );
+
+    addArticleBlocks(blocks, koreaLines);
 
     blocks.push({ type: 'divider' });
   }
