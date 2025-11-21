@@ -73,9 +73,100 @@ function simpleGPTRelevanceCheck(articles) {
   }
   
   Logger.log('🤖 GPT 체크 완료: ' + gptCallCount + '회 호출, ' + highScoreArticles.length + '개 → ' + validatedArticles.length + '개 검증');
-  
+
   // 검증된 고점수 기사 + 저점수 기사 합쳐서 반환
   return validatedArticles.concat(lowScoreArticles);
+}
+
+// ===== GPT 기반 중복 기사 제거 =====
+function gptDeduplicateArticles(articles) {
+  if (articles.length === 0) return [];
+
+  Logger.log('\n🔄 === GPT 기반 중복 제거 시작 ===');
+  Logger.log('📊 입력: ' + articles.length + '개 기사');
+
+  // 그룹별로 나누어 GPT 중복 체크
+  var groupedArticles = {};
+  for (var i = 0; i < articles.length; i++) {
+    var article = articles[i];
+    var displayGroup = KEYWORD_GROUPING[article.keyword] || article.keyword;
+
+    if (!groupedArticles[displayGroup]) {
+      groupedArticles[displayGroup] = [];
+    }
+    groupedArticles[displayGroup].push(article);
+  }
+
+  var deduplicatedArticles = [];
+  var gptCallCount = 0;
+  var totalRemoved = 0;
+
+  for (var groupName in groupedArticles) {
+    var groupArticles = groupedArticles[groupName];
+
+    // 그룹 내 기사가 5개 미만이면 GPT 체크 스킵 (중복 가능성 낮음)
+    if (groupArticles.length < 5) {
+      deduplicatedArticles = deduplicatedArticles.concat(groupArticles);
+      Logger.log('⏭️ ' + groupName + ': ' + groupArticles.length + '개 (GPT 스킵 - 기사 수 적음)');
+      continue;
+    }
+
+    // 그룹당 최대 15개씩만 GPT 체크
+    var checkArticles = groupArticles.slice(0, 15);
+
+    Logger.log('🔍 ' + groupName + ': ' + checkArticles.length + '개 기사 GPT 중복 체크...');
+
+    var prompt = getDeduplicationPrompt(groupName, checkArticles);
+    gptCallCount++;
+
+    try {
+      var gptResponse = callSimpleGPT(prompt);
+
+      if (!gptResponse) {
+        Logger.log('⚠️ ' + groupName + ': GPT 호출 실패 → 모든 기사 유지');
+        deduplicatedArticles = deduplicatedArticles.concat(checkArticles);
+      } else {
+        // GPT 응답 파싱: 유지할 기사 번호들
+        var keepNumbers = gptResponse.match(/\d+/g) || [];
+        var keepIndices = keepNumbers.map(function(n) { return parseInt(n) - 1; })
+                                     .filter(function(i) { return i >= 0 && i < checkArticles.length; });
+
+        if (keepIndices.length === 0) {
+          Logger.log('⚠️ ' + groupName + ': 유효한 응답 없음 → 모든 기사 유지');
+          deduplicatedArticles = deduplicatedArticles.concat(checkArticles);
+        } else {
+          var removedCount = checkArticles.length - keepIndices.length;
+          totalRemoved += removedCount;
+
+          for (var i = 0; i < keepIndices.length; i++) {
+            deduplicatedArticles.push(checkArticles[keepIndices[i]]);
+          }
+          Logger.log('✅ ' + groupName + ': ' + checkArticles.length + '개 → ' + keepIndices.length + '개 유지 (' + removedCount + '개 중복 제거)');
+        }
+      }
+
+    } catch (e) {
+      Logger.log('❌ ' + groupName + ': GPT 에러 → 모든 기사 유지: ' + e.toString());
+      deduplicatedArticles = deduplicatedArticles.concat(checkArticles);
+    }
+
+    Utilities.sleep(500); // API 호출 간 대기
+  }
+
+  Logger.log('🔄 GPT 중복 제거 완료: ' + gptCallCount + '회 호출, ' + articles.length + '개 → ' + deduplicatedArticles.length + '개 (중복 ' + totalRemoved + '개 제거)');
+
+  return deduplicatedArticles;
+}
+
+// ===== GPT 중복 제거 프롬프트 =====
+function getDeduplicationPrompt(groupName, articles) {
+  var contentList = [];
+  for (var i = 0; i < articles.length; i++) {
+    var a = articles[i];
+    contentList.push((i + 1) + '. "' + a.title + '"');
+  }
+
+  return '당신은 뉴스 큐레이션 전문가입니다. 다음 "' + groupName + '" 그룹 기사들 중에서 중복되거나 유사한 내용의 기사들을 제거하고 유지할 기사들만 선별해주세요.\n\n**중복 판정 기준:**\n1️⃣ 제목에 같은 핵심 키워드가 3개 이상 반복되는 경우\n2️⃣ 같은 사건/이슈를 다루는 기사 (예: "A사 매출 증가" vs "A사 실적 호조")\n3️⃣ 뉘앙스가 매우 유사한 경우 (예: "B사 신제품 출시" vs "B사 새로운 제품 런칭")\n\n**선별 우선순위:**\n- 더 구체적이고 정보가 많은 기사 우선\n- 공식 발표/실적 관련 기사 우선\n- 제목이 명확한 기사 우선\n\n**중복이 아닌 경우:**\n- 서로 다른 사건/이슈를 다루는 경우\n- 시간대가 다른 별개의 뉴스인 경우\n- 같은 회사라도 다른 주제인 경우\n\n**출력 형식:** 유지할 기사 번호만 쉼표로 구분 (예: 1,3,5,7)\n\n📰 기사 목록:\n' + contentList.join('\n');
 }
 
 // ===== 간단한 GPT 프롬프트 =====
@@ -680,15 +771,16 @@ function fetchAndWrite() {
 
   try {
     var allRawArticles = fetchAllNewsFromBothSources(); // 통합 수집 사용
-    
+
     if (allRawArticles.length === 0) {
       Logger.log('수집된 기사가 없습니다. 프로세스 종료.');
       return;
     }
-    
+
     var uniqueArticles = removeDuplicatesFromAllArticles(allRawArticles);
     var peFilteredArticles = peSmartFilteringAndValidation(uniqueArticles);
-    var finalArticles = finalDuplicateRemoval(peFilteredArticles);
+    var gptDeduplicatedArticles = gptDeduplicateArticles(peFilteredArticles); // GPT 기반 중복 제거
+    var finalArticles = finalDuplicateRemoval(gptDeduplicatedArticles);
     
     // 최종 정렬: 키워드 우선순위 > 중요도 점수 > 날짜
     finalArticles.sort(function(a, b) {
@@ -726,8 +818,8 @@ function fetchAndWrite() {
     var duration = (endTime - startTime) / 1000;
     
     Logger.log('\n📊 === 최종 결과 ===');
-    Logger.log('📥 수집: ' + allRawArticles.length + '개 → 🔄 중복제거: ' + uniqueArticles.length + '개 → 🎯 PE필터링: ' + peFilteredArticles.length + '개 → 🏆 최종선별: ' + finalArticles.length + '개');
-    Logger.log('⏱️ 전체 작업 시간: ' + Math.round(duration) + '초 (네이버+구글 통합 PE 필터링)');
+    Logger.log('📥 수집: ' + allRawArticles.length + '개 → 🔄 중복제거: ' + uniqueArticles.length + '개 → 🎯 PE필터링: ' + peFilteredArticles.length + '개 → 🤖 GPT중복제거: ' + gptDeduplicatedArticles.length + '개 → 🏆 최종선별: ' + finalArticles.length + '개');
+    Logger.log('⏱️ 전체 작업 시간: ' + Math.round(duration) + '초 (네이버+구글 통합 PE 필터링 + GPT 중복제거)');
     
     // 중요도 통계
     var scoreStats = {
@@ -770,7 +862,8 @@ function sendSlackOnly() {
     var allRawArticles = fetchAllNewsFromBothSources(); // 통합 수집 사용
     var uniqueArticles = removeDuplicatesFromAllArticles(allRawArticles);
     var peFilteredArticles = peSmartFilteringAndValidation(uniqueArticles);
-    var finalArticles = finalDuplicateRemoval(peFilteredArticles);
+    var gptDeduplicatedArticles = gptDeduplicateArticles(peFilteredArticles); // GPT 기반 중복 제거
+    var finalArticles = finalDuplicateRemoval(gptDeduplicatedArticles);
     
     finalArticles.sort(function(a, b) {
       // 1순위: 키워드 우선순위
@@ -793,8 +886,8 @@ function sendSlackOnly() {
     var duration = Math.round((endTime - startTime) / 1000);
 
     Logger.log('\n📊 === Slack 전용 네이버+구글 통합 결과 ===');
-    Logger.log('📥 ' + allRawArticles.length + '개 → 🔄 ' + uniqueArticles.length + '개 → 🎯 ' + peFilteredArticles.length + '개 → 🏆 ' + finalArticles.length + '개');
-    Logger.log('⏱️ 소요 시간: ' + duration + '초 (네이버+구글 통합 PE 처리)');
+    Logger.log('📥 ' + allRawArticles.length + '개 → 🔄 ' + uniqueArticles.length + '개 → 🎯 ' + peFilteredArticles.length + '개 → 🤖 ' + gptDeduplicatedArticles.length + '개 → 🏆 ' + finalArticles.length + '개');
+    Logger.log('⏱️ 소요 시간: ' + duration + '초 (네이버+구글 통합 PE 처리 + GPT 중복제거)');
 
     if (finalArticles.length > 0) {
       var avgScore = Math.round(finalArticles.reduce(function(sum, a) { return sum + a.importanceScore; }, 0) / finalArticles.length);
@@ -1044,7 +1137,13 @@ var STRONG_EXCLUDE_KEYWORDS = [
     '사회공헌', '봉사', '기부', '후원', '나눔', '자선', 'csr',
     '워크샵', '세미나', '교육', '연수', '체험', '견학', '채용설명회',
     '시상식', '수상', '포상', '표창', '감사패', '브리핑', '발표회',
-    '컨퍼런스', '포럼', '설명회', '간담회', '협약식', '서명식'
+    '컨퍼런스', '포럼', '설명회', '간담회', '협약식', '서명식',
+    // 연예 관련
+    '연예인', '아이돌', '가수', '배우', '드라마', '영화', '방송출연', '예능', '앨범', '콘서트', '팬미팅', '화보', '인터뷰', '뮤직비디오',
+    // 스포츠 관련 (SK렌터카 당구단 등)
+    'pba', '당구', '포켓볼', '3쿠션', '4구', '빌리어드', '야구', '축구', '농구', '배구', '골프', '테니스',
+    '경기', '선수단', '감독', '코치', '우승', '준우승', '플레이오프', 'ps진출', '순위권', '포스트시즌',
+    '결승전', '준결승', '토너먼트', '리그', '시즌', '스코어', '득점', '승부', '패배', '무승부'
 ];
 
 // ===== 키워드 관련성 체크 =====
@@ -1487,6 +1586,33 @@ function calculatePEImportanceScore(article) {
     for (var i = 0; i < skExcludeKeywords.length; i++) {
       if (content.includes(skExcludeKeywords[i])) {
         return 0; // SK렌터카에서 당구/PBA 관련 기사 제외
+      }
+    }
+  }
+
+  // 2-2단계: JOBKOREA 그룹 특별 필터링 (연예/스포츠 강화)
+  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '리멤버', '그리팅'];
+  var isJobkoreaGroup = false;
+  for (var i = 0; i < jobkoreaKeywords.length; i++) {
+    if (article.keyword === jobkoreaKeywords[i]) {
+      isJobkoreaGroup = true;
+      break;
+    }
+  }
+
+  if (isJobkoreaGroup) {
+    // JOBKOREA 그룹에서 연예/스포츠 관련 더 강력하게 필터링
+    var jobkoreaExcludeKeywords = [
+      // 연예 관련
+      '연예인', '아이돌', '가수', '배우', '드라마', '영화', '예능', '음악', '앨범', '콘서트',
+      // 스포츠 관련
+      'pba', '당구', '야구', '축구', '농구', '배구', '골프', '선수', '경기', '우승', 'ps진출', '순위권',
+      // 기타 엔터테인먼트
+      '화보', '인터뷰', '팬미팅', '공연', '무대'
+    ];
+    for (var i = 0; i < jobkoreaExcludeKeywords.length; i++) {
+      if (content.includes(jobkoreaExcludeKeywords[i])) {
+        return 0; // JOBKOREA 그룹에서 연예/스포츠 관련 기사 제외
       }
     }
   }
