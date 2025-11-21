@@ -638,9 +638,9 @@ function sendSlackNewsReport(finalArticles) {
     var dateStr = Utilities.formatDate(new Date(), 'GMT+9', 'MM월 dd일');
 
     var groupOrder = [
-      'BKR', 'HCI', 'UBase', 'Serveone', 
-      'Lock&Lock', 'JOBKOREA', 
-      'YGY', 'SK Rent-a-Car', 'Market'
+      'BKR', 'HCI', 'UBase', 'Serveone',
+      'Lock&Lock', 'JOBKOREA',
+      'YGY', 'SKR and LTR', 'Market'
     ];
 
     var blocks = [];
@@ -1067,17 +1067,20 @@ var SLACK_CHANNEL = '#news-bot';
 
 // ===== 키워드 설정 =====
 var KEYWORDS = [
-    '버거킹', '팀홀튼', '맥도날드', '현대커머셜', '유베이스', '서브원', 
-    '락앤락p', '잡코리아', '알바몬', '사람인', '원티드', '리멤버', '그리팅',
-    '요기요', '쿠팡이츠', '배달의민족', '배민', 
+    '버거킹', '팀홀튼', '맥도날드', 'kfc', '투썸플레이스', '롯데리아', '현대커머셜', '유베이스', '서브원',
+    '락앤락p', '잡코리아', '알바몬', '사람인', '원티드', '토스알바', '당근알바', '리멤버컴퍼니', '그리팅',
+    '요기요', '쿠팡이츠', '배달의민족', '배민', '땡겨요',
     'SK렌터카', '롯데렌탈', '롯데렌터카', '어피니티', '어피너티',
-    'mbk', 'kkr', 'cvc', 'blackstone', 'baincapital', 'imm', 'vig', '스틱인베', '스카이레이크', '글렌우드'
+    'mbk', 'kkr', 'cvc', 'blackstone', 'baincapital', 'imm', 'vig', '스틱인베', '스카이레이크', '글렌우드', 'eqt', '베인캐피탈', '베인캐피털', '블랙스톤', '알토스'
 ];
 
 var KEYWORD_GROUPING = {
     '버거킹': 'BKR',
     '팀홀튼': 'BKR',
     '맥도날드': 'BKR',
+    'kfc': 'BKR',
+    '투썸플레이스': 'BKR',
+    '롯데리아': 'BKR',
     '현대커머셜': 'HCI',
     '유베이스': 'UBase',
     '서브원': 'Serveone',
@@ -1086,15 +1089,18 @@ var KEYWORD_GROUPING = {
     '알바몬': 'JOBKOREA',
     '사람인': 'JOBKOREA',
     '원티드': 'JOBKOREA',
-    '리멤버': 'JOBKOREA',
+    '토스알바': 'JOBKOREA',
+    '당근알바': 'JOBKOREA',
+    '리멤버컴퍼니': 'JOBKOREA',
     '그리팅': 'JOBKOREA',
     '요기요': 'YGY',
     '쿠팡이츠': 'YGY',
     '배달의민족': 'YGY',
     '배민': 'YGY',
-    'SK렌터카': 'SK Rent-a-Car',
-    '롯데렌탈': 'Market',
-    '롯데렌터카': 'Market',
+    '땡겨요': 'YGY',
+    'SK렌터카': 'SKR and LTR',
+    '롯데렌탈': 'SKR and LTR',
+    '롯데렌터카': 'SKR and LTR',
     '어피니티': 'Market',
     '어피너티': 'Market',
     'mbk': 'Market',
@@ -1106,7 +1112,12 @@ var KEYWORD_GROUPING = {
     'vig': 'Market',
     '스틱인베': 'Market',
     '스카이레이크': 'Market',
-    '글렌우드': 'Market'
+    '글렌우드': 'Market',
+    'eqt': 'Market',
+    '베인캐피탈': 'Market',
+    '베인캐피털': 'Market',
+    '블랙스톤': 'Market',
+    '알토스': 'Market'
 };
 
 var NEWS_COUNT = 50;
@@ -1151,20 +1162,26 @@ var KEYWORD_RELEVANCE_CHECK = {
     '버거킹': ['버거킹', 'bk', '햄버거'],
     '팀홀튼': ['팀홀튼', 'tim', 'hortons', '도넛', '커피'],
     '맥도날드': ['맥도날드', 'mcdonald', '맥딜리버리'],
+    'kfc': ['kfc', '켄터키', '치킨'],
+    '투썸플레이스': ['투썸플레이스', 'twosome', 'a twosome'],
+    '롯데리아': ['롯데리아', 'lotteria'],
     '현대커머셜': ['현대커머셜', '현대상용차', '트럭', '버스'],
     '유베이스': ['유베이스', 'ubase'],
     '서브원': ['서브원', 'serveone'],
     '락앤락': ['락앤락', 'locknlock'],
-    '잡코리아': ['잡코리아', 'jobkorea', '채용'],
-    '알바몬': ['알바몬', 'albamon', '아르바이트'],
+    '잡코리아': ['잡코리아', 'jobkorea'],
+    '알바몬': ['알바몬', 'albamon'],
     '사람인': ['사람인', 'saramin'],
     '원티드': ['원티드', 'wanted'],
-    '리멤버': ['리멤버', 'remember', '비즈니스'],
+    '토스알바': ['토스알바', 'toss', '알바'],
+    '당근알바': ['당근알바', '당근', '알바'],
+    '리멤버컴퍼니': ['리멤버컴퍼니', 'remember', 'company'],
     '그리팅': ['그리팅', 'greeting'],
     '요기요': ['요기요', 'yogiyo', '배달'],
     '쿠팡이츠': ['쿠팡이츠', 'coupang', 'eats'],
     '배달의민족': ['배달의민족', '배민', 'baemin'],
     '배민': ['배민', '배달의민족'],
+    '땡겨요': ['땡겨요', '배달'],
     'SK렌터카': ['sk렌터카', 'sk렌탈', '렌터카'],
     '롯데렌탈': ['롯데렌탈', '롯데렌터카'],
     '롯데렌터카': ['롯데렌터카', '롯데렌탈'],
@@ -1174,12 +1191,17 @@ var KEYWORD_RELEVANCE_CHECK = {
     'kkr': ['kkr', 'kohlberg'],
     'cvc': ['cvc', '캐피탈'],
     'blackstone': ['blackstone', '블랙스톤'],
-    'baincapital': ['bain', '베인캐피탈'],
+    'baincapital': ['bain', '베인캐피탈', '베인캐피털'],
     'imm': ['imm', '아이엠엠'],
     'vig': ['vig', '브이아이지'],
     '스틱인베': ['스틱인베', 'stic'],
     '스카이레이크': ['스카이레이크', 'skylake'],
-    '글렌우드': ['글렌우드', 'glenwood']
+    '글렌우드': ['글렌우드', 'glenwood'],
+    'eqt': ['eqt', 'eqt partners'],
+    '베인캐피탈': ['베인캐피탈', '베인캐피털', 'bain', 'bain capital'],
+    '베인캐피털': ['베인캐피털', '베인캐피탈', 'bain', 'bain capital'],
+    '블랙스톤': ['블랙스톤', 'blackstone'],
+    '알토스': ['알토스', 'altos']
 };
 
 // ===== 언론사 추출 =====
@@ -1495,17 +1517,19 @@ function extractGoogleNewsSource(title, description, link) {
   }
 }
 
-// ===== 키워드 관련성 검증 함수 =====
+// ===== 키워드 관련성 검증 함수 (엄격한 제목 기반 필터링) =====
 function checkKeywordRelevance(article) {
-  var content = (article.title + ' ' + (article.description || '')).toLowerCase();
   var keywordTerms = KEYWORD_RELEVANCE_CHECK[article.keyword] || [article.keyword.toLowerCase()];
-  
-  // 관련 키워드가 하나라도 포함되어 있는지 확인
+
+  // 모든 키워드: 제목에만 키워드가 있어야 함 (더 엄격한 필터링)
+  var title = article.title.toLowerCase();
   for (var i = 0; i < keywordTerms.length; i++) {
-    if (content.includes(keywordTerms[i].toLowerCase())) {
+    if (title.includes(keywordTerms[i].toLowerCase())) {
       return true;
     }
   }
+
+  // 제목에 키워드가 없으면 제외
   return false;
 }
 
@@ -1579,7 +1603,27 @@ function calculatePEImportanceScore(article) {
       return 0; // 즉시 제외
     }
   }
-  
+
+  // 2-0단계: BKR 그룹 특별 필터링 (연극/문화 콘텐츠 제외)
+  var bkrKeywords = ['버거킹', '팀홀튼', '맥도날드', 'kfc', '투썸플레이스', '롯데리아'];
+  var isBkrGroup = false;
+  for (var i = 0; i < bkrKeywords.length; i++) {
+    if (article.keyword === bkrKeywords[i]) {
+      isBkrGroup = true;
+      break;
+    }
+  }
+
+  if (isBkrGroup) {
+    // BKR 그룹에서 연극/문화/공연 관련 제외
+    var bkrExcludeKeywords = ['연극', '뮤지컬', '공연', '무대', '작품', '원작', '캐릭터', '영화', '드라마'];
+    for (var i = 0; i < bkrExcludeKeywords.length; i++) {
+      if (content.includes(bkrExcludeKeywords[i])) {
+        return 0; // BKR 그룹에서 문화 콘텐츠 관련 기사 제외
+      }
+    }
+  }
+
   // 2-1단계: SK렌터카 그룹 특별 필터링 (PBA, 당구 제외)
   if (article.keyword === 'SK렌터카') {
     var skExcludeKeywords = ['pba', '당구', '포켓볼', '3쿠션', '4구', '빌리어드'];
@@ -1591,7 +1635,7 @@ function calculatePEImportanceScore(article) {
   }
 
   // 2-2단계: JOBKOREA 그룹 특별 필터링 (연예/스포츠 강화)
-  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '리멤버', '그리팅'];
+  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '토스알바', '당근알바', '리멤버컴퍼니', '그리팅'];
   var isJobkoreaGroup = false;
   for (var i = 0; i < jobkoreaKeywords.length; i++) {
     if (article.keyword === jobkoreaKeywords[i]) {
