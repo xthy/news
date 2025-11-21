@@ -337,7 +337,7 @@ const NEWS_SOURCES = [
   {
     name: '중앙일보 - 경제',
     type: 'rss',
-    url: 'https://koreajoongangdaily.joins.com/RSS/allArticle.xml',
+    url: 'https://news.google.com/rss/search?q=site:joongang.co.kr+OR+site:joins.com+경제+OR+economy+when:24h&hl=ko&gl=KR&ceid=KR:ko',
     section: 'korea',
     tier: 1
   },
@@ -353,7 +353,7 @@ const NEWS_SOURCES = [
   {
     name: '동아일보 - 산업',
     type: 'rss',
-    url: 'https://rss.donga.com/industry.xml',
+    url: 'https://news.google.com/rss/search?q=site:donga.com+경제+OR+산업+when:24h&hl=ko&gl=KR&ceid=KR:ko',
     section: 'korea',
     tier: 1
   },
@@ -371,21 +371,21 @@ const NEWS_SOURCES = [
   {
     name: '한국경제',
     type: 'rss',
-    url: 'https://www.hankyung.com/rss/economy',
+    url: 'https://news.google.com/rss/search?q=site:hankyung.com+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko',
     section: 'korea',
     tier: 1
   },
   {
     name: '한국경제 - 증권',
     type: 'rss',
-    url: 'https://www.hankyung.com/rss/stock',
+    url: 'https://news.google.com/rss/search?q=site:hankyung.com+증권+OR+주식+when:24h&hl=ko&gl=KR&ceid=KR:ko',
     section: 'korea',
     tier: 1
   },
   {
     name: '한국경제 - 기업',
     type: 'rss',
-    url: 'https://www.hankyung.com/rss/business',
+    url: 'https://news.google.com/rss/search?q=site:hankyung.com+기업+when:24h&hl=ko&gl=KR&ceid=KR:ko',
     section: 'korea',
     tier: 1
   },
@@ -408,9 +408,9 @@ const NEWS_SOURCES = [
   
   // --- Yonhap (English for international context) ---
   {
-    name: 'Yonhap - Business',
+    name: 'Yonhap - Economy',
     type: 'rss',
-    url: 'https://en.yna.co.kr/RSS/business.xml',
+    url: 'https://en.yna.co.kr/RSS/economy.xml',
     section: 'korea',
     tier: 2
   },
