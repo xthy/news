@@ -1,6 +1,6 @@
 /**
  * Global News Summary for Private Equity Professionals
- * Version 3.0 - Multi-Section Edition
+ * Version 3.1 - Fixed Newline Issues
  *
  * Sections:
  * 1. Global Top Headlines - Major world business/economic news
@@ -17,8 +17,8 @@
 
 const CONFIG = {
   // API Keys
-  OPENAI_API_KEY: 'sk-proj-2g3OmSfqt4sA4r4KE2OjOjYYRq5abvx0luzb4A7PYy1FazAthsLOk98Di3jDunDU5adQW',
-  SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/T08SQU00JQ7/B09SW4SR18E/SC0HrFE6uZPmfDwcY',
+  OPENAI_API_KEY: 'sk-proj-2g3OmSfqt4sA4r4KE2OjOjYYRq5abvx0luzb4A7PYy1FazAthsL',
+  SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/T08SQU00JQ7/B09SW4SR18E',
 
   // ChatGPT Settings
   GPT_MODEL: 'gpt-4-turbo-preview',
@@ -32,9 +32,9 @@ const CONFIG = {
   SIMILARITY_THRESHOLD: 0.7,
   
   // Section-specific limits
-  GLOBAL_TOP_HEADLINES: 20,      // Increased from 15
-  KOREA_TOP_HEADLINES: 15,       // Increased from 10
-  PE_SPECIFIC_NEWS: 15,          // Increased from 10
+  GLOBAL_TOP_HEADLINES: 20,
+  KOREA_TOP_HEADLINES: 15,
+  PE_SPECIFIC_NEWS: 15,
 
   // Market Data
   MARKET_SYMBOLS: {
@@ -628,7 +628,7 @@ const NEWS_SOURCES = [
 
 function sendDailyNewsSummary() {
   try {
-    Logger.log('🚀 Starting Global News Summary v3.0...');
+    Logger.log('🚀 Starting Global News Summary v3.1...');
 
     // 1. Fetch all news articles
     const allArticles = fetchAllNews();
@@ -769,8 +769,8 @@ function fetchRSSFeed(source) {
 
         // Filter exact matches
         const invalidTitles = [
-          '-', '--', '---',  // Just dashes
-          'deals', 'news', 'article',  // Generic single words
+          '-', '--', '---',
+          'deals', 'news', 'article',
           'untitled', 'no title', '[no title]'
         ];
         if (invalidTitles.includes(titleLower)) return;
@@ -784,7 +784,7 @@ function fetchRSSFeed(source) {
           if (titleLower.startsWith(prefix)) return;
         }
 
-        // Filter titles that are just a source name (e.g., "Private Equity Wire")
+        // Filter titles that are just a source name
         if (titleLower.split(' ').length <= 3 &&
             (titleLower.includes('wire') || titleLower.includes('news') ||
              titleLower.includes('international') || titleLower.includes('hub'))) {
@@ -793,8 +793,8 @@ function fetchRSSFeed(source) {
 
         const article = {
           source: extractSourceName(source.name, link),
-          title: title,
-          link: link,
+          title: deepCleanText(title),
+          link: deepCleanText(link),
           description: cleanDescription(getElementText(item, 'description') || getElementText(item, 'summary')),
           publishedAt: parseDate(getElementText(item, 'pubDate') || getElementText(item, 'published') || getElementText(item, 'updated')),
           sourceTier: source.tier || 2,
@@ -854,11 +854,10 @@ function extractSourceName(feedName, link) {
       if (link.includes('mt.co.kr')) return 'Money Today';
       if (link.includes('thebell.co.kr')) return 'The Bell';
     }
-    // If can't identify from URL, use generic label
     return 'Financial Press';
   }
   
-  // Clean up direct feed names - remove all category suffixes
+  // Clean up direct feed names
   return feedName
     .replace(/Google News - /g, '')
     .replace(/ - World News/g, '')
@@ -879,20 +878,12 @@ function extractSourceName(feedName, link) {
 function cleanTitle(title) {
   if (!title) return '';
 
-  // Remove source attribution at end (e.g., "- Bloomberg.com", "- Private Equity Wire")
-  // Pattern: " - [source name]" at the end of title
   title = title
-    // Remove all newlines and carriage returns first
     .replace(/[\r\n]+/g, ' ')
-    // Remove excessive whitespace
     .replace(/\s+/g, ' ')
-    // Remove trailing source with .com/.net/.org/.co.uk
     .replace(/ - [\w\s\.\-&]+(\.com|\.net|\.org|\.co\.uk)$/gi, '')
-    // Remove trailing source names (e.g., "- Private Equity Wire", "- Bloomberg")
     .replace(/ - [A-Z][\w\s\.\-&]+$/g, '')
-    // Remove "- report" at the end
     .replace(/ - report$/gi, '')
-    // Remove pipe separators and everything after
     .replace(/ \| .*$/, '')
     .trim();
 
@@ -912,6 +903,29 @@ function getElementText(element, childName) {
 function parseDate(dateStr) {
   if (!dateStr) return new Date();
   return new Date(dateStr);
+}
+
+function deepCleanText(text) {
+  if (!text) return '';
+
+  return text
+    // Remove all types of newlines and line breaks
+    .replace(/[\r\n\u2028\u2029\u000A\u000B\u000C\u000D\u0085]+/g, ' ')
+    // Remove URL-encoded newlines
+    .replace(/%0A/gi, ' ')
+    .replace(/%0D/gi, ' ')
+    .replace(/%09/gi, ' ')
+    // Remove HTML line breaks
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<p>/gi, ' ')
+    .replace(/<\/p>/gi, ' ')
+    // Remove zero-width characters
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    // Remove extra whitespace from markdown links
+    .replace(/>\s+</g, '><')
+    // Collapse multiple spaces into one
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 // ==================== ARTICLE PROCESSING ====================
@@ -940,9 +954,7 @@ function scoreArticleBySection(article, sectionType) {
   const text = (article.title + ' ' + (article.description || '')).toLowerCase();
 
   // ==================== UNIVERSAL FILTER: EXCLUDE SPORTS & ENTERTAINMENT ====================
-  // This applies to ALL sections - immediate disqualification
   const excludeKeywords = [
-    // Sports - comprehensive list
     'sport', 'sports', 'football', 'soccer', 'baseball', 'basketball', 'nfl', 'nba', 'mlb', 'nhl',
     'olympic', 'olympics', 'fifa', 'uefa', 'premier league', 'champions league', 'world cup',
     'tennis', 'golf', 'boxing', 'mma', 'ufc', 'wrestling', 'racing', 'formula 1', 'f1',
@@ -953,28 +965,22 @@ function scoreArticleBySection(article, sectionType) {
     'college football', 'college basketball', 'ncaa', 'division', 'conference',
     'quarterback', 'running back', 'pitcher', 'batter', 'goalie', 'defender',
     '스포츠', '야구', '축구', '농구', '배구', '골프', '테니스', '올림픽',
-    
-    // Entertainment
     'k-pop', 'kpop', 'bts', 'blackpink', 'celebrity', 'celebrities', 'entertainment', 'hollywood',
     'movie', 'movies', 'film', 'films', 'actor', 'actress', 'drama', 'dramas', 'tv show', 'netflix', 'streaming',
     'music', 'album', 'albums', 'concert', 'concerts', 'tour', 'grammy', 'grammys', 'oscar', 'oscars', 'emmy', 'emmys',
     'box office', 'premiere', 'trailer', 'songwriter', 'musician', 'band', 'singer',
     '연예', '드라마', '영화', '가수', '배우', '아이돌', 'k드라마',
-    
-    // Crime & Violence (clearly not business)
     'stabbed', 'stabbing', 'shooting', 'shot', 'killed', 'murder', 'murdered', 'assault', 'assaulted',
     'rape', 'raped', 'robbery', 'robbed', 'burglary', 'burglar', 'theft', 'stolen',
     'arrested', 'arrest', 'police', 'cop', 'sheriff', 'investigation', 'suspect', 'victim',
     'crime', 'criminal', 'prison', 'jail', 'inmate', 'convicted', 'trial', 'guilty',
-    
-    // Other irrelevant
     'weather', 'forecast', 'hurricane', 'tornado', 'earthquake', 'flood',
     'accident', 'crash', 'collision', 'died', 'death', 'funeral', 'obituary'
   ];
   
   for (const keyword of excludeKeywords) {
     if (text.includes(keyword)) {
-      return -1000; // Massive negative score = automatic exclusion
+      return -1000;
     }
   }
 
@@ -996,7 +1002,6 @@ function scoreArticleBySection(article, sectionType) {
 
   // Section-specific scoring
   if (sectionType === 'global') {
-    // Global economics, policy, major corporations
     const globalKeywords = [
       'fed', 'federal reserve', 'interest rate', 'inflation', 'gdp',
       'central bank', 'economy', 'trade war', 'tariff', 'china',
@@ -1006,7 +1011,6 @@ function scoreArticleBySection(article, sectionType) {
       if (text.includes(kw)) score += 5;
     });
 
-    // Major companies
     const majorCompanies = ['apple', 'microsoft', 'google', 'amazon', 'meta', 'tesla', 'nvidia'];
     majorCompanies.forEach(co => {
       if (text.includes(co)) score += 3;
@@ -1014,16 +1018,12 @@ function scoreArticleBySection(article, sectionType) {
   }
 
   if (sectionType === 'korea') {
-    // Korea major companies and large startups
     const majorCompanies = [
-      // Traditional chaebols
       'samsung', 'hyundai', 'sk', 'lg', 'lotte', 'hanwha', 'gs', 'hanjin',
       'doosan', 'shinsegae', 'cj', 'posco',
       'samsung electronics', 'hyundai motor', 'sk hynix', 'lg energy',
       '삼성', '현대', 'sk', 'lg', '롯데', '한화', 'gs', '한진',
       '두산', '신세계', 'cj', '포스코',
-
-      // Major tech startups & unicorns
       'kakao', 'naver', 'coupang', 'toss', 'krafton', 'nexon', 'ncsoft',
       'baemin', 'woowa', 'zigbang', 'daangn', 'karrot', 'viva republica',
       'yanolja', 'socar', 'musinsa', 'kurly', 'market kurly', 'dunamu',
@@ -1032,7 +1032,6 @@ function scoreArticleBySection(article, sectionType) {
       '야놀자', '쏘카', '무신사', '컬리', '마켓컬리', '두나무'
     ];
 
-    // Check if article mentions major company or startup
     let hasRelevantCompany = false;
     majorCompanies.forEach(co => {
       if (text.includes(co)) {
@@ -1041,57 +1040,42 @@ function scoreArticleBySection(article, sectionType) {
       }
     });
 
-    // PE/M&A/Investment keywords (HIGHEST priority for Korea section)
     const peRelatedKeywords = [
-      // M&A and deals
       '인수', '합병', '매각', '지분', '투자', '펀딩',
       'acquisition', 'merger', 'stake', 'investment', 'funding', 'deal',
       'm&a', 'buyout', 'takeover',
-
-      // PE and VC
       'private equity', 'venture capital', 'pe firm', 'vc',
       '사모펀드', '벤처캐피탈', '프라이빗에쿼티',
-
-      // Valuations and exits
       'ipo', 'valuation', '기업가치', '밸류에이션', 'exit',
       '상장', 'listing', 'unicorn', '유니콘',
-
-      // Startup ecosystem
       '스타트업', 'startup', 'start-up', '벤처', 'venture',
       '시리즈', 'series a', 'series b', 'series c'
     ];
     peRelatedKeywords.forEach(kw => {
       if (text.includes(kw)) {
         hasRelevantCompany = true;
-        score += 18; // HIGHEST score - PE-related news prioritized
+        score += 18;
       }
     });
 
-    // Government policy and regulation
     const policyKeywords = [
-      // Government institutions
       '정부', 'government', '금융위', '공정위', '공정거래위원회', '금융감독원',
       'financial services commission', 'fair trade commission', 'fsc', 'ftc',
       '국회', 'national assembly', '기재부', 'ministry of finance',
       '산업부', 'ministry of trade', '과기부', 'ministry of science',
-
-      // Policy and regulation
       '정책', 'policy', '규제', 'regulation', '법안', 'bill', 'legislation',
       '개혁', 'reform', '완화', 'easing', '강화', 'strengthening',
       '승인', 'approval', '허가', 'permit', '제재', 'sanctions',
-
-      // Economic policy
       '금융정책', 'monetary policy', '재정정책', 'fiscal policy',
       '부동산', 'real estate', '세제', 'tax', '세금', '조세'
     ];
     policyKeywords.forEach(kw => {
       if (text.includes(kw)) {
         hasRelevantCompany = true;
-        score += 12; // Reduced from 15 to make room for PE news
+        score += 12;
       }
     });
 
-    // Macro economic keywords (always relevant)
     const macroKeywords = [
       'kospi', 'kosdaq', '경제', '수출', '무역', '환율', 'gdp', '금리',
       'economy', 'export', 'trade', 'interest rate', '한국은행', 'bank of korea',
@@ -1104,7 +1088,6 @@ function scoreArticleBySection(article, sectionType) {
       }
     });
 
-    // Korea industry keywords
     const koreaKeywords = [
       'chaebol', '재벌', '반도체', 'semiconductor', '자동차', 'automotive',
       '배터리', 'battery', 'k-chip', '디스플레이', 'display'
@@ -1113,68 +1096,53 @@ function scoreArticleBySection(article, sectionType) {
       if (text.includes(kw)) score += 6;
     });
 
-    // Korea business leaders
     if (text.includes('lee jae-yong') || text.includes('chung eui-sun') ||
         text.includes('이재용') || text.includes('정의선')) score += 8;
 
-    // If no relevant company, policy, or macro topic, likely minor/promotional news
     if (!hasRelevantCompany) {
-      score -= 300; // Penalty for minor company news (reduced from 400)
+      score -= 300;
     }
     
-    // Exclude promotional/marketing/real estate fluff
     const promotionalKeywords = [
       'medica', '전시회', 'exhibition', '참가', 'participation',
       '가입자', 'subscriber', '돌파', 'breakthrough', 
       '특징주', 'featured stock', '상승', 'rise', '하락', 'fall',
       '[특징주]', '전략적 투자', 'strategic investment', '신성장',
-      // Real estate / construction marketing
       '견본주택', '분양', '모델하우스', 'model house', 'showroom',
       '아파트', 'apartment', 'officetel', '오피스텔',
       '개관', 'opening', 'grand opening', '오픈'
     ];
     promotionalKeywords.forEach(kw => {
-      if (text.includes(kw)) score -= 250; // Strong penalize promotional content
+      if (text.includes(kw)) score -= 250;
     });
   }
 
   if (sectionType === 'pe') {
-    // === PROFESSIONAL PE SOURCES PREMIUM ===
-    // Boost professional PE media sources
     const professionalPESources = [
       'pe hub', 'pehub', 'private equity international', 'pere', 'altassets',
       'private equity wire', 'institutional investor'
     ];
     professionalPESources.forEach(src => {
       if (article.source.toLowerCase().includes(src)) {
-        score += 30; // Premium boost for professional PE sources
+        score += 30;
       }
     });
 
-    // === EXCLUDE CONSUMER/RETAIL NOISE ===
-    // Filter out consumer products, retail shopping, non-business articles
     const consumerNoise = [
-      // Shopping & consumer products
       'black friday', 'cyber monday', 'deals are heating', 'save up to', 'discount',
       'shopping', 'buy now', 'on sale', 'price drop', 'grill', 'traeger', 'weber',
       'blackstone griddle', 'mattress', 'vacuum', 'tv deals', 'headphones',
-      // Consumer tech (not business)
       'iphone case', 'airpods', 'smart watch', 'fitness tracker',
-      // Gaming (not business deals)
       'video game', 'playstation', 'xbox', 'nintendo', 'fortnite', 'minecraft',
-      // Stock tips (not business news)
       'stock ideal for retirement', 'buy this stock', 'stock rises', 'stock falls',
-      // Generic listicles
       'best of', 'top 10', 'gift guide', 'how to buy'
     ];
     for (const noise of consumerNoise) {
       if (text.includes(noise)) {
-        return -1000; // Immediate exclusion
+        return -1000;
       }
     }
 
-    // === TIER 1: HIGH-VALUE PE KEYWORDS ===
-    // Professional PE terminology - highest scores
     const tier1Keywords = [
       'private equity', 'pe firm', 'pe fund', 'leveraged buyout', 'lbo',
       'take private', 'buyout', 'management buyout', 'mbo',
@@ -1187,12 +1155,11 @@ function scoreArticleBySection(article, sectionType) {
     let hasTier1 = false;
     tier1Keywords.forEach(kw => {
       if (text.includes(kw)) {
-        score += 25; // High score for professional terminology
+        score += 25;
         hasTier1 = true;
       }
     });
 
-    // === TIER 2: M&A & DEAL ACTIVITY ===
     const tier2Keywords = [
       'acquisition', 'acquires', 'acquired', 'merger', 'takeover',
       'agrees to buy', 'to acquire', 'deal valued', 'transaction',
@@ -1206,7 +1173,6 @@ function scoreArticleBySection(article, sectionType) {
       }
     });
 
-    // === TIER 3: VC, IPO, EXIT ACTIVITY ===
     const tier3Keywords = [
       'venture capital', 'vc firm', 'series a', 'series b', 'series c', 'series d',
       'seed round', 'growth equity', 'growth capital',
@@ -1216,11 +1182,10 @@ function scoreArticleBySection(article, sectionType) {
     tier3Keywords.forEach(kw => {
       if (text.includes(kw)) {
         score += 12;
-        hasTier2 = true; // Count as deal activity
+        hasTier2 = true;
       }
     });
 
-    // === TIER 4: FINANCIAL METRICS & VALUATION ===
     const valuationKeywords = [
       'valuation', 'enterprise value', 'ebitda', 'multiple', 'ebitda multiple',
       'deal value', 'transaction value', 'equity value', 'purchase price',
@@ -1230,9 +1195,7 @@ function scoreArticleBySection(article, sectionType) {
       if (text.includes(kw)) score += 8;
     });
 
-    // === MAJOR PE FIRMS (Global Top 50) ===
     const megaPEFirms = [
-      // US Mega-funds (Top 10 by AUM)
       'blackstone', 'kkr', 'kohlberg kravis', 'carlyle group', 'carlyle',
       'apollo global', 'apollo management', 'tpg capital', 'tpg',
       'warburg pincus', 'advent international', 'thoma bravo',
@@ -1240,29 +1203,23 @@ function scoreArticleBySection(article, sectionType) {
       'hellman & friedman', 'hellman friedman', 'neuberger berman',
       'leonard green', 'general atlantic', 'vista equity',
       'brookfield', 'ares management', 'bridgepoint',
-      // European leaders
       'cinven', 'permira', 'pai partners', 'apax partners',
       'bc partners', 'ardian', 'nordic capital', 'eqt',
-      // Asian leaders
       'affinity equity', 'gaw capital', 'hillhouse capital',
       'citic capital', 'fosun', 'hony capital'
     ];
     let hasPEFirm = false;
     megaPEFirms.forEach(firm => {
       if (text.includes(firm)) {
-        score += 30; // Huge boost for major PE firm mention
+        score += 30;
         hasPEFirm = true;
         hasTier1 = true;
       }
     });
 
-    // === DEAL SIZE & SCALE INDICATORS ===
-    // Prefer articles with specific deal values
     if (text.includes('billion')) score += 12;
     if (text.includes('million') && (text.includes('acquisition') || text.includes('funding'))) score += 6;
 
-    // === PROFESSIONAL CONTEXT VALIDATION ===
-    // Must have business/finance context
     const businessContext = [
       'company', 'companies', 'firm', 'corporation',
       'investor', 'investment', 'capital', 'fund', 'equity',
@@ -1276,19 +1233,14 @@ function scoreArticleBySection(article, sectionType) {
       }
     });
 
-    // === QUALITY GATES ===
-    // Must have at least ONE of: professional PE term OR major PE firm OR M&A activity
     if (!hasTier1 && !hasPEFirm && !hasTier2) {
-      score -= 600; // Heavy penalty for low relevance
+      score -= 600;
     }
 
-    // Must have business context
     if (!hasContext) {
-      score -= 400; // Likely not a real business article
+      score -= 400;
     }
 
-    // === SOURCE QUALITY BONUS ===
-    // Prefer premium business sources
     const premiumSources = [
       'wsj', 'wall street journal', 'financial times', 'ft.com',
       'bloomberg', 'reuters', 'economist', 'forbes', 'axios',
@@ -1361,17 +1313,15 @@ function calculateSimilarity(str1, str2) {
 }
 
 function removeSemanticDuplicates(articles, sectionType) {
-  // Skip GPT deduplication if API key not configured or too few articles
   if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
     return articles;
   }
 
   if (articles.length <= 5) {
-    return articles; // Not worth GPT call for small lists
+    return articles;
   }
 
   try {
-    // Prepare article list with indices for GPT
     const articleList = articles.map((a, idx) => {
       return `${idx}: ${a.title}`;
     }).join('\n');
@@ -1429,13 +1379,11 @@ Respond with JSON only:`;
       return articles;
     }
 
-    // Create set of indices to remove (keep highest score from each group)
     const indicesToRemove = new Set();
 
     duplicateGroups.forEach(group => {
       if (!Array.isArray(group) || group.length < 2) return;
 
-      // Find article with highest score in this group
       let bestIdx = group[0];
       let bestScore = articles[group[0]].score;
 
@@ -1446,7 +1394,6 @@ Respond with JSON only:`;
         }
       });
 
-      // Mark all others for removal
       group.forEach(idx => {
         if (idx !== bestIdx) {
           indicesToRemove.add(idx);
@@ -1454,7 +1401,6 @@ Respond with JSON only:`;
       });
     });
 
-    // Filter out duplicates
     const dedupedArticles = articles.filter((_, idx) => !indicesToRemove.has(idx));
 
     Logger.log(`✓ Semantic dedup: ${articles.length} → ${dedupedArticles.length} (removed ${indicesToRemove.size})`);
@@ -1463,7 +1409,7 @@ Respond with JSON only:`;
 
   } catch (error) {
     Logger.log(`⚠ Semantic dedup failed: ${error.toString()}`);
-    return articles; // Return original on error
+    return articles;
   }
 }
 
@@ -1781,7 +1727,7 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     type: 'header',
     text: {
       type: 'plain_text',
-      text: '📊 Global Business & Markets Brief',
+      text: 'Global Business & Markets Brief',
       emoji: true
     }
   });
@@ -1921,11 +1867,13 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
       }
     });
 
-    const globalLines = globalArticles.map((a, i) => {
-      const cleanedTitle = deepCleanText(a.title);
-      const cleanedLink = deepCleanText(a.link);
-      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
-    });
+    const globalLines = globalArticles
+      .map((a, i) => {
+        const cleanedTitle = deepCleanText(a.title);
+        const cleanedLink = deepCleanText(a.link);
+        return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+      })
+      .filter(line => line.length > 15);
 
     addArticleBlocks(blocks, globalLines);
 
@@ -1943,11 +1891,13 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
       }
     });
 
-    const peLines = peArticles.map((a, i) => {
-      const cleanedTitle = deepCleanText(a.title);
-      const cleanedLink = deepCleanText(a.link);
-      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
-    });
+    const peLines = peArticles
+      .map((a, i) => {
+        const cleanedTitle = deepCleanText(a.title);
+        const cleanedLink = deepCleanText(a.link);
+        return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+      })
+      .filter(line => line.length > 15);
 
     addArticleBlocks(blocks, peLines);
 
@@ -1965,11 +1915,13 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
       }
     });
 
-    const koreaLines = koreaArticles.map((a, i) => {
-      const cleanedTitle = deepCleanText(a.title);
-      const cleanedLink = deepCleanText(a.link);
-      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
-    });
+    const koreaLines = koreaArticles
+      .map((a, i) => {
+        const cleanedTitle = deepCleanText(a.title);
+        const cleanedLink = deepCleanText(a.link);
+        return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+      })
+      .filter(line => line.length > 15);
 
     addArticleBlocks(blocks, koreaLines);
 
@@ -1981,29 +1933,11 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     type: 'context',
     elements: [{
       type: 'mrkdwn',
-      text: `🤖 Global News AI v3.0 | Analysis by GPT-4 | ${globalArticles.length + peArticles.length + koreaArticles.length} curated articles`
+      text: `🤖 Analysis by GPT-4 | ${globalArticles.length + peArticles.length + koreaArticles.length} curated articles`
     }]
   });
 
   return { blocks: blocks };
-}
-
-function deepCleanText(text) {
-  if (!text) return '';
-
-  return text
-    // Remove all types of newlines and line breaks
-    .replace(/[\r\n\u2028\u2029\u000A\u000B\u000C\u000D\u0085]+/g, ' ')
-    // Remove URL-encoded newlines
-    .replace(/%0A/gi, ' ')
-    .replace(/%0D/gi, ' ')
-    // Remove HTML line breaks
-    .replace(/<br\s*\/?>/gi, ' ')
-    // Remove zero-width characters that might cause issues
-    .replace(/[\u200B-\u200D\uFEFF]/g, '')
-    // Collapse multiple spaces into one
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 function addArticleBlocks(blocks, articleLines) {
@@ -2012,16 +1946,27 @@ function addArticleBlocks(blocks, articleLines) {
   let currentLength = 0;
 
   articleLines.forEach(line => {
-    // Deep clean the line to remove ALL possible newline sources
     const cleanLine = deepCleanText(line);
+    
+    // Skip empty or too short lines
+    if (!cleanLine || cleanLine.trim().length < 10) {
+      return;
+    }
+    
     const lineLength = cleanLine.length + 1;
 
     if (currentLength + lineLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
+      // Join and clean again before adding block
+      const blockText = currentChunk
+        .join('\n')
+        .replace(/\n{2,}/g, '\n')
+        .trim();
+        
       blocks.push({
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: currentChunk.join('\n')
+          text: blockText
         }
       });
       currentChunk = [cleanLine];
@@ -2033,11 +1978,16 @@ function addArticleBlocks(blocks, articleLines) {
   });
 
   if (currentChunk.length > 0) {
+    const blockText = currentChunk
+      .join('\n')
+      .replace(/\n{2,}/g, '\n')
+      .trim();
+      
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: currentChunk.join('\n')
+        text: blockText
       }
     });
   }
@@ -2055,7 +2005,6 @@ function formatMarketData(marketData) {
         const day = stock.dayChange.toFixed(2);
         const week = stock.weekChange.toFixed(2);
         
-        // Add chart links
         let chartLink = '';
         if (stock.symbol === '^GSPC') {
           chartLink = 'https://finance.yahoo.com/quote/%5EGSPC';
@@ -2080,7 +2029,6 @@ function formatMarketData(marketData) {
         const day = stock.dayChange.toFixed(2);
         const week = stock.weekChange.toFixed(2);
         
-        // Add chart links
         let chartLink = '';
         if (stock.symbol === '^KS11') {
           chartLink = 'https://finance.yahoo.com/quote/%5EKS11';
@@ -2180,7 +2128,7 @@ function sendErrorToSlack(error) {
 // ==================== TESTING ====================
 
 function testScript() {
-  Logger.log('🧪 Testing v3.0 Multi-Section...\n');
+  Logger.log('🧪 Testing v3.1 Multi-Section...\n');
 
   Logger.log('1. Testing Global sources...');
   const globalSource = NEWS_SOURCES.find(s => s.section === 'global' && s.name.includes('WSJ'));
