@@ -638,9 +638,9 @@ function sendSlackNewsReport(finalArticles) {
     var dateStr = Utilities.formatDate(new Date(), 'GMT+9', 'MM월 dd일');
 
     var groupOrder = [
-      'BKR', 'HCI', 'UBase', 'Serveone', 
-      'Lock&Lock', 'JOBKOREA', 
-      'YGY', 'SK Rent-a-Car', 'Market'
+      'BKR', 'HCI', 'UBase', 'Serveone',
+      'Lock&Lock', 'JOBKOREA',
+      'YGY', 'SKR and LTR', 'Market'
     ];
 
     var blocks = [];
@@ -1067,17 +1067,20 @@ var SLACK_CHANNEL = '#news-bot';
 
 // ===== 키워드 설정 =====
 var KEYWORDS = [
-    '버거킹', '팀홀튼', '맥도날드', '현대커머셜', '유베이스', '서브원', 
-    '락앤락p', '잡코리아', '알바몬', '사람인', '원티드', '리멤버', '그리팅',
-    '요기요', '쿠팡이츠', '배달의민족', '배민', 
+    '버거킹', '팀홀튼', '맥도날드', 'kfc', '투썸플레이스', '롯데리아', '현대커머셜', '유베이스', '서브원',
+    '락앤락p', '잡코리아', '알바몬', '사람인', '원티드', '리멤버',
+    '요기요', '쿠팡이츠', '배달의민족', '배민',
     'SK렌터카', '롯데렌탈', '롯데렌터카', '어피니티', '어피너티',
-    'mbk', 'kkr', 'cvc', 'blackstone', 'baincapital', 'imm', 'vig', '스틱인베', '스카이레이크', '글렌우드'
+    'mbk', 'kkr', 'cvc', 'blackstone', 'baincapital', 'imm', 'vig', '스틱인베', '스카이레이크', '글렌우드', 'eqt', '베인캐피탈', '베인캐피털', '알토스'
 ];
 
 var KEYWORD_GROUPING = {
     '버거킹': 'BKR',
     '팀홀튼': 'BKR',
     '맥도날드': 'BKR',
+    'kfc': 'BKR',
+    '투썸플레이스': 'BKR',
+    '롯데리아': 'BKR',
     '현대커머셜': 'HCI',
     '유베이스': 'UBase',
     '서브원': 'Serveone',
@@ -1087,14 +1090,13 @@ var KEYWORD_GROUPING = {
     '사람인': 'JOBKOREA',
     '원티드': 'JOBKOREA',
     '리멤버': 'JOBKOREA',
-    '그리팅': 'JOBKOREA',
     '요기요': 'YGY',
     '쿠팡이츠': 'YGY',
     '배달의민족': 'YGY',
     '배민': 'YGY',
-    'SK렌터카': 'SK Rent-a-Car',
-    '롯데렌탈': 'Market',
-    '롯데렌터카': 'Market',
+    'SK렌터카': 'SKR and LTR',
+    '롯데렌탈': 'SKR and LTR',
+    '롯데렌터카': 'SKR and LTR',
     '어피니티': 'Market',
     '어피너티': 'Market',
     'mbk': 'Market',
@@ -1106,7 +1108,11 @@ var KEYWORD_GROUPING = {
     'vig': 'Market',
     '스틱인베': 'Market',
     '스카이레이크': 'Market',
-    '글렌우드': 'Market'
+    '글렌우드': 'Market',
+    'eqt': 'Market',
+    '베인캐피탈': 'Market',
+    '베인캐피털': 'Market',
+    '알토스': 'Market'
 };
 
 var NEWS_COUNT = 50;
@@ -1151,6 +1157,9 @@ var KEYWORD_RELEVANCE_CHECK = {
     '버거킹': ['버거킹', 'bk', '햄버거'],
     '팀홀튼': ['팀홀튼', 'tim', 'hortons', '도넛', '커피'],
     '맥도날드': ['맥도날드', 'mcdonald', '맥딜리버리'],
+    'kfc': ['kfc', '켄터키', '치킨'],
+    '투썸플레이스': ['투썸플레이스', 'twosome', 'a twosome'],
+    '롯데리아': ['롯데리아', 'lotteria'],
     '현대커머셜': ['현대커머셜', '현대상용차', '트럭', '버스'],
     '유베이스': ['유베이스', 'ubase'],
     '서브원': ['서브원', 'serveone'],
@@ -1160,7 +1169,6 @@ var KEYWORD_RELEVANCE_CHECK = {
     '사람인': ['사람인', 'saramin'],
     '원티드': ['원티드', 'wanted'],
     '리멤버': ['리멤버', 'remember', '비즈니스'],
-    '그리팅': ['그리팅', 'greeting'],
     '요기요': ['요기요', 'yogiyo', '배달'],
     '쿠팡이츠': ['쿠팡이츠', 'coupang', 'eats'],
     '배달의민족': ['배달의민족', '배민', 'baemin'],
@@ -1174,12 +1182,16 @@ var KEYWORD_RELEVANCE_CHECK = {
     'kkr': ['kkr', 'kohlberg'],
     'cvc': ['cvc', '캐피탈'],
     'blackstone': ['blackstone', '블랙스톤'],
-    'baincapital': ['bain', '베인캐피탈'],
+    'baincapital': ['bain', '베인캐피탈', '베인캐피털'],
     'imm': ['imm', '아이엠엠'],
     'vig': ['vig', '브이아이지'],
     '스틱인베': ['스틱인베', 'stic'],
     '스카이레이크': ['스카이레이크', 'skylake'],
-    '글렌우드': ['글렌우드', 'glenwood']
+    '글렌우드': ['글렌우드', 'glenwood'],
+    'eqt': ['eqt', 'eqt partners'],
+    '베인캐피탈': ['베인캐피탈', '베인캐피털', 'bain', 'bain capital'],
+    '베인캐피털': ['베인캐피털', '베인캐피탈', 'bain', 'bain capital'],
+    '알토스': ['알토스', 'altos']
 };
 
 // ===== 언론사 추출 =====
@@ -1593,7 +1605,7 @@ function calculatePEImportanceScore(article) {
   }
 
   // 2-2단계: JOBKOREA 그룹 특별 필터링 (연예/스포츠 강화)
-  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '리멤버', '그리팅'];
+  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '리멤버'];
   var isJobkoreaGroup = false;
   for (var i = 0; i < jobkoreaKeywords.length; i++) {
     if (article.keyword === jobkoreaKeywords[i]) {
