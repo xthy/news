@@ -1927,7 +1927,9 @@ function addArticleBlocks(blocks, articleLines) {
   let currentLength = 0;
 
   articleLines.forEach(line => {
-    const lineLength = line.length + 1;
+    // Remove any remaining newlines from the line
+    const cleanLine = line.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const lineLength = cleanLine.length + 1;
 
     if (currentLength + lineLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
       blocks.push({
@@ -1937,10 +1939,10 @@ function addArticleBlocks(blocks, articleLines) {
           text: currentChunk.join('\n')
         }
       });
-      currentChunk = [line];
+      currentChunk = [cleanLine];
       currentLength = lineLength;
     } else {
-      currentChunk.push(line);
+      currentChunk.push(cleanLine);
       currentLength += lineLength;
     }
   });
