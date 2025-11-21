@@ -763,7 +763,7 @@ function fetchRSSFeed(source) {
         const title = cleanTitle(getElementText(item, 'title'));
 
         // Validate title - filter out empty or meaningless titles
-        if (!title || title.length < 3) continue;
+        if (!title || title.length < 3) return;
 
         const titleLower = title.toLowerCase().trim();
         const invalidTitles = [
@@ -771,7 +771,7 @@ function fetchRSSFeed(source) {
           'deals', 'news', 'article',  // Generic single words
           'untitled', 'no title', '[no title]'
         ];
-        if (invalidTitles.includes(titleLower)) continue;
+        if (invalidTitles.includes(titleLower)) return;
 
         const article = {
           source: extractSourceName(source.name, link),
