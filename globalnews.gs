@@ -1014,52 +1014,88 @@ function scoreArticleBySection(article, sectionType) {
   }
 
   if (sectionType === 'korea') {
-    // Korea major companies/chaebols only - filter out minor companies
+    // Korea major companies and large startups
     const majorCompanies = [
+      // Traditional chaebols
       'samsung', 'hyundai', 'sk', 'lg', 'lotte', 'hanwha', 'gs', 'hanjin',
-      'doosan', 'shinsegae', 'cj', 'posco', 'kakao', 'naver', 'coupang',
+      'doosan', 'shinsegae', 'cj', 'posco',
       'samsung electronics', 'hyundai motor', 'sk hynix', 'lg energy',
       '삼성', '현대', 'sk', 'lg', '롯데', '한화', 'gs', '한진',
-      '두산', '신세계', 'cj', '포스코', '카카오', '네이버', '쿠팡'
+      '두산', '신세계', 'cj', '포스코',
+
+      // Major tech startups & unicorns
+      'kakao', 'naver', 'coupang', 'toss', 'krafton', 'nexon', 'ncsoft',
+      'baemin', 'woowa', 'zigbang', 'daangn', 'karrot', 'viva republica',
+      'yanolja', 'socar', 'musinsa', 'kurly', 'market kurly', 'dunamu',
+      '카카오', '네이버', '쿠팡', '토스', '크래프톤', '넥슨', '엔씨소프트',
+      '배달의민족', '배민', '우아한형제들', '직방', '당근마켓', '비바리퍼블리카',
+      '야놀자', '쏘카', '무신사', '컬리', '마켓컬리', '두나무'
     ];
-    
-    // Check if article mentions major company
-    let hasMajorCompany = false;
+
+    // Check if article mentions major company or startup
+    let hasRelevantCompany = false;
     majorCompanies.forEach(co => {
       if (text.includes(co)) {
-        hasMajorCompany = true;
+        hasRelevantCompany = true;
         score += 12;
       }
     });
-    
-    // Macro economic keywords (always relevant even without company name)
+
+    // Government policy and regulation (highly relevant for business news)
+    const policyKeywords = [
+      // Government institutions
+      '정부', 'government', '금융위', '공정위', '공정거래위원회', '금융감독원',
+      'financial services commission', 'fair trade commission', 'fsc', 'ftc',
+      '국회', 'national assembly', '기재부', 'ministry of finance',
+      '산업부', 'ministry of trade', '과기부', 'ministry of science',
+
+      // Policy and regulation
+      '정책', 'policy', '규제', 'regulation', '법안', 'bill', 'legislation',
+      '개혁', 'reform', '완화', 'easing', '강화', 'strengthening',
+      '승인', 'approval', '허가', 'permit', '제재', 'sanctions',
+
+      // Economic policy
+      '금융정책', 'monetary policy', '재정정책', 'fiscal policy',
+      '부동산', 'real estate', '세제', 'tax', '세금', '조세'
+    ];
+    policyKeywords.forEach(kw => {
+      if (text.includes(kw)) {
+        hasRelevantCompany = true; // Policy news is always relevant
+        score += 15; // Higher score for policy news
+      }
+    });
+
+    // Macro economic keywords (always relevant)
     const macroKeywords = [
       'kospi', 'kosdaq', '경제', '수출', '무역', '환율', 'gdp', '금리',
-      'economy', 'export', 'trade', 'interest rate', '한국은행', 'bank of korea'
+      'economy', 'export', 'trade', 'interest rate', '한국은행', 'bank of korea',
+      '인플레이션', 'inflation', '경기', 'economic growth'
     ];
     macroKeywords.forEach(kw => {
       if (text.includes(kw)) {
-        hasMajorCompany = true; // Count as relevant
+        hasRelevantCompany = true; // Macro news is always relevant
         score += 10;
       }
     });
-    
+
     // Korea business keywords
     const koreaKeywords = [
       'chaebol', '재벌', '반도체', 'semiconductor', '자동차', 'automotive',
-      '배터리', 'battery', 'k-chip', 'ipo', '인수', '합병', 'merger'
+      '배터리', 'battery', 'k-chip', 'ipo', '인수', '합병', 'merger',
+      '투자', 'investment', '펀딩', 'funding', '유니콘', 'unicorn',
+      '스타트업', 'startup', 'start-up', '벤처', 'venture'
     ];
     koreaKeywords.forEach(kw => {
       if (text.includes(kw)) score += 6;
     });
 
     // Korea business leaders
-    if (text.includes('lee jae-yong') || text.includes('chung eui-sun') || 
+    if (text.includes('lee jae-yong') || text.includes('chung eui-sun') ||
         text.includes('이재용') || text.includes('정의선')) score += 8;
-    
-    // If no major company or macro topic, likely minor/promotional news
-    if (!hasMajorCompany) {
-      score -= 400; // Heavy penalty for minor company news
+
+    // If no relevant company, policy, or macro topic, likely minor/promotional news
+    if (!hasRelevantCompany) {
+      score -= 300; // Penalty for minor company news (reduced from 400)
     }
     
     // Exclude promotional/marketing/real estate fluff
@@ -1860,9 +1896,11 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
       }
     });
 
-    const globalLines = globalArticles.map((a, i) =>
-      `*${i + 1}.* <${a.link}|${a.title}>`
-    );
+    const globalLines = globalArticles.map((a, i) => {
+      const cleanedTitle = a.title.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+      const cleanedLink = a.link.replace(/[\r\n]+/g, '').trim();
+      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+    });
 
     addArticleBlocks(blocks, globalLines);
 
@@ -1880,9 +1918,11 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
       }
     });
 
-    const peLines = peArticles.map((a, i) =>
-      `*${i + 1}.* <${a.link}|${a.title}>`
-    );
+    const peLines = peArticles.map((a, i) => {
+      const cleanedTitle = a.title.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+      const cleanedLink = a.link.replace(/[\r\n]+/g, '').trim();
+      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+    });
 
     addArticleBlocks(blocks, peLines);
 
@@ -1900,9 +1940,11 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
       }
     });
 
-    const koreaLines = koreaArticles.map((a, i) =>
-      `*${i + 1}.* <${a.link}|${a.title}>`
-    );
+    const koreaLines = koreaArticles.map((a, i) => {
+      const cleanedTitle = a.title.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+      const cleanedLink = a.link.replace(/[\r\n]+/g, '').trim();
+      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+    });
 
     addArticleBlocks(blocks, koreaLines);
 
@@ -2014,8 +2056,10 @@ function formatMarketData(marketData) {
     marketData.forex.forEach(fx => {
       if (fx && fx.price != null) {
         const emoji = fx.dayChange >= 0 ? '📈' : '📉';
+        const day = fx.dayChange.toFixed(2);
+        const week = fx.weekChange.toFixed(2);
         const chartLink = 'https://finance.yahoo.com/quote/KRW=X';
-        text += `${emoji} USD/KRW: ${fx.price.toFixed(2)} (${fx.dayChange.toFixed(2)}%) <${chartLink}|→ Detail>\n`;
+        text += `${emoji} USD/KRW: ${fx.price.toFixed(2)} (Day ${day}% | Week ${week}%) <${chartLink}|→ Detail>\n`;
       }
     });
     text += '\n';
@@ -2026,8 +2070,10 @@ function formatMarketData(marketData) {
     marketData.crypto.forEach(c => {
       if (c && c.price != null) {
         const emoji = c.dayChange >= 0 ? '📈' : '📉';
+        const day = c.dayChange.toFixed(2);
+        const week = c.weekChange.toFixed(2);
         const chartLink = 'https://finance.yahoo.com/quote/BTC-USD';
-        text += `${emoji} Bitcoin: $${c.price.toFixed(0)} (${c.dayChange.toFixed(2)}%) <${chartLink}|→ Detail>\n`;
+        text += `${emoji} Bitcoin: $${c.price.toFixed(0)} (Day ${day}% | Week ${week}%) <${chartLink}|→ Detail>\n`;
       }
     });
   }
