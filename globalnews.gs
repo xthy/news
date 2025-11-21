@@ -32,12 +32,12 @@ const CONFIG = {
   SIMILARITY_THRESHOLD: 0.7,
   
   // Section-specific limits (final output after GPT curation)
-  GLOBAL_TOP_HEADLINES: 5,       // Curated to 5 most important
-  KOREA_TOP_HEADLINES: 5,        // Curated to 5 most important
-  PE_SPECIFIC_NEWS: 5,           // Curated to 5 most important
+  GLOBAL_TOP_HEADLINES: 7,       // Curated to 7 most important
+  KOREA_TOP_HEADLINES: 7,        // Curated to 7 most important
+  PE_SPECIFIC_NEWS: 7,           // Curated to 7 most important
 
   // Pre-GPT candidate pool (for GPT to choose from)
-  CANDIDATE_POOL_SIZE: 25,        // Fetch 25 candidates, GPT picks top 5
+  CANDIDATE_POOL_SIZE: 25,        // Fetch 25 candidates, GPT picks top 7
 
   // Market Data
   MARKET_SYMBOLS: {
@@ -1420,7 +1420,10 @@ This means:
 
 If NO duplicates found, return: []
 
-Respond with JSON only:`;
+CRITICAL: Respond with ONLY valid JSON - no explanations or comments.
+Do NOT say "I'm unable to..." or "I apologize..." - just return the JSON array.
+
+Respond with JSON only (no other text):`;
 
     const response = callChatGPT(prompt, 800);
 
@@ -1429,6 +1432,12 @@ Respond with JSON only:`;
       cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
     } else if (cleanedResponse.startsWith('```')) {
       cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
+
+    // Validate that response looks like JSON array before parsing
+    if (!cleanedResponse.trim().startsWith('[')) {
+      Logger.log(`⚠ Semantic dedup response is not JSON array. Response: ${cleanedResponse.substring(0, 200)}`);
+      throw new Error('GPT did not return valid JSON array for deduplication');
     }
 
     const duplicateGroups = JSON.parse(cleanedResponse);
@@ -1471,7 +1480,19 @@ Respond with JSON only:`;
     return dedupedArticles;
 
   } catch (error) {
-    Logger.log(`⚠ Semantic dedup failed: ${error.toString()}`);
+    Logger.log(`❌ Semantic dedup failed: ${error.toString()}`);
+    Logger.log(`❌ Error stack: ${error.stack}`);
+
+    // Try to log the response if available
+    try {
+      if (response) {
+        Logger.log(`❌ GPT Response (first 300 chars): ${response.substring(0, 300)}`);
+      }
+    } catch (e) {
+      // Ignore logging errors
+    }
+
+    Logger.log(`⚠ Continuing with original articles (no deduplication)`);
     return articles; // Return original on error
   }
 }
@@ -1528,7 +1549,13 @@ Response format (JSON array of indices):
 
 This means articles at indices 3, 7, 12, 15, and 20 are the most important.
 
-CRITICAL: Return EXACTLY ${targetCount} indices. Respond with JSON only:`;
+CRITICAL INSTRUCTIONS:
+- Return EXACTLY ${targetCount} indices
+- Respond with ONLY valid JSON - no explanations, apologies, or comments
+- Do NOT say "I'm unable to..." or "I apologize..." - just return the JSON array
+- If you cannot select, return indices [0, 1, 2, ..., ${targetCount - 1}]
+
+Respond with JSON array only (no other text):`;
 
     const response = callChatGPT(prompt, 300);
 
@@ -1537,6 +1564,12 @@ CRITICAL: Return EXACTLY ${targetCount} indices. Respond with JSON only:`;
       cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
     } else if (cleanedResponse.startsWith('```')) {
       cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
+
+    // Validate that response looks like JSON array before parsing
+    if (!cleanedResponse.trim().startsWith('[')) {
+      Logger.log(`⚠ GPT curation response is not JSON array. Response: ${cleanedResponse.substring(0, 200)}`);
+      throw new Error('GPT did not return valid JSON array');
     }
 
     const selectedIndices = JSON.parse(cleanedResponse);
@@ -1567,7 +1600,19 @@ CRITICAL: Return EXACTLY ${targetCount} indices. Respond with JSON only:`;
     return curatedArticles.slice(0, targetCount);
 
   } catch (error) {
-    Logger.log(`⚠ GPT curation failed: ${error.toString()}`);
+    Logger.log(`❌ GPT curation failed: ${error.toString()}`);
+    Logger.log(`❌ Error stack: ${error.stack}`);
+
+    // Try to log the response if available
+    try {
+      if (response) {
+        Logger.log(`❌ GPT Response (first 300 chars): ${response.substring(0, 300)}`);
+      }
+    } catch (e) {
+      // Ignore logging errors
+    }
+
+    Logger.log(`⚠ Falling back to top ${targetCount} articles by score`);
     return articles.slice(0, targetCount); // Return top by score on error
   }
 }
@@ -1760,14 +1805,21 @@ CRITICAL REMINDERS:
 - If a section has minimal news, briefly note market conditions or sentiment instead
 - Readers get this EVERY day - make each day's content feel fresh and timely
 
-Respond in JSON:
+RESPONSE FORMAT - CRITICAL:
+You MUST respond ONLY with valid JSON. Do NOT include any explanatory text, apologies, or comments.
+If you cannot generate a summary, return the JSON structure with empty arrays/strings.
+Do NOT say "I'm unable to..." or "I apologize..." - just return the JSON.
+
+Expected JSON format (respond with ONLY this, nothing else):
 {
   "insights": ["insight1 with TODAY'S news", "insight2...", "insight3...", "insight4...", "insight5...", "insight6..."],
   "macroEconomic": "today's economic/policy developments...",
   "peDeals": "today's PE/M&A activity - if truly nothing, briefly note 'Quiet day for major transactions, markets focused on...'",
   "korea": "today's Korea business news - ALWAYS provide analysis, never use placeholder text",
   "sectors": "today's sector developments or empty string"
-}`;
+}
+
+Respond with JSON only (no other text):`;
 
     const response = callChatGPT(prompt, 3500);
 
@@ -1776,6 +1828,12 @@ Respond in JSON:
       cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
     } else if (cleanedResponse.startsWith('```')) {
       cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
+
+    // Validate that response looks like JSON before parsing
+    if (!cleanedResponse.trim().startsWith('{')) {
+      Logger.log(`⚠ AI response is not JSON. Response: ${cleanedResponse.substring(0, 200)}`);
+      throw new Error('AI did not return valid JSON');
     }
 
     const summary = JSON.parse(cleanedResponse);
@@ -1789,11 +1847,22 @@ Respond in JSON:
     };
 
   } catch (error) {
-    Logger.log(`AI summary error: ${error.toString()}`);
+    Logger.log(`❌ AI summary error: ${error.toString()}`);
+    Logger.log(`❌ Error stack: ${error.stack}`);
+
+    // Try to log the response if available
+    try {
+      if (response) {
+        Logger.log(`❌ GPT Response (first 500 chars): ${response.substring(0, 500)}`);
+      }
+    } catch (e) {
+      // Ignore logging errors
+    }
+
     return {
       headline: 'Global News Headlines',
-      insights: ['Error generating summary'],
-      macroEconomic: '',
+      insights: ['AI summary unavailable - check logs for details'],
+      macroEconomic: 'Summary generation failed. Please check system logs.',
       peDeals: '',
       korea: '',
       sectors: ''
