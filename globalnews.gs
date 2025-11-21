@@ -752,8 +752,11 @@ function processArticlesBySection(articles, limit, sectionType) {
   // Sort by score
   articles.sort((a, b) => b.score - a.score);
 
-  // Remove duplicates
-  const uniqueArticles = removeDuplicates(articles);
+  // Remove basic duplicates (exact/similar titles)
+  let uniqueArticles = removeDuplicates(articles);
+
+  // Remove semantic duplicates using GPT (same story, different wording)
+  uniqueArticles = removeSemanticDuplicates(uniqueArticles, sectionType);
 
   // Return top N
   return uniqueArticles.slice(0, limit);
@@ -1030,6 +1033,113 @@ function calculateSimilarity(str1, str2) {
   const union = new Set([...words1, ...words2]);
 
   return intersection.size / union.size;
+}
+
+function removeSemanticDuplicates(articles, sectionType) {
+  // Skip GPT deduplication if API key not configured or too few articles
+  if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
+    return articles;
+  }
+
+  if (articles.length <= 5) {
+    return articles; // Not worth GPT call for small lists
+  }
+
+  try {
+    // Prepare article list with indices for GPT
+    const articleList = articles.map((a, idx) => {
+      return `${idx}: ${a.title}`;
+    }).join('\n');
+
+    const prompt = `You are analyzing news article titles to identify duplicates - articles covering the SAME news story/event.
+
+CRITICAL RULES:
+- Articles about the SAME story/event = DUPLICATES (even if worded differently)
+- Articles about DIFFERENT stories = NOT DUPLICATES (even if similar topic/company)
+- Look for: same company + same event/announcement + same timeframe
+- Ignore: source differences, minor wording variations
+
+Examples:
+DUPLICATES (same story):
+- "KKR aims to raise $15 billion for Asia fund"
+- "KKR seeks $15B in new Asia private equity fund"
+- "KKR launches $15 billion fundraising for fifth Asia fund"
+→ All about KKR's specific $15B Asia fundraising
+
+NOT DUPLICATES (different stories):
+- "Apple announces new iPhone 15"
+- "Apple reports Q3 earnings beat"
+→ Different Apple stories
+
+Articles to analyze:
+${articleList}
+
+Task: Identify groups of articles covering the SAME story. Return ONLY duplicate groups (2+ articles about same story).
+
+Response format (JSON array of arrays):
+[[1, 4, 7], [2, 9]]
+
+This means:
+- Articles 1, 4, 7 are duplicates (same story)
+- Articles 2, 9 are duplicates (same story)
+- All other articles are unique
+
+If NO duplicates found, return: []
+
+Respond with JSON only:`;
+
+    const response = callChatGPT(prompt, 800);
+
+    let cleanedResponse = response.trim();
+    if (cleanedResponse.startsWith('```json')) {
+      cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
+    } else if (cleanedResponse.startsWith('```')) {
+      cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
+
+    const duplicateGroups = JSON.parse(cleanedResponse);
+
+    if (!Array.isArray(duplicateGroups) || duplicateGroups.length === 0) {
+      Logger.log('✓ No semantic duplicates found');
+      return articles;
+    }
+
+    // Create set of indices to remove (keep highest score from each group)
+    const indicesToRemove = new Set();
+
+    duplicateGroups.forEach(group => {
+      if (!Array.isArray(group) || group.length < 2) return;
+
+      // Find article with highest score in this group
+      let bestIdx = group[0];
+      let bestScore = articles[group[0]].score;
+
+      group.forEach(idx => {
+        if (articles[idx].score > bestScore) {
+          bestScore = articles[idx].score;
+          bestIdx = idx;
+        }
+      });
+
+      // Mark all others for removal
+      group.forEach(idx => {
+        if (idx !== bestIdx) {
+          indicesToRemove.add(idx);
+        }
+      });
+    });
+
+    // Filter out duplicates
+    const dedupedArticles = articles.filter((_, idx) => !indicesToRemove.has(idx));
+
+    Logger.log(`✓ Semantic dedup: ${articles.length} → ${dedupedArticles.length} (removed ${indicesToRemove.size})`);
+
+    return dedupedArticles;
+
+  } catch (error) {
+    Logger.log(`⚠ Semantic dedup failed: ${error.toString()}`);
+    return articles; // Return original on error
+  }
 }
 
 // ==================== MARKET DATA ====================
