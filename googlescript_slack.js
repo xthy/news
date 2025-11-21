@@ -1495,32 +1495,19 @@ function extractGoogleNewsSource(title, description, link) {
   }
 }
 
-// ===== 키워드 관련성 검증 함수 =====
+// ===== 키워드 관련성 검증 함수 (엄격한 제목 기반 필터링) =====
 function checkKeywordRelevance(article) {
   var keywordTerms = KEYWORD_RELEVANCE_CHECK[article.keyword] || [article.keyword.toLowerCase()];
 
-  // JOBKOREA 그룹은 제목에만 키워드가 있어야 함 (본문 언급만으로는 부족)
-  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '리멤버', '그리팅'];
-  var isJobkoreaGroup = jobkoreaKeywords.indexOf(article.keyword) !== -1;
-
-  if (isJobkoreaGroup) {
-    // JOBKOREA 그룹: 제목에만 키워드가 있는지 확인
-    var title = article.title.toLowerCase();
-    for (var i = 0; i < keywordTerms.length; i++) {
-      if (title.includes(keywordTerms[i].toLowerCase())) {
-        return true;
-      }
-    }
-    return false; // 제목에 없으면 제외
-  }
-
-  // 일반 키워드: 제목 + 본문에서 확인
-  var content = (article.title + ' ' + (article.description || '')).toLowerCase();
+  // 모든 키워드: 제목에만 키워드가 있어야 함 (더 엄격한 필터링)
+  var title = article.title.toLowerCase();
   for (var i = 0; i < keywordTerms.length; i++) {
-    if (content.includes(keywordTerms[i].toLowerCase())) {
+    if (title.includes(keywordTerms[i].toLowerCase())) {
       return true;
     }
   }
+
+  // 제목에 키워드가 없으면 제외
   return false;
 }
 
