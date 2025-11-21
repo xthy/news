@@ -1164,11 +1164,11 @@ var KEYWORD_RELEVANCE_CHECK = {
     '유베이스': ['유베이스', 'ubase'],
     '서브원': ['서브원', 'serveone'],
     '락앤락': ['락앤락', 'locknlock'],
-    '잡코리아': ['잡코리아', 'jobkorea', '채용'],
-    '알바몬': ['알바몬', 'albamon', '아르바이트'],
+    '잡코리아': ['잡코리아', 'jobkorea'],
+    '알바몬': ['알바몬', 'albamon'],
     '사람인': ['사람인', 'saramin'],
     '원티드': ['원티드', 'wanted'],
-    '리멤버': ['리멤버', 'remember', '비즈니스'],
+    '리멤버': ['리멤버', 'remember'],
     '요기요': ['요기요', 'yogiyo', '배달'],
     '쿠팡이츠': ['쿠팡이츠', 'coupang', 'eats'],
     '배달의민족': ['배달의민족', '배민', 'baemin'],
@@ -1593,7 +1593,27 @@ function calculatePEImportanceScore(article) {
       return 0; // 즉시 제외
     }
   }
-  
+
+  // 2-0단계: BKR 그룹 특별 필터링 (연극/문화 콘텐츠 제외)
+  var bkrKeywords = ['버거킹', '팀홀튼', '맥도날드', 'kfc', '투썸플레이스', '롯데리아'];
+  var isBkrGroup = false;
+  for (var i = 0; i < bkrKeywords.length; i++) {
+    if (article.keyword === bkrKeywords[i]) {
+      isBkrGroup = true;
+      break;
+    }
+  }
+
+  if (isBkrGroup) {
+    // BKR 그룹에서 연극/문화/공연 관련 제외
+    var bkrExcludeKeywords = ['연극', '뮤지컬', '공연', '무대', '작품', '원작', '캐릭터', '영화', '드라마'];
+    for (var i = 0; i < bkrExcludeKeywords.length; i++) {
+      if (content.includes(bkrExcludeKeywords[i])) {
+        return 0; // BKR 그룹에서 문화 콘텐츠 관련 기사 제외
+      }
+    }
+  }
+
   // 2-1단계: SK렌터카 그룹 특별 필터링 (PBA, 당구 제외)
   if (article.keyword === 'SK렌터카') {
     var skExcludeKeywords = ['pba', '당구', '포켓볼', '3쿠션', '4구', '빌리어드'];
