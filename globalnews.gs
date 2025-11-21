@@ -265,6 +265,53 @@ const NEWS_SOURCES = [
     tier: 2
   },
 
+  // --- Premium Tech & Business Sources ---
+
+  // Wired - Tech & Business
+  {
+    name: 'Wired',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:wired.com+business+OR+technology+OR+ai+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'global',
+    tier: 2
+  },
+
+  // The Verge - Tech & Policy
+  {
+    name: 'The Verge',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:theverge.com+business+OR+tech+OR+regulation+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'global',
+    tier: 2
+  },
+
+  // Ars Technica - Tech Analysis
+  {
+    name: 'Ars Technica',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:arstechnica.com+business+OR+tech+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'global',
+    tier: 2
+  },
+
+  // MIT Technology Review
+  {
+    name: 'MIT Tech Review',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:technologyreview.com+business+OR+ai+OR+climate+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'global',
+    tier: 2
+  },
+
+  // VentureBeat - Tech Business
+  {
+    name: 'VentureBeat',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:venturebeat.com+ai+OR+business+OR+tech+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'global',
+    tier: 2
+  },
+
   // =================================================
   // SECTION 2: KOREA TOP HEADLINES
   // 4대 일간지 (조선/중앙/동아/한겨레) 경제면 + 주요 경제지
@@ -397,101 +444,183 @@ const NEWS_SOURCES = [
 
   // =================================================
   // SECTION 3: PE SPECIFIC NEWS
+  // Professional PE & Deal Flow Intelligence
   // =================================================
-  
-  // --- Top Global PE Firms (Top 50 by AUM) ---
+
+  // --- Tier 1: Premium PE-Specific Publications ---
+
+  // PE Hub - Leading PE industry publication
+  {
+    name: 'PE Hub',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:pehub.com+OR+%22pe+hub%22+private+equity+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // Private Equity International (PEI)
+  {
+    name: 'Private Equity International',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:privateequityinternational.com+OR+%22private+equity+international%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // PERE - Real Estate PE
+  {
+    name: 'PERE',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:perenews.com+OR+%22real+estate+private+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // AltAssets
+  {
+    name: 'AltAssets',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:altassets.net+private+equity+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // Private Equity Wire
+  {
+    name: 'Private Equity Wire',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=%22private+equity+wire%22+OR+site:privateequitywire.co.uk+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // --- Tier 1: Premium Business Publications with PE Focus ---
+
+  // Forbes - M&A and PE
+  {
+    name: 'Forbes PE/M&A',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:forbes.com+%22private+equity%22+OR+%22merger%22+OR+%22acquisition%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // The Information - Tech deals
+  {
+    name: 'The Information',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:theinformation.com+acquisition+OR+funding+OR+valuation+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // Axios - Deals
+  {
+    name: 'Axios Deals',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:axios.com+deals+OR+merger+OR+acquisition+OR+%22private+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // --- Tier 1: Major PE Firms Coverage ---
+
+  // Mega PE Firms (Blackstone, KKR, Carlyle, Apollo, TPG)
+  {
+    name: 'Mega PE Firms',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=%22blackstone%22+OR+%22kkr%22+OR+%22carlyle+group%22+OR+%22apollo+global%22+OR+%22tpg+capital%22+deal+OR+acquisition+OR+investment+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+
+  // Top-tier PE Firms (Silver Lake, Thoma Bravo, Vista, Bain Capital)
   {
     name: 'Top PE Firms',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=blackstone+OR+kkr+OR+carlyle+OR+apollo+OR+tpg+OR+warburg+OR+%22advent+international%22+OR+%22cvc+capital%22+OR+hellman+OR+neuberger+when:24h&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%22silver+lake%22+OR+%22thoma+bravo%22+OR+%22vista+equity%22+OR+%22bain+capital%22+OR+%22general+atlantic%22+acquisition+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   },
+
+  // --- Tier 1: Deal Activity & M&A ---
+
+  // Major M&A Announcements (WSJ, FT, Bloomberg sources)
   {
-    name: 'Major PE Firms 2',
+    name: 'Major M&A',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22silver+lake%22+OR+%22thoma+bravo%22+OR+%22leonard+green%22+OR+%22general+atlantic%22+OR+%22bain+capital%22+OR+%22vista+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%28site:wsj.com+OR+site:ft.com+OR+site:bloomberg.com%29+merger+OR+acquisition+OR+takeover+billion+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   },
+
+  // LBO & Buyout News
   {
-    name: 'Asian PE Firms',
+    name: 'Leveraged Buyouts',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22affinity+equity%22+OR+%22gaw+capital%22+OR+%22hillhouse+capital%22+OR+%22kkr+asia%22+OR+%22asia+private+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%22leveraged+buyout%22+OR+%22lbo%22+OR+%22buyout%22+%22private+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   },
-  
-  // --- M&A and Deals ---
+
+  // --- Tier 2: IPO & Exit Activity ---
+
+  // IPO Filings & Listings
   {
-    name: 'PE/M&A Deals',
+    name: 'IPO Activity',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22merger+and+acquisition%22+OR+%22m%26a+deal%22+OR+buyout+company+OR+%22acquires%22+company+when:24h&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%22files+for+ipo%22+OR+%22ipo+pricing%22+OR+%22going+public%22+OR+%22stock+listing%22+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
-    tier: 1
+    tier: 2
   },
-  
-  // --- IPO News ---
+
+  // SPAC & Exit News
   {
-    name: 'IPO & Listings',
+    name: 'PE Exits',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22files+for+ipo%22+OR+%22goes+public%22+OR+%22ipo+pricing%22+OR+%22stock+listing%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%22private+equity%22+exit+OR+spac+OR+%22portfolio+company%22+sale+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
-    tier: 1
+    tier: 2
   },
-  
-  // --- Venture Capital ---
+
+  // --- Tier 2: Venture Capital & Growth Equity ---
+
+  // Major VC Rounds
   {
     name: 'Venture Capital',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22venture+capital%22+OR+%22raises+funding%22+OR+%22series+a%22+OR+%22series+b%22+OR+%22series+c%22+startup+when:24h&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%22series+a%22+OR+%22series+b%22+OR+%22series+c%22+OR+%22series+d%22+funding+million+OR+billion+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
-    tier: 1
+    tier: 2
   },
-  
-  // --- Private Equity Firms ---
+
+  // Crunchbase News - Startup funding
   {
-    name: 'PE Firms',
+    name: 'Crunchbase',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22private+equity%22+OR+blackstone+OR+kkr+OR+carlyle+OR+apollo+OR+tpg+investment+OR+acquisition+when:24h&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=site:news.crunchbase.com+funding+OR+acquisition+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
-    tier: 1
+    tier: 2
   },
-  
-  // --- Corporate Restructuring ---
+
+  // TechCrunch - Tech deals
+  {
+    name: 'TechCrunch Deals',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:techcrunch.com+acquisition+OR+raises+OR+funding+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 2
+  },
+
+  // --- Tier 2: Distressed & Special Situations ---
+
+  // Corporate Restructuring
   {
     name: 'Restructuring',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=corporate+restructuring+OR+%22chapter+11%22+OR+bankruptcy+filing+OR+%22distressed+debt%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=corporate+restructuring+OR+%22chapter+11%22+OR+bankruptcy+OR+%22distressed+debt%22+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
-    tier: 1
-  },
-  
-  // --- Leveraged Finance ---
-  {
-    name: 'Leveraged Finance',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22leveraged+buyout%22+OR+lbo+OR+%22high+yield+bonds%22+OR+%22leveraged+loan%22+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-  
-  // --- Tech M&A ---
-  {
-    name: 'Tech M&A',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=technology+OR+software+OR+saas+%22acquisition%22+OR+%22merger%22+company+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-  
-  // --- Valuation & Deals ---
-  {
-    name: 'Valuation',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=company+valuation+OR+%22enterprise+value%22+OR+%22deal+value%22+billion+OR+million+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
+    tier: 2
   }
 ];
 
@@ -534,8 +663,8 @@ function sendDailyNewsSummary() {
     // 4. Generate AI summary
     const aiSummary = generateAISummary(
       globalArticles,
-      koreaArticles,
       peArticles,
+      koreaArticles,
       marketData
     );
     Logger.log('🤖 AI summary generated');
@@ -544,8 +673,8 @@ function sendDailyNewsSummary() {
     const message = formatSlackMessage(
       aiSummary,
       globalArticles,
-      koreaArticles,
       peArticles,
+      koreaArticles,
       marketData
     );
     sendToSlack(message);
@@ -631,9 +760,40 @@ function fetchRSSFeed(source) {
           }
         }
 
+        const title = cleanTitle(getElementText(item, 'title'));
+
+        // Validate title - filter out empty or meaningless titles
+        if (!title || title.length < 3) return;
+
+        const titleLower = title.toLowerCase().trim();
+
+        // Filter exact matches
+        const invalidTitles = [
+          '-', '--', '---',  // Just dashes
+          'deals', 'news', 'article',  // Generic single words
+          'untitled', 'no title', '[no title]'
+        ];
+        if (invalidTitles.includes(titleLower)) return;
+
+        // Filter titles that start with generic words followed by dash
+        const invalidPrefixes = [
+          'deals - ', 'news - ', 'article - ', 'updates - ',
+          '- ', '--', 'null - ', 'undefined - '
+        ];
+        for (const prefix of invalidPrefixes) {
+          if (titleLower.startsWith(prefix)) return;
+        }
+
+        // Filter titles that are just a source name (e.g., "Private Equity Wire")
+        if (titleLower.split(' ').length <= 3 &&
+            (titleLower.includes('wire') || titleLower.includes('news') ||
+             titleLower.includes('international') || titleLower.includes('hub'))) {
+          return;
+        }
+
         const article = {
           source: extractSourceName(source.name, link),
-          title: cleanTitle(getElementText(item, 'title')),
+          title: title,
           link: link,
           description: cleanDescription(getElementText(item, 'description') || getElementText(item, 'summary')),
           publishedAt: parseDate(getElementText(item, 'pubDate') || getElementText(item, 'published') || getElementText(item, 'updated')),
@@ -718,12 +878,21 @@ function extractSourceName(feedName, link) {
 
 function cleanTitle(title) {
   if (!title) return '';
-  return title
-    .replace(/ - WSJ$/, '')
-    .replace(/ - The New York Times$/, '')
-    .replace(/ - Financial Times$/, '')
+
+  // Remove source attribution at end (e.g., "- Bloomberg.com", "- Private Equity Wire")
+  // Pattern: " - [source name]" at the end of title
+  title = title
+    // Remove trailing source with .com/.net/.org/.co.uk
+    .replace(/ - [\w\s\.\-&]+(\.com|\.net|\.org|\.co\.uk)$/gi, '')
+    // Remove trailing source names (e.g., "- Private Equity Wire", "- Bloomberg")
+    .replace(/ - [A-Z][\w\s\.\-&]+$/g, '')
+    // Remove "- report" at the end
+    .replace(/ - report$/gi, '')
+    // Remove pipe separators and everything after
     .replace(/ \| .*$/, '')
     .trim();
+
+  return title;
 }
 
 function cleanDescription(desc) {
@@ -752,8 +921,11 @@ function processArticlesBySection(articles, limit, sectionType) {
   // Sort by score
   articles.sort((a, b) => b.score - a.score);
 
-  // Remove duplicates
-  const uniqueArticles = removeDuplicates(articles);
+  // Remove basic duplicates (exact/similar titles)
+  let uniqueArticles = removeDuplicates(articles);
+
+  // Remove semantic duplicates using GPT (same story, different wording)
+  uniqueArticles = removeSemanticDuplicates(uniqueArticles, sectionType);
 
   // Return top N
   return uniqueArticles.slice(0, limit);
@@ -903,74 +1075,166 @@ function scoreArticleBySection(article, sectionType) {
   }
 
   if (sectionType === 'pe') {
-    // PE-specific scoring (highest weights)
-    const peKeywords = [
-      'private equity', 'buyout', 'lbo', 'pe firm',
-      'merger', 'acquisition', 'm&a', 'takeover', 'deal',
-      'ipo', 'listing', 'going public', 'spac',
-      'venture capital', 'vc', 'funding', 'series',
-      'valuation', 'multiple', 'ebitda', 'enterprise value',
-      'restructuring', 'bankruptcy', 'distressed',
-      'activist', 'shareholder', 'proxy',
-      'leveraged', 'debt', 'credit', 'covenant',
-      'portfolio company', 'exit', 'secondary'
+    // === PROFESSIONAL PE SOURCES PREMIUM ===
+    // Boost professional PE media sources
+    const professionalPESources = [
+      'pe hub', 'pehub', 'private equity international', 'pere', 'altassets',
+      'private equity wire', 'institutional investor'
     ];
-    
-    // Check if article has at least ONE PE-relevant keyword
-    let hasRelevantKeyword = false;
-    peKeywords.forEach(kw => {
-      if (text.includes(kw)) {
-        score += 10;
-        hasRelevantKeyword = true;
+    professionalPESources.forEach(src => {
+      if (article.source.toLowerCase().includes(src)) {
+        score += 30; // Premium boost for professional PE sources
       }
     });
-    
-    // If NO PE keywords found, heavily penalize (likely irrelevant)
-    if (!hasRelevantKeyword) {
-      score -= 500; // Strong penalty but not absolute exclusion
+
+    // === EXCLUDE CONSUMER/RETAIL NOISE ===
+    // Filter out consumer products, retail shopping, non-business articles
+    const consumerNoise = [
+      // Shopping & consumer products
+      'black friday', 'cyber monday', 'deals are heating', 'save up to', 'discount',
+      'shopping', 'buy now', 'on sale', 'price drop', 'grill', 'traeger', 'weber',
+      'blackstone griddle', 'mattress', 'vacuum', 'tv deals', 'headphones',
+      // Consumer tech (not business)
+      'iphone case', 'airpods', 'smart watch', 'fitness tracker',
+      // Gaming (not business deals)
+      'video game', 'playstation', 'xbox', 'nintendo', 'fortnite', 'minecraft',
+      // Stock tips (not business news)
+      'stock ideal for retirement', 'buy this stock', 'stock rises', 'stock falls',
+      // Generic listicles
+      'best of', 'top 10', 'gift guide', 'how to buy'
+    ];
+    for (const noise of consumerNoise) {
+      if (text.includes(noise)) {
+        return -1000; // Immediate exclusion
+      }
     }
 
-    // Major PE firms (Global Top 50)
-    const peFirms = [
-      // US Mega-funds
-      'blackstone', 'kkr', 'carlyle', 'apollo', 'tpg',
-      'warburg pincus', 'advent international', 'bain capital',
-      'cvc capital', 'hellman & friedman', 'neuberger berman',
-      'silver lake', 'thoma bravo', 'leonard green',
-      'general atlantic', 'vista equity', 'brookfield',
-      'ares management', 'bridgepoint', 'providence equity',
-      // European firms
+    // === TIER 1: HIGH-VALUE PE KEYWORDS ===
+    // Professional PE terminology - highest scores
+    const tier1Keywords = [
+      'private equity', 'pe firm', 'pe fund', 'leveraged buyout', 'lbo',
+      'take private', 'buyout', 'management buyout', 'mbo',
+      'portfolio company', 'fund raising', 'fundraising', 'closes fund',
+      'limited partner', 'lp commitment', 'general partner',
+      'dry powder', 'deal flow', 'exit strategy', 'holding period',
+      'sponsor', 'financial sponsor', 'add-on acquisition', 'platform acquisition',
+      'recapitalization', 'dividend recap', 'secondary buyout'
+    ];
+    let hasTier1 = false;
+    tier1Keywords.forEach(kw => {
+      if (text.includes(kw)) {
+        score += 25; // High score for professional terminology
+        hasTier1 = true;
+      }
+    });
+
+    // === TIER 2: M&A & DEAL ACTIVITY ===
+    const tier2Keywords = [
+      'acquisition', 'acquires', 'acquired', 'merger', 'takeover',
+      'agrees to buy', 'to acquire', 'deal valued', 'transaction',
+      'agreed to sell', 'sells stake', 'stake sale'
+    ];
+    let hasTier2 = false;
+    tier2Keywords.forEach(kw => {
+      if (text.includes(kw)) {
+        score += 15;
+        hasTier2 = true;
+      }
+    });
+
+    // === TIER 3: VC, IPO, EXIT ACTIVITY ===
+    const tier3Keywords = [
+      'venture capital', 'vc firm', 'series a', 'series b', 'series c', 'series d',
+      'seed round', 'growth equity', 'growth capital',
+      'ipo', 'initial public offering', 'files for ipo', 'going public', 'stock listing',
+      'spac merger', 'de-spac', 'public listing'
+    ];
+    tier3Keywords.forEach(kw => {
+      if (text.includes(kw)) {
+        score += 12;
+        hasTier2 = true; // Count as deal activity
+      }
+    });
+
+    // === TIER 4: FINANCIAL METRICS & VALUATION ===
+    const valuationKeywords = [
+      'valuation', 'enterprise value', 'ebitda', 'multiple', 'ebitda multiple',
+      'deal value', 'transaction value', 'equity value', 'purchase price',
+      'raised at a valuation', 'valued at'
+    ];
+    valuationKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 8;
+    });
+
+    // === MAJOR PE FIRMS (Global Top 50) ===
+    const megaPEFirms = [
+      // US Mega-funds (Top 10 by AUM)
+      'blackstone', 'kkr', 'kohlberg kravis', 'carlyle group', 'carlyle',
+      'apollo global', 'apollo management', 'tpg capital', 'tpg',
+      'warburg pincus', 'advent international', 'thoma bravo',
+      'silver lake', 'bain capital', 'cvc capital',
+      'hellman & friedman', 'hellman friedman', 'neuberger berman',
+      'leonard green', 'general atlantic', 'vista equity',
+      'brookfield', 'ares management', 'bridgepoint',
+      // European leaders
       'cinven', 'permira', 'pai partners', 'apax partners',
       'bc partners', 'ardian', 'nordic capital', 'eqt',
-      // Asian firms
+      // Asian leaders
       'affinity equity', 'gaw capital', 'hillhouse capital',
       'citic capital', 'fosun', 'hony capital'
     ];
-    peFirms.forEach(firm => {
+    let hasPEFirm = false;
+    megaPEFirms.forEach(firm => {
       if (text.includes(firm)) {
-        score += 20; // Major boost for top PE firms
-        hasRelevantKeyword = true;
+        score += 30; // Huge boost for major PE firm mention
+        hasPEFirm = true;
+        hasTier1 = true;
       }
     });
-    
-    // Business context keywords (must have at least one)
-    const businessKeywords = [
-      'company', 'companies', 'firm', 'corporation', 'business',
-      'investor', 'investment', 'capital', 'fund', 'financial',
-      'billion', 'million', 'stake', 'shares', 'equity'
+
+    // === DEAL SIZE & SCALE INDICATORS ===
+    // Prefer articles with specific deal values
+    if (text.includes('billion')) score += 12;
+    if (text.includes('million') && (text.includes('acquisition') || text.includes('funding'))) score += 6;
+
+    // === PROFESSIONAL CONTEXT VALIDATION ===
+    // Must have business/finance context
+    const businessContext = [
+      'company', 'companies', 'firm', 'corporation',
+      'investor', 'investment', 'capital', 'fund', 'equity',
+      'stake', 'shares', 'deal', 'transaction'
     ];
-    let hasBusinessContext = false;
-    businessKeywords.forEach(kw => {
+    let hasContext = false;
+    businessContext.forEach(kw => {
       if (text.includes(kw)) {
-        hasBusinessContext = true;
+        hasContext = true;
         score += 2;
       }
     });
-    
-    // If no business context at all, likely not a business article
-    if (!hasBusinessContext) {
-      score -= 300;
+
+    // === QUALITY GATES ===
+    // Must have at least ONE of: professional PE term OR major PE firm OR M&A activity
+    if (!hasTier1 && !hasPEFirm && !hasTier2) {
+      score -= 600; // Heavy penalty for low relevance
     }
+
+    // Must have business context
+    if (!hasContext) {
+      score -= 400; // Likely not a real business article
+    }
+
+    // === SOURCE QUALITY BONUS ===
+    // Prefer premium business sources
+    const premiumSources = [
+      'wsj', 'wall street journal', 'financial times', 'ft.com',
+      'bloomberg', 'reuters', 'economist', 'forbes', 'axios',
+      'the information', 'business insider'
+    ];
+    premiumSources.forEach(src => {
+      if (article.source.toLowerCase().includes(src)) {
+        score += 10;
+      }
+    });
   }
 
   // Recency bonus
@@ -1030,6 +1294,113 @@ function calculateSimilarity(str1, str2) {
   const union = new Set([...words1, ...words2]);
 
   return intersection.size / union.size;
+}
+
+function removeSemanticDuplicates(articles, sectionType) {
+  // Skip GPT deduplication if API key not configured or too few articles
+  if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
+    return articles;
+  }
+
+  if (articles.length <= 5) {
+    return articles; // Not worth GPT call for small lists
+  }
+
+  try {
+    // Prepare article list with indices for GPT
+    const articleList = articles.map((a, idx) => {
+      return `${idx}: ${a.title}`;
+    }).join('\n');
+
+    const prompt = `You are analyzing news article titles to identify duplicates - articles covering the SAME news story/event.
+
+CRITICAL RULES:
+- Articles about the SAME story/event = DUPLICATES (even if worded differently)
+- Articles about DIFFERENT stories = NOT DUPLICATES (even if similar topic/company)
+- Look for: same company + same event/announcement + same timeframe
+- Ignore: source differences, minor wording variations
+
+Examples:
+DUPLICATES (same story):
+- "KKR aims to raise $15 billion for Asia fund"
+- "KKR seeks $15B in new Asia private equity fund"
+- "KKR launches $15 billion fundraising for fifth Asia fund"
+→ All about KKR's specific $15B Asia fundraising
+
+NOT DUPLICATES (different stories):
+- "Apple announces new iPhone 15"
+- "Apple reports Q3 earnings beat"
+→ Different Apple stories
+
+Articles to analyze:
+${articleList}
+
+Task: Identify groups of articles covering the SAME story. Return ONLY duplicate groups (2+ articles about same story).
+
+Response format (JSON array of arrays):
+[[1, 4, 7], [2, 9]]
+
+This means:
+- Articles 1, 4, 7 are duplicates (same story)
+- Articles 2, 9 are duplicates (same story)
+- All other articles are unique
+
+If NO duplicates found, return: []
+
+Respond with JSON only:`;
+
+    const response = callChatGPT(prompt, 800);
+
+    let cleanedResponse = response.trim();
+    if (cleanedResponse.startsWith('```json')) {
+      cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
+    } else if (cleanedResponse.startsWith('```')) {
+      cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
+
+    const duplicateGroups = JSON.parse(cleanedResponse);
+
+    if (!Array.isArray(duplicateGroups) || duplicateGroups.length === 0) {
+      Logger.log('✓ No semantic duplicates found');
+      return articles;
+    }
+
+    // Create set of indices to remove (keep highest score from each group)
+    const indicesToRemove = new Set();
+
+    duplicateGroups.forEach(group => {
+      if (!Array.isArray(group) || group.length < 2) return;
+
+      // Find article with highest score in this group
+      let bestIdx = group[0];
+      let bestScore = articles[group[0]].score;
+
+      group.forEach(idx => {
+        if (articles[idx].score > bestScore) {
+          bestScore = articles[idx].score;
+          bestIdx = idx;
+        }
+      });
+
+      // Mark all others for removal
+      group.forEach(idx => {
+        if (idx !== bestIdx) {
+          indicesToRemove.add(idx);
+        }
+      });
+    });
+
+    // Filter out duplicates
+    const dedupedArticles = articles.filter((_, idx) => !indicesToRemove.has(idx));
+
+    Logger.log(`✓ Semantic dedup: ${articles.length} → ${dedupedArticles.length} (removed ${indicesToRemove.size})`);
+
+    return dedupedArticles;
+
+  } catch (error) {
+    Logger.log(`⚠ Semantic dedup failed: ${error.toString()}`);
+    return articles; // Return original on error
+  }
 }
 
 // ==================== MARKET DATA ====================
@@ -1345,17 +1716,9 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     type: 'header',
     text: {
       type: 'plain_text',
-      text: '📰 Daily Global News Intelligence',
+      text: '📊 Global Business & Markets Brief',
       emoji: true
     }
-  });
-
-  blocks.push({
-    type: 'context',
-    elements: [{
-      type: 'mrkdwn',
-      text: `${today} | Sources: WSJ, FT, Bloomberg, NYT, Reuters, Economist + Korea Media`
-    }]
   });
 
   blocks.push({ type: 'divider' });
@@ -1492,21 +1855,13 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
         emoji: true
       }
     });
-    
-    blocks.push({
-      type: 'context',
-      elements: [{
-        type: 'mrkdwn',
-        text: `Top ${globalArticles.length} stories from international business press`
-      }]
-    });
 
-    const globalLines = globalArticles.map((a, i) => 
+    const globalLines = globalArticles.map((a, i) =>
       `*${i + 1}.* <${a.link}|${a.title}>`
     );
 
     addArticleBlocks(blocks, globalLines);
-    
+
     blocks.push({ type: 'divider' });
   }
 
@@ -1520,21 +1875,13 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
         emoji: true
       }
     });
-    
-    blocks.push({
-      type: 'context',
-      elements: [{
-        type: 'mrkdwn',
-        text: `Top ${peArticles.length} deals, transactions & PE activity`
-      }]
-    });
 
-    const peLines = peArticles.map((a, i) => 
+    const peLines = peArticles.map((a, i) =>
       `*${i + 1}.* <${a.link}|${a.title}>`
     );
 
     addArticleBlocks(blocks, peLines);
-    
+
     blocks.push({ type: 'divider' });
   }
 
@@ -1548,21 +1895,13 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
         emoji: true
       }
     });
-    
-    blocks.push({
-      type: 'context',
-      elements: [{
-        type: 'mrkdwn',
-        text: `Top ${koreaArticles.length} stories from Korean business media`
-      }]
-    });
 
-    const koreaLines = koreaArticles.map((a, i) => 
+    const koreaLines = koreaArticles.map((a, i) =>
       `*${i + 1}.* <${a.link}|${a.title}>`
     );
 
     addArticleBlocks(blocks, koreaLines);
-    
+
     blocks.push({ type: 'divider' });
   }
 
