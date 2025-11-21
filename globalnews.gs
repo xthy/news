@@ -663,8 +663,8 @@ function sendDailyNewsSummary() {
     // 4. Generate AI summary
     const aiSummary = generateAISummary(
       globalArticles,
-      koreaArticles,
       peArticles,
+      koreaArticles,
       marketData
     );
     Logger.log('🤖 AI summary generated');
@@ -673,8 +673,8 @@ function sendDailyNewsSummary() {
     const message = formatSlackMessage(
       aiSummary,
       globalArticles,
-      koreaArticles,
       peArticles,
+      koreaArticles,
       marketData
     );
     sendToSlack(message);
@@ -766,12 +766,30 @@ function fetchRSSFeed(source) {
         if (!title || title.length < 3) return;
 
         const titleLower = title.toLowerCase().trim();
+
+        // Filter exact matches
         const invalidTitles = [
           '-', '--', '---',  // Just dashes
           'deals', 'news', 'article',  // Generic single words
           'untitled', 'no title', '[no title]'
         ];
         if (invalidTitles.includes(titleLower)) return;
+
+        // Filter titles that start with generic words followed by dash
+        const invalidPrefixes = [
+          'deals - ', 'news - ', 'article - ', 'updates - ',
+          '- ', '--', 'null - ', 'undefined - '
+        ];
+        for (const prefix of invalidPrefixes) {
+          if (titleLower.startsWith(prefix)) return;
+        }
+
+        // Filter titles that are just a source name (e.g., "Private Equity Wire")
+        if (titleLower.split(' ').length <= 3 &&
+            (titleLower.includes('wire') || titleLower.includes('news') ||
+             titleLower.includes('international') || titleLower.includes('hub'))) {
+          return;
+        }
 
         const article = {
           source: extractSourceName(source.name, link),
