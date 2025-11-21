@@ -31,10 +31,13 @@ const CONFIG = {
   MAX_ARTICLES_PER_SOURCE: 15,
   SIMILARITY_THRESHOLD: 0.7,
   
-  // Section-specific limits
-  GLOBAL_TOP_HEADLINES: 20,      // Increased from 15
-  KOREA_TOP_HEADLINES: 15,       // Increased from 10
-  PE_SPECIFIC_NEWS: 15,          // Increased from 10
+  // Section-specific limits (final output after GPT curation)
+  GLOBAL_TOP_HEADLINES: 5,       // Curated to 5 most important
+  KOREA_TOP_HEADLINES: 5,        // Curated to 5 most important
+  PE_SPECIFIC_NEWS: 5,           // Curated to 5 most important
+
+  // Pre-GPT candidate pool (for GPT to choose from)
+  CANDIDATE_POOL_SIZE: 25        // Fetch 25 candidates, GPT picks top 5
 
   // Market Data
   MARKET_SYMBOLS: {
@@ -931,8 +934,14 @@ function processArticlesBySection(articles, limit, sectionType) {
   // Remove semantic duplicates using GPT (same story, different wording)
   uniqueArticles = removeSemanticDuplicates(uniqueArticles, sectionType);
 
-  // Return top N
-  return uniqueArticles.slice(0, limit);
+  // Get candidate pool (more articles than final limit)
+  const candidatePool = uniqueArticles.slice(0, CONFIG.CANDIDATE_POOL_SIZE);
+
+  // Use GPT to curate the most important articles from candidate pool
+  const curatedArticles = curateTopArticlesWithGPT(candidatePool, limit, sectionType);
+
+  // Return curated articles
+  return curatedArticles;
 }
 
 function scoreArticleBySection(article, sectionType) {
@@ -1467,6 +1476,102 @@ Respond with JSON only:`;
   }
 }
 
+function curateTopArticlesWithGPT(articles, targetCount, sectionType) {
+  // Skip GPT curation if API key not configured or too few articles
+  if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
+    return articles.slice(0, targetCount);
+  }
+
+  if (articles.length <= targetCount) {
+    return articles; // Already at or below target
+  }
+
+  try {
+    // Prepare article list with indices for GPT
+    const articleList = articles.map((a, idx) => {
+      const preview = a.description ? ` - ${a.description.substring(0, 100)}...` : '';
+      return `${idx}: [${a.source}] ${a.title}${preview}`;
+    }).join('\n\n');
+
+    const sectionContext = {
+      'global': 'global business, economy, policy, markets, and major corporate news',
+      'pe': 'private equity, M&A, deals, fundraising, exits, and investment activity',
+      'korea': 'Korean business, economy, policy, major companies (chaebols, startups), and market developments'
+    };
+
+    const prompt = `You are a senior business analyst curating the most important news for PE professionals.
+
+SECTION: ${sectionContext[sectionType] || 'business news'}
+
+Your task: Select the ${targetCount} MOST IMPORTANT articles from the candidate list below.
+
+IMPORTANCE CRITERIA (ranked):
+1. **Market-moving news** - Central bank decisions, major economic data, policy changes
+2. **Major deals & transactions** - Large M&A, significant PE deals, IPO filings
+3. **Corporate developments** - CEO changes, major restructuring, earnings surprises
+4. **Regulatory & policy** - New regulations, government actions affecting business
+5. **Strategic shifts** - Major business model changes, industry disruptions
+
+AVOID selecting:
+- Minor incremental news without clear impact
+- Repetitive updates on the same ongoing story
+- Speculative or rumor-based reporting
+- Minor regional news without broader significance
+
+Articles to analyze:
+${articleList}
+
+Task: Select exactly ${targetCount} articles that are MOST important for business decision-makers.
+
+Response format (JSON array of indices):
+[3, 7, 12, 15, 20]
+
+This means articles at indices 3, 7, 12, 15, and 20 are the most important.
+
+CRITICAL: Return EXACTLY ${targetCount} indices. Respond with JSON only:`;
+
+    const response = callChatGPT(prompt, 300);
+
+    let cleanedResponse = response.trim();
+    if (cleanedResponse.startsWith('```json')) {
+      cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
+    } else if (cleanedResponse.startsWith('```')) {
+      cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
+
+    const selectedIndices = JSON.parse(cleanedResponse);
+
+    if (!Array.isArray(selectedIndices) || selectedIndices.length === 0) {
+      Logger.log('⚠ GPT curation returned no selections, using top articles by score');
+      return articles.slice(0, targetCount);
+    }
+
+    // Extract selected articles in the order GPT chose them
+    const curatedArticles = selectedIndices
+      .filter(idx => idx >= 0 && idx < articles.length)
+      .map(idx => articles[idx]);
+
+    Logger.log(`✓ GPT curation: ${articles.length} → ${curatedArticles.length} curated articles`);
+
+    // If GPT didn't return enough, fill with top-scored articles
+    if (curatedArticles.length < targetCount) {
+      const selectedSet = new Set(selectedIndices);
+      const remaining = articles
+        .map((a, idx) => ({ article: a, idx }))
+        .filter(item => !selectedSet.has(item.idx))
+        .map(item => item.article)
+        .slice(0, targetCount - curatedArticles.length);
+      curatedArticles.push(...remaining);
+    }
+
+    return curatedArticles.slice(0, targetCount);
+
+  } catch (error) {
+    Logger.log(`⚠ GPT curation failed: ${error.toString()}`);
+    return articles.slice(0, targetCount); // Return top by score on error
+  }
+}
+
 // ==================== MARKET DATA ====================
 
 function fetchMarketData() {
@@ -1924,7 +2029,7 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     const globalLines = globalArticles.map((a, i) => {
       const cleanedTitle = deepCleanText(a.title);
       const cleanedLink = deepCleanText(a.link);
-      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+      return `${i + 1}. <${cleanedLink}|${cleanedTitle}>`;
     });
 
     addArticleBlocks(blocks, globalLines);
@@ -1946,7 +2051,7 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     const peLines = peArticles.map((a, i) => {
       const cleanedTitle = deepCleanText(a.title);
       const cleanedLink = deepCleanText(a.link);
-      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+      return `${i + 1}. <${cleanedLink}|${cleanedTitle}>`;
     });
 
     addArticleBlocks(blocks, peLines);
@@ -1968,7 +2073,7 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     const koreaLines = koreaArticles.map((a, i) => {
       const cleanedTitle = deepCleanText(a.title);
       const cleanedLink = deepCleanText(a.link);
-      return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
+      return `${i + 1}. <${cleanedLink}|${cleanedTitle}>`;
     });
 
     addArticleBlocks(blocks, koreaLines);
@@ -2054,18 +2159,8 @@ function formatMarketData(marketData) {
         const price = stock.price.toFixed(2);
         const day = stock.dayChange.toFixed(2);
         const week = stock.weekChange.toFixed(2);
-        
-        // Add chart links
-        let chartLink = '';
-        if (stock.symbol === '^GSPC') {
-          chartLink = 'https://finance.yahoo.com/quote/%5EGSPC';
-        } else if (stock.symbol === '^DJI') {
-          chartLink = 'https://finance.yahoo.com/quote/%5EDJI';
-        } else if (stock.symbol === '^IXIC') {
-          chartLink = 'https://finance.yahoo.com/quote/%5EIXIC';
-        }
-        
-        text += `${emoji} ${stock.name}: ${price} (Day ${day}% | Week ${week}%) <${chartLink}|→ Detail>\n`;
+
+        text += `${emoji} ${stock.name}: ${price} (${day}% | WoW ${week}%)\n`;
       }
     });
     text += '\n';
@@ -2079,16 +2174,8 @@ function formatMarketData(marketData) {
         const price = stock.price.toFixed(2);
         const day = stock.dayChange.toFixed(2);
         const week = stock.weekChange.toFixed(2);
-        
-        // Add chart links
-        let chartLink = '';
-        if (stock.symbol === '^KS11') {
-          chartLink = 'https://finance.yahoo.com/quote/%5EKS11';
-        } else if (stock.symbol === '^KQ11') {
-          chartLink = 'https://finance.yahoo.com/quote/%5EKQ11';
-        }
-        
-        text += `${emoji} ${stock.name}: ${price} (Day ${day}% | Week ${week}%) <${chartLink}|→ Detail>\n`;
+
+        text += `${emoji} ${stock.name}: ${price} (${day}% | WoW ${week}%)\n`;
       }
     });
     text += '\n';
@@ -2101,8 +2188,7 @@ function formatMarketData(marketData) {
         const emoji = fx.dayChange >= 0 ? '📈' : '📉';
         const day = fx.dayChange.toFixed(2);
         const week = fx.weekChange.toFixed(2);
-        const chartLink = 'https://finance.yahoo.com/quote/KRW=X';
-        text += `${emoji} USD/KRW: ${fx.price.toFixed(2)} (Day ${day}% | Week ${week}%) <${chartLink}|→ Detail>\n`;
+        text += `${emoji} USD/KRW: ${fx.price.toFixed(2)} (${day}% | WoW ${week}%)\n`;
       }
     });
     text += '\n';
@@ -2115,8 +2201,7 @@ function formatMarketData(marketData) {
         const emoji = c.dayChange >= 0 ? '📈' : '📉';
         const day = c.dayChange.toFixed(2);
         const week = c.weekChange.toFixed(2);
-        const chartLink = 'https://finance.yahoo.com/quote/BTC-USD';
-        text += `${emoji} Bitcoin: $${c.price.toFixed(0)} (Day ${day}% | Week ${week}%) <${chartLink}|→ Detail>\n`;
+        text += `${emoji} Bitcoin: $${c.price.toFixed(0)} (${day}% | WoW ${week}%)\n`;
       }
     });
   }
