@@ -17,8 +17,8 @@
 
 const CONFIG = {
   // API Keys
-  OPENAI_API_KEY: 'YOUR_OPENAI_API_KEY_HERE',
-  SLACK_WEBHOOK_URL: 'YOUR_SLACK_WEBHOOK_URL_HERE',
+  OPENAI_API_KEY: 'sk-proj-2g3OmSfqt4sA4r4KE2OjOjYYRq5abvx0luzb4A7PYy1FazAthsLOk98Di3jDunDU5adQW',
+  SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/T08SQU00JQ7/B09SW4SR18E/SC0HrFE6uZPmfDwcY',
 
   // ChatGPT Settings
   GPT_MODEL: 'gpt-4-turbo-preview',
@@ -30,11 +30,11 @@ const CONFIG = {
   // News Settings
   MAX_ARTICLES_PER_SOURCE: 15,
   SIMILARITY_THRESHOLD: 0.7,
-
+  
   // Section-specific limits
-  GLOBAL_TOP_HEADLINES: 15,
-  KOREA_TOP_HEADLINES: 10,
-  PE_SPECIFIC_NEWS: 10,
+  GLOBAL_TOP_HEADLINES: 20,      // Increased from 15
+  KOREA_TOP_HEADLINES: 15,       // Increased from 10
+  PE_SPECIFIC_NEWS: 15,          // Increased from 10
 
   // Market Data
   MARKET_SYMBOLS: {
@@ -51,7 +51,7 @@ const NEWS_SOURCES = [
   // =================================================
   // SECTION 1: GLOBAL TOP HEADLINES
   // =================================================
-
+  
   // --- Wall Street Journal ---
   {
     name: 'WSJ - World News',
@@ -74,7 +74,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 1
   },
-
+  
   // --- New York Times ---
   {
     name: 'NYT - Business',
@@ -97,7 +97,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 1
   },
-
+  
   // --- Financial Times ---
   {
     name: 'FT - World',
@@ -120,34 +120,34 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 1
   },
-
+  
   // --- Bloomberg (via Google News) ---
   {
     name: 'Bloomberg Business',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:bloomberg.com+(markets+OR+economy+OR+business)&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=business+OR+economy+OR+markets+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'global',
     tier: 1
   },
-
+  
   // --- Reuters ---
   {
     name: 'Reuters Business',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:reuters.com+(business+OR+markets+OR+economy)&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=business+OR+finance+OR+economy+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'global',
     tier: 1
   },
-
+  
   // --- The Economist ---
   {
     name: 'The Economist',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:economist.com&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=economy+OR+trade+OR+policy+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'global',
     tier: 1
   },
-
+  
   // --- Washington Post ---
   {
     name: 'WaPo - Business',
@@ -156,7 +156,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 1
   },
-
+  
   // --- BBC ---
   {
     name: 'BBC - Business',
@@ -165,7 +165,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 2
   },
-
+  
   // --- CNBC ---
   {
     name: 'CNBC - Top News',
@@ -174,7 +174,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 2
   },
-
+  
   // --- MarketWatch ---
   {
     name: 'MarketWatch',
@@ -183,7 +183,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 2
   },
-
+  
   // --- Guardian ---
   {
     name: 'Guardian - Business',
@@ -192,7 +192,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 2
   },
-
+  
   // --- Axios ---
   {
     name: 'Axios',
@@ -201,7 +201,43 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 2
   },
-
+  
+  // --- Associated Press ---
+  {
+    name: 'AP Business',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=business+OR+finance+source:ap+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'global',
+    tier: 1
+  },
+  
+  // --- Politico ---
+  {
+    name: 'Politico',
+    type: 'rss',
+    url: 'https://www.politico.com/rss/economy-and-jobs.xml',
+    section: 'global',
+    tier: 2
+  },
+  
+  // --- Forbes ---
+  {
+    name: 'Forbes',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=business+OR+ceo+OR+markets+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'global',
+    tier: 2
+  },
+  
+  // --- Business Insider ---
+  {
+    name: 'Business Insider',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=finance+OR+markets+OR+economy+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'global',
+    tier: 2
+  },
+  
   // --- Tech News (for global section) ---
   {
     name: 'TechCrunch',
@@ -210,7 +246,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 2
   },
-
+  
   // --- Nikkei Asia ---
   {
     name: 'Nikkei Asia',
@@ -219,7 +255,7 @@ const NEWS_SOURCES = [
     section: 'global',
     tier: 2
   },
-
+  
   // --- South China Morning Post ---
   {
     name: 'SCMP - Business',
@@ -231,72 +267,107 @@ const NEWS_SOURCES = [
 
   // =================================================
   // SECTION 2: KOREA TOP HEADLINES
+  // 4대 일간지 (조선/중앙/동아/한겨레) 경제면 + 주요 경제지
   // =================================================
-
-  // --- Korea Herald ---
+  
+  // --- 조선일보 경제 ---
   {
-    name: 'Korea Herald - Business',
+    name: '조선일보 - 경제',
     type: 'rss',
-    url: 'http://www.koreaherald.com/rss/020100000000.xml',
+    url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/economy/?outputType=xml',
     section: 'korea',
     tier: 1
   },
   {
-    name: 'Korea Herald - Finance',
+    name: '조선일보 - 산업',
     type: 'rss',
-    url: 'http://www.koreaherald.com/rss/020200000000.xml',
+    url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/industry/?outputType=xml',
     section: 'korea',
     tier: 1
   },
+  
+  // --- 중앙일보 경제 ---
   {
-    name: 'Korea Herald - IT',
-    type: 'rss',
-    url: 'http://www.koreaherald.com/rss/020400000000.xml',
-    section: 'korea',
-    tier: 1
-  },
-
-  // --- Korea Times ---
-  {
-    name: 'Korea Times - Business',
-    type: 'rss',
-    url: 'https://www.koreatimes.co.kr/www/rss/biz.xml',
-    section: 'korea',
-    tier: 1
-  },
-  {
-    name: 'Korea Times - Finance',
-    type: 'rss',
-    url: 'https://www.koreatimes.co.kr/www/rss/finance.xml',
-    section: 'korea',
-    tier: 1
-  },
-
-  // --- Yonhap ---
-  {
-    name: 'Yonhap - Business',
-    type: 'rss',
-    url: 'https://en.yna.co.kr/RSS/business.xml',
-    section: 'korea',
-    tier: 1
-  },
-  {
-    name: 'Yonhap - Economy',
-    type: 'rss',
-    url: 'https://en.yna.co.kr/RSS/economy.xml',
-    section: 'korea',
-    tier: 1
-  },
-
-  // --- Korea JoongAng Daily ---
-  {
-    name: 'JoongAng Daily',
+    name: '중앙일보 - 경제',
     type: 'rss',
     url: 'https://koreajoongangdaily.joins.com/RSS/allArticle.xml',
     section: 'korea',
     tier: 1
   },
-
+  
+  // --- 동아일보 경제 ---
+  {
+    name: '동아일보 - 경제',
+    type: 'rss',
+    url: 'https://rss.donga.com/economy.xml',
+    section: 'korea',
+    tier: 1
+  },
+  {
+    name: '동아일보 - 산업',
+    type: 'rss',
+    url: 'https://rss.donga.com/industry.xml',
+    section: 'korea',
+    tier: 1
+  },
+  
+  // --- 한겨레 경제 ---
+  {
+    name: '한겨레 - 경제',
+    type: 'rss',
+    url: 'https://www.hani.co.kr/rss/economy/',
+    section: 'korea',
+    tier: 1
+  },
+  
+  // --- 한국경제 (경제지) ---
+  {
+    name: '한국경제',
+    type: 'rss',
+    url: 'https://www.hankyung.com/rss/economy',
+    section: 'korea',
+    tier: 1
+  },
+  {
+    name: '한국경제 - 증권',
+    type: 'rss',
+    url: 'https://www.hankyung.com/rss/stock',
+    section: 'korea',
+    tier: 1
+  },
+  {
+    name: '한국경제 - 기업',
+    type: 'rss',
+    url: 'https://www.hankyung.com/rss/business',
+    section: 'korea',
+    tier: 1
+  },
+  
+  // --- 매일경제 (경제지) ---
+  {
+    name: '매일경제',
+    type: 'rss',
+    url: 'https://www.mk.co.kr/rss/30100041/',
+    section: 'korea',
+    tier: 1
+  },
+  {
+    name: '매일경제 - 증권',
+    type: 'rss',
+    url: 'https://www.mk.co.kr/rss/50200011/',
+    section: 'korea',
+    tier: 1
+  },
+  
+  // --- Yonhap (English for international context) ---
+  {
+    name: 'Yonhap - Business',
+    type: 'rss',
+    url: 'https://en.yna.co.kr/RSS/business.xml',
+    section: 'korea',
+    tier: 2
+  },
+  
   // --- Google News Korea ---
   {
     name: 'Google News - Korea Business',
@@ -305,7 +376,7 @@ const NEWS_SOURCES = [
     section: 'korea',
     tier: 2
   },
-
+  
   // --- SCMP Korea Coverage ---
   {
     name: 'SCMP - Korea',
@@ -314,7 +385,7 @@ const NEWS_SOURCES = [
     section: 'korea',
     tier: 2
   },
-
+  
   // --- Nikkei Korea Coverage ---
   {
     name: 'Nikkei - Korea',
@@ -327,93 +398,98 @@ const NEWS_SOURCES = [
   // =================================================
   // SECTION 3: PE SPECIFIC NEWS
   // =================================================
-
-  // --- M&A and Deals ---
+  
+  // --- Top Global PE Firms (Top 50 by AUM) ---
   {
-    name: 'PE/M&A Deals - Premium',
+    name: 'Top PE Firms',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(merger+OR+acquisition+OR+buyout+OR+%22private+equity%22+OR+takeover)+site:wsj.com+OR+site:ft.com+OR+site:bloomberg.com+OR+site:reuters.com&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=blackstone+OR+kkr+OR+carlyle+OR+apollo+OR+tpg+OR+warburg+OR+%22advent+international%22+OR+%22cvc+capital%22+OR+hellman+OR+neuberger+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   },
-
+  {
+    name: 'Major PE Firms 2',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=%22silver+lake%22+OR+%22thoma+bravo%22+OR+%22leonard+green%22+OR+%22general+atlantic%22+OR+%22bain+capital%22+OR+%22vista+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+  {
+    name: 'Asian PE Firms',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=%22affinity+equity%22+OR+%22gaw+capital%22+OR+%22hillhouse+capital%22+OR+%22kkr+asia%22+OR+%22asia+private+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+  
+  // --- M&A and Deals ---
+  {
+    name: 'PE/M&A Deals',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=%22merger+and+acquisition%22+OR+%22m%26a+deal%22+OR+buyout+company+OR+%22acquires%22+company+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+  
   // --- IPO News ---
   {
     name: 'IPO & Listings',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(ipo+OR+listing+OR+%22going+public%22+OR+spac)+site:wsj.com+OR+site:ft.com+OR+site:bloomberg.com&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%22files+for+ipo%22+OR+%22goes+public%22+OR+%22ipo+pricing%22+OR+%22stock+listing%22+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   },
-
+  
   // --- Venture Capital ---
   {
     name: 'Venture Capital',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(%22venture+capital%22+OR+funding+OR+series+OR+startup+investment)+(site:techcrunch.com+OR+site:bloomberg.com+OR+site:wsj.com)&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%22venture+capital%22+OR+%22raises+funding%22+OR+%22series+a%22+OR+%22series+b%22+OR+%22series+c%22+startup+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   },
-
+  
+  // --- Private Equity Firms ---
+  {
+    name: 'PE Firms',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=%22private+equity%22+OR+blackstone+OR+kkr+OR+carlyle+OR+apollo+OR+tpg+investment+OR+acquisition+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+  
   // --- Corporate Restructuring ---
   {
-    name: 'Restructuring & Bankruptcy',
+    name: 'Restructuring',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(restructuring+OR+bankruptcy+OR+distressed+OR+creditor)+(site:wsj.com+OR+site:ft.com+OR+site:reuters.com)&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=corporate+restructuring+OR+%22chapter+11%22+OR+bankruptcy+filing+OR+%22distressed+debt%22+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   },
-
-  // --- Activist Investors ---
-  {
-    name: 'Activist Investors',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(%22activist+investor%22+OR+%22hedge+fund%22+OR+%22shareholder+activist%22)+(site:wsj.com+OR+site:bloomberg.com+OR+site:reuters.com)&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
+  
   // --- Leveraged Finance ---
   {
     name: 'Leveraged Finance',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(leveraged+OR+lbo+OR+%22high+yield%22+OR+%22junk+bond%22)+(site:wsj.com+OR+site:ft.com+OR+site:bloomberg.com)&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=%22leveraged+buyout%22+OR+lbo+OR+%22high+yield+bonds%22+OR+%22leveraged+loan%22+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   },
-
-  // --- PE Exits ---
-  {
-    name: 'PE Exits & Returns',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(%22private+equity%22+exit+OR+secondary+sale+OR+portfolio+company)+(site:wsj.com+OR+site:ft.com+OR+site:bloomberg.com)&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // --- Infrastructure & Real Assets ---
-  {
-    name: 'Infrastructure Deals',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(infrastructure+OR+%22real+assets%22+OR+renewable)+(investment+OR+acquisition)+(site:ft.com+OR+site:bloomberg.com+OR+site:reuters.com)&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // --- Valuation & Pricing ---
-  {
-    name: 'Valuation News',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(valuation+OR+multiple+OR+%22enterprise+value%22)+(acquisition+OR+merger)+(site:wsj.com+OR+site:bloomberg.com)&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
+  
   // --- Tech M&A ---
   {
     name: 'Tech M&A',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=(tech+OR+software+OR+saas)+(merger+OR+acquisition+OR+buyout)+(site:techcrunch.com+OR+site:bloomberg.com+OR+site:wsj.com)&hl=en-US&gl=US&ceid=US:en',
+    url: 'https://news.google.com/rss/search?q=technology+OR+software+OR+saas+%22acquisition%22+OR+%22merger%22+company+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'pe',
+    tier: 1
+  },
+  
+  // --- Valuation & Deals ---
+  {
+    name: 'Valuation',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=company+valuation+OR+%22enterprise+value%22+OR+%22deal+value%22+billion+OR+million+when:24h&hl=en-US&gl=US&ceid=US:en',
     section: 'pe',
     tier: 1
   }
@@ -437,19 +513,19 @@ function sendDailyNewsSummary() {
     );
     Logger.log(`✅ Global: ${globalArticles.length} articles`);
 
-    const koreaArticles = processArticlesBySection(
-      allArticles.filter(a => a.section === 'korea'),
-      CONFIG.KOREA_TOP_HEADLINES,
-      'korea'
-    );
-    Logger.log(`✅ Korea: ${koreaArticles.length} articles`);
-
     const peArticles = processArticlesBySection(
       allArticles.filter(a => a.section === 'pe'),
       CONFIG.PE_SPECIFIC_NEWS,
       'pe'
     );
     Logger.log(`✅ PE Specific: ${peArticles.length} articles`);
+
+    const koreaArticles = processArticlesBySection(
+      allArticles.filter(a => a.section === 'korea'),
+      CONFIG.KOREA_TOP_HEADLINES,
+      'korea'
+    );
+    Logger.log(`✅ Korea: ${koreaArticles.length} articles`);
 
     // 3. Get market data
     const marketData = fetchMarketData();
@@ -582,7 +658,17 @@ function fetchRSSFeed(source) {
 }
 
 function extractSourceName(feedName, link) {
-  if (feedName.includes('Google News') || feedName.includes('PE/M&A') || feedName.includes('IPO') || feedName.includes('Venture')) {
+  // For aggregated feeds, extract actual source from URL
+  if (feedName.includes('Google News') || 
+      feedName.includes('PE/M&A') || 
+      feedName.includes('IPO') || 
+      feedName.includes('Venture') ||
+      feedName.includes('Restructuring') ||
+      feedName.includes('Activist') ||
+      feedName.includes('Leveraged') ||
+      feedName.includes('Infrastructure') ||
+      feedName.includes('Valuation') ||
+      feedName.includes('Tech M&A')) {
     if (link) {
       if (link.includes('wsj.com')) return 'WSJ';
       if (link.includes('ft.com')) return 'FT';
@@ -591,13 +677,28 @@ function extractSourceName(feedName, link) {
       if (link.includes('nytimes.com')) return 'NYT';
       if (link.includes('economist.com')) return 'Economist';
       if (link.includes('techcrunch.com')) return 'TechCrunch';
+      if (link.includes('cnbc.com')) return 'CNBC';
+      if (link.includes('axios.com')) return 'Axios';
+      if (link.includes('theguardian.com')) return 'Guardian';
+      if (link.includes('washingtonpost.com')) return 'Washington Post';
+      if (link.includes('marketwatch.com')) return 'MarketWatch';
+      // Korea sources
       if (link.includes('koreaherald.com')) return 'Korea Herald';
       if (link.includes('koreatimes.co.kr')) return 'Korea Times';
       if (link.includes('yna.co.kr')) return 'Yonhap';
+      if (link.includes('chosun.com')) return 'Chosun Ilbo';
+      if (link.includes('joongang.co.kr')) return 'JoongAng';
+      if (link.includes('hankyung.com')) return 'Korea Economic Daily';
+      if (link.includes('mk.co.kr')) return 'Maeil Business';
+      if (link.includes('etnews.com')) return 'ET News';
+      if (link.includes('mt.co.kr')) return 'Money Today';
+      if (link.includes('thebell.co.kr')) return 'The Bell';
     }
+    // If can't identify from URL, use generic label
+    return 'Financial Press';
   }
-
-  // Remove all category/section suffixes
+  
+  // Clean up direct feed names - remove all category suffixes
   return feedName
     .replace(/Google News - /g, '')
     .replace(/ - World News/g, '')
@@ -612,16 +713,6 @@ function extractSourceName(feedName, link) {
     .replace(/ - Top News/g, '')
     .replace(/ - Top Stories/g, '')
     .replace(/ - Premium/g, '')
-    .replace(/PE\/M&A Deals - Premium/g, 'Various')
-    .replace(/IPO & Listings/g, 'Various')
-    .replace(/Venture Capital/g, 'Various')
-    .replace(/Restructuring & Bankruptcy/g, 'Various')
-    .replace(/Activist Investors/g, 'Various')
-    .replace(/Leveraged Finance/g, 'Various')
-    .replace(/PE Exits & Returns/g, 'Various')
-    .replace(/Infrastructure Deals/g, 'Various')
-    .replace(/Valuation News/g, 'Various')
-    .replace(/Tech M&A/g, 'Various')
     .trim();
 }
 
@@ -672,6 +763,45 @@ function scoreArticleBySection(article, sectionType) {
   let score = 0;
   const text = (article.title + ' ' + (article.description || '')).toLowerCase();
 
+  // ==================== UNIVERSAL FILTER: EXCLUDE SPORTS & ENTERTAINMENT ====================
+  // This applies to ALL sections - immediate disqualification
+  const excludeKeywords = [
+    // Sports - comprehensive list
+    'sport', 'sports', 'football', 'soccer', 'baseball', 'basketball', 'nfl', 'nba', 'mlb', 'nhl',
+    'olympic', 'olympics', 'fifa', 'uefa', 'premier league', 'champions league', 'world cup',
+    'tennis', 'golf', 'boxing', 'mma', 'ufc', 'wrestling', 'racing', 'formula 1', 'f1',
+    'athlete', 'athletes', 'player', 'players', 'team', 'teams', 'coach', 'coaches', 
+    'stadium', 'arena', 'league', 'tournament', 'championship', 'playoff', 'playoffs',
+    'game', 'games', 'match', 'matches', 'score', 'scored', 'win', 'wins', 'loss', 'defeat',
+    'athletic', 'athletics', 'aggie', 'aggies', 'bulldogs', 'wildcats', 'tigers', 'bears',
+    'college football', 'college basketball', 'ncaa', 'division', 'conference',
+    'quarterback', 'running back', 'pitcher', 'batter', 'goalie', 'defender',
+    '스포츠', '야구', '축구', '농구', '배구', '골프', '테니스', '올림픽',
+    
+    // Entertainment
+    'k-pop', 'kpop', 'bts', 'blackpink', 'celebrity', 'celebrities', 'entertainment', 'hollywood',
+    'movie', 'movies', 'film', 'films', 'actor', 'actress', 'drama', 'dramas', 'tv show', 'netflix', 'streaming',
+    'music', 'album', 'albums', 'concert', 'concerts', 'tour', 'grammy', 'grammys', 'oscar', 'oscars', 'emmy', 'emmys',
+    'box office', 'premiere', 'trailer', 'songwriter', 'musician', 'band', 'singer',
+    '연예', '드라마', '영화', '가수', '배우', '아이돌', 'k드라마',
+    
+    // Crime & Violence (clearly not business)
+    'stabbed', 'stabbing', 'shooting', 'shot', 'killed', 'murder', 'murdered', 'assault', 'assaulted',
+    'rape', 'raped', 'robbery', 'robbed', 'burglary', 'burglar', 'theft', 'stolen',
+    'arrested', 'arrest', 'police', 'cop', 'sheriff', 'investigation', 'suspect', 'victim',
+    'crime', 'criminal', 'prison', 'jail', 'inmate', 'convicted', 'trial', 'guilty',
+    
+    // Other irrelevant
+    'weather', 'forecast', 'hurricane', 'tornado', 'earthquake', 'flood',
+    'accident', 'crash', 'collision', 'died', 'death', 'funeral', 'obituary'
+  ];
+  
+  for (const keyword of excludeKeywords) {
+    if (text.includes(keyword)) {
+      return -1000; // Massive negative score = automatic exclusion
+    }
+  }
+
   // Base score by source tier
   if (article.sourceTier === 1) {
     score += 40;
@@ -708,17 +838,68 @@ function scoreArticleBySection(article, sectionType) {
   }
 
   if (sectionType === 'korea') {
-    // Korea-specific scoring
+    // Korea major companies/chaebols only - filter out minor companies
+    const majorCompanies = [
+      'samsung', 'hyundai', 'sk', 'lg', 'lotte', 'hanwha', 'gs', 'hanjin',
+      'doosan', 'shinsegae', 'cj', 'posco', 'kakao', 'naver', 'coupang',
+      'samsung electronics', 'hyundai motor', 'sk hynix', 'lg energy',
+      '삼성', '현대', 'sk', 'lg', '롯데', '한화', 'gs', '한진',
+      '두산', '신세계', 'cj', '포스코', '카카오', '네이버', '쿠팡'
+    ];
+    
+    // Check if article mentions major company
+    let hasMajorCompany = false;
+    majorCompanies.forEach(co => {
+      if (text.includes(co)) {
+        hasMajorCompany = true;
+        score += 12;
+      }
+    });
+    
+    // Macro economic keywords (always relevant even without company name)
+    const macroKeywords = [
+      'kospi', 'kosdaq', '경제', '수출', '무역', '환율', 'gdp', '금리',
+      'economy', 'export', 'trade', 'interest rate', '한국은행', 'bank of korea'
+    ];
+    macroKeywords.forEach(kw => {
+      if (text.includes(kw)) {
+        hasMajorCompany = true; // Count as relevant
+        score += 10;
+      }
+    });
+    
+    // Korea business keywords
     const koreaKeywords = [
-      'samsung', 'hyundai', 'sk', 'lg', 'korea', 'korean',
-      'kospi', 'kosdaq', 'seoul', 'chaebol', 'kdb', 'k-chip'
+      'chaebol', '재벌', '반도체', 'semiconductor', '자동차', 'automotive',
+      '배터리', 'battery', 'k-chip', 'ipo', '인수', '합병', 'merger'
     ];
     koreaKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 8;
+      if (text.includes(kw)) score += 6;
     });
 
     // Korea business leaders
-    if (text.includes('lee jae-yong') || text.includes('chung eui-sun')) score += 5;
+    if (text.includes('lee jae-yong') || text.includes('chung eui-sun') || 
+        text.includes('이재용') || text.includes('정의선')) score += 8;
+    
+    // If no major company or macro topic, likely minor/promotional news
+    if (!hasMajorCompany) {
+      score -= 400; // Heavy penalty for minor company news
+    }
+    
+    // Exclude promotional/marketing/real estate fluff
+    const promotionalKeywords = [
+      'medica', '전시회', 'exhibition', '참가', 'participation',
+      '가입자', 'subscriber', '돌파', 'breakthrough', 
+      '특징주', 'featured stock', '상승', 'rise', '하락', 'fall',
+      '[특징주]', '전략적 투자', 'strategic investment', '신성장',
+      // Real estate / construction marketing
+      '견본주택', '분양', '모델하우스', 'model house', 'showroom',
+      '아파트', 'apartment', 'officetel', '오피스텔',
+      '개관', 'opening', 'grand opening', '오픈'
+    ];
+    promotionalKeywords.forEach(kw => {
+      if (text.includes(kw)) score -= 250; // Strong penalize promotional content
+    });
   }
 
   if (sectionType === 'pe') {
@@ -734,18 +915,62 @@ function scoreArticleBySection(article, sectionType) {
       'leveraged', 'debt', 'credit', 'covenant',
       'portfolio company', 'exit', 'secondary'
     ];
+    
+    // Check if article has at least ONE PE-relevant keyword
+    let hasRelevantKeyword = false;
     peKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 10;
+      if (text.includes(kw)) {
+        score += 10;
+        hasRelevantKeyword = true;
+      }
     });
+    
+    // If NO PE keywords found, heavily penalize (likely irrelevant)
+    if (!hasRelevantKeyword) {
+      score -= 500; // Strong penalty but not absolute exclusion
+    }
 
-    // Major PE firms
+    // Major PE firms (Global Top 50)
     const peFirms = [
+      // US Mega-funds
       'blackstone', 'kkr', 'carlyle', 'apollo', 'tpg',
-      'warburg', 'advent', 'vista', 'thoma bravo', 'silver lake'
+      'warburg pincus', 'advent international', 'bain capital',
+      'cvc capital', 'hellman & friedman', 'neuberger berman',
+      'silver lake', 'thoma bravo', 'leonard green',
+      'general atlantic', 'vista equity', 'brookfield',
+      'ares management', 'bridgepoint', 'providence equity',
+      // European firms
+      'cinven', 'permira', 'pai partners', 'apax partners',
+      'bc partners', 'ardian', 'nordic capital', 'eqt',
+      // Asian firms
+      'affinity equity', 'gaw capital', 'hillhouse capital',
+      'citic capital', 'fosun', 'hony capital'
     ];
     peFirms.forEach(firm => {
-      if (text.includes(firm)) score += 8;
+      if (text.includes(firm)) {
+        score += 20; // Major boost for top PE firms
+        hasRelevantKeyword = true;
+      }
     });
+    
+    // Business context keywords (must have at least one)
+    const businessKeywords = [
+      'company', 'companies', 'firm', 'corporation', 'business',
+      'investor', 'investment', 'capital', 'fund', 'financial',
+      'billion', 'million', 'stake', 'shares', 'equity'
+    ];
+    let hasBusinessContext = false;
+    businessKeywords.forEach(kw => {
+      if (text.includes(kw)) {
+        hasBusinessContext = true;
+        score += 2;
+      }
+    });
+    
+    // If no business context at all, likely not a business article
+    if (!hasBusinessContext) {
+      score -= 300;
+    }
   }
 
   // Recency bonus
@@ -897,7 +1122,7 @@ function calculateChange(prices, days) {
 
 // ==================== AI SUMMARY ====================
 
-function generateAISummary(globalArticles, koreaArticles, peArticles, marketData) {
+function generateAISummary(globalArticles, peArticles, koreaArticles, marketData) {
   if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
     return {
       headline: 'Global News Headlines',
@@ -915,67 +1140,92 @@ function generateAISummary(globalArticles, koreaArticles, peArticles, marketData
       return `${i + 1}. [${a.source}] ${a.title}${desc}`;
     }).join('\n\n');
 
-    const koreaContext = koreaArticles.slice(0, 8).map((a, i) => {
+    const peContext = peArticles.slice(0, 8).map((a, i) => {
       return `${i + 1}. [${a.source}] ${a.title}`;
     }).join('\n');
 
-    const peContext = peArticles.slice(0, 8).map((a, i) => {
+    const koreaContext = koreaArticles.slice(0, 8).map((a, i) => {
       return `${i + 1}. [${a.source}] ${a.title}`;
     }).join('\n');
 
     const marketContext = formatMarketContextForAI(marketData);
 
     const prompt = `You are an executive analyst for private equity professionals.
-Analyze today's news across three sections and provide comprehensive intelligence.
+Analyze TODAY'S news (last 24 hours) and provide a daily briefing focused on NEW developments.
 
-=== MARKET DATA ===
+CRITICAL: This is a DAILY briefing. Focus on what CHANGED or HAPPENED in the last 24 hours.
+Use present tense and "today" language: "announced today", "reports show", "markets responded to..."
+Avoid generic evergreen analysis. Highlight NEW information, decisions, announcements, and movements.
+
+IMPORTANT FILTER: Ignore ANY sports or entertainment news that may have slipped through:
+- Sports: football, basketball, soccer, tennis, olympics, athlete deals, team acquisitions, stadium sales
+- Entertainment: movies, music, concerts, celebrities, K-pop, streaming services, box office
+- Focus ONLY on business, finance, economy, policy, corporate M&A, technology, industry
+
+=== MARKET DATA (Last 24 Hours) ===
 ${marketContext}
 
-=== GLOBAL TOP HEADLINES ===
+=== GLOBAL TOP HEADLINES (Today) ===
 ${globalContext}
 
-=== KOREA HEADLINES ===
-${koreaContext}
-
-=== PE/M&A SPECIFIC NEWS ===
+=== PE/M&A SPECIFIC NEWS (Today) ===
 ${peContext}
 
-TASK: Synthesize into actionable intelligence for PE professionals:
+=== KOREA HEADLINES (Today) ===
+${koreaContext}
+
+TASK: Synthesize TODAY'S BUSINESS developments into actionable intelligence:
 
 1. **Key Insights** (6 bullets, 150-200 chars each)
-   - Most important developments from ALL sections
-   - Focus on: economic policy, major deals, market movements, Korea business, PE activity
-   - Include specific details and business implications
+   - What HAPPENED today that matters for PE/business leaders?
+   - NEW announcements, decisions, policy changes, deal news
+   - Use action verbs: "announced", "reported", "reached", "fell", "surged"
+   - Focus on concrete events and numbers from TODAY
+   - Example: "Fed officials signaled dovish pivot today as October CPI came in at 2.3%, opening door for March rate cuts"
 
 2. **Macro-Economic & Policy** (700-900 chars)
-   - Central bank actions, inflation, rates, fiscal policy
-   - Government regulation and trade
-   - How these affect investment strategy
+   - TODAY'S central bank actions, economic data releases, policy announcements
+   - NEW inflation/employment numbers, rate decisions, fiscal policy changes
+   - Market reactions to today's developments
+   - How today's news affects investment strategy going forward
+   - Use temporal markers: "today", "this morning", "announced", "reported"
 
 3. **PE & Deal Activity** (600-800 chars)
-   - M&A transactions, IPOs, buyouts
-   - PE firm activity and exits
-   - Valuation trends and market conditions
-   - Include Korea deals if relevant
+   - Deals ANNOUNCED today, closings, IPO filings, PE exits
+   - NEW valuations, fundraising announcements, LP commitments
+   - TODAY'S market conditions affecting deal activity
+   - Recent transaction trends visible in today's news
+   - If no major deals today, write: "(No significant PE transactions reported in last 24 hours)"
 
 4. **Korea Business Focus** (500-700 chars)
-   - Major Korea corporate developments
-   - Samsung, Hyundai, SK, LG updates
-   - Korea economic policy and markets
-   - Cross-border implications
+   - TODAY'S major Korean corporate announcements and decisions
+   - Samsung, Hyundai, SK, LG developments from today
+   - Korean market reactions and policy news
+   - Cross-border implications of today's Korea news
+   - IMPORTANT: Even if news seems minor, analyze what's available rather than saying "limited developments"
+   - Focus on what DID happen, not what didn't
 
 5. **Sector Trends** (500-700 chars or empty)
-   - Which sectors seeing major activity
-   - Technology, semiconductors, energy, etc.
-   - Investment implications
+   - Which sectors saw major developments TODAY
+   - NEW product launches, regulatory changes, earnings reports
+   - TODAY'S technology breakthroughs or industry shifts
+   - If no clear sector story today, leave empty
+
+CRITICAL REMINDERS:
+- This is a DAILY update - emphasize what's NEW in last 24 hours
+- Use present tense and time markers: "today", "announced", "reported"
+- Focus on EVENTS and CHANGES, not static analysis
+- For Korea section: ALWAYS provide analysis based on available news, don't use placeholder text
+- If a section has minimal news, briefly note market conditions or sentiment instead
+- Readers get this EVERY day - make each day's content feel fresh and timely
 
 Respond in JSON:
 {
-  "insights": ["insight1", "insight2", "insight3", "insight4", "insight5", "insight6"],
-  "macroEconomic": "analysis...",
-  "peDeals": "PE & deal analysis...",
-  "korea": "Korea business focus...",
-  "sectors": "sector trends or empty"
+  "insights": ["insight1 with TODAY'S news", "insight2...", "insight3...", "insight4...", "insight5...", "insight6..."],
+  "macroEconomic": "today's economic/policy developments...",
+  "peDeals": "today's PE/M&A activity - if truly nothing, briefly note 'Quiet day for major transactions, markets focused on...'",
+  "korea": "today's Korea business news - ALWAYS provide analysis, never use placeholder text",
+  "sectors": "today's sector developments or empty string"
 }`;
 
     const response = callChatGPT(prompt, 3500);
@@ -1086,7 +1336,7 @@ function callChatGPT(prompt, maxTokens = 500) {
 
 // ==================== SLACK FORMATTING ====================
 
-function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles, marketData) {
+function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles, marketData) {
   const blocks = [];
   const today = Utilities.formatDate(new Date(), 'GMT+9', 'yyyy-MM-dd EEEE');
 
@@ -1119,7 +1369,7 @@ function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles
       emoji: true
     }
   });
-
+  
   blocks.push({
     type: 'section',
     text: {
@@ -1242,7 +1492,7 @@ function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles
         emoji: true
       }
     });
-
+    
     blocks.push({
       type: 'context',
       elements: [{
@@ -1251,12 +1501,252 @@ function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles
       }]
     });
 
-    const globalLines = globalArticles.map((a, i) =>
-      `*${i + 1}.* <${a.link}|${a.title}> _— ${a.source}_`
+    const globalLines = globalArticles.map((a, i) => 
+      `*${i + 1}.* <${a.link}|${a.title}>`
     );
 
     addArticleBlocks(blocks, globalLines);
+    
+    blocks.push({ type: 'divider' });
+  }
 
+  // ==================== SECTION 2: PE/M&A NEWS ====================
+  if (peArticles.length > 0) {
+    blocks.push({
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: '💼 Private Equity & M&A',
+        emoji: true
+      }
+    });
+    
+    blocks.push({
+      type: 'context',
+      elements: [{
+        type: 'mrkdwn',
+        text: `Top ${peArticles.length} deals, transactions & PE activity`
+      }]
+    });
+
+    const peLines = peArticles.map((a, i) => 
+      `*${i + 1}.* <${a.link}|${a.title}>`
+    );
+
+    addArticleBlocks(blocks, peLines);
+    
+    blocks.push({ type: 'divider' });
+  }
+
+  // ==================== SECTION 3: KOREA HEADLINES ====================
+  if (koreaArticles.length > 0) {
+    blocks.push({
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: '🇰🇷 Korea Business & Markets',
+        emoji: true
+      }
+    });
+    
+    blocks.push({
+      type: 'context',
+      elements: [{
+        type: 'mrkdwn',
+        text: `Top ${koreaArticles.length} stories from Korean business media`
+      }]
+    });
+
+    const koreaLines = koreaArticles.map((a, i) => 
+      `*${i + 1}.* <${a.link}|${a.title}>`
+    );
+
+    addArticleBlocks(blocks, koreaLines);
+    
+    blocks.push({ type: 'divider' });
+  }
+
+  // ==================== FOOTER ====================
+  blocks.push({
+    type: 'context',
+    elements: [{
+      type: 'mrkdwn',
+      text: `🤖 Global News AI v3.0 | Analysis by GPT-4 | ${globalArticles.length + peArticles.length + koreaArticles.length} curated articles`
+    }]
+  });
+
+  return { blocks: blocks };
+}
+  const blocks = [];
+  const today = Utilities.formatDate(new Date(), 'GMT+9', 'yyyy-MM-dd EEEE');
+
+  // ==================== HEADER ====================
+  blocks.push({
+    type: 'header',
+    text: {
+      type: 'plain_text',
+      text: '📰 Daily Global News Intelligence',
+      emoji: true
+    }
+  });
+
+  blocks.push({
+    type: 'context',
+    elements: [{
+      type: 'mrkdwn',
+      text: `${today} | Sources: WSJ, FT, Bloomberg, NYT, Reuters, Economist + Korea Media`
+    }]
+  });
+
+  blocks.push({ type: 'divider' });
+
+  // ==================== MARKET INDICATORS ====================
+  blocks.push({
+    type: 'header',
+    text: {
+      type: 'plain_text',
+      text: '📊 Market Overview',
+      emoji: true
+    }
+  });
+  
+  blocks.push({
+    type: 'section',
+    text: {
+      type: 'mrkdwn',
+      text: formatMarketData(marketData)
+    }
+  });
+
+  blocks.push({ type: 'divider' });
+
+  // ==================== EXECUTIVE SUMMARY ====================
+  blocks.push({
+    type: 'header',
+    text: {
+      type: 'plain_text',
+      text: '🎯 Executive Summary',
+      emoji: true
+    }
+  });
+
+  // Key Insights
+  if (aiSummary.insights && aiSummary.insights.length > 0) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: "*Today's Key Insights*"
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.insights.map(i => `• ${i}`).join('\n')
+      }
+    });
+  }
+
+  // Macro-Economic
+  if (aiSummary.macroEconomic) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*Macro-Economic & Policy*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.macroEconomic
+      }
+    });
+  }
+
+  // PE & Deals
+  if (aiSummary.peDeals) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*PE & Deal Activity*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.peDeals
+      }
+    });
+  }
+
+  // Korea Focus
+  if (aiSummary.korea) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*Korea Business Focus*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.korea
+      }
+    });
+  }
+
+  // Sector Trends
+  if (aiSummary.sectors) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*Sector & Industry Trends*'
+      }
+    });
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: aiSummary.sectors
+      }
+    });
+  }
+
+  blocks.push({ type: 'divider' });
+
+  // ==================== SECTION 1: GLOBAL HEADLINES ====================
+  if (globalArticles.length > 0) {
+    blocks.push({
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: '🌍 Global Business & Economy',
+        emoji: true
+      }
+    });
+    
+    blocks.push({
+      type: 'context',
+      elements: [{
+        type: 'mrkdwn',
+        text: `Top ${globalArticles.length} stories from international business press`
+      }]
+    });
+
+    const globalLines = globalArticles.map((a, i) => 
+      `*${i + 1}.* <${a.link}|${a.title}>`
+    );
+
+    addArticleBlocks(blocks, globalLines);
+    
     blocks.push({ type: 'divider' });
   }
 
@@ -1270,7 +1760,7 @@ function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles
         emoji: true
       }
     });
-
+    
     blocks.push({
       type: 'context',
       elements: [{
@@ -1279,12 +1769,12 @@ function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles
       }]
     });
 
-    const koreaLines = koreaArticles.map((a, i) =>
-      `*${i + 1}.* <${a.link}|${a.title}> _— ${a.source}_`
+    const koreaLines = koreaArticles.map((a, i) => 
+      `*${i + 1}.* <${a.link}|${a.title}>`
     );
 
     addArticleBlocks(blocks, koreaLines);
-
+    
     blocks.push({ type: 'divider' });
   }
 
@@ -1298,7 +1788,7 @@ function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles
         emoji: true
       }
     });
-
+    
     blocks.push({
       type: 'context',
       elements: [{
@@ -1307,12 +1797,12 @@ function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles
       }]
     });
 
-    const peLines = peArticles.map((a, i) =>
-      `*${i + 1}.* <${a.link}|${a.title}> _— ${a.source}_`
+    const peLines = peArticles.map((a, i) => 
+      `*${i + 1}.* <${a.link}|${a.title}>`
     );
 
     addArticleBlocks(blocks, peLines);
-
+    
     blocks.push({ type: 'divider' });
   }
 
@@ -1326,7 +1816,7 @@ function formatSlackMessage(aiSummary, globalArticles, koreaArticles, peArticles
   });
 
   return { blocks: blocks };
-}
+  }
 
 function addArticleBlocks(blocks, articleLines) {
   const CHARS_PER_BLOCK = 2800;
@@ -1374,7 +1864,18 @@ function formatMarketData(marketData) {
         const price = stock.price.toFixed(2);
         const day = stock.dayChange.toFixed(2);
         const week = stock.weekChange.toFixed(2);
-        text += `${emoji} ${stock.name}: ${price} (Day ${day}% | Week ${week}%)\n`;
+        
+        // Add chart links
+        let chartLink = '';
+        if (stock.symbol === '^GSPC') {
+          chartLink = 'https://finance.yahoo.com/quote/%5EGSPC';
+        } else if (stock.symbol === '^DJI') {
+          chartLink = 'https://finance.yahoo.com/quote/%5EDJI';
+        } else if (stock.symbol === '^IXIC') {
+          chartLink = 'https://finance.yahoo.com/quote/%5EIXIC';
+        }
+        
+        text += `${emoji} ${stock.name}: ${price} (Day ${day}% | Week ${week}%) <${chartLink}|→ Detail>\n`;
       }
     });
     text += '\n';
@@ -1388,7 +1889,16 @@ function formatMarketData(marketData) {
         const price = stock.price.toFixed(2);
         const day = stock.dayChange.toFixed(2);
         const week = stock.weekChange.toFixed(2);
-        text += `${emoji} ${stock.name}: ${price} (Day ${day}% | Week ${week}%)\n`;
+        
+        // Add chart links
+        let chartLink = '';
+        if (stock.symbol === '^KS11') {
+          chartLink = 'https://finance.yahoo.com/quote/%5EKS11';
+        } else if (stock.symbol === '^KQ11') {
+          chartLink = 'https://finance.yahoo.com/quote/%5EKQ11';
+        }
+        
+        text += `${emoji} ${stock.name}: ${price} (Day ${day}% | Week ${week}%) <${chartLink}|→ Detail>\n`;
       }
     });
     text += '\n';
@@ -1399,7 +1909,8 @@ function formatMarketData(marketData) {
     marketData.forex.forEach(fx => {
       if (fx && fx.price != null) {
         const emoji = fx.dayChange >= 0 ? '📈' : '📉';
-        text += `${emoji} USD/KRW: ${fx.price.toFixed(2)} (${fx.dayChange.toFixed(2)}%)\n`;
+        const chartLink = 'https://finance.yahoo.com/quote/KRW=X';
+        text += `${emoji} USD/KRW: ${fx.price.toFixed(2)} (${fx.dayChange.toFixed(2)}%) <${chartLink}|→ Detail>\n`;
       }
     });
     text += '\n';
@@ -1410,7 +1921,8 @@ function formatMarketData(marketData) {
     marketData.crypto.forEach(c => {
       if (c && c.price != null) {
         const emoji = c.dayChange >= 0 ? '📈' : '📉';
-        text += `${emoji} Bitcoin: $${c.price.toFixed(0)} (${c.dayChange.toFixed(2)}%)\n`;
+        const chartLink = 'https://finance.yahoo.com/quote/BTC-USD';
+        text += `${emoji} Bitcoin: $${c.price.toFixed(0)} (${c.dayChange.toFixed(2)}%) <${chartLink}|→ Detail>\n`;
       }
     });
   }
