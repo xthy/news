@@ -878,12 +878,21 @@ function extractSourceName(feedName, link) {
 
 function cleanTitle(title) {
   if (!title) return '';
-  return title
-    .replace(/ - WSJ$/, '')
-    .replace(/ - The New York Times$/, '')
-    .replace(/ - Financial Times$/, '')
+
+  // Remove source attribution at end (e.g., "- Bloomberg.com", "- Private Equity Wire")
+  // Pattern: " - [source name]" at the end of title
+  title = title
+    // Remove trailing source with .com/.net/.org/.co.uk
+    .replace(/ - [\w\s\.\-&]+(\.com|\.net|\.org|\.co\.uk)$/gi, '')
+    // Remove trailing source names (e.g., "- Private Equity Wire", "- Bloomberg")
+    .replace(/ - [A-Z][\w\s\.\-&]+$/g, '')
+    // Remove "- report" at the end
+    .replace(/ - report$/gi, '')
+    // Remove pipe separators and everything after
     .replace(/ \| .*$/, '')
     .trim();
+
+  return title;
 }
 
 function cleanDescription(desc) {
