@@ -882,6 +882,10 @@ function cleanTitle(title) {
   // Remove source attribution at end (e.g., "- Bloomberg.com", "- Private Equity Wire")
   // Pattern: " - [source name]" at the end of title
   title = title
+    // Remove all newlines and carriage returns first
+    .replace(/[\r\n]+/g, ' ')
+    // Remove excessive whitespace
+    .replace(/\s+/g, ' ')
     // Remove trailing source with .com/.net/.org/.co.uk
     .replace(/ - [\w\s\.\-&]+(\.com|\.net|\.org|\.co\.uk)$/gi, '')
     // Remove trailing source names (e.g., "- Private Equity Wire", "- Bloomberg")
