@@ -1041,7 +1041,33 @@ function scoreArticleBySection(article, sectionType) {
       }
     });
 
-    // Government policy and regulation (highly relevant for business news)
+    // PE/M&A/Investment keywords (HIGHEST priority for Korea section)
+    const peRelatedKeywords = [
+      // M&A and deals
+      '인수', '합병', '매각', '지분', '투자', '펀딩',
+      'acquisition', 'merger', 'stake', 'investment', 'funding', 'deal',
+      'm&a', 'buyout', 'takeover',
+
+      // PE and VC
+      'private equity', 'venture capital', 'pe firm', 'vc',
+      '사모펀드', '벤처캐피탈', '프라이빗에쿼티',
+
+      // Valuations and exits
+      'ipo', 'valuation', '기업가치', '밸류에이션', 'exit',
+      '상장', 'listing', 'unicorn', '유니콘',
+
+      // Startup ecosystem
+      '스타트업', 'startup', 'start-up', '벤처', 'venture',
+      '시리즈', 'series a', 'series b', 'series c'
+    ];
+    peRelatedKeywords.forEach(kw => {
+      if (text.includes(kw)) {
+        hasRelevantCompany = true;
+        score += 18; // HIGHEST score - PE-related news prioritized
+      }
+    });
+
+    // Government policy and regulation
     const policyKeywords = [
       // Government institutions
       '정부', 'government', '금융위', '공정위', '공정거래위원회', '금융감독원',
@@ -1060,8 +1086,8 @@ function scoreArticleBySection(article, sectionType) {
     ];
     policyKeywords.forEach(kw => {
       if (text.includes(kw)) {
-        hasRelevantCompany = true; // Policy news is always relevant
-        score += 15; // Higher score for policy news
+        hasRelevantCompany = true;
+        score += 12; // Reduced from 15 to make room for PE news
       }
     });
 
@@ -1073,17 +1099,15 @@ function scoreArticleBySection(article, sectionType) {
     ];
     macroKeywords.forEach(kw => {
       if (text.includes(kw)) {
-        hasRelevantCompany = true; // Macro news is always relevant
+        hasRelevantCompany = true;
         score += 10;
       }
     });
 
-    // Korea business keywords
+    // Korea industry keywords
     const koreaKeywords = [
       'chaebol', '재벌', '반도체', 'semiconductor', '자동차', 'automotive',
-      '배터리', 'battery', 'k-chip', 'ipo', '인수', '합병', 'merger',
-      '투자', 'investment', '펀딩', 'funding', '유니콘', 'unicorn',
-      '스타트업', 'startup', 'start-up', '벤처', 'venture'
+      '배터리', 'battery', 'k-chip', '디스플레이', 'display'
     ];
     koreaKeywords.forEach(kw => {
       if (text.includes(kw)) score += 6;
@@ -1588,11 +1612,12 @@ ${koreaContext}
 TASK: Synthesize TODAY'S BUSINESS developments into actionable intelligence:
 
 1. **Key Insights** (6 bullets, 150-200 chars each)
-   - What HAPPENED today that matters for PE/business leaders?
-   - NEW announcements, decisions, policy changes, deal news
+   - PRIORITY ORDER: (1) Global macro/economic developments, (2) Korea economic/policy news, (3) PE deals/M&A, (4) Other significant business events
+   - Start with what's shaking global/Korea economies - central banks, policy, inflation, trade, markets
+   - Place PE deals and M&A news in the MIDDLE positions (bullets 3-4), not at the beginning
    - Use action verbs: "announced", "reported", "reached", "fell", "surged"
    - Focus on concrete events and numbers from TODAY
-   - Example: "Fed officials signaled dovish pivot today as October CPI came in at 2.3%, opening door for March rate cuts"
+   - Example order: [Global macro] [Korea policy] [Deal news] [Deal news] [Market reaction] [Sector development]
 
 2. **Macro-Economic & Policy** (700-900 chars)
    - TODAY'S central bank actions, economic data releases, policy announcements
@@ -1897,8 +1922,8 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     });
 
     const globalLines = globalArticles.map((a, i) => {
-      const cleanedTitle = a.title.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
-      const cleanedLink = a.link.replace(/[\r\n]+/g, '').trim();
+      const cleanedTitle = deepCleanText(a.title);
+      const cleanedLink = deepCleanText(a.link);
       return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
     });
 
@@ -1919,8 +1944,8 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     });
 
     const peLines = peArticles.map((a, i) => {
-      const cleanedTitle = a.title.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
-      const cleanedLink = a.link.replace(/[\r\n]+/g, '').trim();
+      const cleanedTitle = deepCleanText(a.title);
+      const cleanedLink = deepCleanText(a.link);
       return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
     });
 
@@ -1941,8 +1966,8 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     });
 
     const koreaLines = koreaArticles.map((a, i) => {
-      const cleanedTitle = a.title.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
-      const cleanedLink = a.link.replace(/[\r\n]+/g, '').trim();
+      const cleanedTitle = deepCleanText(a.title);
+      const cleanedLink = deepCleanText(a.link);
       return `*${i + 1}.* <${cleanedLink}|${cleanedTitle}>`;
     });
 
@@ -1963,14 +1988,32 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
   return { blocks: blocks };
 }
 
+function deepCleanText(text) {
+  if (!text) return '';
+
+  return text
+    // Remove all types of newlines and line breaks
+    .replace(/[\r\n\u2028\u2029\u000A\u000B\u000C\u000D\u0085]+/g, ' ')
+    // Remove URL-encoded newlines
+    .replace(/%0A/gi, ' ')
+    .replace(/%0D/gi, ' ')
+    // Remove HTML line breaks
+    .replace(/<br\s*\/?>/gi, ' ')
+    // Remove zero-width characters that might cause issues
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    // Collapse multiple spaces into one
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function addArticleBlocks(blocks, articleLines) {
   const CHARS_PER_BLOCK = 2800;
   let currentChunk = [];
   let currentLength = 0;
 
   articleLines.forEach(line => {
-    // Remove any remaining newlines from the line
-    const cleanLine = line.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+    // Deep clean the line to remove ALL possible newline sources
+    const cleanLine = deepCleanText(line);
     const lineLength = cleanLine.length + 1;
 
     if (currentLength + lineLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
