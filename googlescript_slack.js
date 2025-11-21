@@ -1068,10 +1068,10 @@ var SLACK_CHANNEL = '#news-bot';
 // ===== 키워드 설정 =====
 var KEYWORDS = [
     '버거킹', '팀홀튼', '맥도날드', 'kfc', '투썸플레이스', '롯데리아', '현대커머셜', '유베이스', '서브원',
-    '락앤락p', '잡코리아', '알바몬', '사람인', '원티드', '리멤버',
-    '요기요', '쿠팡이츠', '배달의민족', '배민',
+    '락앤락p', '잡코리아', '알바몬', '사람인', '원티드', '토스알바', '당근알바', '리멤버컴퍼니', '그리팅',
+    '요기요', '쿠팡이츠', '배달의민족', '배민', '땡겨요',
     'SK렌터카', '롯데렌탈', '롯데렌터카', '어피니티', '어피너티',
-    'mbk', 'kkr', 'cvc', 'blackstone', 'baincapital', 'imm', 'vig', '스틱인베', '스카이레이크', '글렌우드', 'eqt', '베인캐피탈', '베인캐피털', '알토스'
+    'mbk', 'kkr', 'cvc', 'blackstone', 'baincapital', 'imm', 'vig', '스틱인베', '스카이레이크', '글렌우드', 'eqt', '베인캐피탈', '베인캐피털', '블랙스톤', '알토스'
 ];
 
 var KEYWORD_GROUPING = {
@@ -1089,11 +1089,15 @@ var KEYWORD_GROUPING = {
     '알바몬': 'JOBKOREA',
     '사람인': 'JOBKOREA',
     '원티드': 'JOBKOREA',
-    '리멤버': 'JOBKOREA',
+    '토스알바': 'JOBKOREA',
+    '당근알바': 'JOBKOREA',
+    '리멤버컴퍼니': 'JOBKOREA',
+    '그리팅': 'JOBKOREA',
     '요기요': 'YGY',
     '쿠팡이츠': 'YGY',
     '배달의민족': 'YGY',
     '배민': 'YGY',
+    '땡겨요': 'YGY',
     'SK렌터카': 'SKR and LTR',
     '롯데렌탈': 'SKR and LTR',
     '롯데렌터카': 'SKR and LTR',
@@ -1112,6 +1116,7 @@ var KEYWORD_GROUPING = {
     'eqt': 'Market',
     '베인캐피탈': 'Market',
     '베인캐피털': 'Market',
+    '블랙스톤': 'Market',
     '알토스': 'Market'
 };
 
@@ -1168,11 +1173,15 @@ var KEYWORD_RELEVANCE_CHECK = {
     '알바몬': ['알바몬', 'albamon'],
     '사람인': ['사람인', 'saramin'],
     '원티드': ['원티드', 'wanted'],
-    '리멤버': ['리멤버', 'remember'],
+    '토스알바': ['토스알바', 'toss', '알바'],
+    '당근알바': ['당근알바', '당근', '알바'],
+    '리멤버컴퍼니': ['리멤버컴퍼니', 'remember', 'company'],
+    '그리팅': ['그리팅', 'greeting'],
     '요기요': ['요기요', 'yogiyo', '배달'],
     '쿠팡이츠': ['쿠팡이츠', 'coupang', 'eats'],
     '배달의민족': ['배달의민족', '배민', 'baemin'],
     '배민': ['배민', '배달의민족'],
+    '땡겨요': ['땡겨요', '배달'],
     'SK렌터카': ['sk렌터카', 'sk렌탈', '렌터카'],
     '롯데렌탈': ['롯데렌탈', '롯데렌터카'],
     '롯데렌터카': ['롯데렌터카', '롯데렌탈'],
@@ -1191,6 +1200,7 @@ var KEYWORD_RELEVANCE_CHECK = {
     'eqt': ['eqt', 'eqt partners'],
     '베인캐피탈': ['베인캐피탈', '베인캐피털', 'bain', 'bain capital'],
     '베인캐피털': ['베인캐피털', '베인캐피탈', 'bain', 'bain capital'],
+    '블랙스톤': ['블랙스톤', 'blackstone'],
     '알토스': ['알토스', 'altos']
 };
 
@@ -1625,7 +1635,7 @@ function calculatePEImportanceScore(article) {
   }
 
   // 2-2단계: JOBKOREA 그룹 특별 필터링 (연예/스포츠 강화)
-  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '리멤버'];
+  var jobkoreaKeywords = ['잡코리아', '알바몬', '사람인', '원티드', '토스알바', '당근알바', '리멤버컴퍼니', '그리팅'];
   var isJobkoreaGroup = false;
   for (var i = 0; i < jobkoreaKeywords.length; i++) {
     if (article.keyword === jobkoreaKeywords[i]) {
