@@ -43,7 +43,7 @@ const CONFIG = {
   MARKET_SYMBOLS: {
     US_STOCKS: ['^GSPC', '^DJI', '^IXIC'],
     KOREA_STOCKS: ['^KS11', '^KQ11'],
-    CRYPTO: ['BTC-USD'],
+    COMMODITIES: ['GC=F', 'CL=F', 'BTC-USD'],  // Gold, Oil, Bitcoin
     FOREX: ['KRW=X', 'JPY=X']
   }
 };
@@ -1569,7 +1569,7 @@ function fetchMarketData() {
   return {
     usStocks: fetchStockData(CONFIG.MARKET_SYMBOLS.US_STOCKS),
     koreaStocks: fetchStockData(CONFIG.MARKET_SYMBOLS.KOREA_STOCKS),
-    crypto: fetchStockData(CONFIG.MARKET_SYMBOLS.CRYPTO),
+    commodities: fetchStockData(CONFIG.MARKET_SYMBOLS.COMMODITIES),
     forex: fetchStockData(CONFIG.MARKET_SYMBOLS.FOREX)
   };
 }
@@ -1859,13 +1859,23 @@ function formatMarketContextForAI(marketData) {
     context = context.slice(0, -2) + '\n';
   }
 
-  if (marketData.crypto && marketData.crypto.length > 0) {
-    marketData.crypto.forEach(c => {
-      if (c && c.price) {
-        const chg = c.dayChange >= 0 ? `+${c.dayChange.toFixed(2)}%` : `${c.dayChange.toFixed(2)}%`;
-        context += `Bitcoin: $${c.price.toFixed(0)} (${chg})\n`;
+  if (marketData.commodities && marketData.commodities.length > 0) {
+    context += 'Commodities: ';
+    marketData.commodities.forEach(item => {
+      if (item && item.price) {
+        const chg = item.dayChange >= 0 ? `+${item.dayChange.toFixed(2)}%` : `${item.dayChange.toFixed(2)}%`;
+
+        let displayName = 'Unknown';
+        if (item.symbol === 'GC=F') displayName = 'Gold';
+        else if (item.symbol === 'CL=F') displayName = 'Oil';
+        else if (item.symbol === 'BTC-USD') displayName = 'Bitcoin';
+        else displayName = item.name || item.symbol;
+
+        const priceStr = (item.symbol === 'BTC-USD') ? `$${item.price.toFixed(0)}` : `$${item.price.toFixed(2)}`;
+        context += `${displayName} ${priceStr} (${chg}), `;
       }
     });
+    context = context.slice(0, -2) + '\n';
   }
 
   return context || 'Market data unavailable';
@@ -2235,14 +2245,33 @@ function formatMarketData(marketData) {
     text += '\n';
   }
 
-  if (marketData.crypto && marketData.crypto.length > 0) {
-    text += '*Crypto*\n';
-    marketData.crypto.forEach(c => {
-      if (c && c.price != null) {
-        const emoji = c.dayChange >= 0 ? '📈' : '📉';
-        const day = c.dayChange.toFixed(2);
-        const week = c.weekChange.toFixed(2);
-        text += `${emoji} Bitcoin: $${c.price.toFixed(0)} (${day}% | WoW ${week}%)\n`;
+  if (marketData.commodities && marketData.commodities.length > 0) {
+    text += '*Commodities & Crypto*\n';
+    marketData.commodities.forEach(item => {
+      if (item && item.price != null) {
+        const emoji = item.dayChange >= 0 ? '📈' : '📉';
+        const day = item.dayChange.toFixed(2);
+        const week = item.weekChange.toFixed(2);
+
+        // Determine display name and price format
+        let displayName = 'Unknown';
+        let priceStr = '';
+
+        if (item.symbol === 'GC=F') {
+          displayName = 'Gold';
+          priceStr = `$${item.price.toFixed(2)}`;
+        } else if (item.symbol === 'CL=F') {
+          displayName = 'Oil (WTI)';
+          priceStr = `$${item.price.toFixed(2)}`;
+        } else if (item.symbol === 'BTC-USD') {
+          displayName = 'Bitcoin';
+          priceStr = `$${item.price.toFixed(0)}`;
+        } else {
+          displayName = item.name || item.symbol;
+          priceStr = `$${item.price.toFixed(2)}`;
+        }
+
+        text += `${emoji} ${displayName}: ${priceStr} (${day}% | WoW ${week}%)\n`;
       }
     });
   }
