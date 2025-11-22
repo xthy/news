@@ -44,7 +44,7 @@ const CONFIG = {
     US_STOCKS: ['^GSPC', '^DJI', '^IXIC'],
     KOREA_STOCKS: ['^KS11', '^KQ11'],
     CRYPTO: ['BTC-USD'],
-    FOREX: ['KRW=X']
+    FOREX: ['KRW=X', 'JPY=X']
   }
 };
 
@@ -1841,6 +1841,24 @@ function formatMarketContextForAI(marketData) {
     context = context.slice(0, -2) + '\n';
   }
 
+  if (marketData.forex && marketData.forex.length > 0) {
+    context += 'FX: ';
+    marketData.forex.forEach(fx => {
+      if (fx && fx.price) {
+        const chg = fx.dayChange >= 0 ? `+${fx.dayChange.toFixed(2)}%` : `${fx.dayChange.toFixed(2)}%`;
+        let pairName = 'USD/???';
+        if (fx.symbol === 'KRW=X') pairName = 'USD/KRW';
+        else if (fx.symbol === 'JPY=X') pairName = 'USD/JPY';
+        else {
+          const currency = fx.symbol.replace('=X', '');
+          pairName = `USD/${currency}`;
+        }
+        context += `${pairName} ${fx.price.toFixed(2)} (${chg}), `;
+      }
+    });
+    context = context.slice(0, -2) + '\n';
+  }
+
   if (marketData.crypto && marketData.crypto.length > 0) {
     marketData.crypto.forEach(c => {
       if (c && c.price) {
@@ -2201,7 +2219,17 @@ function formatMarketData(marketData) {
         const emoji = fx.dayChange >= 0 ? '📈' : '📉';
         const day = fx.dayChange.toFixed(2);
         const week = fx.weekChange.toFixed(2);
-        text += `${emoji} USD/KRW: ${fx.price.toFixed(2)} (${day}% | WoW ${week}%)\n`;
+
+        // Extract currency pair name from symbol (e.g., KRW=X -> USD/KRW)
+        let pairName = 'USD/???';
+        if (fx.symbol === 'KRW=X') pairName = 'USD/KRW';
+        else if (fx.symbol === 'JPY=X') pairName = 'USD/JPY';
+        else {
+          const currency = fx.symbol.replace('=X', '');
+          pairName = `USD/${currency}`;
+        }
+
+        text += `${emoji} ${pairName}: ${fx.price.toFixed(2)} (${day}% | WoW ${week}%)\n`;
       }
     });
     text += '\n';
