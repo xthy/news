@@ -1,28 +1,27 @@
 /**
- * Global News Summary for Private Equity Professionals
- * Version 3.1 - Fixed Newline Issues
+ * Global Headlines Summary for Business Leaders
+ * Version 5.4 - Enhanced Quality Filtering
  *
  * Sections:
- * 1. Global Top Headlines - Major world business/economic news
- * 2. Korea Top Headlines - Korea-specific business news
- * 3. PE Specific News - M&A, deals, private equity focus
+ * 1. International Headlines - Economy, policy, major events, crises (10 articles)
+ * 2. Korea Headlines - Economy, policy, major events (10 articles)
  *
- * Required Configuration:
- * 1. Set your OpenAI API Key in OPENAI_API_KEY
- * 2. Set your Slack Webhook URL in SLACK_WEBHOOK_URL
- * 3. Deploy as time-triggered function (daily at desired time)
+ * Focus: Must-know headlines, major global events, volatility drivers
  */
 
 // ==================== CONFIGURATION ====================
 
 const CONFIG = {
   // API Keys
-  OPENAI_API_KEY: 'sk-proj-2g3OmSfqt4sA4r4KE2OjOjYYRq5abvx0luzb4A7PYy1FazAthsL',
-  SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/T08SQU00JQ7/B09SW4SR18E',
+  OPENAI_API_KEY: 'sk-proj-',
+  PERPLEXITY_API_KEY: 'pplx-',
+  SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/',
 
-  // ChatGPT Settings
+  // AI Settings
   GPT_MODEL: 'gpt-4-turbo-preview',
   GPT_TEMPERATURE: 0.3,
+  PERPLEXITY_MODEL: 'sonar-pro',
+  PERPLEXITY_TEMPERATURE: 0.2,
 
   // Time Range (hours)
   NEWS_HOURS_BACK: 24,
@@ -31,296 +30,305 @@ const CONFIG = {
   MAX_ARTICLES_PER_SOURCE: 15,
   SIMILARITY_THRESHOLD: 0.7,
   
-  // Section-specific limits (final output after GPT curation)
-  GLOBAL_TOP_HEADLINES: 7,       // Curated to 7 most important
-  KOREA_TOP_HEADLINES: 7,        // Curated to 7 most important
-  PE_SPECIFIC_NEWS: 7,           // Curated to 7 most important
+  // Section-specific limits
+  INTERNATIONAL_HEADLINES: 10,
+  KOREA_HEADLINES: 10,
 
-  // Pre-GPT candidate pool (for GPT to choose from)
-  CANDIDATE_POOL_SIZE: 25,        // Fetch 25 candidates, GPT picks top 7
+  // Pre-AI candidate pool
+  CANDIDATE_POOL_SIZE: 30,
+  PERPLEXITY_VALIDATION_POOL: 25,
+  
+  // Deduplication
+  FINAL_DEDUP_THRESHOLD: 0.35,
+  MIN_KEYWORD_OVERLAP: 3,
+  MAX_ARTICLES_PER_TOPIC: 1,
 
   // Market Data
   MARKET_SYMBOLS: {
     US_STOCKS: ['^GSPC', '^DJI', '^IXIC'],
     KOREA_STOCKS: ['^KS11', '^KQ11'],
-    COMMODITIES: ['GC=F', 'CL=F', 'BTC-USD'],  // Gold, Oil, Bitcoin
+    COMMODITIES: ['GC=F', 'CL=F', 'BTC-USD'],
     FOREX: ['KRW=X', 'JPY=X']
   }
 };
 
 // ==================== NEWS SOURCES ====================
 
-const NEWS_SOURCES = [
+const NEWS_SOURCES_XX = [
   // =================================================
-  // SECTION 1: GLOBAL TOP HEADLINES
+  // SECTION 1: INTERNATIONAL HEADLINES
   // =================================================
   
-  // --- Wall Street Journal ---
+  // --- TOP TIER: Premium Business News ---
+  
   {
     name: 'WSJ - World News',
     type: 'rss',
     url: 'https://feeds.a.dj.com/rss/RSSWorldNews.xml',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   {
     name: 'WSJ - Markets',
     type: 'rss',
     url: 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   {
     name: 'WSJ - Business',
     type: 'rss',
     url: 'https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   
-  // --- New York Times ---
   {
     name: 'NYT - Business',
     type: 'rss',
     url: 'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   {
     name: 'NYT - World',
     type: 'rss',
     url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   {
     name: 'NYT - Economy',
     type: 'rss',
     url: 'https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   
-  // --- Financial Times ---
   {
     name: 'FT - World',
     type: 'rss',
     url: 'https://www.ft.com/world?format=rss',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   {
     name: 'FT - Companies',
     type: 'rss',
     url: 'https://www.ft.com/companies?format=rss',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   {
     name: 'FT - Markets',
     type: 'rss',
     url: 'https://www.ft.com/markets?format=rss',
-    section: 'global',
+    section: 'international',
     tier: 1
   },
   
-  // --- Bloomberg (via Google News) ---
   {
     name: 'Bloomberg Business',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=business+OR+economy+OR+markets+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
+    url: 'https://news.google.com/rss/search?q=site:bloomberg.com+business+OR+economy+OR+markets+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
     tier: 1
   },
   
-  // --- Reuters ---
   {
     name: 'Reuters Business',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=business+OR+finance+OR+economy+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
+    url: 'https://news.google.com/rss/search?q=site:reuters.com+business+OR+economy+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
     tier: 1
   },
   
-  // --- The Economist ---
   {
     name: 'The Economist',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=economy+OR+trade+OR+policy+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
+    url: 'https://news.google.com/rss/search?q=site:economist.com+economy+OR+policy+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
     tier: 1
   },
   
-  // --- Washington Post ---
+  // --- BREAKING NEWS & MAJOR EVENTS ---
+  
   {
-    name: 'WaPo - Business',
+    name: 'Reuters World',
     type: 'rss',
-    url: 'https://feeds.washingtonpost.com/rss/business',
-    section: 'global',
+    url: 'https://news.google.com/rss/search?q=site:reuters.com+breaking+OR+urgent+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
     tier: 1
   },
   
-  // --- BBC ---
+  {
+    name: 'AP Breaking News',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:apnews.com+breaking+OR+urgent+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 1
+  },
+  
+  {
+    name: 'BBC World News',
+    type: 'rss',
+    url: 'http://feeds.bbci.co.uk/news/world/rss.xml',
+    section: 'international',
+    tier: 1
+  },
+  
   {
     name: 'BBC - Business',
     type: 'rss',
     url: 'http://feeds.bbci.co.uk/news/business/rss.xml',
-    section: 'global',
+    section: 'international',
     tier: 2
   },
   
-  // --- CNBC ---
+  {
+    name: 'CNN Breaking',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:cnn.com+breaking+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 2
+  },
+  
+  {
+    name: 'Al Jazeera',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:aljazeera.com+breaking+OR+crisis+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 2
+  },
+  
+  // --- CRISES & DISASTERS ---
+  
+  {
+    name: 'Major Incidents',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=disaster+OR+emergency+OR+crisis+OR+collapse+OR+explosion+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 1
+  },
+  
+  {
+    name: 'Natural Disasters',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=earthquake+OR+tsunami+OR+hurricane+OR+typhoon+OR+flood+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 2
+  },
+  
+  // --- GEOPOLITICAL & CONFLICTS ---
+  
+  {
+    name: 'Geopolitical Events',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=china+OR+russia+OR+ukraine+OR+taiwan+OR+iran+OR+israel+conflict+OR+war+OR+sanctions+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 1
+  },
+  
+  {
+    name: 'US Politics Impact',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=white+house+OR+congress+OR+fed+OR+treasury+policy+OR+regulation+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 1
+  },
+  
+  // --- TECH & MAJOR DISRUPTIONS ---
+  
+  {
+    name: 'Major Tech Events',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=site:techcrunch.com+OR+site:theverge.com+layoff+OR+shutdown+OR+breakthrough+OR+regulation+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 2
+  },
+  
+  {
+    name: 'AI & Tech Policy',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=artificial+intelligence+OR+ai+regulation+OR+ban+OR+policy+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
+    tier: 2
+  },
+  
+  // --- TRADITIONAL BUSINESS SOURCES ---
+  
+  {
+    name: 'WaPo - Business',
+    type: 'rss',
+    url: 'https://feeds.washingtonpost.com/rss/business',
+    section: 'international',
+    tier: 1
+  },
+  
   {
     name: 'CNBC - Top News',
     type: 'rss',
     url: 'https://www.cnbc.com/id/100003114/device/rss/rss.html',
-    section: 'global',
+    section: 'international',
     tier: 2
   },
   
-  // --- MarketWatch ---
-  {
-    name: 'MarketWatch',
-    type: 'rss',
-    url: 'https://feeds.content.dowjones.io/public/rss/mw_topstories',
-    section: 'global',
-    tier: 2
-  },
-  
-  // --- Guardian ---
   {
     name: 'Guardian - Business',
     type: 'rss',
     url: 'https://www.theguardian.com/uk/business/rss',
-    section: 'global',
+    section: 'international',
     tier: 2
   },
   
-  // --- Axios ---
   {
     name: 'Axios',
     type: 'rss',
     url: 'https://api.axios.com/feed/',
-    section: 'global',
+    section: 'international',
     tier: 2
   },
   
-  // --- Associated Press ---
-  {
-    name: 'AP Business',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=business+OR+finance+source:ap+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
-    tier: 1
-  },
-  
-  // --- Politico ---
   {
     name: 'Politico',
     type: 'rss',
     url: 'https://www.politico.com/rss/economy-and-jobs.xml',
-    section: 'global',
+    section: 'international',
     tier: 2
   },
   
-  // --- Forbes ---
-  {
-    name: 'Forbes',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=business+OR+ceo+OR+markets+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
-    tier: 2
-  },
+  // --- ASIA FOCUS ---
   
-  // --- Business Insider ---
-  {
-    name: 'Business Insider',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=finance+OR+markets+OR+economy+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
-    tier: 2
-  },
-  
-  // --- Tech News (for global section) ---
-  {
-    name: 'TechCrunch',
-    type: 'rss',
-    url: 'https://techcrunch.com/feed/',
-    section: 'global',
-    tier: 2
-  },
-  
-  // --- Nikkei Asia ---
   {
     name: 'Nikkei Asia',
     type: 'rss',
     url: 'https://asia.nikkei.com/rss/feed/nar',
-    section: 'global',
+    section: 'international',
     tier: 2
   },
   
-  // --- South China Morning Post ---
   {
     name: 'SCMP - Business',
     type: 'rss',
     url: 'https://www.scmp.com/rss/91/feed',
-    section: 'global',
+    section: 'international',
     tier: 2
   },
-
-  // --- Premium Tech & Business Sources ---
-
-  // Wired - Tech & Business
+  
   {
-    name: 'Wired',
+    name: 'China Business',
     type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:wired.com+business+OR+technology+OR+ai+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
-    tier: 2
-  },
-
-  // The Verge - Tech & Policy
-  {
-    name: 'The Verge',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:theverge.com+business+OR+tech+OR+regulation+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
-    tier: 2
-  },
-
-  // Ars Technica - Tech Analysis
-  {
-    name: 'Ars Technica',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:arstechnica.com+business+OR+tech+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
-    tier: 2
-  },
-
-  // MIT Technology Review
-  {
-    name: 'MIT Tech Review',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:technologyreview.com+business+OR+ai+OR+climate+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
-    tier: 2
-  },
-
-  // VentureBeat - Tech Business
-  {
-    name: 'VentureBeat',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:venturebeat.com+ai+OR+business+OR+tech+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'global',
+    url: 'https://news.google.com/rss/search?q=china+economy+OR+policy+OR+crisis+when:24h&hl=en-US&gl=US&ceid=US:en',
+    section: 'international',
     tier: 2
   },
 
   // =================================================
-  // SECTION 2: KOREA TOP HEADLINES
-  // 4대 일간지 (조선/중앙/동아/한겨레) 경제면 + 주요 경제지
+  // SECTION 2: KOREA HEADLINES
   // =================================================
   
-  // --- 조선일보 경제 ---
+  // --- Korean Major Newspapers ---
+  
   {
     name: '조선일보 - 경제',
     type: 'rss',
@@ -336,7 +344,6 @@ const NEWS_SOURCES = [
     tier: 1
   },
   
-  // --- 중앙일보 경제 ---
   {
     name: '중앙일보 - 경제',
     type: 'rss',
@@ -345,7 +352,6 @@ const NEWS_SOURCES = [
     tier: 1
   },
   
-  // --- 동아일보 경제 ---
   {
     name: '동아일보 - 경제',
     type: 'rss',
@@ -361,7 +367,6 @@ const NEWS_SOURCES = [
     tier: 1
   },
   
-  // --- 한겨레 경제 ---
   {
     name: '한겨레 - 경제',
     type: 'rss',
@@ -370,7 +375,8 @@ const NEWS_SOURCES = [
     tier: 1
   },
   
-  // --- 한국경제 (경제지) ---
+  // --- Korean Business Papers ---
+  
   {
     name: '한국경제',
     type: 'rss',
@@ -393,7 +399,6 @@ const NEWS_SOURCES = [
     tier: 1
   },
   
-  // --- 매일경제 (경제지) ---
   {
     name: '매일경제',
     type: 'rss',
@@ -409,7 +414,26 @@ const NEWS_SOURCES = [
     tier: 1
   },
   
-  // --- Yonhap (English for international context) ---
+  // --- Korean Breaking & Events ---
+  
+  {
+    name: 'Korea Breaking',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=korea+속보+OR+긴급+OR+breaking+when:24h&hl=ko&gl=KR&ceid=KR:ko',
+    section: 'korea',
+    tier: 1
+  },
+  
+  {
+    name: 'Korea Major Events',
+    type: 'rss',
+    url: 'https://news.google.com/rss/search?q=korea+사고+OR+재난+OR+위기+OR+crisis+when:24h&hl=ko&gl=KR&ceid=KR:ko',
+    section: 'korea',
+    tier: 1
+  },
+  
+  // --- English Korea Coverage ---
+  
   {
     name: 'Yonhap - Economy',
     type: 'rss',
@@ -418,7 +442,6 @@ const NEWS_SOURCES = [
     tier: 2
   },
   
-  // --- Google News Korea ---
   {
     name: 'Google News - Korea Business',
     type: 'rss',
@@ -427,7 +450,6 @@ const NEWS_SOURCES = [
     tier: 2
   },
   
-  // --- SCMP Korea Coverage ---
   {
     name: 'SCMP - Korea',
     type: 'rss',
@@ -436,193 +458,11 @@ const NEWS_SOURCES = [
     tier: 2
   },
   
-  // --- Nikkei Korea Coverage ---
   {
     name: 'Nikkei - Korea',
     type: 'rss',
     url: 'https://news.google.com/rss/search?q=site:asia.nikkei.com+korea&hl=en-US&gl=US&ceid=US:en',
     section: 'korea',
-    tier: 2
-  },
-
-  // =================================================
-  // SECTION 3: PE SPECIFIC NEWS
-  // Professional PE & Deal Flow Intelligence
-  // =================================================
-
-  // --- Tier 1: Premium PE-Specific Publications ---
-
-  // PE Hub - Leading PE industry publication
-  {
-    name: 'PE Hub',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:pehub.com+OR+%22pe+hub%22+private+equity+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // Private Equity International (PEI)
-  {
-    name: 'Private Equity International',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:privateequityinternational.com+OR+%22private+equity+international%22+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // PERE - Real Estate PE
-  {
-    name: 'PERE',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:perenews.com+OR+%22real+estate+private+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // AltAssets
-  {
-    name: 'AltAssets',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:altassets.net+private+equity+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // Private Equity Wire
-  {
-    name: 'Private Equity Wire',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22private+equity+wire%22+OR+site:privateequitywire.co.uk+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // --- Tier 1: Premium Business Publications with PE Focus ---
-
-  // Forbes - M&A and PE
-  {
-    name: 'Forbes PE/M&A',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:forbes.com+%22private+equity%22+OR+%22merger%22+OR+%22acquisition%22+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // The Information - Tech deals
-  {
-    name: 'The Information',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:theinformation.com+acquisition+OR+funding+OR+valuation+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // Axios - Deals
-  {
-    name: 'Axios Deals',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:axios.com+deals+OR+merger+OR+acquisition+OR+%22private+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // --- Tier 1: Major PE Firms Coverage ---
-
-  // Mega PE Firms (Blackstone, KKR, Carlyle, Apollo, TPG)
-  {
-    name: 'Mega PE Firms',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22blackstone%22+OR+%22kkr%22+OR+%22carlyle+group%22+OR+%22apollo+global%22+OR+%22tpg+capital%22+deal+OR+acquisition+OR+investment+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // Top-tier PE Firms (Silver Lake, Thoma Bravo, Vista, Bain Capital)
-  {
-    name: 'Top PE Firms',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22silver+lake%22+OR+%22thoma+bravo%22+OR+%22vista+equity%22+OR+%22bain+capital%22+OR+%22general+atlantic%22+acquisition+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // --- Tier 1: Deal Activity & M&A ---
-
-  // Major M&A Announcements (WSJ, FT, Bloomberg sources)
-  {
-    name: 'Major M&A',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%28site:wsj.com+OR+site:ft.com+OR+site:bloomberg.com%29+merger+OR+acquisition+OR+takeover+billion+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // LBO & Buyout News
-  {
-    name: 'Leveraged Buyouts',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22leveraged+buyout%22+OR+%22lbo%22+OR+%22buyout%22+%22private+equity%22+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 1
-  },
-
-  // --- Tier 2: IPO & Exit Activity ---
-
-  // IPO Filings & Listings
-  {
-    name: 'IPO Activity',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22files+for+ipo%22+OR+%22ipo+pricing%22+OR+%22going+public%22+OR+%22stock+listing%22+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 2
-  },
-
-  // SPAC & Exit News
-  {
-    name: 'PE Exits',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22private+equity%22+exit+OR+spac+OR+%22portfolio+company%22+sale+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 2
-  },
-
-  // --- Tier 2: Venture Capital & Growth Equity ---
-
-  // Major VC Rounds
-  {
-    name: 'Venture Capital',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=%22series+a%22+OR+%22series+b%22+OR+%22series+c%22+OR+%22series+d%22+funding+million+OR+billion+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 2
-  },
-
-  // Crunchbase News - Startup funding
-  {
-    name: 'Crunchbase',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:news.crunchbase.com+funding+OR+acquisition+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 2
-  },
-
-  // TechCrunch - Tech deals
-  {
-    name: 'TechCrunch Deals',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=site:techcrunch.com+acquisition+OR+raises+OR+funding+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
-    tier: 2
-  },
-
-  // --- Tier 2: Distressed & Special Situations ---
-
-  // Corporate Restructuring
-  {
-    name: 'Restructuring',
-    type: 'rss',
-    url: 'https://news.google.com/rss/search?q=corporate+restructuring+OR+%22chapter+11%22+OR+bankruptcy+OR+%22distressed+debt%22+when:24h&hl=en-US&gl=US&ceid=US:en',
-    section: 'pe',
     tier: 2
   }
 ];
@@ -631,30 +471,23 @@ const NEWS_SOURCES = [
 
 function sendDailyNewsSummary() {
   try {
-    Logger.log('🚀 Starting Global News Summary v3.1...');
+    Logger.log('🚀 Starting Headlines Summary v5.4...');
 
     // 1. Fetch all news articles
     const allArticles = fetchAllNews();
     Logger.log(`📰 Fetched ${allArticles.length} total articles`);
 
     // 2. Separate by section and process
-    const globalArticles = processArticlesBySection(
-      allArticles.filter(a => a.section === 'global'),
-      CONFIG.GLOBAL_TOP_HEADLINES,
-      'global'
+    const internationalArticles = processArticlesBySection(
+      allArticles.filter(a => a.section === 'international'),
+      CONFIG.INTERNATIONAL_HEADLINES,
+      'international'
     );
-    Logger.log(`✅ Global: ${globalArticles.length} articles`);
-
-    const peArticles = processArticlesBySection(
-      allArticles.filter(a => a.section === 'pe'),
-      CONFIG.PE_SPECIFIC_NEWS,
-      'pe'
-    );
-    Logger.log(`✅ PE Specific: ${peArticles.length} articles`);
+    Logger.log(`✅ International: ${internationalArticles.length} articles`);
 
     const koreaArticles = processArticlesBySection(
       allArticles.filter(a => a.section === 'korea'),
-      CONFIG.KOREA_TOP_HEADLINES,
+      CONFIG.KOREA_HEADLINES,
       'korea'
     );
     Logger.log(`✅ Korea: ${koreaArticles.length} articles`);
@@ -665,8 +498,7 @@ function sendDailyNewsSummary() {
 
     // 4. Generate AI summary
     const aiSummary = generateAISummary(
-      globalArticles,
-      peArticles,
+      internationalArticles,
       koreaArticles,
       marketData
     );
@@ -675,14 +507,13 @@ function sendDailyNewsSummary() {
     // 5. Format and send to Slack
     const message = formatSlackMessage(
       aiSummary,
-      globalArticles,
-      peArticles,
+      internationalArticles,
       koreaArticles,
       marketData
     );
     sendToSlack(message);
 
-    Logger.log('✅ Daily news summary sent successfully!');
+    Logger.log('✅ Daily headlines summary sent successfully!');
 
   } catch (error) {
     Logger.log('❌ Error: ' + error.toString());
@@ -696,7 +527,7 @@ function fetchAllNews() {
   const allArticles = [];
   const cutoffTime = new Date(Date.now() - CONFIG.NEWS_HOURS_BACK * 60 * 60 * 1000);
 
-  NEWS_SOURCES.forEach(source => {
+  NEWS_SOURCES_XX.forEach(source => {
     try {
       let articles = fetchRSSFeed(source);
 
@@ -765,12 +596,11 @@ function fetchRSSFeed(source) {
 
         const title = cleanTitle(getElementText(item, 'title'));
 
-        // Validate title - filter out empty or meaningless titles
+        // Validate title
         if (!title || title.length < 3) return;
 
         const titleLower = title.toLowerCase().trim();
 
-        // Filter exact matches
         const invalidTitles = [
           '-', '--', '---',
           'deals', 'news', 'article',
@@ -778,7 +608,6 @@ function fetchRSSFeed(source) {
         ];
         if (invalidTitles.includes(titleLower)) return;
 
-        // Filter titles that start with generic words followed by dash
         const invalidPrefixes = [
           'deals - ', 'news - ', 'article - ', 'updates - ',
           '- ', '--', 'null - ', 'undefined - '
@@ -787,7 +616,6 @@ function fetchRSSFeed(source) {
           if (titleLower.startsWith(prefix)) return;
         }
 
-        // Filter titles that are just a source name
         if (titleLower.split(' ').length <= 3 &&
             (titleLower.includes('wire') || titleLower.includes('news') ||
              titleLower.includes('international') || titleLower.includes('hub'))) {
@@ -821,17 +649,8 @@ function fetchRSSFeed(source) {
 }
 
 function extractSourceName(feedName, link) {
-  // For aggregated feeds, extract actual source from URL
-  if (feedName.includes('Google News') || 
-      feedName.includes('PE/M&A') || 
-      feedName.includes('IPO') || 
-      feedName.includes('Venture') ||
-      feedName.includes('Restructuring') ||
-      feedName.includes('Activist') ||
-      feedName.includes('Leveraged') ||
-      feedName.includes('Infrastructure') ||
-      feedName.includes('Valuation') ||
-      feedName.includes('Tech M&A')) {
+  if (feedName.includes('Google News') || feedName.includes('Breaking') || 
+      feedName.includes('Major') || feedName.includes('Geopolitical')) {
     if (link) {
       if (link.includes('wsj.com')) return 'WSJ';
       if (link.includes('ft.com')) return 'FT';
@@ -839,13 +658,14 @@ function extractSourceName(feedName, link) {
       if (link.includes('reuters.com')) return 'Reuters';
       if (link.includes('nytimes.com')) return 'NYT';
       if (link.includes('economist.com')) return 'Economist';
-      if (link.includes('techcrunch.com')) return 'TechCrunch';
       if (link.includes('cnbc.com')) return 'CNBC';
       if (link.includes('axios.com')) return 'Axios';
       if (link.includes('theguardian.com')) return 'Guardian';
       if (link.includes('washingtonpost.com')) return 'Washington Post';
-      if (link.includes('marketwatch.com')) return 'MarketWatch';
-      // Korea sources
+      if (link.includes('bbc.com') || link.includes('bbc.co.uk')) return 'BBC';
+      if (link.includes('cnn.com')) return 'CNN';
+      if (link.includes('aljazeera.com')) return 'Al Jazeera';
+      if (link.includes('apnews.com')) return 'AP';
       if (link.includes('koreaherald.com')) return 'Korea Herald';
       if (link.includes('koreatimes.co.kr')) return 'Korea Times';
       if (link.includes('yna.co.kr')) return 'Yonhap';
@@ -853,28 +673,18 @@ function extractSourceName(feedName, link) {
       if (link.includes('joongang.co.kr')) return 'JoongAng';
       if (link.includes('hankyung.com')) return 'Korea Economic Daily';
       if (link.includes('mk.co.kr')) return 'Maeil Business';
-      if (link.includes('etnews.com')) return 'ET News';
-      if (link.includes('mt.co.kr')) return 'Money Today';
-      if (link.includes('thebell.co.kr')) return 'The Bell';
     }
-    return 'Financial Press';
+    return 'News Wire';
   }
   
-  // Clean up direct feed names
   return feedName
     .replace(/Google News - /g, '')
     .replace(/ - World News/g, '')
     .replace(/ - World/g, '')
     .replace(/ - Markets/g, '')
     .replace(/ - Business/g, '')
-    .replace(/ - Finance/g, '')
-    .replace(/ - IT/g, '')
     .replace(/ - Economy/g, '')
-    .replace(/ - Technology/g, '')
-    .replace(/ - Companies/g, '')
-    .replace(/ - Top News/g, '')
-    .replace(/ - Top Stories/g, '')
-    .replace(/ - Premium/g, '')
+    .replace(/ - Breaking/g, '')
     .trim();
 }
 
@@ -912,21 +722,15 @@ function deepCleanText(text) {
   if (!text) return '';
 
   return text
-    // Remove all types of newlines and line breaks
     .replace(/[\r\n\u2028\u2029\u000A\u000B\u000C\u000D\u0085]+/g, ' ')
-    // Remove URL-encoded newlines
     .replace(/%0A/gi, ' ')
     .replace(/%0D/gi, ' ')
     .replace(/%09/gi, ' ')
-    // Remove HTML line breaks
     .replace(/<br\s*\/?>/gi, ' ')
     .replace(/<p>/gi, ' ')
     .replace(/<\/p>/gi, ' ')
-    // Remove zero-width characters
     .replace(/[\u200B-\u200D\uFEFF]/g, '')
-    // Remove extra whitespace from markdown links
     .replace(/>\s+</g, '><')
-    // Collapse multiple spaces into one
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -934,57 +738,403 @@ function deepCleanText(text) {
 // ==================== ARTICLE PROCESSING ====================
 
 function processArticlesBySection(articles, limit, sectionType) {
-  // Score articles based on section type
   articles.forEach(article => {
     article.score = scoreArticleBySection(article, sectionType);
   });
 
-  // Sort by score
   articles.sort((a, b) => b.score - a.score);
 
-  // Remove basic duplicates (exact/similar titles)
   let uniqueArticles = removeDuplicates(articles);
-
-  // Remove semantic duplicates using GPT (same story, different wording)
   uniqueArticles = removeSemanticDuplicates(uniqueArticles, sectionType);
 
-  // Get candidate pool (more articles than final limit)
-  const candidatePool = uniqueArticles.slice(0, CONFIG.CANDIDATE_POOL_SIZE);
+  const topCandidates = uniqueArticles.slice(0, CONFIG.PERPLEXITY_VALIDATION_POOL);
+  const validatedArticles = validateArticlesWithPerplexity(topCandidates, sectionType);
+  const curatedArticles = curateTopArticlesWithGPT(validatedArticles, limit * 2, sectionType);
+  
+  let topicFiltered = removeTopicDuplicates(curatedArticles, sectionType);
+  
+  // ⭐ ENHANCED: Quality filtering
+  let qualityFiltered = filterLowQualityHeadlines(topicFiltered, sectionType);
+  let finalArticles = removeFinalDuplicates(qualityFiltered, CONFIG.FINAL_DEDUP_THRESHOLD);
+  
+  if (finalArticles.length < limit) {
+    const usedTitles = new Set(finalArticles.map(a => a.title));
+    const backfill = uniqueArticles
+      .filter(a => !usedTitles.has(a.title))
+      .filter(a => isHeadlineWorthy(a, sectionType))
+      .slice(0, limit - finalArticles.length);
+    finalArticles = finalArticles.concat(backfill);
+  }
 
-  // Use GPT to curate the most important articles from candidate pool
-  const curatedArticles = curateTopArticlesWithGPT(candidatePool, limit, sectionType);
+  return finalArticles.slice(0, limit);
+}
 
-  // Return curated articles
-  return curatedArticles;
+function removeTopicDuplicates(articles, sectionType) {
+  const topicKeywords = {
+    'flood': ['flood', 'flooding', '홍수', 'cyclone', 'storm', 'monsoon'],
+    'earthquake': ['earthquake', 'quake', '지진', 'tremor', 'seismic'],
+    'fire': ['fire', 'wildfire', '화재', 'blaze'],
+    'coupang': ['coupang', '쿠팡', 'kim bum-suk', '김범석'],
+    'samsung': ['samsung', '삼성', 'galaxy'],
+    'hyundai': ['hyundai', '현대', 'kia', '기아'],
+    'sk': ['sk hynix', 'sk텔레콤', 'sk이노베이션'],
+    'lg': ['lg전자', 'lg에너지'],
+    'tariff': ['tariff', '관세', 'trade duty', 'customs'],
+    'inflation': ['inflation', '물가', 'cpi', '인플레이션', 'consumer price'],
+    'currency': ['currency', '환율', 'exchange rate', 'won', 'forex'],
+    'interest_rate': ['interest rate', '금리', 'fed rate', 'base rate'],
+    'ukraine_war': ['ukraine', '우크라이나', 'russia', 'putin', 'zelensky', 'kyiv'],
+    'israel_gaza': ['israel', 'gaza', 'hezbollah', 'lebanon', '이스라엘', 'hamas'],
+    'syria': ['syria', 'assad', '시리아', 'damascus'],
+    'china_taiwan': ['taiwan', 'strait', '대만', 'cross-strait'],
+    'layoff': ['layoff', 'job cut', '정리해고', '구조조정', 'restructuring'],
+    'bankruptcy': ['bankruptcy', 'bankrupt', '파산', '부도', 'insolvency'],
+    'merger': ['merger', 'acquisition', 'takeover', '인수합병', 'm&a'],
+    'ipo': ['ipo', '상장', 'listing', 'public offering'],
+    'data_breach': ['data breach', 'leak', '유출', 'hack', 'cyber attack', '해킹'],
+    'kospi': ['kospi', 'kosdaq', '코스피', '코스닥'],
+    'korea_export': ['korea export', '한국 수출', '수출', 'korean shipment']
+  };
+  
+  const topicGroups = {};
+  
+  articles.forEach(article => {
+    const text = (article.title + ' ' + (article.description || '')).toLowerCase();
+    
+    for (const [topic, keywords] of Object.entries(topicKeywords)) {
+      const matchCount = keywords.filter(kw => text.includes(kw.toLowerCase())).length;
+      
+      if (matchCount > 0) {
+        if (!topicGroups[topic]) {
+          topicGroups[topic] = [];
+        }
+        topicGroups[topic].push(article);
+        break;
+      }
+    }
+  });
+  
+  const selectedArticles = new Set();
+  const usedArticles = new Set();
+  
+  Object.entries(topicGroups).forEach(([topic, topicArticles]) => {
+    if (topicArticles.length > 1) {
+      Logger.log(`🔍 Topic "${topic}": ${topicArticles.length} articles found`);
+      
+      topicArticles.sort((a, b) => b.score - a.score);
+      const bestArticle = topicArticles[0];
+      
+      selectedArticles.add(bestArticle);
+      topicArticles.forEach(a => usedArticles.add(a));
+      
+      Logger.log(`  ✓ Kept: "${bestArticle.title}"`);
+      topicArticles.slice(1).forEach(a => {
+        Logger.log(`  ✗ Removed: "${a.title}"`);
+      });
+    }
+  });
+  
+  const result = articles.filter(a => {
+    if (usedArticles.has(a)) {
+      return selectedArticles.has(a);
+    }
+    return true;
+  });
+  
+  if (result.length < articles.length) {
+    Logger.log(`✓ Topic dedup: ${articles.length} → ${result.length} articles`);
+  }
+  
+  return result;
+}
+
+function calculateKeywordSimilarity(title1, title2) {
+  const stopwords = new Set(['the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'has', 'was', 'been', 'have', 'this', 'that', 'with', 'from', 'will', 'their', 'there', 'what', 'which', 'when', 'who', 'where', 'how', 'about', 'after', 'before']);
+  
+  const extractKeywords = (text) => {
+    return text
+      .toLowerCase()
+      .replace(/[^\w\s가-힣]/g, ' ')
+      .split(/\s+/)
+      .filter(word => word.length >= 3 && !stopwords.has(word));
+  };
+
+  const keywords1 = extractKeywords(title1);
+  const keywords2 = extractKeywords(title2);
+  
+  const set1 = new Set(keywords1);
+  const set2 = new Set(keywords2);
+  
+  const intersection = [...set1].filter(x => set2.has(x));
+  const overlapCount = intersection.length;
+  
+  const union = new Set([...set1, ...set2]);
+  const jaccard = union.size > 0 ? intersection.length / union.size : 0;
+  
+  return {
+    similarity: jaccard,
+    overlapCount: overlapCount,
+    sharedKeywords: intersection
+  };
+}
+
+function removeFinalDuplicates(articles, threshold = 0.35) {
+  const unique = [];
+  
+  for (const article of articles) {
+    let isDuplicate = false;
+    
+    for (const existing of unique) {
+      const comparison = calculateKeywordSimilarity(article.title, existing.title);
+      
+      if (comparison.similarity > threshold || comparison.overlapCount >= CONFIG.MIN_KEYWORD_OVERLAP) {
+        Logger.log(`🔍 Dedup: "${article.title}" vs "${existing.title}" (sim: ${comparison.similarity.toFixed(2)}, overlap: ${comparison.overlapCount})`);
+        
+        if (article.score > existing.score) {
+          const index = unique.indexOf(existing);
+          unique[index] = article;
+        }
+        isDuplicate = true;
+        break;
+      }
+    }
+    
+    if (!isDuplicate) {
+      unique.push(article);
+    }
+  }
+  
+  Logger.log(`✓ Final dedup: ${articles.length} → ${unique.length} articles`);
+  return unique;
+}
+
+// ⭐ ENHANCED: Quality filtering
+function filterLowQualityHeadlines(articles, sectionType) {
+  return articles.filter(article => isHeadlineWorthy(article, sectionType));
+}
+
+function isHeadlineWorthy(article, sectionType) {
+  const text = (article.title + ' ' + (article.description || '')).toLowerCase();
+  const source = article.source.toLowerCase();
+  
+  // ==================== UNIVERSAL FILTERS ====================
+  
+  // ❌ 1. Local city news (US small cities)
+  const localCities = [
+    'missoula', 'spokane', 'boise', 'billings', 'great falls',
+    'eugene', 'salem', 'bend', 'tacoma', 'bellingham',
+    'reno', 'bozeman', 'fargo', 'sioux falls', 'rapid city'
+  ];
+  
+  for (const city of localCities) {
+    if (text.includes(city)) {
+      // Exception: Major disaster/crisis
+      const majorEventKeywords = ['disaster', 'emergency', 'crisis', 'explosion', 'fire', 'shooting', 'attack'];
+      const hasMajorEvent = majorEventKeywords.some(kw => text.includes(kw));
+      
+      if (!hasMajorEvent) {
+        Logger.log(`❌ Filtered (local city): ${article.title}`);
+        return false;
+      }
+    }
+  }
+  
+  // ❌ 2. Local news patterns
+  const localNewsPatterns = [
+    /travel alert.*hazardous/i,
+    /city council.*vote/i,
+    /mayor announces/i,
+    /local business.*open/i,
+    /community event/i,
+    /school district/i
+  ];
+  
+  for (const pattern of localNewsPatterns) {
+    if (pattern.test(text)) {
+      Logger.log(`❌ Filtered (local news pattern): ${article.title}`);
+      return false;
+    }
+  }
+  
+  // ❌ 3. Awards / Ceremonies
+  const awardPatterns = [
+    /수상|award|receives prize|wins award/i,
+    /시상식|ceremony|recognition event/i,
+    /영예|honor.*bestowed/i
+  ];
+  
+  for (const pattern of awardPatterns) {
+    if (pattern.test(text)) {
+      // Exception: Major international awards (Nobel, Oscar, etc.)
+      const majorAwards = ['nobel', 'oscar', 'grammy', 'pulitzer', 'booker'];
+      const hasMajorAward = majorAwards.some(award => text.includes(award));
+      
+      if (!hasMajorAward) {
+        Logger.log(`❌ Filtered (award/ceremony): ${article.title}`);
+        return false;
+      }
+    }
+  }
+  
+  // ❌ 4. Meta news / Media criticism
+  const metaNewsPatterns = [
+    /왜.*썼나|how.*wrote|why.*said/i,
+    /언론.*비판|media criticism/i,
+    /보도.*문제|reporting issue/i,
+    /기자.*질문|journalist ask/i
+  ];
+  
+  for (const pattern of metaNewsPatterns) {
+    if (pattern.test(text)) {
+      Logger.log(`❌ Filtered (meta news): ${article.title}`);
+      return false;
+    }
+  }
+  
+  // ❌ 5. Columns / Opinion pieces (unless major publication)
+  if (text.includes('칼럼') || text.includes('column') || text.includes('opinion')) {
+    const majorOpinionSources = ['economist', 'ft', 'wsj', 'nyt', 'bloomberg'];
+    const isMajorSource = majorOpinionSources.some(s => source.includes(s));
+    
+    if (!isMajorSource) {
+      Logger.log(`❌ Filtered (opinion/column): ${article.title}`);
+      return false;
+    }
+  }
+  
+  // ❌ 6. Low credibility sources
+  const lowCredibilitySources = [
+    'ai부동산신문',
+    '부동산신문',
+    '코리아투데이',
+    '코리아뉴스',
+    'korea today news'
+  ];
+  
+  for (const lowSource of lowCredibilitySources) {
+    if (source.includes(lowSource)) {
+      Logger.log(`❌ Filtered (low credibility source): ${article.title}`);
+      return false;
+    }
+  }
+  
+  // ❌ 7. Vague / Generic titles
+  const vaguePatterns = [
+    /^behind the curtain/i,
+    /^what to know/i,
+    /^things to watch/i,
+    /^[0-9]+ things/i
+  ];
+  
+  for (const pattern of vaguePatterns) {
+    if (pattern.test(article.title)) {
+      // Exception: If it has clear context in description
+      if (!article.description || article.description.length < 50) {
+        Logger.log(`❌ Filtered (vague title): ${article.title}`);
+        return false;
+      }
+    }
+  }
+  
+  // ==================== SECTION-SPECIFIC FILTERS ====================
+  
+  if (sectionType === 'korea') {
+    // ❌ Minor company HR/personnel
+    const minorHRPatterns = [
+      /임직원.*정년/,
+      /임직원.*채용/,
+      /직원.*복지/,
+      /인사.*발령/,
+      /사장.*취임/,
+      /신임.*임원/,
+      /승진.*인사/
+    ];
+    
+    for (const pattern of minorHRPatterns) {
+      if (pattern.test(text)) {
+        const majorCompanies = ['samsung', '삼성', 'hyundai', '현대', 'sk', 'lg', 'kakao', '카카오', 'naver', '네이버'];
+        const hasMajorCompany = majorCompanies.some(co => text.includes(co));
+        
+        if (!hasMajorCompany) {
+          Logger.log(`❌ Filtered (minor HR): ${article.title}`);
+          return false;
+        }
+      }
+    }
+    
+    // ❌ Unknown small companies
+    const unknownCompanyPatterns = [
+      /케어닥|올리브영|무신사|컬리|직방/
+    ];
+    
+    for (const pattern of unknownCompanyPatterns) {
+      if (pattern.test(text)) {
+        const minorEvents = ['출시', '론칭', '오픈', '리뉴얼', '업데이트'];
+        const hasMinorEvent = minorEvents.some(e => text.includes(e));
+        
+        if (hasMinorEvent) {
+          Logger.log(`❌ Filtered (minor company): ${article.title}`);
+          return false;
+        }
+      }
+    }
+    
+    // ❌ Product launches (unless major)
+    const productLaunchPatterns = [
+      /신제품.*출시/,
+      /새.*제품.*론칭/
+    ];
+    
+    for (const pattern of productLaunchPatterns) {
+      if (pattern.test(text)) {
+        const majorTech = ['삼성', 'lg', '현대'];
+        const hasMajorTech = majorTech.some(t => text.includes(t));
+        
+        if (!hasMajorTech) {
+          Logger.log(`❌ Filtered (product launch): ${article.title}`);
+          return false;
+        }
+      }
+    }
+    
+    // ❌ PR / Marketing
+    const prPatterns = [
+      /제공.*이벤트/,
+      /할인.*프로모션/,
+      /경품.*증정/,
+      /사은품/
+    ];
+    
+    for (const pattern of prPatterns) {
+      if (pattern.test(text)) {
+        Logger.log(`❌ Filtered (PR/marketing): ${article.title}`);
+        return false;
+      }
+    }
+  }
+  
+  // ❌ Too short titles
+  if (article.title.split(' ').length < 5 && article.title.length < 30) {
+    Logger.log(`❌ Filtered (too short): ${article.title}`);
+    return false;
+  }
+  
+  return true;
 }
 
 function scoreArticleBySection(article, sectionType) {
   let score = 0;
   const text = (article.title + ' ' + (article.description || '')).toLowerCase();
 
-  // ==================== UNIVERSAL FILTER: EXCLUDE SPORTS & ENTERTAINMENT ====================
+  // ==================== EXCLUDE NOISE ====================
   const excludeKeywords = [
-    'sport', 'sports', 'football', 'soccer', 'baseball', 'basketball', 'nfl', 'nba', 'mlb', 'nhl',
-    'olympic', 'olympics', 'fifa', 'uefa', 'premier league', 'champions league', 'world cup',
-    'tennis', 'golf', 'boxing', 'mma', 'ufc', 'wrestling', 'racing', 'formula 1', 'f1',
-    'athlete', 'athletes', 'player', 'players', 'team', 'teams', 'coach', 'coaches', 
-    'stadium', 'arena', 'league', 'tournament', 'championship', 'playoff', 'playoffs',
-    'game', 'games', 'match', 'matches', 'score', 'scored', 'win', 'wins', 'loss', 'defeat',
-    'athletic', 'athletics', 'aggie', 'aggies', 'bulldogs', 'wildcats', 'tigers', 'bears',
-    'college football', 'college basketball', 'ncaa', 'division', 'conference',
-    'quarterback', 'running back', 'pitcher', 'batter', 'goalie', 'defender',
-    '스포츠', '야구', '축구', '농구', '배구', '골프', '테니스', '올림픽',
-    'k-pop', 'kpop', 'bts', 'blackpink', 'celebrity', 'celebrities', 'entertainment', 'hollywood',
-    'movie', 'movies', 'film', 'films', 'actor', 'actress', 'drama', 'dramas', 'tv show', 'netflix', 'streaming',
-    'music', 'album', 'albums', 'concert', 'concerts', 'tour', 'grammy', 'grammys', 'oscar', 'oscars', 'emmy', 'emmys',
-    'box office', 'premiere', 'trailer', 'songwriter', 'musician', 'band', 'singer',
-    '연예', '드라마', '영화', '가수', '배우', '아이돌', 'k드라마',
-    'stabbed', 'stabbing', 'shooting', 'shot', 'killed', 'murder', 'murdered', 'assault', 'assaulted',
-    'rape', 'raped', 'robbery', 'robbed', 'burglary', 'burglar', 'theft', 'stolen',
-    'arrested', 'arrest', 'police', 'cop', 'sheriff', 'investigation', 'suspect', 'victim',
-    'crime', 'criminal', 'prison', 'jail', 'inmate', 'convicted', 'trial', 'guilty',
-    'weather', 'forecast', 'hurricane', 'tornado', 'earthquake', 'flood',
-    'accident', 'crash', 'collision', 'died', 'death', 'funeral', 'obituary'
+    'sport', 'sports', 'football', 'soccer', 'baseball', 'basketball', 'nfl', 'nba',
+    'k-pop', 'kpop', 'celebrity', 'entertainment', 'hollywood',
+    'movie', 'movies', 'film', 'actor', 'actress', 'netflix',
+    'music', 'album', 'concert', 'grammy', 'oscar',
+    '연예', '드라마', '영화', '가수', '배우', '아이돌',
+    'private equity', 'pe firm', 'leveraged buyout', 'venture capital',
+    'black friday', 'cyber monday', 'gift guide'
   ];
   
   for (const keyword of excludeKeywords) {
@@ -1008,264 +1158,180 @@ function scoreArticleBySection(article, sectionType) {
   else if (source.includes('economist')) score += 12;
   else if (source.includes('nyt') || source.includes('new york times')) score += 10;
   else if (source.includes('reuters')) score += 10;
+  else if (source.includes('bbc')) score += 8;
+  else if (source.includes('cnn')) score += 8;
 
-  // Section-specific scoring
-  if (sectionType === 'global') {
-    const globalKeywords = [
-      'fed', 'federal reserve', 'interest rate', 'inflation', 'gdp',
-      'central bank', 'economy', 'trade war', 'tariff', 'china',
-      'recession', 'growth', 'treasury', 'bond'
+  // ==================== SECTION-SPECIFIC SCORING ====================
+
+  if (sectionType === 'international') {
+    
+    const breakingKeywords = [
+      'breaking', 'urgent', 'just in', 'developing', 'alert',
+      'emergency', 'crisis', '속보', '긴급'
     ];
-    globalKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 5;
+    breakingKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 30;
     });
 
-    const majorCompanies = ['apple', 'microsoft', 'google', 'amazon', 'meta', 'tesla', 'nvidia'];
-    majorCompanies.forEach(co => {
-      if (text.includes(co)) score += 3;
+    const disasterKeywords = [
+      'disaster', 'earthquake', 'tsunami', 'hurricane', 'typhoon',
+      'explosion', 'fire', 'collapse', 'crash', 'accident',
+      'flood', 'volcano', 'storm', 'tornado',
+      'terror', 'attack', 'shooting', 'bombing',
+      '재난', '지진', '폭발', '사고', '붕괴'
+    ];
+    disasterKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 25;
+    });
+
+    const geopoliticalKeywords = [
+      'war', 'conflict', 'invasion', 'coup', 'revolution',
+      'sanctions', 'military', 'nuclear', 'missile',
+      'china', 'russia', 'ukraine', 'taiwan', 'iran', 'israel',
+      'nato', 'un security', 'diplomatic crisis',
+      '전쟁', '분쟁', '제재', '군사'
+    ];
+    geopoliticalKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 22;
+    });
+
+    const macroKeywords = [
+      'fed', 'federal reserve', 'interest rate', 'inflation', 'gdp',
+      'central bank', 'recession', 'depression', 'bailout',
+      'monetary policy', 'fiscal policy', 'treasury',
+      'unemployment', 'jobs report', 'cpi', 'ppi'
+    ];
+    macroKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 20;
+    });
+
+    const policyKeywords = [
+      'regulation', 'law', 'legislation', 'executive order',
+      'parliament', 'congress', 'government shutdown',
+      'reform', 'ban', 'restrict', 'approve', 'vote',
+      'election', 'political crisis'
+    ];
+    policyKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 18;
+    });
+
+    const corporateCrisisKeywords = [
+      'bankruptcy', 'bankrupt', 'default', 'insolvent',
+      'ceo fired', 'ceo resigns', 'ceo steps down',
+      'scandal', 'fraud', 'investigation', 'lawsuit',
+      'massive layoff', 'plant closure', 'recall',
+      'cyber attack', 'data breach', 'hack'
+    ];
+    corporateCrisisKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 16;
+    });
+
+    const globalEventKeywords = [
+      'summit', 'g7', 'g20', 'world economic forum', 'davos',
+      'olympics', 'world cup', 'pandemic', 'epidemic',
+      'climate', 'cop', 'paris agreement'
+    ];
+    globalEventKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 12;
+    });
+
+    const techDisruptionKeywords = [
+      'ai regulation', 'ban', 'antitrust', 'breakup',
+      'layoffs', 'shutdown', 'outage', 'hack',
+      'breakthrough', 'quantum', 'fusion'
+    ];
+    techDisruptionKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 10;
+    });
+
+    const marketShockKeywords = [
+      'crash', 'plunge', 'surge', 'rally', 'sell-off',
+      'circuit breaker', 'trading halt', 'volatility',
+      'record high', 'record low', 'all-time high'
+    ];
+    marketShockKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 14;
     });
   }
 
   if (sectionType === 'korea') {
-    const majorCompanies = [
-      'samsung', 'hyundai', 'sk', 'lg', 'lotte', 'hanwha', 'gs', 'hanjin',
-      'doosan', 'shinsegae', 'cj', 'posco',
-      'samsung electronics', 'hyundai motor', 'sk hynix', 'lg energy',
-      '삼성', '현대', 'sk', 'lg', '롯데', '한화', 'gs', '한진',
-      '두산', '신세계', 'cj', '포스코',
-      'kakao', 'naver', 'coupang', 'toss', 'krafton', 'nexon', 'ncsoft',
-      'baemin', 'woowa', 'zigbang', 'daangn', 'karrot', 'viva republica',
-      'yanolja', 'socar', 'musinsa', 'kurly', 'market kurly', 'dunamu',
-      '카카오', '네이버', '쿠팡', '토스', '크래프톤', '넥슨', '엔씨소프트',
-      '배달의민족', '배민', '우아한형제들', '직방', '당근마켓', '비바리퍼블리카',
-      '야놀자', '쏘카', '무신사', '컬리', '마켓컬리', '두나무'
+    
+    const breakingKeywords = [
+      'breaking', '속보', '긴급', '특보', 'urgent'
     ];
+    breakingKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 30;
+    });
 
+    const disasterKeywords = [
+      '사고', '재난', '화재', '폭발', '붕괴',
+      'disaster', 'accident', 'fire', 'explosion', 'collapse'
+    ];
+    disasterKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 25;
+    });
+
+    const majorCompanies = [
+      'samsung', 'hyundai', 'sk', 'lg', 'lotte', 'hanwha', 'posco',
+      '삼성', '현대', '롯데', '한화', '포스코'
+    ];
     let hasRelevantCompany = false;
     majorCompanies.forEach(co => {
       if (text.includes(co)) {
         hasRelevantCompany = true;
-        score += 12;
-      }
-    });
-
-    const peRelatedKeywords = [
-      '인수', '합병', '매각', '지분', '투자', '펀딩',
-      'acquisition', 'merger', 'stake', 'investment', 'funding', 'deal',
-      'm&a', 'buyout', 'takeover',
-      'private equity', 'venture capital', 'pe firm', 'vc',
-      '사모펀드', '벤처캐피탈', '프라이빗에쿼티',
-      'ipo', 'valuation', '기업가치', '밸류에이션', 'exit',
-      '상장', 'listing', 'unicorn', '유니콘',
-      '스타트업', 'startup', 'start-up', '벤처', 'venture',
-      '시리즈', 'series a', 'series b', 'series c'
-    ];
-    peRelatedKeywords.forEach(kw => {
-      if (text.includes(kw)) {
-        hasRelevantCompany = true;
-        score += 18;
-      }
-    });
-
-    const policyKeywords = [
-      '정부', 'government', '금융위', '공정위', '공정거래위원회', '금융감독원',
-      'financial services commission', 'fair trade commission', 'fsc', 'ftc',
-      '국회', 'national assembly', '기재부', 'ministry of finance',
-      '산업부', 'ministry of trade', '과기부', 'ministry of science',
-      '정책', 'policy', '규제', 'regulation', '법안', 'bill', 'legislation',
-      '개혁', 'reform', '완화', 'easing', '강화', 'strengthening',
-      '승인', 'approval', '허가', 'permit', '제재', 'sanctions',
-      '금융정책', 'monetary policy', '재정정책', 'fiscal policy',
-      '부동산', 'real estate', '세제', 'tax', '세금', '조세'
-    ];
-    policyKeywords.forEach(kw => {
-      if (text.includes(kw)) {
-        hasRelevantCompany = true;
-        score += 12;
+        score += 15;
       }
     });
 
     const macroKeywords = [
-      'kospi', 'kosdaq', '경제', '수출', '무역', '환율', 'gdp', '금리',
-      'economy', 'export', 'trade', 'interest rate', '한국은행', 'bank of korea',
-      '인플레이션', 'inflation', '경기', 'economic growth'
+      '금리', '환율', '수출', '무역', 'gdp', '경제성장',
+      'kospi', 'kosdaq', '한국은행', 'bank of korea',
+      '경기', '경제', '인플레이션', '물가', 'cpi'
     ];
+    let hasMacroRelevance = false;
     macroKeywords.forEach(kw => {
       if (text.includes(kw)) {
-        hasRelevantCompany = true;
-        score += 10;
+        hasMacroRelevance = true;
+        score += 20;
       }
     });
 
-    const koreaKeywords = [
-      'chaebol', '재벌', '반도체', 'semiconductor', '자동차', 'automotive',
-      '배터리', 'battery', 'k-chip', '디스플레이', 'display'
+    const policyKeywords = [
+      '정부', '금융위', '공정위', '금융감독원', '국회',
+      'government', 'policy', '정책', '규제', 'regulation',
+      '법안', '개혁', 'reform', '승인', '제재'
     ];
-    koreaKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 6;
+    policyKeywords.forEach(kw => {
+      if (text.includes(kw)) {
+        hasMacroRelevance = true;
+        score += 18;
+      }
     });
 
-    if (text.includes('lee jae-yong') || text.includes('chung eui-sun') ||
-        text.includes('이재용') || text.includes('정의선')) score += 8;
+    const industryKeywords = [
+      '반도체', 'semiconductor', 'chip', '자동차', 'automotive',
+      '배터리', 'battery', '디스플레이', '조선', 'shipbuilding'
+    ];
+    industryKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 12;
+    });
 
-    if (!hasRelevantCompany) {
+    const crisisKeywords = [
+      '위기', '파산', '부도', '경영난', '구조조정',
+      'crisis', 'bankruptcy', 'restructuring', 'layoff'
+    ];
+    crisisKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 15;
+    });
+
+    if (!hasRelevantCompany && !hasMacroRelevance) {
       score -= 300;
     }
-    
-    const promotionalKeywords = [
-      'medica', '전시회', 'exhibition', '참가', 'participation',
-      '가입자', 'subscriber', '돌파', 'breakthrough', 
-      '특징주', 'featured stock', '상승', 'rise', '하락', 'fall',
-      '[특징주]', '전략적 투자', 'strategic investment', '신성장',
-      '견본주택', '분양', '모델하우스', 'model house', 'showroom',
-      '아파트', 'apartment', 'officetel', '오피스텔',
-      '개관', 'opening', 'grand opening', '오픈'
-    ];
-    promotionalKeywords.forEach(kw => {
-      if (text.includes(kw)) score -= 250;
-    });
   }
 
-  if (sectionType === 'pe') {
-    const professionalPESources = [
-      'pe hub', 'pehub', 'private equity international', 'pere', 'altassets',
-      'private equity wire', 'institutional investor'
-    ];
-    professionalPESources.forEach(src => {
-      if (article.source.toLowerCase().includes(src)) {
-        score += 30;
-      }
-    });
-
-    const consumerNoise = [
-      'black friday', 'cyber monday', 'deals are heating', 'save up to', 'discount',
-      'shopping', 'buy now', 'on sale', 'price drop', 'grill', 'traeger', 'weber',
-      'blackstone griddle', 'mattress', 'vacuum', 'tv deals', 'headphones',
-      'iphone case', 'airpods', 'smart watch', 'fitness tracker',
-      'video game', 'playstation', 'xbox', 'nintendo', 'fortnite', 'minecraft',
-      'stock ideal for retirement', 'buy this stock', 'stock rises', 'stock falls',
-      'best of', 'top 10', 'gift guide', 'how to buy'
-    ];
-    for (const noise of consumerNoise) {
-      if (text.includes(noise)) {
-        return -1000;
-      }
-    }
-
-    const tier1Keywords = [
-      'private equity', 'pe firm', 'pe fund', 'leveraged buyout', 'lbo',
-      'take private', 'buyout', 'management buyout', 'mbo',
-      'portfolio company', 'fund raising', 'fundraising', 'closes fund',
-      'limited partner', 'lp commitment', 'general partner',
-      'dry powder', 'deal flow', 'exit strategy', 'holding period',
-      'sponsor', 'financial sponsor', 'add-on acquisition', 'platform acquisition',
-      'recapitalization', 'dividend recap', 'secondary buyout'
-    ];
-    let hasTier1 = false;
-    tier1Keywords.forEach(kw => {
-      if (text.includes(kw)) {
-        score += 25;
-        hasTier1 = true;
-      }
-    });
-
-    const tier2Keywords = [
-      'acquisition', 'acquires', 'acquired', 'merger', 'takeover',
-      'agrees to buy', 'to acquire', 'deal valued', 'transaction',
-      'agreed to sell', 'sells stake', 'stake sale'
-    ];
-    let hasTier2 = false;
-    tier2Keywords.forEach(kw => {
-      if (text.includes(kw)) {
-        score += 15;
-        hasTier2 = true;
-      }
-    });
-
-    const tier3Keywords = [
-      'venture capital', 'vc firm', 'series a', 'series b', 'series c', 'series d',
-      'seed round', 'growth equity', 'growth capital',
-      'ipo', 'initial public offering', 'files for ipo', 'going public', 'stock listing',
-      'spac merger', 'de-spac', 'public listing'
-    ];
-    tier3Keywords.forEach(kw => {
-      if (text.includes(kw)) {
-        score += 12;
-        hasTier2 = true;
-      }
-    });
-
-    const valuationKeywords = [
-      'valuation', 'enterprise value', 'ebitda', 'multiple', 'ebitda multiple',
-      'deal value', 'transaction value', 'equity value', 'purchase price',
-      'raised at a valuation', 'valued at'
-    ];
-    valuationKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 8;
-    });
-
-    const megaPEFirms = [
-      'blackstone', 'kkr', 'kohlberg kravis', 'carlyle group', 'carlyle',
-      'apollo global', 'apollo management', 'tpg capital', 'tpg',
-      'warburg pincus', 'advent international', 'thoma bravo',
-      'silver lake', 'bain capital', 'cvc capital',
-      'hellman & friedman', 'hellman friedman', 'neuberger berman',
-      'leonard green', 'general atlantic', 'vista equity',
-      'brookfield', 'ares management', 'bridgepoint',
-      'cinven', 'permira', 'pai partners', 'apax partners',
-      'bc partners', 'ardian', 'nordic capital', 'eqt',
-      'affinity equity', 'gaw capital', 'hillhouse capital',
-      'citic capital', 'fosun', 'hony capital'
-    ];
-    let hasPEFirm = false;
-    megaPEFirms.forEach(firm => {
-      if (text.includes(firm)) {
-        score += 30;
-        hasPEFirm = true;
-        hasTier1 = true;
-      }
-    });
-
-    if (text.includes('billion')) score += 12;
-    if (text.includes('million') && (text.includes('acquisition') || text.includes('funding'))) score += 6;
-
-    const businessContext = [
-      'company', 'companies', 'firm', 'corporation',
-      'investor', 'investment', 'capital', 'fund', 'equity',
-      'stake', 'shares', 'deal', 'transaction'
-    ];
-    let hasContext = false;
-    businessContext.forEach(kw => {
-      if (text.includes(kw)) {
-        hasContext = true;
-        score += 2;
-      }
-    });
-
-    if (!hasTier1 && !hasPEFirm && !hasTier2) {
-      score -= 600;
-    }
-
-    if (!hasContext) {
-      score -= 400;
-    }
-
-    const premiumSources = [
-      'wsj', 'wall street journal', 'financial times', 'ft.com',
-      'bloomberg', 'reuters', 'economist', 'forbes', 'axios',
-      'the information', 'business insider'
-    ];
-    premiumSources.forEach(src => {
-      if (article.source.toLowerCase().includes(src)) {
-        score += 10;
-      }
-    });
-  }
-
-  // Recency bonus
   const hoursAgo = (Date.now() - new Date(article.publishedAt).getTime()) / (1000 * 60 * 60);
-  if (hoursAgo < 3) score += 8;
-  else if (hoursAgo < 6) score += 4;
+  if (hoursAgo < 3) score += 10;
+  else if (hoursAgo < 6) score += 5;
 
   return score;
 }
@@ -1300,7 +1366,6 @@ function removeDuplicates(articles) {
   }
 
   unique.sort((a, b) => b.score - a.score);
-
   return unique;
 }
 
@@ -1322,223 +1387,260 @@ function calculateSimilarity(str1, str2) {
 }
 
 function removeSemanticDuplicates(articles, sectionType) {
-  if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
-    return articles;
-  }
-
-  if (articles.length <= 5) {
+  if (!CONFIG.OPENAI_API_KEY || articles.length <= 5) {
     return articles;
   }
 
   try {
-    const articleList = articles.map((a, idx) => {
-      return `${idx}: ${a.title}`;
-    }).join('\n');
+    const articleList = articles.map((a, idx) => `${idx}: ${a.title}`).join('\n');
 
-    const prompt = `You are analyzing news article titles to identify duplicates - articles covering the SAME news story/event.
+    const prompt = `Identify duplicate headlines (same story, different wording).
 
-CRITICAL RULES:
-- Articles about the SAME story/event = DUPLICATES (even if worded differently)
-- Articles about DIFFERENT stories = NOT DUPLICATES (even if similar topic/company)
-- Look for: same company + same event/announcement + same timeframe
-- Ignore: source differences, minor wording variations
-
-Examples:
-DUPLICATES (same story):
-- "KKR aims to raise $15 billion for Asia fund"
-- "KKR seeks $15B in new Asia private equity fund"
-- "KKR launches $15 billion fundraising for fifth Asia fund"
-→ All about KKR's specific $15B Asia fundraising
-
-NOT DUPLICATES (different stories):
-- "Apple announces new iPhone 15"
-- "Apple reports Q3 earnings beat"
-→ Different Apple stories
-
-Articles to analyze:
+Articles:
 ${articleList}
 
-Task: Identify groups of articles covering the SAME story. Return ONLY duplicate groups (2+ articles about same story).
+Return JSON array of duplicate groups: [[1,4,7], [2,9]]
+If no duplicates: []
 
-Response format (JSON array of arrays):
-[[1, 4, 7], [2, 9]]
+CRITICAL: Respond with ONLY a valid JSON array. No markdown, no explanations.
 
-This means:
-- Articles 1, 4, 7 are duplicates (same story)
-- Articles 2, 9 are duplicates (same story)
-- All other articles are unique
-
-If NO duplicates found, return: []
-
-CRITICAL: Respond with ONLY valid JSON - no explanations or comments.
-Do NOT say "I'm unable to..." or "I apologize..." - just return the JSON array.
-
-Respond with JSON only (no other text):`;
+Respond with JSON only:`;
 
     const response = callChatGPT(prompt, 800);
-
+    
     let cleanedResponse = response.trim();
-    if (cleanedResponse.startsWith('```json')) {
-      cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
-    } else if (cleanedResponse.startsWith('```')) {
-      cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    
+    cleanedResponse = cleanedResponse
+      .replace(/^```(?:json)?\s*\n?/gi, '')
+      .replace(/\n?```\s*$/gi, '')
+      .trim();
+    
+    const arrayMatch = cleanedResponse.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      cleanedResponse = arrayMatch[0];
     }
 
-    // Validate that response looks like JSON array before parsing
-    if (!cleanedResponse.trim().startsWith('[')) {
-      Logger.log(`⚠ Semantic dedup response is not JSON array. Response: ${cleanedResponse.substring(0, 200)}`);
-      throw new Error('GPT did not return valid JSON array for deduplication');
+    if (!cleanedResponse.startsWith('[')) {
+      Logger.log(`⚠ Semantic dedup: Invalid JSON format. Using fallback.`);
+      return articles;
     }
 
     const duplicateGroups = JSON.parse(cleanedResponse);
 
     if (!Array.isArray(duplicateGroups) || duplicateGroups.length === 0) {
-      Logger.log('✓ No semantic duplicates found');
       return articles;
     }
 
     const indicesToRemove = new Set();
-
     duplicateGroups.forEach(group => {
       if (!Array.isArray(group) || group.length < 2) return;
-
       let bestIdx = group[0];
       let bestScore = articles[group[0]].score;
-
       group.forEach(idx => {
         if (articles[idx].score > bestScore) {
           bestScore = articles[idx].score;
           bestIdx = idx;
         }
       });
-
       group.forEach(idx => {
-        if (idx !== bestIdx) {
-          indicesToRemove.add(idx);
-        }
+        if (idx !== bestIdx) indicesToRemove.add(idx);
       });
     });
 
-    const dedupedArticles = articles.filter((_, idx) => !indicesToRemove.has(idx));
-
-    Logger.log(`✓ Semantic dedup: ${articles.length} → ${dedupedArticles.length} (removed ${indicesToRemove.size})`);
-
-    return dedupedArticles;
+    return articles.filter((_, idx) => !indicesToRemove.has(idx));
 
   } catch (error) {
     Logger.log(`❌ Semantic dedup failed: ${error.toString()}`);
-    Logger.log(`❌ Error stack: ${error.stack}`);
+    return articles;
+  }
+}
 
-    // Try to log the response if available
-    try {
-      if (response) {
-        Logger.log(`❌ GPT Response (first 300 chars): ${response.substring(0, 300)}`);
+// ==================== PERPLEXITY VALIDATION ====================
+
+function validateArticlesWithPerplexity(articles, sectionType) {
+  if (!CONFIG.PERPLEXITY_API_KEY || articles.length === 0) {
+    return articles;
+  }
+
+  try {
+    const contexts = {
+      'international': {
+        criteria: `Evaluate HEADLINE IMPORTANCE:
+- Breaking news & emergencies
+- Major disasters & crises (high volatility)
+- Economic policy & market-movers
+- Geopolitical conflicts
+- Corporate crises & disruptions
+
+PRIORITIZE: Events that move markets, change policy, or demand executive attention
+INCLUDE: Disasters, accidents, major global events`,
+        
+        question: 'Which headlines are MOST IMPORTANT for business leaders TODAY?'
+      },
+      
+      'korea': {
+        criteria: `Evaluate KOREA HEADLINE IMPORTANCE:
+- Breaking news & emergencies
+- Economic policy & data
+- Major corporate events & crises
+- Government actions
+- Disasters & major incidents
+
+INCLUDE: Macro policy, major events, crises
+AVOID: Minor company news, HR announcements`,
+        
+        question: 'Which are MOST IMPORTANT for Korean executives TODAY?'
       }
-    } catch (e) {
-      // Ignore logging errors
+    };
+
+    const context = contexts[sectionType];
+    const articleList = articles.map((a, i) => {
+      const preview = a.description ? ` - ${a.description.substring(0, 100)}...` : '';
+      return `${i}. [${a.source}] ${a.title}${preview}`;
+    }).join('\n\n');
+
+    const prompt = `Evaluate TODAY's headlines for business executives.
+
+${context.criteria}
+
+Articles:
+${articleList}
+
+${context.question}
+
+Return: JSON array with 15-20 most important indices
+Format: [3, 7, 1, 12, 5]
+
+CRITICAL: Respond with ONLY a valid JSON array. No markdown, no explanations.
+
+Respond with JSON only:`;
+
+    const result = callPerplexity(prompt, true);
+    
+    let cleanedResponse = result.content.trim();
+    
+    cleanedResponse = cleanedResponse
+      .replace(/^```(?:json)?\s*\n?/gi, '')
+      .replace(/\n?```\s*$/gi, '')
+      .trim();
+    
+    const arrayMatch = cleanedResponse.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      cleanedResponse = arrayMatch[0];
     }
 
-    Logger.log(`⚠ Continuing with original articles (no deduplication)`);
-    return articles; // Return original on error
+    if (!cleanedResponse.startsWith('[')) {
+      Logger.log(`⚠ Perplexity: Invalid JSON format. Using fallback.`);
+      return articles;
+    }
+
+    const selectedIndices = JSON.parse(cleanedResponse);
+
+    if (!Array.isArray(selectedIndices) || selectedIndices.length === 0) {
+      return articles;
+    }
+
+    const validatedArticles = selectedIndices
+      .filter(idx => idx >= 0 && idx < articles.length)
+      .map(idx => articles[idx]);
+
+    Logger.log(`✓ Perplexity validation (${sectionType}): ${articles.length} → ${validatedArticles.length}`);
+    
+    return validatedArticles;
+
+  } catch (error) {
+    Logger.log(`❌ Perplexity validation failed: ${error.toString()}`);
+    return articles;
   }
 }
 
 function curateTopArticlesWithGPT(articles, targetCount, sectionType) {
-  // Skip GPT curation if API key not configured or too few articles
-  if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
+  if (!CONFIG.OPENAI_API_KEY || articles.length <= targetCount) {
     return articles.slice(0, targetCount);
   }
 
-  if (articles.length <= targetCount) {
-    return articles; // Already at or below target
-  }
-
   try {
-    // Prepare article list with indices for GPT
     const articleList = articles.map((a, idx) => {
       const preview = a.description ? ` - ${a.description.substring(0, 100)}...` : '';
       return `${idx}: [${a.source}] ${a.title}${preview}`;
     }).join('\n\n');
 
     const sectionContext = {
-      'global': 'global business, economy, policy, markets, and major corporate news',
-      'pe': 'private equity, M&A, deals, fundraising, exits, and investment activity',
-      'korea': 'Korean business, economy, policy, major companies (chaebols, startups), and market developments'
+      'international': 'Top HEADLINES: breaking news, crises, major events, policy changes',
+      'korea': 'Top KOREA HEADLINES: breaking news, economy, policy, major events (NO minor company HR news)'
     };
 
-    const prompt = `You are a senior business analyst curating the most important news for PE professionals.
+    const prompt = `Select ${targetCount} most important HEADLINES for ${sectionContext[sectionType]}.
 
-SECTION: ${sectionContext[sectionType] || 'business news'}
+PRIORITY:
+1. Breaking news & emergencies
+2. Disasters & major incidents
+3. Economic policy & market shocks
+4. Geopolitical crises
+5. Corporate crises
 
-Your task: Select the ${targetCount} MOST IMPORTANT articles from the candidate list below.
+⚠️ CRITICAL - AVOID DUPLICATES:
+- If multiple articles cover the SAME EVENT/STORY, pick ONLY the best one
+- Examples of duplicates to avoid:
+  * Multiple flood articles about same region → Pick 1 best
+  * Multiple articles about same company scandal → Pick 1 best
+  * Multiple articles about same policy/tariff → Pick 1 best
+- Prioritize: More comprehensive coverage, better source, more detail
 
-IMPORTANCE CRITERIA (ranked):
-1. **Market-moving news** - Central bank decisions, major economic data, policy changes
-2. **Major deals & transactions** - Large M&A, significant PE deals, IPO filings
-3. **Corporate developments** - CEO changes, major restructuring, earnings surprises
-4. **Regulatory & policy** - New regulations, government actions affecting business
-5. **Strategic shifts** - Major business model changes, industry disruptions
+EXCLUDE:
+- Minor company HR/personnel announcements
+- Small startup product launches
+- Marketing/promotional content
+- DUPLICATE stories (same event, different source)
+- Local city news (Missoula, Spokane, etc.)
+- Award ceremonies / Media criticism
 
-AVOID selecting:
-- Minor incremental news without clear impact
-- Repetitive updates on the same ongoing story
-- Speculative or rumor-based reporting
-- Minor regional news without broader significance
-
-Articles to analyze:
+Articles:
 ${articleList}
 
-Task: Select exactly ${targetCount} articles that are MOST important for business decision-makers.
+Return: JSON array with exactly ${targetCount} DIVERSE, NON-DUPLICATE indices
+Format: [3, 7, 12]
 
-Response format (JSON array of indices):
-[3, 7, 12, 15, 20]
+CRITICAL: Respond with ONLY a valid JSON array. No markdown, no explanations, no text outside the array.
 
-This means articles at indices 3, 7, 12, 15, and 20 are the most important.
+Respond with JSON only:`;
 
-CRITICAL INSTRUCTIONS:
-- Return EXACTLY ${targetCount} indices
-- Respond with ONLY valid JSON - no explanations, apologies, or comments
-- Do NOT say "I'm unable to..." or "I apologize..." - just return the JSON array
-- If you cannot select, return indices [0, 1, 2, ..., ${targetCount - 1}]
-
-Respond with JSON array only (no other text):`;
-
-    const response = callChatGPT(prompt, 300);
-
+    const response = callChatGPT(prompt, 400);
+    
     let cleanedResponse = response.trim();
-    if (cleanedResponse.startsWith('```json')) {
-      cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
-    } else if (cleanedResponse.startsWith('```')) {
-      cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    
+    cleanedResponse = cleanedResponse
+      .replace(/^```(?:json)?\s*\n?/gi, '')
+      .replace(/\n?```\s*$/gi, '')
+      .trim();
+    
+    const arrayMatch = cleanedResponse.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      cleanedResponse = arrayMatch[0];
     }
 
-    // Validate that response looks like JSON array before parsing
-    if (!cleanedResponse.trim().startsWith('[')) {
-      Logger.log(`⚠ GPT curation response is not JSON array. Response: ${cleanedResponse.substring(0, 200)}`);
-      throw new Error('GPT did not return valid JSON array');
+    if (!cleanedResponse.startsWith('[')) {
+      Logger.log(`⚠ GPT curation: Invalid JSON format. Using fallback.`);
+      return articles.slice(0, targetCount);
     }
 
     const selectedIndices = JSON.parse(cleanedResponse);
 
     if (!Array.isArray(selectedIndices) || selectedIndices.length === 0) {
-      Logger.log('⚠ GPT curation returned no selections, using top articles by score');
+      Logger.log('⚠ GPT curation: Empty array. Using fallback.');
       return articles.slice(0, targetCount);
     }
 
-    // Extract selected articles in the order GPT chose them
     const curatedArticles = selectedIndices
       .filter(idx => idx >= 0 && idx < articles.length)
       .map(idx => articles[idx]);
 
-    Logger.log(`✓ GPT curation: ${articles.length} → ${curatedArticles.length} curated articles`);
+    Logger.log(`✓ GPT curation: ${articles.length} → ${curatedArticles.length}`);
 
-    // If GPT didn't return enough, fill with top-scored articles
     if (curatedArticles.length < targetCount) {
       const selectedSet = new Set(selectedIndices);
       const remaining = articles
-        .map((a, idx) => ({ article: a, idx }))
-        .filter(item => !selectedSet.has(item.idx))
-        .map(item => item.article)
+        .filter((_, idx) => !selectedSet.has(idx))
         .slice(0, targetCount - curatedArticles.length);
       curatedArticles.push(...remaining);
     }
@@ -1547,19 +1649,7 @@ Respond with JSON array only (no other text):`;
 
   } catch (error) {
     Logger.log(`❌ GPT curation failed: ${error.toString()}`);
-    Logger.log(`❌ Error stack: ${error.stack}`);
-
-    // Try to log the response if available
-    try {
-      if (response) {
-        Logger.log(`❌ GPT Response (first 300 chars): ${response.substring(0, 300)}`);
-      }
-    } catch (e) {
-      // Ignore logging errors
-    }
-
-    Logger.log(`⚠ Falling back to top ${targetCount} articles by score`);
-    return articles.slice(0, targetCount); // Return top by score on error
+    return articles.slice(0, targetCount);
   }
 }
 
@@ -1625,7 +1715,10 @@ function fetchYahooFinanceData(symbol) {
       '^KS11': 'KOSPI',
       '^KQ11': 'KOSDAQ',
       'BTC-USD': 'Bitcoin',
-      'KRW=X': 'USD/KRW'
+      'GC=F': 'Gold',
+      'CL=F': 'Oil (WTI)',
+      'KRW=X': 'USD/KRW',
+      'JPY=X': 'USD/JPY'
     };
 
     return {
@@ -1653,165 +1746,115 @@ function calculateChange(prices, days) {
 
 // ==================== AI SUMMARY ====================
 
-function generateAISummary(globalArticles, peArticles, koreaArticles, marketData) {
-  if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
+function generateAISummary(internationalArticles, koreaArticles, marketData) {
+  if (!CONFIG.OPENAI_API_KEY) {
     return {
-      headline: 'Global News Headlines',
-      insights: ['Configure OpenAI API key'],
-      macroEconomic: '',
-      deals: '',
-      sectors: '',
-      regional: ''
+      insights: ['CONFIGure OpenAI API key']
     };
   }
 
   try {
-    const globalContext = globalArticles.slice(0, 10).map((a, i) => {
+    const intlContext = internationalArticles.slice(0, 10).map((a, i) => {
       const desc = a.description ? `\n   ${a.description.substring(0, 150)}` : '';
       return `${i + 1}. [${a.source}] ${a.title}${desc}`;
     }).join('\n\n');
 
-    const peContext = peArticles.slice(0, 8).map((a, i) => {
-      return `${i + 1}. [${a.source}] ${a.title}`;
-    }).join('\n');
-
-    const koreaContext = koreaArticles.slice(0, 8).map((a, i) => {
+    const koreaContext = koreaArticles.slice(0, 10).map((a, i) => {
       return `${i + 1}. [${a.source}] ${a.title}`;
     }).join('\n');
 
     const marketContext = formatMarketContextForAI(marketData);
 
-    const prompt = `You are an executive analyst for private equity professionals.
-Analyze TODAY'S news (last 24 hours) and provide a daily briefing focused on NEW developments.
+    const prompt = `Analyze TODAY's MAJOR HEADLINES for business executives.
 
-CRITICAL: This is a DAILY briefing. Focus on what CHANGED or HAPPENED in the last 24 hours.
-Use present tense and "today" language: "announced today", "reports show", "markets responded to..."
-Avoid generic evergreen analysis. Highlight NEW information, decisions, announcements, and movements.
-
-IMPORTANT FILTER: Ignore ANY sports or entertainment news that may have slipped through:
-- Sports: football, basketball, soccer, tennis, olympics, athlete deals, team acquisitions, stadium sales
-- Entertainment: movies, music, concerts, celebrities, K-pop, streaming services, box office
-- Focus ONLY on business, finance, economy, policy, corporate M&A, technology, industry
-
-=== MARKET DATA (Last 24 Hours) ===
+=== MARKET DATA ===
 ${marketContext}
 
-=== GLOBAL TOP HEADLINES (Today) ===
-${globalContext}
+=== INTERNATIONAL HEADLINES ===
+${intlContext}
 
-=== PE/M&A SPECIFIC NEWS (Today) ===
-${peContext}
-
-=== KOREA HEADLINES (Today) ===
+=== KOREA HEADLINES ===
 ${koreaContext}
 
-TASK: Synthesize TODAY'S BUSINESS developments into actionable intelligence:
+Focus on:
+- Breaking news & emergencies
+- Major disasters/crises creating volatility
+- Economic policy changes
+- Geopolitical events
+- Corporate disruptions
 
-1. **Key Insights** (6 bullets, 150-200 chars each)
-   - PRIORITY ORDER: (1) Global macro/economic developments, (2) Korea economic/policy news, (3) PE deals/M&A, (4) Other significant business events
-   - Start with what's shaking global/Korea economies - central banks, policy, inflation, trade, markets
-   - Place PE deals and M&A news in the MIDDLE positions (bullets 3-4), not at the beginning
-   - Use action verbs: "announced", "reported", "reached", "fell", "surged"
-   - Focus on concrete events and numbers from TODAY
-   - Example order: [Global macro] [Korea policy] [Deal news] [Deal news] [Market reaction] [Sector development]
+TASK: Create 8-10 rich, detailed insights covering TODAY's most important developments.
 
-2. **Macro-Economic & Policy** (700-900 chars)
-   - TODAY'S central bank actions, economic data releases, policy announcements
-   - NEW inflation/employment numbers, rate decisions, fiscal policy changes
-   - Market reactions to today's developments
-   - How today's news affects investment strategy going forward
-   - Use temporal markers: "today", "this morning", "announced", "reported"
+**Key Insights Requirements:**
+- 8-10 bullets total
+- Each bullet: 200-250 characters (detailed, not just headlines)
+- Include context, implications, or why it matters
+- Mix of:
+  * Breaking news & urgent developments (2-3)
+  * Economic/policy changes & market impacts (2-3)
+  * Korea-specific developments (2-3)
+  * Geopolitical or major global events (1-2)
 
-3. **PE & Deal Activity** (600-800 chars)
-   - Deals ANNOUNCED today, closings, IPO filings, PE exits
-   - NEW valuations, fundraising announcements, LP commitments
-   - TODAY'S market conditions affecting deal activity
-   - Recent transaction trends visible in today's news
-   - If no major deals today, write: "(No significant PE transactions reported in last 24 hours)"
+**Style:**
+- Start with action: "announced", "reported", "surged", "plunged", "reached"
+- Include key numbers/data when relevant
+- Add brief context or implication
+- Be specific, not generic
 
-4. **Korea Business Focus** (500-700 chars)
-   - TODAY'S major Korean corporate announcements and decisions
-   - Samsung, Hyundai, SK, LG developments from today
-   - Korean market reactions and policy news
-   - Cross-border implications of today's Korea news
-   - IMPORTANT: Even if news seems minor, analyze what's available rather than saying "limited developments"
-   - Focus on what DID happen, not what didn't
+**Example good insights:**
+✅ "Fed signals potential rate pause in March as inflation data shows continued cooling to 3.1% YoY, sparking equity rally with S&P 500 up 2.3% - markets pricing in 70% chance of cuts by June"
+✅ "Samsung Electronics faces $2B quarterly loss as chip oversupply deepens, announcing 10,000 job cuts globally - signals broader semiconductor downturn affecting Korea's export-dependent economy"
 
-5. **Sector Trends** (500-700 chars or empty)
-   - Which sectors saw major developments TODAY
-   - NEW product launches, regulatory changes, earnings reports
-   - TODAY'S technology breakthroughs or industry shifts
-   - If no clear sector story today, leave empty
+**Example bad insights (too generic):**
+❌ "Fed may pause rate hikes"
+❌ "Samsung reports losses"
 
-CRITICAL REMINDERS:
-- This is a DAILY update - emphasize what's NEW in last 24 hours
-- Use present tense and time markers: "today", "announced", "reported"
-- Focus on EVENTS and CHANGES, not static analysis
-- For Korea section: ALWAYS provide analysis based on available news, don't use placeholder text
-- If a section has minimal news, briefly note market conditions or sentiment instead
-- Readers get this EVERY day - make each day's content feel fresh and timely
-
-RESPONSE FORMAT - CRITICAL:
-You MUST respond ONLY with valid JSON. Do NOT include any explanatory text, apologies, or comments.
-If you cannot generate a summary, return the JSON structure with empty arrays/strings.
-Do NOT say "I'm unable to..." or "I apologize..." - just return the JSON.
-
-Expected JSON format (respond with ONLY this, nothing else):
+RESPONSE FORMAT:
 {
-  "insights": ["insight1 with TODAY'S news", "insight2...", "insight3...", "insight4...", "insight5...", "insight6..."],
-  "macroEconomic": "today's economic/policy developments...",
-  "peDeals": "today's PE/M&A activity - if truly nothing, briefly note 'Quiet day for major transactions, markets focused on...'",
-  "korea": "today's Korea business news - ALWAYS provide analysis, never use placeholder text",
-  "sectors": "today's sector developments or empty string"
+  "insights": [
+    "detailed insight 1 with context and numbers...",
+    "detailed insight 2 with implications...",
+    "detailed insight 3 with market impact...",
+    "detailed insight 4...",
+    "detailed insight 5...",
+    "detailed insight 6...",
+    "detailed insight 7...",
+    "detailed insight 8..."
+  ]
 }
 
-Respond with JSON only (no other text):`;
+CRITICAL: Respond with ONLY a valid JSON object. No markdown, no explanations.
+
+Respond with JSON only:`;
 
     const response = callChatGPT(prompt, 3500);
 
     let cleanedResponse = response.trim();
-    if (cleanedResponse.startsWith('```json')) {
-      cleanedResponse = cleanedResponse.replace(/^```json\s*\n?/, '').replace(/\n?```\s*$/, '');
-    } else if (cleanedResponse.startsWith('```')) {
-      cleanedResponse = cleanedResponse.replace(/^```\s*\n?/, '').replace(/\n?```\s*$/, '');
+    
+    cleanedResponse = cleanedResponse
+      .replace(/^```(?:json)?\s*\n?/gi, '')
+      .replace(/\n?```\s*$/gi, '')
+      .trim();
+    
+    const jsonMatch = cleanedResponse.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      cleanedResponse = jsonMatch[0];
     }
 
-    // Validate that response looks like JSON before parsing
-    if (!cleanedResponse.trim().startsWith('{')) {
-      Logger.log(`⚠ AI response is not JSON. Response: ${cleanedResponse.substring(0, 200)}`);
-      throw new Error('AI did not return valid JSON');
+    if (!cleanedResponse.startsWith('{')) {
+      Logger.log(`⚠ AI summary: Invalid JSON format`);
+      throw new Error('Invalid JSON format from AI summary');
     }
 
     const summary = JSON.parse(cleanedResponse);
     return {
-      headline: 'Global News Headlines',
-      insights: summary.insights || [],
-      macroEconomic: summary.macroEconomic || '',
-      peDeals: summary.peDeals || '',
-      korea: summary.korea || '',
-      sectors: summary.sectors || ''
+      insights: summary.insights || []
     };
 
   } catch (error) {
     Logger.log(`❌ AI summary error: ${error.toString()}`);
-    Logger.log(`❌ Error stack: ${error.stack}`);
-
-    // Try to log the response if available
-    try {
-      if (response) {
-        Logger.log(`❌ GPT Response (first 500 chars): ${response.substring(0, 500)}`);
-      }
-    } catch (e) {
-      // Ignore logging errors
-    }
-
     return {
-      headline: 'Global News Headlines',
-      insights: ['AI summary unavailable - check logs for details'],
-      macroEconomic: 'Summary generation failed. Please check system logs.',
-      peDeals: '',
-      korea: '',
-      sectors: ''
+      insights: ['AI summary unavailable - check logs']
     };
   }
 }
@@ -1841,38 +1884,24 @@ function formatMarketContextForAI(marketData) {
     context = context.slice(0, -2) + '\n';
   }
 
-  if (marketData.forex && marketData.forex.length > 0) {
-    context += 'FX: ';
-    marketData.forex.forEach(fx => {
-      if (fx && fx.price) {
-        const chg = fx.dayChange >= 0 ? `+${fx.dayChange.toFixed(2)}%` : `${fx.dayChange.toFixed(2)}%`;
-        let pairName = 'USD/???';
-        if (fx.symbol === 'KRW=X') pairName = 'USD/KRW';
-        else if (fx.symbol === 'JPY=X') pairName = 'USD/JPY';
-        else {
-          const currency = fx.symbol.replace('=X', '');
-          pairName = `USD/${currency}`;
-        }
-        context += `${pairName} ${fx.price.toFixed(2)} (${chg}), `;
+  if (marketData.commodities && marketData.commodities.length > 0) {
+    context += 'Commodities: ';
+    marketData.commodities.forEach(c => {
+      if (c && c.price) {
+        const chg = c.dayChange >= 0 ? `+${c.dayChange.toFixed(2)}%` : `${c.dayChange.toFixed(2)}%`;
+        let priceStr = c.symbol === 'BTC-USD' ? `$${c.price.toFixed(0)}` : `$${c.price.toFixed(2)}`;
+        context += `${c.name} ${priceStr} (${chg}), `;
       }
     });
     context = context.slice(0, -2) + '\n';
   }
 
-  if (marketData.commodities && marketData.commodities.length > 0) {
-    context += 'Commodities: ';
-    marketData.commodities.forEach(item => {
-      if (item && item.price) {
-        const chg = item.dayChange >= 0 ? `+${item.dayChange.toFixed(2)}%` : `${item.dayChange.toFixed(2)}%`;
-
-        let displayName = 'Unknown';
-        if (item.symbol === 'GC=F') displayName = 'Gold';
-        else if (item.symbol === 'CL=F') displayName = 'Oil';
-        else if (item.symbol === 'BTC-USD') displayName = 'Bitcoin';
-        else displayName = item.name || item.symbol;
-
-        const priceStr = (item.symbol === 'BTC-USD') ? `$${item.price.toFixed(0)}` : `$${item.price.toFixed(2)}`;
-        context += `${displayName} ${priceStr} (${chg}), `;
+  if (marketData.forex && marketData.forex.length > 0) {
+    context += 'FX: ';
+    marketData.forex.forEach(fx => {
+      if (fx && fx.price) {
+        const chg = fx.dayChange >= 0 ? `+${fx.dayChange.toFixed(2)}%` : `${fx.dayChange.toFixed(2)}%`;
+        context += `USD/${fx.symbol.replace('=X', '')} ${fx.price.toFixed(2)} (${chg}), `;
       }
     });
     context = context.slice(0, -2) + '\n';
@@ -1880,6 +1909,8 @@ function formatMarketContextForAI(marketData) {
 
   return context || 'Market data unavailable';
 }
+
+// ==================== API FUNCTIONS ====================
 
 function callChatGPT(prompt, maxTokens = 500) {
   const url = 'https://api.openai.com/v1/chat/completions';
@@ -1889,7 +1920,7 @@ function callChatGPT(prompt, maxTokens = 500) {
     messages: [
       {
         role: 'system',
-        content: 'You are an executive analyst for PE professionals. Provide specific, actionable insights on deals, economics, and business strategy.'
+        content: 'You are an executive analyst providing detailed headline news insights. Always respond with valid JSON only, no markdown formatting.'
       },
       {
         role: 'user',
@@ -1918,30 +1949,69 @@ function callChatGPT(prompt, maxTokens = 500) {
   return json.choices[0].message.content.trim();
 }
 
+function callPerplexity(prompt, useSearch = true) {
+  const url = 'https://api.perplexity.ai/chat/completions';
+  
+  const payload = {
+    model: useSearch ? CONFIG.PERPLEXITY_MODEL : 'sonar',
+    messages: [
+      {
+        role: 'system',
+        content: 'You are a senior business analyst. Always respond with valid JSON only, no markdown formatting.'
+      },
+      {
+        role: 'user',
+        content: prompt
+      }
+    ],
+    temperature: CONFIG.PERPLEXITY_TEMPERATURE,
+    max_tokens: 1000,
+    return_citations: true,
+    search_recency_filter: 'day'
+  };
+  
+  const options = {
+    method: 'post',
+    contentType: 'application/json',
+    headers: {
+      'Authorization': `Bearer ${CONFIG.PERPLEXITY_API_KEY}`
+    },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  };
+  
+  const response = UrlFetchApp.fetch(url, options);
+  const json = JSON.parse(response.getContentText());
+  
+  if (json.error) throw new Error(json.error.message);
+  
+  return {
+    content: json.choices[0].message.content.trim(),
+    citations: json.citations || []
+  };
+}
+
 // ==================== SLACK FORMATTING ====================
 
-function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles, marketData) {
+function formatSlackMessage(aiSummary, internationalArticles, koreaArticles, marketData) {
   const blocks = [];
-  const today = Utilities.formatDate(new Date(), 'GMT+9', 'yyyy-MM-dd EEEE');
 
-  // ==================== HEADER ====================
   blocks.push({
     type: 'header',
     text: {
       type: 'plain_text',
-      text: 'Global Business & Markets Brief',
+      text: '📰 Global Headlines Brief',
       emoji: true
     }
   });
 
   blocks.push({ type: 'divider' });
 
-  // ==================== MARKET INDICATORS ====================
   blocks.push({
     type: 'header',
     text: {
       type: 'plain_text',
-      text: '📊 Market Overview',
+      text: '📊 Market Snapshot',
       emoji: true
     }
   });
@@ -1956,159 +2026,53 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
 
   blocks.push({ type: 'divider' });
 
-  // ==================== EXECUTIVE SUMMARY ====================
   blocks.push({
     type: 'header',
     text: {
       type: 'plain_text',
-      text: '🎯 Executive Summary',
+      text: '🎯 Today\'s Key Insights',
       emoji: true
     }
   });
 
-  // Key Insights
   if (aiSummary.insights && aiSummary.insights.length > 0) {
     blocks.push({
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: "*Today's Key Insights*"
-      }
-    });
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: aiSummary.insights.map(i => `• ${i}`).join('\n')
-      }
-    });
-  }
-
-  // Macro-Economic
-  if (aiSummary.macroEconomic) {
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*Macro-Economic & Policy*'
-      }
-    });
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: aiSummary.macroEconomic
-      }
-    });
-  }
-
-  // PE & Deals
-  if (aiSummary.peDeals) {
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*PE & Deal Activity*'
-      }
-    });
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: aiSummary.peDeals
-      }
-    });
-  }
-
-  // Korea Focus
-  if (aiSummary.korea) {
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*Korea Business Focus*'
-      }
-    });
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: aiSummary.korea
-      }
-    });
-  }
-
-  // Sector Trends
-  if (aiSummary.sectors) {
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: '*Sector & Industry Trends*'
-      }
-    });
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: aiSummary.sectors
+        text: aiSummary.insights.map(i => `• ${i}`).join('\n\n')
       }
     });
   }
 
   blocks.push({ type: 'divider' });
 
-  // ==================== SECTION 1: GLOBAL HEADLINES ====================
-  if (globalArticles.length > 0) {
+  if (internationalArticles.length > 0) {
     blocks.push({
       type: 'header',
       text: {
         type: 'plain_text',
-        text: '🌍 Global Business & Economy',
+        text: '🌍 International Headlines',
         emoji: true
       }
     });
 
-    const globalLines = globalArticles.map((a, i) => {
+    const intlLines = internationalArticles.map((a, i) => {
       const cleanedTitle = deepCleanText(a.title);
       const cleanedLink = deepCleanText(a.link);
       return `${i + 1}. <${cleanedLink}|${cleanedTitle}>`;
     });
 
-    addArticleBlocks(blocks, globalLines);
-
+    addArticleBlocks(blocks, intlLines);
     blocks.push({ type: 'divider' });
   }
 
-  // ==================== SECTION 2: PE/M&A NEWS ====================
-  if (peArticles.length > 0) {
-    blocks.push({
-      type: 'header',
-      text: {
-        type: 'plain_text',
-        text: '💼 Private Equity & M&A',
-        emoji: true
-      }
-    });
-
-    const peLines = peArticles.map((a, i) => {
-      const cleanedTitle = deepCleanText(a.title);
-      const cleanedLink = deepCleanText(a.link);
-      return `${i + 1}. <${cleanedLink}|${cleanedTitle}>`;
-    });
-
-    addArticleBlocks(blocks, peLines);
-
-    blocks.push({ type: 'divider' });
-  }
-
-  // ==================== SECTION 3: KOREA HEADLINES ====================
   if (koreaArticles.length > 0) {
     blocks.push({
       type: 'header',
       text: {
         type: 'plain_text',
-        text: '🇰🇷 Korea Business & Markets',
+        text: '🇰🇷 Korea Headlines',
         emoji: true
       }
     });
@@ -2120,16 +2084,14 @@ function formatSlackMessage(aiSummary, globalArticles, peArticles, koreaArticles
     });
 
     addArticleBlocks(blocks, koreaLines);
-
     blocks.push({ type: 'divider' });
   }
 
-  // ==================== FOOTER ====================
   blocks.push({
     type: 'context',
     elements: [{
       type: 'mrkdwn',
-      text: `🤖 Analysis by GPT-4 | ${globalArticles.length + peArticles.length + koreaArticles.length} curated articles`
+      text: `🤖 AI-Curated Headlines | ${internationalArticles.length + koreaArticles.length} articles`
     }]
   });
 
@@ -2144,7 +2106,6 @@ function addArticleBlocks(blocks, articleLines) {
   articleLines.forEach(line => {
     const cleanLine = deepCleanText(line);
     
-    // Skip empty or too short lines
     if (!cleanLine || cleanLine.trim().length < 10) {
       return;
     }
@@ -2152,7 +2113,6 @@ function addArticleBlocks(blocks, articleLines) {
     const lineLength = cleanLine.length + 1;
 
     if (currentLength + lineLength > CHARS_PER_BLOCK && currentChunk.length > 0) {
-      // Join and clean again before adding block
       const blockText = currentChunk
         .join('\n')
         .replace(/\n{2,}/g, '\n')
@@ -2200,7 +2160,6 @@ function formatMarketData(marketData) {
         const price = stock.price.toFixed(2);
         const day = stock.dayChange.toFixed(2);
         const week = stock.weekChange.toFixed(2);
-
         text += `${emoji} ${stock.name}: ${price} (${day}% | WoW ${week}%)\n`;
       }
     });
@@ -2215,31 +2174,7 @@ function formatMarketData(marketData) {
         const price = stock.price.toFixed(2);
         const day = stock.dayChange.toFixed(2);
         const week = stock.weekChange.toFixed(2);
-
         text += `${emoji} ${stock.name}: ${price} (${day}% | WoW ${week}%)\n`;
-      }
-    });
-    text += '\n';
-  }
-
-  if (marketData.forex && marketData.forex.length > 0) {
-    text += '*FX*\n';
-    marketData.forex.forEach(fx => {
-      if (fx && fx.price != null) {
-        const emoji = fx.dayChange >= 0 ? '📈' : '📉';
-        const day = fx.dayChange.toFixed(2);
-        const week = fx.weekChange.toFixed(2);
-
-        // Extract currency pair name from symbol (e.g., KRW=X -> USD/KRW)
-        let pairName = 'USD/???';
-        if (fx.symbol === 'KRW=X') pairName = 'USD/KRW';
-        else if (fx.symbol === 'JPY=X') pairName = 'USD/JPY';
-        else {
-          const currency = fx.symbol.replace('=X', '');
-          pairName = `USD/${currency}`;
-        }
-
-        text += `${emoji} ${pairName}: ${fx.price.toFixed(2)} (${day}% | WoW ${week}%)\n`;
       }
     });
     text += '\n';
@@ -2252,26 +2187,8 @@ function formatMarketData(marketData) {
         const emoji = item.dayChange >= 0 ? '📈' : '📉';
         const day = item.dayChange.toFixed(2);
         const week = item.weekChange.toFixed(2);
-
-        // Determine display name and price format
-        let displayName = 'Unknown';
-        let priceStr = '';
-
-        if (item.symbol === 'GC=F') {
-          displayName = 'Gold';
-          priceStr = `$${item.price.toFixed(2)}`;
-        } else if (item.symbol === 'CL=F') {
-          displayName = 'Oil (WTI)';
-          priceStr = `$${item.price.toFixed(2)}`;
-        } else if (item.symbol === 'BTC-USD') {
-          displayName = 'Bitcoin';
-          priceStr = `$${item.price.toFixed(0)}`;
-        } else {
-          displayName = item.name || item.symbol;
-          priceStr = `$${item.price.toFixed(2)}`;
-        }
-
-        text += `${emoji} ${displayName}: ${priceStr} (${day}% | WoW ${week}%)\n`;
+        const priceStr = item.symbol === 'BTC-USD' ? `$${item.price.toFixed(0)}` : `$${item.price.toFixed(2)}`;
+        text += `${emoji} ${item.name}: ${priceStr} (${day}% | WoW ${week}%)\n`;
       }
     });
   }
@@ -2282,8 +2199,8 @@ function formatMarketData(marketData) {
 // ==================== SLACK SENDING ====================
 
 function sendToSlack(message) {
-  if (!CONFIG.SLACK_WEBHOOK_URL || CONFIG.SLACK_WEBHOOK_URL === 'YOUR_SLACK_WEBHOOK_URL_HERE') {
-    Logger.log('Slack webhook not configured!');
+  if (!CONFIG.SLACK_WEBHOOK_URL) {
+    Logger.log('Slack webhook not CONFIGured!');
     Logger.log(JSON.stringify(message, null, 2));
     return;
   }
@@ -2311,7 +2228,7 @@ function sendErrorToSlack(error) {
         type: 'header',
         text: {
           type: 'plain_text',
-          text: '❌ News Summary Error',
+          text: '❌ Headlines Summary Error',
           emoji: true
         }
       },
@@ -2335,27 +2252,20 @@ function sendErrorToSlack(error) {
 // ==================== TESTING ====================
 
 function testScript() {
-  Logger.log('🧪 Testing v3.1 Multi-Section...\n');
+  Logger.log('🧪 Testing Headlines v5.4...\n');
 
-  Logger.log('1. Testing Global sources...');
-  const globalSource = NEWS_SOURCES.find(s => s.section === 'global' && s.name.includes('WSJ'));
-  if (globalSource) {
-    const articles = fetchRSSFeed(globalSource);
-    Logger.log(`✓ ${globalSource.name}: ${articles.length} articles`);
+  Logger.log('1. Testing International sources...');
+  const intlSource = NEWS_SOURCES_XX.find(s => s.section === 'international' && s.name.includes('WSJ'));
+  if (intlSource) {
+    const articles = fetchRSSFeed(intlSource);
+    Logger.log(`✓ ${intlSource.name}: ${articles.length} articles`);
   }
 
   Logger.log('\n2. Testing Korea sources...');
-  const koreaSource = NEWS_SOURCES.find(s => s.section === 'korea');
+  const koreaSource = NEWS_SOURCES_XX.find(s => s.section === 'korea');
   if (koreaSource) {
     const articles = fetchRSSFeed(koreaSource);
     Logger.log(`✓ ${koreaSource.name}: ${articles.length} articles`);
-  }
-
-  Logger.log('\n3. Testing PE sources...');
-  const peSource = NEWS_SOURCES.find(s => s.section === 'pe');
-  if (peSource) {
-    const articles = fetchRSSFeed(peSource);
-    Logger.log(`✓ ${peSource.name}: ${articles.length} articles`);
   }
 
   Logger.log('\n✅ Test complete!');
