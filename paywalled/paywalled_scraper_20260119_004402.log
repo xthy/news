@@ -1,0 +1,297 @@
+2026-01-19 00:44:02,115 - INFO - [__main__] - Today is 2026-01-19, Target Yesterday is 2026-01-18
+2026-01-19 00:44:02,115 - INFO - [__main__] - ============================================================
+2026-01-19 00:44:02,115 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-19 00:44:02,115 - INFO - [__main__] - ============================================================
+2026-01-19 00:44:02,115 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-19 00:44:02,992 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-19 00:44:03,014 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-19 00:44:03,025 - INFO - [WDM] - Driver [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192\chromedriver-win32/chromedriver.exe] found in cache
+2026-01-19 00:44:04,120 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-19 00:44:04,121 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-19 00:44:04,121 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-19 00:44:04,121 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-18...
+2026-01-19 00:44:04,121 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-19 00:44:39,983 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-19 00:45:09,989 - ERROR - [__main__] - [hankyung] Login failed: Message: timeout: Timed out receiving message from renderer: 30.000
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x4ded49
+	0x4dea85
+	0x4dc94f
+	0x4dd456
+	0x4ea09b
+	0x4fbe5e
+	0x501976
+	0x4ddad2
+	0x4fbbd5
+	0x57da2f
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 215, in login
+    logger.debug(f"[{site_key}] Post-login URL: {self.driver.current_url}")
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 576, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: timeout: Timed out receiving message from renderer: 30.000
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x4ded49
+	0x4dea85
+	0x4dc94f
+	0x4dd456
+	0x4ea09b
+	0x4fbe5e
+	0x501976
+	0x4ddad2
+	0x4fbbd5
+	0x57da2f
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+
+2026-01-19 00:45:09,990 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-19 00:45:24,011 - ERROR - [__main__] - Error in Hankyung crawler: Alert Text: 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.
+Message: unexpected alert open: {Alert text : 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x4fc11d
+	0x501976
+	0x4ddad2
+	0x4fb703
+	0x57da2f
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 611, in main
+    hk_links = hk.collect_links()
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 318, in collect_links
+    self.driver.get(section_url)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 472, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 231, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.
+Message: unexpected alert open: {Alert text : 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x4fc11d
+	0x501976
+	0x4ddad2
+	0x4fb703
+	0x57da2f
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+
+2026-01-19 00:45:24,012 - INFO - [__main__] - [TheBell] Starting link collection for 2026-01-18...
+2026-01-19 00:45:24,012 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-19 00:45:24,013 - ERROR - [__main__] - [thebell] Login failed: Alert Text: 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.
+Message: unexpected alert open: {Alert text : 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x57e438
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 175, in login
+    self.driver.get(creds["login_url"])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 472, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 231, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.
+Message: unexpected alert open: {Alert text : 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x57e438
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+
+2026-01-19 00:45:24,014 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-19 00:45:25,565 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:25,567 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:27,085 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-01-19 00:45:28,612 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:28,614 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:30,075 - INFO - [__main__] - [TheBell] Scanning Page 3: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=3
+2026-01-19 00:45:31,593 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:31,596 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:33,121 - INFO - [__main__] - [TheBell] Scanning Page 4: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=4
+2026-01-19 00:45:34,638 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:34,640 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:36,147 - INFO - [__main__] - [TheBell] Scanning Page 5: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=5
+2026-01-19 00:45:37,663 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:37,666 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:39,143 - INFO - [__main__] - [TheBell] Scanning Page 6: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=6
+2026-01-19 00:45:40,659 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:40,661 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:42,167 - INFO - [__main__] - [TheBell] Scanning Page 7: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=7
+2026-01-19 00:45:43,683 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:43,687 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:45,182 - INFO - [__main__] - [TheBell] Scanning Page 8: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=8
+2026-01-19 00:45:46,697 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:46,701 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:48,194 - INFO - [__main__] - [TheBell] Scanning Page 9: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=9
+2026-01-19 00:45:49,709 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:49,712 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:51,271 - INFO - [__main__] - [TheBell] Scanning Page 10: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=10
+2026-01-19 00:45:52,787 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-19 00:45:52,790 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-19 00:45:54,288 - WARNING - [__main__] - [TheBell] Reached safety limit of 10 pages
+2026-01-19 00:45:54,288 - INFO - [__main__] - [TheBell] Collection complete. Found 0 articles.
+2026-01-19 00:45:54,288 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-18...
+2026-01-19 00:45:54,288 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-19 00:45:59,867 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-19 00:45:59,869 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-19 00:46:02,432 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-19 00:46:05,009 - INFO - [__main__] - [DealSite+] Collection complete. Found 0 articles.
+2026-01-19 00:46:05,009 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-18...
+2026-01-19 00:46:05,009 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-19 00:46:10,644 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-19 00:46:10,646 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=1
+2026-01-19 00:46:13,083 - INFO - [__main__] - [InvestChosun] Collection complete. Found 5 articles.
+2026-01-19 00:46:13,083 - INFO - [__main__] - 
+============================================================
+2026-01-19 00:46:13,083 - INFO - [__main__] - TOTAL LINKS COLLECTED: 5
+2026-01-19 00:46:13,083 - INFO - [__main__] - ============================================================
+2026-01-19 00:46:13,083 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-19 00:46:13,083 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-19 00:46:13,083 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-19 00:46:13,083 - INFO - [__main__] - [PDF] [1/5] Processing: 홍라희, 삼성전자 주식 1500만주 처분…약 2조원 규모 (InvestChosun)
+2026-01-19 00:46:16,502 - INFO - [__main__] - [PDF] [2/5] Processing: 토큰증권 법 테두리 들어와도…빛 보기까지 산 넘어 산 (InvestChosun)
+2026-01-19 00:46:19,912 - INFO - [__main__] - [PDF] [3/5] Processing: 하나증권 여의도 사옥, 3월 본입찰…신한·한국투자 참전 여부 ‘주목’ (InvestChosun)
+2026-01-19 00:46:23,367 - INFO - [__main__] - [PDF] [4/5] Processing: "IT 넘어 CEO 어젠다로"…대형 회계법인들, '보안 컨설팅' 각기 다른 승부수 (InvestChosun)
+2026-01-19 00:46:26,790 - INFO - [__main__] - [PDF] [5/5] Processing: 대형 회계법인들, 데이터센터 자문 서비스 조직화 채비 (InvestChosun)
+2026-01-19 00:46:30,218 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-19 00:46:30,218 - INFO - [__main__] - PHASE 3: Merging PDFs
+2026-01-19 00:46:30,218 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-19 00:46:34,570 - INFO - [__main__] - 
+============================================================
+2026-01-19 00:46:34,571 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-19 00:46:34,571 - INFO - [__main__] - ============================================================

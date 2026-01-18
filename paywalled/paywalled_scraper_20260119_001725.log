@@ -1,0 +1,247 @@
+2026-01-19 00:17:25,520 - INFO - [__main__] - Today is 2026-01-19, Target Yesterday is 2026-01-18
+2026-01-19 00:17:25,520 - INFO - [__main__] - ============================================================
+2026-01-19 00:17:25,520 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-19 00:17:25,520 - INFO - [__main__] - ============================================================
+2026-01-19 00:17:25,521 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-19 00:17:26,391 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-19 00:17:26,411 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-19 00:17:26,420 - INFO - [WDM] - Driver [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192\chromedriver-win32/chromedriver.exe] found in cache
+2026-01-19 00:17:27,530 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-19 00:17:27,530 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-19 00:17:27,530 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-19 00:17:27,531 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-18...
+2026-01-19 00:17:27,531 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-19 00:17:33,455 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-19 00:17:43,462 - ERROR - [__main__] - [hankyung] Login failed: Alert Text: 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.
+Message: unexpected alert open: {Alert text : 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x4fc11d
+	0x501976
+	0x4ddad2
+	0x4fb703
+	0x57da2f
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 172, in login
+    logger.debug(f"[{site_key}] Post-login URL: {self.driver.current_url}")
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 576, in current_url
+    return self.execute(Command.GET_CURRENT_URL)["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 231, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.
+Message: unexpected alert open: {Alert text : 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x4fc11d
+	0x501976
+	0x4ddad2
+	0x4fb703
+	0x57da2f
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+
+2026-01-19 00:17:43,464 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-19 00:17:43,468 - ERROR - [__main__] - Error in Hankyung crawler: Alert Text: 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.
+Message: unexpected alert open: {Alert text : 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x57e438
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 546, in main
+    hk_links = hk.collect_links()
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 264, in collect_links
+    self.driver.get(section_url)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 472, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 231, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.
+Message: unexpected alert open: {Alert text : 마켓인사이트 서비스는 인증프로그램을 설치해야 이용가능합니다. 보안 프로그램 설치 화면으로 이동합니다.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x57e438
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+
+2026-01-19 00:17:43,469 - INFO - [__main__] - [TheBell] Starting link collection for 2026-01-18...
+2026-01-19 00:17:43,469 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-19 00:17:49,236 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-19 00:17:49,239 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-19 00:17:50,764 - ERROR - [__main__] - Error in TheBell crawler: Alert Text: 로그인이 필요합니다.
+다시 로그인 해주세요.
+Message: unexpected alert open: {Alert text : 로그인이 필요합니다.
+다시 로그인 해주세요.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x57e438
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 554, in main
+    tb_links = tb.collect_links()
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 193, in collect_links
+    articles = self.driver.find_elements(By.CSS_SELECTOR, "div.listBox .listBox") # Verify selector based on user info or standard TheBell
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 952, in find_elements
+    return self.execute(Command.FIND_ELEMENTS, {"using": by, "value": value})["value"] or []
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 231, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: 로그인이 필요합니다.
+다시 로그인 해주세요.
+Message: unexpected alert open: {Alert text : 로그인이 필요합니다.
+다시 로그인 해주세요.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x701213
+	0x701254
+	0x4ee6dd
+	0x57e438
+	0x55b2e6
+	0x52d321
+	0x52e1d4
+	0x955254
+	0x95080b
+	0x96d0ea
+	0x71b118
+	0x72311d
+	0x709518
+	0x7096d9
+	0x6f3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+
+2026-01-19 00:17:50,765 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-18...
+2026-01-19 00:17:50,766 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-19 00:17:56,526 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-19 00:17:56,530 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-19 00:17:59,078 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-19 00:18:01,677 - INFO - [__main__] - [DealSite+] Collection complete. Found 0 articles.
+2026-01-19 00:18:01,678 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-18...
+2026-01-19 00:18:01,678 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-19 00:18:07,290 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-19 00:18:07,294 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=1
+2026-01-19 00:18:09,642 - INFO - [__main__] - [InvestChosun] Collection complete. Found 5 articles.
+2026-01-19 00:18:09,642 - INFO - [__main__] - 
+============================================================
+2026-01-19 00:18:09,642 - INFO - [__main__] - TOTAL LINKS COLLECTED: 5
+2026-01-19 00:18:09,642 - INFO - [__main__] - ============================================================
+2026-01-19 00:18:09,643 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-19 00:18:09,643 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-19 00:18:09,643 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-19 00:18:09,643 - INFO - [__main__] - [PDF] [1/5] Processing: 홍라희, 삼성전자 주식 1500만주 처분…약 2조원 규모 (InvestChosun)
+2026-01-19 00:18:13,036 - INFO - [__main__] - [PDF] [2/5] Processing: 토큰증권 법 테두리 들어와도…빛 보기까지 산 넘어 산 (InvestChosun)
+2026-01-19 00:18:16,464 - INFO - [__main__] - [PDF] [3/5] Processing: 하나증권 여의도 사옥, 3월 본입찰…신한·한국투자 참전 여부 ‘주목’ (InvestChosun)
+2026-01-19 00:18:19,905 - INFO - [__main__] - [PDF] [4/5] Processing: "IT 넘어 CEO 어젠다로"…대형 회계법인들, '보안 컨설팅' 각기 다른 승부수 (InvestChosun)
+2026-01-19 00:18:23,339 - INFO - [__main__] - [PDF] [5/5] Processing: 대형 회계법인들, 데이터센터 자문 서비스 조직화 채비 (InvestChosun)
+2026-01-19 00:18:26,770 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-19 00:18:26,770 - INFO - [__main__] - PHASE 3: Merging PDFs
+2026-01-19 00:18:26,770 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-19 00:18:31,131 - INFO - [__main__] - 
+============================================================
+2026-01-19 00:18:31,132 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-19 00:18:31,132 - INFO - [__main__] - ============================================================
