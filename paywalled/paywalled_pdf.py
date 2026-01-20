@@ -348,15 +348,17 @@ class TheBellCrawler(BaseCrawler):
                             # CRITICAL: Exclude Code 00, Search pages, and irrelevant sections
                             if not href: continue
                             href_lower = href.lower()
+                            # Block explicit search results and keyword lists
                             if "code=00" in href_lower or "thebell+note" in href_lower or \
-                               "search.asp" in href_lower or "keywordnews.asp" in href_lower:
+                               "search.asp" in href_lower or "keywordnews.asp" in href_lower or \
+                               "newslistshort.asp" in href_lower or "keyword=" in href_lower:
                                 continue
                                 
                             # Take only the first line for the title (to avoid including descriptions)
                             title_raw = link_el.text.strip()
                             title = title_raw.split('\n')[0].strip()
                             
-                            if len(title) < 5 or "검색결과" in title or "검색된" in title:
+                            if len(title) < 5 or "검색결과" in title or "검색된" in title or "키워드" in title:
                                 continue
 
                             # Fix relative links
@@ -1171,8 +1173,8 @@ def send_slack_notification(webhook_url, site_pdfs, all_links, date_str):
             titles = grouped.get(internal_site, [])
             pdf_link = site_pdfs.get(internal_site, "")
             
-            # [SiteName] 기사 PDF 보기 링크 - Move to title line
-            pdf_text = f"  - <{pdf_link}|{display_name} PDF 보기 링크>" if pdf_link else ""
+            # [SiteName] PDF 보기 링크 - Concise format as requested
+            pdf_text = f" - <{pdf_link}|PDF 보기 링크>" if pdf_link else ""
             
             if not titles:
                 article_content = "> 기사 없음"
