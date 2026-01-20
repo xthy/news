@@ -37,7 +37,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Calculate Date Range for scraping (Last 4 days to ensure coverage)
+# Calculate Date Range for scraping
 TODAY = datetime.now()
 YESTERDAY = TODAY - timedelta(days=1)
 SEARCH_WINDOW_DAYS = 1
@@ -58,9 +58,16 @@ except:
     config_data = {}
 
 SLACK_WEBHOOK_URL = config_data.get("SLACK_WEBHOOK_URL", "")
+LOG_SLACK_WEBHOOK_URL = config_data.get("LOG_SLACK_WEBHOOK_URL", "")
 SPREADSHEET_ID = config_data.get("SPREADSHEET_ID", "18KrjCdEEcNJrmNRAV19nhwAoya9l65gzH3ypFYaRlHM")
 HISTORY_SHEET_NAME = "paywalled_pdf"
 HISTORY_DAYS = 30
+AB_TEST_MODE = False
+
+def normalize(t):
+    if not t: return ""
+    # Remove all whitespace, special chars, and lower case
+    return re.sub(r'[\s\W_]+', '', str(t)).lower()
 
 # Global log buffer for Slack forwarding
 class SlackLogHandler(logging.Handler):
@@ -293,15 +300,9 @@ class TheBellCrawler(BaseCrawler):
                 except:
                     pass  # No alert present
                 
-                # Improved TheBell Selector: Target main content list ONLY
-                # Use more specific selector to avoid side/footer widgets
-                page_articles = self.driver.find_elements(By.CSS_SELECTOR, "div.listBox > ul > li, div.listBox > dl > dt")
-                
-                if not page_articles:
-                    # Fallback to broader if strict fails
-                    page_articles = self.driver.find_elements(By.CSS_SELECTOR, "div.listBox li, div.listBox dl")
-                
-                logger.debug(f"[TheBell] Found {len(page_articles)} article elements on page {page}")
+                # More robust selector for TheBell news list
+                # Targeting div.listBox or div.articleBox (seen in some variants)
+                page_articles = self.driver.find_elements(By.CSS_SELECTOR, "div.listBox li, div.articleBox li, div.newsList li")
                 
                 if not page_articles:
                     logger.warning(f"[TheBell] No articles found on page {page}. Stopping pagination.")
@@ -345,20 +346,21 @@ class TheBellCrawler(BaseCrawler):
 
                             href = link_el.get_attribute("href")
                             
-                            # CRITICAL: Exclude Code 00, Search pages, and irrelevant sections
+                            # CRITICAL: Exclude Code 00 and Search pages. 
+                            # 'keyword=' was removed as it blocked legitimate keyword-themed articles.
                             if not href: continue
                             href_lower = href.lower()
-                            # Block explicit search results and keyword lists
                             if "code=00" in href_lower or "thebell+note" in href_lower or \
                                "search.asp" in href_lower or "keywordnews.asp" in href_lower or \
-                               "newslistshort.asp" in href_lower or "keyword=" in href_lower:
+                               "newslistshort.asp" in href_lower:
                                 continue
                                 
                             # Take only the first line for the title (to avoid including descriptions)
                             title_raw = link_el.text.strip()
                             title = title_raw.split('\n')[0].strip()
                             
-                            if len(title) < 5 or "검색결과" in title or "검색된" in title or "키워드" in title:
+                            # '키워드' was removed from blacklist as it's often used in valid titles.
+                            if len(title) < 5 or "검색결과" in title or "검색된" in title:
                                 continue
 
                             # Fix relative links
@@ -454,6 +456,12 @@ class HankyungCrawler(BaseCrawler):
                         date_part = match.group(1) # 20260116
                         logger.debug(f"[Hankyung] Article date from URL: {date_part}, looking for: {YESTERDAY_STR_NODASH}")
                         if int(START_DATE.strftime("%Y%m%d")) <= int(date_part) <= int(TODAY.strftime("%Y%m%d")):
+                            # Block irrelevant noise (appointments, general notices)
+                            title_lower = title.lower()
+                            if any(k in title_lower for k in ["인사", "취임", "부고", "게시판", "동정"]):
+                                logger.debug(f"[Hankyung] Skipping irrelevant: {title}")
+                                continue
+                            
                             # Format date nicely
                             fmt_date = f"{date_part[:4]}-{date_part[4:6]}-{date_part[6:]}"
                             target_links.append({"site": "Hankyung", "title": title, "url": href, "date": fmt_date})
@@ -517,25 +525,31 @@ class InvestChosunCrawler(BaseCrawler):
                     continue
 
                 date_text = date_el.text.strip()
-                if "|" in date_text: 
-                    date_text = date_text.split("|")[0].strip()
+                # Normalize InvestChosun date (YYYY.MM.DD HH:MM -> YYYY-MM-DD or YYYY.MM.DD)
+                m = re.search(r'(\d{4})[.-](\d{2})[.-](\d{2})', date_text)
+                if not m: continue
                 
-                logger.debug(f"[InvestChosun] Article date: '{date_text}', looking for: '{YESTERDAY_STR_DOT}'")
-                if YESTERDAY_STR_DOT in date_text or \
-                   any((TODAY - timedelta(days=d)).strftime("%Y.%m.%d") in date_text for d in range(SEARCH_WINDOW_DAYS + 1)):
-                    
+                clean_date = f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+                article_date = datetime.strptime(clean_date, "%Y-%m-%d").date()
+
+                if START_DATE.date() <= article_date <= TODAY.date():
                     # Get link
-                    title_el = art.find_element(By.CSS_SELECTOR, "dl dt a")
-                    href = title_el.get_attribute("href")
-                    title = title_el.text.strip()
-                    
-                    if href and not href.startswith("http"):
-                        href = "https://www.investchosun.com" + href
+                    try:
+                        title_el = art.find_element(By.CSS_SELECTOR, "dl dt a, a")
+                        href = title_el.get_attribute("href")
+                        # Use first line of text as title
+                        title = title_el.text.strip().split('\n')[0].strip()
                         
-                    target_links.append({"site": "InvestChosun", "title": title, "url": href, "date": date_text})
-                    logger.info(f"[InvestChosun] Found: {title} ({date_text})")
+                        if href and len(title) > 5:
+                            if not href.startswith("http"):
+                                href = "https://www.investchosun.com" + href
+                            
+                            if not any(d['url'] == href for d in target_links):
+                                target_links.append({"site": "InvestChosun", "title": title, "url": href, "date": clean_date})
+                                logger.info(f"[InvestChosun] Found: {title} ({clean_date})")
+                    except: pass
                 else:
-                    logger.debug(f"[InvestChosun] Skipped date: {date_text}")
+                    logger.debug(f"[InvestChosun] Skipped date: {clean_date}")
             except Exception as e:
                 logger.debug(f"[InvestChosun] Error processing article item: {e}")
                 continue
@@ -656,230 +670,68 @@ def generate_pdf_for_link(driver, link_info, index, total):
     logger.info(f"[PDF] [{index}/{total}] Processing: {title} ({site})")
     
     try:
-
-        # 1. Optimize URL for Scraping (Use Print View if available)
-        # This greatly improves Readability.js performance as print views have less clutter
+        # 1. Nav to target or print view
         target_url = url
-        if site == "TheBell":
-            # https://www.thebell.co.kr/front/NewsPrint.asp?key=...
-            if "key=" in url:
-                try:
-                    key = url.split("key=")[1].split("&")[0]
-                    target_url = f"https://www.thebell.co.kr/front/NewsPrint.asp?key={key}"
-                except: pass
-        elif site == "InvestChosun":
-            # https://www.investchosun.com/svc/news/article_print.html?contid=...
-            if "contid=" in url:
-                try:
-                    contid = url.split("contid=")[1].split("&")[0]
-                    target_url = f"https://www.investchosun.com/svc/news/article_print.html?contid={contid}"
-                except: pass
-        elif site == "DealSitePlus":
-            # https://dealsiteplus.co.kr/articles/154903/016069 -> /articles/print/154903
-            if "/articles/" in url:
-                try:
-                    parts = url.split("/articles/")[1].split("/")
-                    article_id = parts[0]
-                    target_url = f"https://dealsiteplus.co.kr/articles/print/{article_id}"
-                except: pass
-        elif site == "Hankyung":
-             # https://marketinsight.hankyung.com/print/2026...
-             if "/article/" in url:
-                 target_url = url.replace("/article/", "/print/")
+        if site == "TheBell" and "key=" in url:
+            key = url.split("key=")[1].split("&")[0]
+            target_url = f"https://www.thebell.co.kr/front/NewsPrint.asp?key={key}"
+        elif site == "InvestChosun" and "contid=" in url:
+            contid = url.split("contid=")[1].split("&")[0]
+            target_url = f"https://www.investchosun.com/svc/news/article_print.html?contid={contid}"
+        elif site == "DealSitePlus" and "/articles/" in url:
+            article_id = url.split("/articles/")[1].split("/")[0]
+            target_url = f"https://dealsiteplus.co.kr/articles/print/{article_id}"
+        elif site == "Hankyung" and "/article/" in url:
+            target_url = url.replace("/article/", "/print/")
 
-        logger.debug(f"[PDF] Navigating to: {target_url}")
         driver.get(target_url)
-        time.sleep(3) # Wait for initial load
+        time.sleep(3)
         
-        # 2. Inject Readability using standard JS execution
-        # First load the library text because we can't fetch easily inside executed script due to CORS sometimes
-        # We will use a minified version inline or fetch it if possible. 
-        # Since we are in Selenium, we can just fetch content of js file and inject it.
-        
-        readability_script = """
-            var script = document.createElement('script');
-            script.src = 'https://unpkg.com/@mozilla/readability@0.4.4/Readability.js';
-            document.head.appendChild(script);
-        """
-        driver.execute_script(readability_script)
-        
-        # Wait for library to load
+        # Inject Readability
+        driver.execute_script(f"var s=document.createElement('script');s.src='{READABILITY_JS_URL}';document.head.appendChild(s);")
         time.sleep(2)
         
-        # 3. Execute Readability and extract content
-        extraction_script = """
-            try {
-                if (typeof Readability === 'undefined') { return null; }
-                var documentClone = document.cloneNode(true);
-                var article = new Readability(documentClone).parse();
-                return article;
-            } catch(e) { return null; }
-        """
-        
-        article_data = driver.execute_script(extraction_script)
+        article_data = driver.execute_script("try{return new Readability(document.cloneNode(true)).parse();}catch(e){return null;}")
         
         if not article_data:
-            logger.warning(f"[PDF] Readability failed to extract content for {url}. Falling back to basic print.")
-            # Fallback logic could go here, but let's try to enforce quality.
-            # If failed, maybe just print current page with cleanup?
-            # For now, let's proceed with careful check.
-            pass
+            logger.warning(f"[PDF] Readability failed for {url}")
+            return None
 
-        # If Readability worked, use its content. If not, use page content but clean it.
-        # But 'article_data' (dict) is what we need.
+        content = article_data.get('content', '')
+        e_title = title.replace('\n', ' ')
+        # Remove unwanted headings from top of content
+        content = re.sub(r'^\s*<h[1-6][^>]*>.*?</h[1-6]>\s*', '', content, flags=re.DOTALL)
         
-        final_html = ""
-        # Use original article date if available, else current date
-        article_date = link_info.get("date", datetime.now().strftime('%Y-%m-%d'))
+        # Clean CSS to match other sites and remove unwanted bullets/indents
+        final_html = f"""
+        <!DOCTYPE html><html><head><meta charset="utf-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+            body {{ font-family: 'Noto Sans KR', sans-serif; line-height: 1.8; padding: 50px; color: #111; font-size: 17px; }}
+            .h {{ border-bottom: 3px solid #3366cc; margin-bottom: 30px; padding-bottom: 15px; }}
+            .t {{ font-size: 30px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }}
+            .m {{ font-size: 14px; color: #555; }}
+            .c img {{ max-width: 100%; height: auto; display: block; margin: 25px auto; border-radius: 4px; }}
+            .c p {{ margin-bottom: 18px; text-align: justify; }}
+            /* InvestChosun fix: remove potential list indent for main body if it was extracted as a list box */
+            .c ul, .c li {{ list-style-type: none; margin-left: 0; padding-left: 0; }}
+        </style>
+        </head><body>
+        <div class="h"><div class="t">{e_title}</div>
+        <div class="m"><strong>{site}</strong> | {link_info.get('date','')} | {url}</div></div>
+        <div class="c">{content}</div></body></html>
+        """
+        driver.execute_script("document.open(); document.write(arguments[0]); document.close();", final_html)
+        time.sleep(1)
         
-        if article_data:
-            content = article_data.get('content', '')
-            # Use ONLY the title from link_info (collected from list page)
-            # This is the cleanest source - ignore Readability's title completely
-            extracted_title = title
-            
-            # CRITICAL: Sanitize title to prevent long descriptions
-            # Remove newlines, limit length, strip whitespace
-            extracted_title = extracted_title.replace('\n', ' ').replace('\r', ' ')
-            extracted_title = ' '.join(extracted_title.split())  # Normalize whitespace
-            # Limit to first 150 characters (reasonable title length)
-            if len(extracted_title) > 150:
-                extracted_title = extracted_title[:150] + '...'
-            
-            # Clean content: Remove any leading subtitle/description elements
-            # that Readability might have included before the main article text
-            # Common patterns: <h2>, <h3>, <div class="subtitle">, etc.
-            import re as regex_module
-            # Remove leading headings that might be subtitles (keep only <h1> if it matches title)
-            content = regex_module.sub(r'^\s*<h[2-6][^>]*>.*?</h[2-6]>\s*', '', content, flags=regex_module.DOTALL)
-            # Remove leading divs with class containing 'subtitle', 'summary', 'excerpt'
-            content = regex_module.sub(r'^\s*<div[^>]*class="[^"]*(?:subtitle|summary|excerpt|desc)[^"]*"[^>]*>.*?</div>\s*', '', content, flags=regex_module.DOTALL | regex_module.IGNORECASE)
-            
-            # Construct Clean HTML
-            final_html = f"""
-            <!DOCTYPE html>
-            <html lang="ko">
-            <head>
-                <meta charset="utf-8">
-                <title>{extracted_title}</title>
-                <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-                    
-                    body {{
-                        font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', sans-serif;
-                        line-height: 2.0;
-                        padding: 40px;
-                        max-width: 100%;
-                        margin: 0 auto;
-                        color: #111;
-                        font-size: 16px;
-                    }}
-                    
-                    .article-header {{
-                        border-bottom: 3px solid #3366cc;
-                        margin-bottom: 30px;
-                        padding-bottom: 20px;
-                    }}
-                    
-                    .article-title {{
-                        font-size: 32px;
-                        font-weight: 800;
-                        margin-bottom: 20px;
-                        color: #000;
-                        line-height: 1.3;
-                    }}
-                    
-                    .article-meta {{
-                        font-size: 14px;
-                        color: #555;
-                        margin-bottom: 10px;
-                        font-weight: 500;
-                    }}
-                    
-                    .article-content img {{
-                        max-width: 100% !important; /* Force fit graphics */
-                        height: auto !important;
-                        display: block;
-                        margin: 25px auto;
-                        object-fit: contain;
-                        border-radius: 4px;
-                    }}
-                    
-                    .article-content p {{
-                        margin-bottom: 20px;
-                        text-align: justify;
-                        font-size: 18px;
-                        letter-spacing: -0.02em;
-                    }}
-                    
-                    /* Hide unwanted elements: buttons, sns icons, author blocks that duplicate titles */
-                    .article-content iframe, .article-content .ad, .article-content script, 
-                    .article-content button, .article-content nav, .article-content .btn,
-                    .article-content .sns_top, .article-content .font_size_btn, 
-                    .article-content .article_author, .article-content #header, 
-                    .article-content #footer, .article-content .print_btn {{ display: none !important; }}
-                </style>
-            </head>
-            <body>
-                <div class="article-header">
-                    <h1 class="article-title">{extracted_title}</h1>
-                    <div class="article-meta">
-                        <strong>{"MarketInsight" if site == "Hankyung" else site}</strong> | <span>{article_date}</span>
-                        <br>
-                        <span style="font-size: 11px; color: #999;">{url}</span>
-                    </div>
-                </div>
-                <div class="article-content">
-                    {content}
-                </div>
-            </body>
-            </html>
-            """
-        else:
-            # Fallback: Just print current page but with heavy cleanup
-            logger.info("[PDF] Using fallback print mode.")
-            # Use the previous heavy CSS injection method as fallback
-            # (Omitted here for brevity, assuming Readability mostly works or we use the 'final_html' logic)
-            # If readability fails, we return None or try raw print.
-            # Let's try raw print with the enhanced CSS from previous step if readability fails.
-            pass
-
-        if final_html:
-            # Load the clean HTML
-            # Use a slightly complex way to load HTML string to avoid URL length limits
-            # driver.get("data:text/html;charset=utf-8," + urllib.parse.quote(final_html))
-            # Better way: write to temp file and load it? No, data uri is fine for reasonable size.
-            
-            # Use execute_script to replace document content
-            js_replace = "document.open(); document.write(arguments[0]); document.close();"
-            driver.execute_script(js_replace, final_html)
-            time.sleep(1)
-
-        # 4. Print to PDF
-        pdf_data = driver.execute_cdp_cmd("Page.printToPDF", {
-            "printBackground": True,
-            "preferCSSPageSize": True,
-            "paperWidth": 8.27, # A4
-            "paperHeight": 11.69,
-            "marginTop": 0.8,
-            "marginBottom": 0.8,
-            "marginLeft": 0.6,
-            "marginRight": 0.6,
-            "displayHeaderFooter": False
-        })
-        
+        pdf_data = driver.execute_cdp_cmd("Page.printToPDF", {"printBackground": True, "preferCSSPageSize": True})
         filename = f"{OUTPUT_DIR}/{index}_{site}.pdf"
-        with open(filename, "wb") as f:
-            f.write(base64.b64decode(pdf_data['data']))
-        
-        logger.info(f"[PDF] Generated: {filename}")
+        with open(filename, "wb") as f: f.write(base64.b64decode(pdf_data['data']))
         return filename
     except Exception as e:
-        logger.error(f"[PDF] Failed to generate PDF for {url}: {e}", exc_info=True)
+        logger.error(f"[PDF] Failed for {url}: {e}")
         return None
-    except Exception as e:
-        logger.error(f"[PDF] Failed to generate PDF for {url}: {e}", exc_info=True)
-        return None
+
 
 def merge_pdfs(pdf_list):
     if not pdf_list:
@@ -1097,31 +949,48 @@ def filter_by_sheet_history(all_links, sheets_service):
         history_urls = set()
         history_titles = {} # site -> set of normalized titles
         
-        def normalize(t):
-            return re.sub(r'[\s\W_]+', '', t).lower()
+
+        def normalize_url(u):
+            if not u: return ""
+            # Preserve 'key' for TheBell
+            if "thebell.co.kr" in u and "key=" in u:
+                base = u.split('?')[0]
+                key_match = re.search(r'key=([^&#]+)', u)
+                if key_match: return f"{base}?key={key_match.group(1)}".strip().rstrip('/')
+            
+            # Default: strip query params for others (standard)
+            return u.split('?')[0].split('#')[0].strip().rstrip('/')
 
         for row in rows[1:]: # Skip header
             if len(row) >= 4:
-                site, _, title, url = row[0:4]
-                history_urls.add(url.split('?')[0].strip().rstrip('/'))
-                if site not in history_titles: history_titles[site] = set()
-                history_titles[site].add(normalize(title))
+                h_site = row[0].strip()
+                h_title = row[2].strip()
+                h_url = row[3].strip()
+                
+                history_urls.add(normalize_url(h_url))
+                if h_site not in history_titles: history_titles[h_site] = set()
+                history_titles[h_site].add(normalize(h_title))
+
+        logger.info(f"[History] Loaded {len(history_urls)} URLs and {sum(len(v) for v in history_titles.values())} titles from history.")
 
         unique = []
         for link in all_links:
-            norm_url = link['url'].split('?')[0].strip().rstrip('/')
+            norm_url = normalize_url(link['url'])
             norm_title = normalize(link['title'])
             site = link['site']
             
-            is_dup = (norm_url in history_urls) or (site in history_titles and norm_title in history_titles[site])
+            is_url_dup = norm_url in history_urls
+            is_title_dup = (site in history_titles and norm_title in history_titles[site])
             
-            if not is_dup:
+            if not is_url_dup and not is_title_dup:
                 unique.append(link)
             else:
-                logger.debug(f"[History] Skipping Duplicate: {link['title']}")
+                reason = "URL" if is_url_dup else "Title"
+                logger.info(f"[History] Skipping Duplicate ({reason}): {link['title']} [{site}]")
+        
         return unique
     except Exception as e:
-        logger.error(f"GSheets History check failed: {e}")
+        logger.error(f"GSheets History check failed: {e}", exc_info=True)
         return all_links
 
 def update_sheet_history(new_links, sheets_service):
@@ -1136,6 +1005,8 @@ def update_sheet_history(new_links, sheets_service):
             spreadsheetId=SPREADSHEET_ID, range=f"'{HISTORY_SHEET_NAME}'!A1",
             valueInputOption="RAW", body={'values': values}
         ).execute()
+        
+        logger.info(f"[History] Updated sheet with {len(new_links)} new articles.")
         
         if sheet_id is not None:
             clean_old_history(sheets_service, sheet_id)
@@ -1163,9 +1034,14 @@ def send_slack_notification(webhook_url, site_pdfs, all_links, date_str):
             if site in grouped:
                 grouped[site].append(link.get('title'))
 
+        # Construct dynamic date range for header: (Yesterday - Today)
+        start_date_str = (TODAY - timedelta(days=1)).strftime("%m/%d")
+        end_date_str = TODAY.strftime("%m/%d")
+        header_text = f"Daily PE & M&A Paywalled News ({start_date_str} - {end_date_str})"
+
         blocks = [{
             "type": "header",
-            "text": {"type": "plain_text", "text": f"Daily M&A, PE NEWS ({date_str})"}
+            "text": {"type": "plain_text", "text": header_text}
         }]
 
         # Iterate through all defined sites to handle 'No articles' case
@@ -1253,13 +1129,21 @@ def main():
         # 1.5 Deduplicate Links & Cross-check with GSheets History
         drive_svc, sheet_svc = get_google_services()
         
+        def normalize_url(u):
+            if not u: return ""
+            if "thebell.co.kr" in u and "key=" in u:
+                base = u.split('?')[0]
+                key_match = re.search(r'key=([^&#]+)', u)
+                if key_match: return f"{base}?key={key_match.group(1)}".strip().rstrip('/')
+            return u.split('?')[0].split('#')[0].strip().rstrip('/')
+
         seen_normalized_urls = set()
         seen_site_titles = set()
         unique_links = []
         for link in all_links:
-            u = link['url'].split('?')[0].split('#')[0].strip().rstrip('/')
+            u = normalize_url(link['url'])
             u = u.replace("dealsite.co.kr", "dealsiteplus.co.kr").replace("http://", "https://")
-            site_title_key = (link['site'], link['title'].strip())
+            site_title_key = (link['site'], normalize(link['title']))
             if u not in seen_normalized_urls and site_title_key not in seen_site_titles:
                 unique_links.append(link)
                 seen_normalized_urls.add(u)
@@ -1304,7 +1188,7 @@ def main():
         
     finally:
         # 5. Log Forwarding (Always try to send logs)
-        forward_logs_to_slack(SLACK_WEBHOOK_URL)
+        forward_logs_to_slack(LOG_SLACK_WEBHOOK_URL)
         
         logger.info("\n" + "="*60)
         logger.info("Paywalled PDF Generator Complete")
