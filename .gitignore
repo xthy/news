@@ -9,10 +9,19 @@ ENV/
 
 # Project Specific
 *.pdf
+# Directory-based ignores
 paywalled/paywalled_pdfs_*/
-paywalled/paywalled_scraper_*.log
 paywalled/temp_*/
+
+# Logs and Data
+paywalled/paywalled_scraper_*.log
 paywalled/config.json
+*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+nul
 
 # Security (DO NOT REMOVE)
 token.pickle
