@@ -85,39 +85,40 @@ slack_handler = SlackLogHandler()
 slack_handler.setFormatter(logging.Formatter('%(message)s'))
 logger.addHandler(slack_handler)
 
-CREDENTIALS = {
+# Use credentials from config if available, otherwise fallback to empty/defaults
+CREDENTIALS = config_data.get("CREDENTIALS", {
     "dealsiteplus": {
         "login_url": "https://dealsiteplus.co.kr/user/access/login",
-        "ids": ["affinity"],
-        "pws": ["equity1!"],
+        "ids": [""],
+        "pws": [""],
         "input_id": "login",
         "input_pw": "password"
     },
     "thebell": {
         "login_url": "https://www.thebell.co.kr/LoginCert/Login.asp",
-        "ids": ["affinity"],
-        "pws": ["equity"],
+        "ids": [""],
+        "pws": [""],
         "input_id": "id",
         "input_pw": "pw",
         "btn_id": "btn1"
     },
     "hankyung": {
         "login_url": "https://marketinsight.hankyung.com/",
-        "ids": ["affini1"],
-        "pws": ["affini1"],
+        "ids": [""],
+        "pws": [""],
         "input_id": "user_id",
         "input_pw": "password",
         "btn_selector": ".btnLogin"
     },
     "investchosun": {
         "login_url": "https://www.investchosun.com/svc/member/invest_login.html",
-        "ids": ["affini1"],
-        "pws": ["affini12026"],
+        "ids": [""],
+        "pws": [""],
         "input_id": "username",
         "input_pw": "login_password",
         "btn_selector": "#SignIn"
     }
-}
+})
 
 OUTPUT_DIR = f"paywalled_pdfs_{TODAY.strftime('%Y%m%d')}"
 if not os.path.exists(OUTPUT_DIR):
@@ -128,11 +129,22 @@ if not os.path.exists(OUTPUT_DIR):
 # ────────────────────────────────────────────────
 
 def setup_driver():
-    chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
+    # Detect OS and set common Chrome paths
+    import platform
+    current_os = platform.system()
+    chrome_paths = [
+        "C:/Program Files/Google/Chrome/Application/chrome.exe",
+        "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "/usr/bin/google-chrome"
+    ]
     
     options = Options()
-    if os.path.exists(chrome_path):
-        options.binary_location = chrome_path
+    for cp in chrome_paths:
+        if os.path.exists(cp):
+            options.binary_location = cp
+            logger.info(f"Using Chrome binary at: {cp}")
+            break
     
     # Basic options
     options.add_argument("--log-level=3")
