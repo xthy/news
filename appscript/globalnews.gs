@@ -1,6 +1,6 @@
 /**
- * Global Headlines Summary - Version 10.9
- * Longer Fact-Based Insights with Implications
+ * Global Headlines Summary - Version 11.0
+ * Robust Insights, Diverse Macro Topics, and Credibility Filters
  */
 
 // ==================== CONFIGURATION (Same) ====================
@@ -18,16 +18,16 @@ const CONFIG = {
   
   REQUIRED_INTL_ARTICLES: 10,
   REQUIRED_KOREA_ARTICLES: 10,
-  REQUIRED_MIN_INSIGHTS: 6,
-  REQUIRED_MAX_INSIGHTS: 8,
+  REQUIRED_MIN_INSIGHTS: 5,
+  REQUIRED_MAX_INSIGHTS: 7,
   
-  STAGE1_CANDIDATES: 50,
-  STAGE2_PERPLEXITY: 20,
+  STAGE1_CANDIDATES: 60,
+  STAGE2_PERPLEXITY: 25,
   STAGE3_FINAL: 10,
   
-  SIMILARITY_THRESHOLD: 0.5,
-  INSIGHT_SIMILARITY_THRESHOLD: 0.4,
-  MIN_SOURCE_DIVERSITY: 5,
+  SIMILARITY_THRESHOLD: 0.45,
+  INSIGHT_SIMILARITY_THRESHOLD: 0.35,
+  MIN_SOURCE_DIVERSITY: 6,
   
   MARKET_SYMBOLS: {
     US_STOCKS: ['^GSPC', '^DJI', '^IXIC'],
@@ -114,17 +114,17 @@ function v109_sendDailyNewsSummary() {
     const marketData = v109_fetchMarketData();
     Logger.log('\n📊 Market data fetched');
 
-    const aiSummary = v109_generateExecutiveInsights(intlArticles, koreaArticles, marketData);
+    const aiSummary = v110_generateExecutiveInsights(intlArticles, koreaArticles, marketData);
     Logger.log(`\n🤖 Insights: ${aiSummary.insights.length}/${CONFIG.REQUIRED_MIN_INSIGHTS}-${CONFIG.REQUIRED_MAX_INSIGHTS}`);
 
-    const message = v109_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketData);
-    v109_sendToSlack(message);
+    const message = v110_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketData);
+    v110_sendToSlack(message);
 
-    Logger.log('\n✅ SUCCESS! Fact-based insights.');
+    Logger.log('\n✅ SUCCESS! Diverse & Robust insights.');
 
   } catch (error) {
     Logger.log('\n❌ ERROR: ' + error.toString());
-    v109_sendErrorToSlack(error);
+    v110_sendErrorToSlack(error);
   }
 }
 
@@ -139,44 +139,61 @@ function v109_sendDailyNewsSummary() {
 
 // ==================== EXECUTIVE INSIGHTS (IMPROVED PROMPT) ====================
 
-function v109_generateExecutiveInsights(intlArticles, koreaArticles, marketData) {
-  if (!CONFIG.OPENAI_API_KEY) return { insights: [] };
+function v110_generateExecutiveInsights(intlArticles, koreaArticles, marketData) {
+  if (!CONFIG.OPENAI_API_KEY) return { insights: ["API 키가 설정되지 않았습니다."] };
 
   if (!intlArticles || !Array.isArray(intlArticles)) intlArticles = [];
   if (!koreaArticles || !Array.isArray(koreaArticles)) koreaArticles = [];
   
-  if (intlArticles.length === 0 && koreaArticles.length === 0) return { insights: [] };
+  if (intlArticles.length === 0 && koreaArticles.length === 0) {
+    return { insights: ["분석할 기사가 없습니다. 뉴스 소스 상태를 확인해주세요."] };
+  }
 
   const attempts = [
-    { minLen: 100, maxLen: 200, temp: 0.3 },
-    { minLen: 80, maxLen: 220, temp: 0.4 },
-    { minLen: 70, maxLen: 250, temp: 0.5 }
+    { minLen: 80, maxLen: 250, temp: 0.3 },
+    { minLen: 60, maxLen: 300, temp: 0.5 },
+    { minLen: 50, maxLen: 350, temp: 0.7 }
   ];
+
+  let lastError = "";
 
   for (let i = 0; i < attempts.length; i++) {
     const attempt = attempts[i];
     Logger.log(`   → Insights attempt ${i + 1}/${attempts.length} (temp=${attempt.temp})`);
     
-    const result = v109_generateFactBasedInsights(intlArticles, koreaArticles, marketData, attempt);
-    
-    if (result.insights && result.insights.length > 0) {
-      Logger.log(`     ✓ Generated ${result.insights.length} raw insights`);
+    try {
+      const result = v110_generateFactBasedInsights(intlArticles, koreaArticles, marketData, attempt);
       
-      const deduplicated = v109_deduplicateInsights(result.insights);
-      
-      if (deduplicated.length >= CONFIG.REQUIRED_MIN_INSIGHTS) {
-        Logger.log(`   ✓ SUCCESS: ${deduplicated.length} unique insights`);
-        return { insights: deduplicated };
-      } else {
-        Logger.log(`     ⚠️ Only ${deduplicated.length} insights after dedup`);
+      if (result.insights && result.insights.length > 0) {
+        Logger.log(`     ✓ Generated ${result.insights.length} raw insights`);
+        
+        const deduplicated = v110_deduplicateInsights(result.insights);
+        
+        if (deduplicated.length >= CONFIG.REQUIRED_MIN_INSIGHTS) {
+          Logger.log(`   ✓ SUCCESS: ${deduplicated.length} unique insights`);
+          return { insights: deduplicated };
+        } else {
+          Logger.log(`     ⚠️ Only ${deduplicated.length} insights after dedup`);
+          // If we have at least 3, and it's the last attempt, just use them
+          if (i === attempts.length - 1 && deduplicated.length >= 3) {
+            return { insights: deduplicated };
+          }
+        }
       }
-    } else {
-      Logger.log(`     ✗ No insights generated`);
+    } catch (e) {
+      lastError = e.toString();
+      Logger.log(`     ❌ Attempt failed: ${lastError}`);
     }
   }
 
-  Logger.log('   ❌ All attempts failed - returning empty');
-  return { insights: [] };
+  Logger.log('   ❌ All attempts failed or yielded insufficient results');
+  return { 
+    insights: [
+      "⚠️ AI 인사이트 생성 중 오류가 발생했거나 충분한 결과가 도출되지 않았습니다.",
+      "기사 원문을 참고하시기 바랍니다.",
+      lastError ? `(Error: ${lastError.substring(0, 50)}...)` : ""
+    ].filter(s => s !== "")
+  };
 }
 
 function v109_generateFactBasedInsights(intlArticles, koreaArticles, marketData, params) {
@@ -197,90 +214,42 @@ function v109_generateFactBasedInsights(intlArticles, koreaArticles, marketData,
 
     const marketContext = v109_formatMarketContextForAI(marketData);
 
-    const prompt = `당신은 한국 비즈니스 임원을 위한 아침 브리핑을 작성하는 senior analyst입니다.
+    const prompt = `당신은 글로벌 비즈니스 리더와 임원을 위한 일간 리포트를 작성하는 수석 전략 분석가입니다.
+제공된 뉴스 기사들을 분석하여 가장 신뢰도 높고 임팩트 있는 인사이트를 작성하세요.
 
-=== 시장 데이터 (이미 제공됨 - 중복 금지!) ===
+=== 시장 데이터 ===
 ${marketContext}
 
-=== 국제 헤드라인 ===
+=== 국제 뉴스 주요 헤드라인 ===
 ${intlContext || '없음'}
 
-=== 한국 헤드라인 ===
+=== 한국 뉴스 주요 헤드라인 ===
 ${koreaContext || '없음'}
 
-**중요: 정확히 ${CONFIG.REQUIRED_MAX_INSIGHTS}개의 fact-based 인사이트를 작성하세요.**
+**중요 지침:**
+1. **정확히 ${CONFIG.REQUIRED_MAX_INSIGHTS}개의 인사이트를 작성하세요.**
+2. **다양성 확보 (Variety):** 
+   - 단순히 "반도체 호조", "금리 동결" 같은 매일 반복되는 뻔한 이야기보다, 지정학적 변화, 산업 구조 개편, 규제 변화, 인구/사회적 거시 전망 등을 포함하세요.
+   - 금융(주식/환율)에만 치우치지 말고, 기술, 정책, 에너지, 글로벌 공급망 등 다양한 섹터를 다루세요.
+3. **신뢰성 및 선정 기준 (Credibility):**
+   - 글로벌 또는 국가적 영향력이 확실한 주제를 선택하세요.
+   - 특정 중소기업이나 지엽적인 소식(예: 특정 해운사의 사업 재편 등)은 그것이 산업 전체의 변곡점을 시사하지 않는 한 배제하세요.
+   - "장금상선"과 같은 지엽적인 사례보다는 글로벌 해운 물류망의 변화 같은 거시적 관점에서 접근하세요.
+4. **작성 형식:**
+   - **핵심 사실** + **구체적 데이터(금액, 수치, 날짜)** + **임원 관점의 시사점**.
+   - 각 인사이트는 100~200자 내외(2~3문장)로 작성하세요.
+   - "이는...", "투자자 입장에서는..." 등 상투적인 표현은 지양하고 담백하게 시사점을 제시하세요.
 
-⭐ **CRITICAL RULES:**
-
-1. **길이: 100-200자 (2-3문장)**
-   - 구조: **핵심 사실** + **구체적 수치/맥락** + **시사점**
-   - 예: "정부가 ETF 배수 규제를 완화하며 레버리지 3배 상품까지 허용한다. 개인투자자의 고위험 상품 접근성이 높아지는 동시에 시장 변동성 확대가 예상된다."
-
-2. **Fact-based (사실 중심)**
-   - 구체적 수치, 날짜, 비율, 금액 포함
-   - "정부", "한은", "Fed", "삼성", "현대" 등 주체 명확히
-   - 모호한 표현 금지: "상당한", "많은", "일부"
-   
-   ✅ "현대차가 미국 시장 점유율 11.3%를 기록하며 4위를 차지했다"
-   ❌ "현대차가 미국 시장에서 좋은 성과를 거뒀다"
-
-3. **시사점 언급 (but "이는..." 금지!)**
-   
-   ✅ 좋은 시사점 표현:
-   - "...전망이다"
-   - "...예상된다"
-   - "...영향을 미칠 것으로 보인다"
-   - "...가능성이 커졌다"
-   - 새 문장으로 시작: "금융시장 변동성이 확대될 전망이다"
-   
-   ❌ 절대 금지:
-   - "이는 ~을 의미한다"
-   - "이는 ~에 영향을 미친다"
-   - "투자자 입장에서..."
-   - "시장 참여자들은..."
-
-4. **각 인사이트 = 완전히 다른 주제**
-   - 대만/TSMC = 1개만
-   - Fed/트럼프 = 1개만
-   - 반도체 = 1개만
-
-5. **Executive-Level Only**
-   ✅ 포함: 정책 발표, M&A, 지수 milestone, 산업 영향, 지정학
-   ❌ 제외: 금속 가격, 지역 정책, 일일 변동, 시장 데이터 중복
-
-**우수 사례 (100-200자):**
-
-✅ "정부가 ETF 종목과 레버리지 배수 규제를 완화해 개인의 고위험 상품 접근을 허용한다. 레버리지 3배 상품까지 거래 가능해지며, 파생상품 시장 확대와 함께 변동성이 커질 전망이다." (93자)
-
-✅ "한은이 미국의 추가 금리 인하 가능성을 언급하며 한미 금리차 축소를 전망했다. 원화 환율 안정과 국내 통화정책 완화 여지가 커질 것으로 보이며, 외환시장 변동성은 줄어들 전망이다." (96자)
-
-✅ "현대차그룹이 2024년 미국 시장 점유율 11.3%를 기록하며 역대 최고치를 달성했다. 토요타, GM, 포드에 이어 4위를 차지하며 글로벌 경쟁력을 입증했고, 북미 시장 확대가 지속될 전망이다." (100자)
-
-✅ "삼성과 SK하이닉스가 강유전체 메모리 특허 출원에서 1위를 차지하며 AI 메모리 경쟁을 주도하고 있다. 차세대 반도체 기술 선점으로 글로벌 시장 지배력이 강화될 것으로 예상된다." (90자)
-
-✅ "주요 은행들이 주택담보대출 금리를 0.15%p 인상하며 가계 대출 부담이 커졌다. 연초부터 시작된 금리 인상으로 주담대 상환 압박이 심화되고, 부동산 시장 위축이 우려된다." (88자)
-
-✅ "트럼프가 그린란드 매입 협상이 진행되지 않으면 유럽 국가들에 10% 관세를 부과하겠다고 밝혔다. EU는 긴급 대사회의를 소집했으며, 대서양 무역 긴장이 고조될 가능성이 커졌다." (96자)
-
-**나쁜 사례:**
-
-❌ "정부가 ETF 규제를 완화했다." (너무 짧음, 16자)
-
-❌ "정부가 ETF 규제를 완화해 투자자들이 더 많은 선택을 할 수 있게 됐다. 이는 시장 활성화를 의미한다." ("이는..." 사용 금지!)
-
-❌ "투자자 입장에서 볼 때 ETF 규제 완화는 긍정적이다." (주관적, "투자자 입장" 금지)
-
-JSON 형식 (반드시 이 형식으로):
+JSON 형식으로만 답변하세요:
 {
   "insights": [
-    "fact-based 인사이트 1 (100-200자, 2-3문장)",
-    "fact-based 인사이트 2 (100-200자, 2-3문장)",
-    "fact-based 인사이트 3 (100-200자, 2-3문장)",
-    "fact-based 인사이트 4 (100-200자, 2-3문장)",
-    "fact-based 인사이트 5 (100-200자, 2-3문장)",
-    "fact-based 인사이트 6 (100-200자, 2-3문장)",
-    "fact-based 인사이트 7 (100-200자, 2-3문장)",
-    "fact-based 인사이트 8 (100-200자, 2-3문장)"
+    "인사이트 1 (거시/정책 위주)",
+    "인사이트 2 (산업/기술 위주)",
+    "인사이트 3 (국제 정세 위주)",
+    "인사이트 4 (한국 경제 위주)",
+    "인사이트 5 (전략적 시사점)",
+    "인사이트 6 (자유 주제 - 임팩트 중심)",
+    "인사이트 7 (예비/추가)"
   ]
 }`;
 
@@ -590,23 +559,51 @@ function v109_processWithGuarantee(articles, requiredCount, sectionType, intlTop
   return final;
 }
 
-function v109_headlineScore(article, sectionType, intlTopics = []) {
+function v110_headlineScore(article, sectionType, intlTopics = []) {
   let score = article.sourceTier === 1 ? 40 : 20;
   const text = (article.title + ' ' + article.description).toLowerCase();
   const title = article.title.toLowerCase();
   const source = article.source.toLowerCase();
-  if (source.includes('wsj') || source.includes('ft')) score += 15;
-  else if (source.includes('bloomberg') || source.includes('economist')) score += 12;
-  else if (source.includes('nyt') || source.includes('reuters')) score += 10;
+  
+  if (source.includes('wsj') || source.includes('ft')) score += 20;
+  else if (source.includes('bloomberg') || source.includes('economist')) score += 15;
+  else if (source.includes('nyt') || source.includes('reuters')) score += 12;
+
+  // -- 1. 가중치 높은 매크로/전략 키워드 (Variety 보완) --
+  const macroKeywords = [
+    '지정학', 'geopolitics', '공급망', 'supply chain', '규제', 'regulation', 
+    '인구', 'demographics', '에너지', 'energy', '전략', 'strategy', 
+    '산업구조', 'reordering', '협정', 'accord', '관세', 'tariff',
+    '보조금', 'subsidy', '국제기구', 'imf', 'world bank', 'iaea', 'un',
+    '생산성', 'productivity', '노동', 'labor', '디지털 전환', 'digital transformation'
+  ];
+  macroKeywords.forEach(kw => {
+    if (text.includes(kw)) score += 15;
+  });
+
+  // -- 2. 제외 키워드 (Strict Filter) --
   const columnKeywords = ['칼럼', 'column', '[칼럼]', '오피니언', 'opinion', '[오피니언]', '기고', 'editorial', 'commentary', '데스크', '[데스크]', 'op-ed', '사설', '논평', '기자수첩', '취재수첩'];
   for (const kw of columnKeywords) {
     if (text.includes(kw) || title.includes(kw)) return -1000;
   }
+  
   const excludeKeywords = ['sport', 'football', 'soccer', 'baseball', 'basketball', 'k-pop', 'kpop', 'celebrity', 'entertainment', 'hollywood', 'movie', 'actor', 'actress', 'netflix', 'grammy', 'oscar', '연예', '드라마', '영화', '가수', '배우'];
   for (const kw of excludeKeywords) {
     if (text.includes(kw)) return -1000;
   }
-  const trivialKeywords = ['환율 종가', '환율 마감', '달러 환율', '원 오른', '원 내린', '원 상승', '원 하락', '통장', '적금', '예금', '넣으면', '받는', '월 50만', '월50만', '목돈', '특판', '중과세', '다주택자', '양도세', '취득세', '인구감소지역', '비규제지역', '응찰', '입찰', '계약', '공사비', '금 가격', '은 가격', '동 가격', '최고가 찍', '사상 최대', '사상 최고', '동시에 최고가', '특별시', '광역시', '인센티브', '공기관 이전', '지원금', '보조금', '가이드', '방법', '어떻게', '팁'];
+
+  // -- 3. 지엽적/반복적 금융 데이터 필터링 (Credibility & Variety 보완) --
+  const trivialMarketKeywords = ['환율 종가', '환율 마감', '달러 환율', '원 오른', '원 내린', '원 상승', '원 하락', '시황', '장중', '상승 출발', '하락 출발', '금값 최고', '은값 최고'];
+  for (const kw of trivialMarketKeywords) {
+    if (title.includes(kw)) score -= 25;
+  }
+
+  const trivialKeywords = [
+    '통장', '적금', '예금', '넣으면', '받는', '월 50만', '월50만', '목돈', '특판', 
+    '중과세', '다주택자', '양도세', '취득세', '인구감소지역', '비규제지역', 
+    '응찰', '입찰', '계약', '공사비', '특별시', '광역시', '인센티브', 
+    '공기관 이전', '지원금', '보조금 가이드', '방법', '어떻게', '팁'
+  ];
   for (const kw of trivialKeywords) {
     if (title.includes(kw)) {
       const majorKeywords = ['정부', '금융위', '기재부', '금리', '정책', '법', '규제', '대통령', '장관', 'fed', '중앙은행'];
@@ -620,54 +617,38 @@ function v109_headlineScore(article, sectionType, intlTopics = []) {
       if (!hasMajor) return -1000;
     }
   }
-  if (sectionType === 'korea') {
-    for (const topic of intlTopics) {
-      if (title.includes(topic)) return -1000;
-    }
-    const foreignOnly = ['openai', 'chatgpt', 'gpt-4', 'claude', 'google', '구글', 'apple', '애플', 'meta', '메타', 'amazon', '아마존', 'microsoft', '마이크로소프트', 'tesla', '테슬라', 'nvidia', '엔비디아', 'trump', '트럼프', 'biden', '바이든', 'putin', '푸틴', '캐나다', 'canada', '독일', 'germany', '영국', 'uk', '포르쉐', 'porsche', 'bmw', '벤츠', 'mercedes'];
-    let hasForeign = false;
-    for (const entity of foreignOnly) {
-      if (title.includes(entity)) {
-        hasForeign = true;
-        break;
-      }
-    }
-    if (hasForeign) {
-      const koreaKeywords = ['삼성', 'samsung', 'sk', 'sk하이닉스', '현대', 'hyundai', '한국', '국내', '서울', '정부', '금융위', '공정위', '대', 'vs', '비교', '영향', '진출', '협력'];
-      let hasKoreaRelevance = false;
-      for (const kw of koreaKeywords) {
-        if (title.includes(kw)) {
-          hasKoreaRelevance = true;
-          break;
-        }
-      }
-      if (!hasKoreaRelevance) return -1000;
-    }
-    const foreignMarkets = ['중국서', '중국 시장', '미국 시장', '일본 시장', '유럽 시장'];
-    for (const market of foreignMarkets) {
-      if (title.includes(market)) {
-        if (!title.includes('한국') && !title.includes('국내') && !title.includes('삼성') && !title.includes('sk') && !title.includes('현대')) {
-          return -1000;
-        }
-      }
-    }
-  }
-  const hoursAgo = (Date.now() - new Date(article.publishedAt)) / (1000 * 60 * 60);
-  if (hoursAgo < 3) score += 15;
-  else if (hoursAgo < 6) score += 10;
-  else if (hoursAgo < 12) score += 5;
+
+  // -- 4. 섹션별 특화 및 신설 키워드 --
   if (sectionType === 'intl') {
     const majorKeywords = ['breaking', 'urgent', 'crisis', 'war', 'strike', 'fed', 'ecb', 'boj', 'rate', 'inflation', 'recession', 'tariff', 'sanctions', 'trade war', 'china', 'russia', 'ukraine', 'taiwan', 'iran', 'trump', 'biden', 'powell', 'apple', 'microsoft', 'nvidia', 'tesla', 'openai'];
     majorKeywords.forEach(kw => {
       if (text.includes(kw)) score += 12;
     });
   }
+
   if (sectionType === 'korea') {
-    const majorKeywords = ['kospi', 'kosdaq', '4800', '5000', '사상', '최고', '최저', '금리', '기준금리', '정책', '규제', '법안', '정부', '금융위', '공정위', '기재부', '삼성', 'samsung', 'sk하이닉스', '현대', 'hyundai', '반도체', '배터리', '자동차', '조선', '철강', '수출', '무역', '환율', 'gdp', '성장률', '인수', '합병', 'm&a', '구조조정', '상장'];
+    // 중복 기사 방지 (국제 주제가 한국 섹션에 너무 많지 않게)
+    for (const topic of intlTopics) {
+      if (title.includes(topic)) score -= 30;
+    }
+
+    // 다양성 보완 (자동차, 원전, 배터리 등)
+    const diversifyKeywords = ['자동차', '현대차', '기아', '원전', '에너지', '배터리', 'k-배터리', '방산', '방위산업', '바이오', '제약', '플랫폼', '네이버', '카카오'];
+    diversifyKeywords.forEach(kw => {
+      if (text.includes(kw)) score += 10;
+    });
+
+    const majorKeywords = ['kospi', 'kosdaq', '4800', '5000', '사상', '최고', '최저', '금리', '기준금리', '정책', '규제', '법안', '정부', '금융위', '공정위', '기재부', '삼성', 'samsung', 'sk하이닉스', '현대', 'hyundai', '반도체', '수출', '무역', '환율', 'gdp', '성장률', '인수', '합병', 'm&a', '구조조정', '상장'];
     majorKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 12;
+      if (text.includes(kw)) score += 10;
     });
   }
+
+  const hoursAgo = (Date.now() - new Date(article.publishedAt)) / (1000 * 60 * 60);
+  if (hoursAgo < 4) score += 15;
+  else if (hoursAgo < 8) score += 10;
+  else if (hoursAgo < 16) score += 5;
+
   return score;
 }
 
@@ -1006,47 +987,47 @@ function v109_formatMarketContextForAI(marketData) {
 function v109_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketData) {
   const blocks = [];
   const today = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-  blocks.push({type: 'header', text: {type: 'plain_text', text: '📰 Global Business Brief', emoji: true}});
+  blocks.push({type: 'header', text: {type: 'plain_text', text: `📰 Global - Korea Business Brief (${today})`, emoji: true}});
   blocks.push({type: 'divider'});
   blocks.push({type: 'header', text: {type: 'plain_text', text: '📊 Market Snapshot', emoji: true}});
-  blocks.push({type: 'section', text: {type: 'mrkdwn', text: v109_truncate(v109_formatMarketData(marketData), 2900)}});
+  blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(v110_formatMarketData(marketData), 2900)}});
   blocks.push({type: 'divider'});
   if (aiSummary.insights && aiSummary.insights.length > 0) {
-    blocks.push({type: 'header', text: {type: 'plain_text', text: '🎯 Executive Insights', emoji: true}});
-    const insightsText = aiSummary.insights.map((i, idx) => `${idx + 1}. ${v109_truncate(i, 400)}`).join('\n\n');
-    blocks.push({type: 'section', text: {type: 'mrkdwn', text: v109_truncate(insightsText, 2900)}});
+    blocks.push({type: 'header', text: {type: 'plain_text', text: '🎯 Executive Insights (Strategic View)', emoji: true}});
+    const insightsText = aiSummary.insights.map((i, idx) => `*${idx + 1}.* ${v110_truncate(i, 450)}`).join('\n\n');
+    blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(insightsText, 2900)}});
     blocks.push({type: 'divider'});
   }
   if (intlArticles && intlArticles.length > 0) {
-    blocks.push({type: 'header', text: {type: 'plain_text', text: '🌍 International', emoji: true}});
-    const intlText = intlArticles.map((a, i) => `${i + 1}. <${v109_truncate(a.link, 400)}|${v109_truncate(a.title, 250)}>`).join('\n');
-    blocks.push({type: 'section', text: {type: 'mrkdwn', text: v109_truncate(intlText, 2900)}});
+    blocks.push({type: 'header', text: {type: 'plain_text', text: '🌍 International Headlines', emoji: true}});
+    const intlText = intlArticles.map((a, i) => `${i + 1}. <${v110_truncate(a.link, 400)}|${v110_truncate(a.title, 250)}>`).join('\n');
+    blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(intlText, 2900)}});
     blocks.push({type: 'divider'});
   }
   if (koreaArticles && koreaArticles.length > 0) {
-    blocks.push({type: 'header', text: {type: 'plain_text', text: '🇰🇷 Korea', emoji: true}});
-    const koreaText = koreaArticles.map((a, i) => `${i + 1}. <${v109_truncate(a.link, 400)}|${v109_truncate(a.title, 250)}>`).join('\n');
-    blocks.push({type: 'section', text: {type: 'mrkdwn', text: v109_truncate(koreaText, 2900)}});
+    blocks.push({type: 'header', text: {type: 'plain_text', text: '🇰🇷 Korea Business Headlines', emoji: true}});
+    const koreaText = koreaArticles.map((a, i) => `${i + 1}. <${v110_truncate(a.link, 400)}|${v110_truncate(a.title, 250)}>`).join('\n');
+    blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(koreaText, 2900)}});
     blocks.push({type: 'divider'});
   }
   const total = (intlArticles?.length || 0) + (koreaArticles?.length || 0);
-  blocks.push({type: 'context', elements: [{type: 'mrkdwn', text: `Daily BIZ News Agent 🤖 v10.9 | ${total} articles`}]});
+  blocks.push({type: 'context', elements: [{type: 'mrkdwn', text: `Daily BIZ News Agent 🤖 v11.0 | ${total} curated articles`}]});
   return {blocks: blocks};
 }
 
-function v109_truncate(text, maxLength) {
+function v110_truncate(text, maxLength) {
   if (!text) return '';
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength - 3) + '...';
 }
 
-function v109_formatMarketData(marketData) {
+function v110_formatMarketData(marketData) {
   let text = '';
   if (marketData.usStocks && marketData.usStocks.length > 0) {
     text += '*US Markets*\n';
     marketData.usStocks.forEach(s => {
       const emoji = s.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${s.name}: ${s.price.toFixed(2)} (${s.dayChange.toFixed(2)}% | WoW ${s.weekChange.toFixed(2)}%)\n`;
+      text += `${emoji} ${s.name}: ${s.price.toLocaleString(undefined, {minimumFractionDigits: 2})} (${s.dayChange >= 0 ? '+' : ''}${s.dayChange.toFixed(2)}% | WoW ${s.weekChange >= 0 ? '+' : ''}${s.weekChange.toFixed(2)}%)\n`;
     });
     text += '\n';
   }
@@ -1054,7 +1035,7 @@ function v109_formatMarketData(marketData) {
     text += '*Korea Markets*\n';
     marketData.koreaStocks.forEach(s => {
       const emoji = s.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${s.name}: ${s.price.toFixed(2)} (${s.dayChange.toFixed(2)}% | WoW ${s.weekChange.toFixed(2)}%)\n`;
+      text += `${emoji} ${s.name}: ${s.price.toLocaleString()} (${s.dayChange >= 0 ? '+' : ''}${s.dayChange.toFixed(2)}% | WoW ${s.weekChange >= 0 ? '+' : ''}${s.weekChange.toFixed(2)}%)\n`;
     });
     text += '\n';
   }
@@ -1062,7 +1043,7 @@ function v109_formatMarketData(marketData) {
     text += '*FX Rates*\n';
     marketData.fxRates.forEach(fx => {
       const emoji = fx.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${fx.name}: ${fx.price.toFixed(2)} (${fx.dayChange.toFixed(2)}% | WoW ${fx.weekChange.toFixed(2)}%)\n`;
+      text += `${emoji} ${fx.name}: ${fx.price.toFixed(2)} (${fx.dayChange >= 0 ? '+' : ''}${fx.dayChange.toFixed(2)}% | WoW ${fx.weekChange >= 0 ? '+' : ''}${fx.weekChange.toFixed(2)}%)\n`;
     });
     text += '\n';
   }
@@ -1070,14 +1051,14 @@ function v109_formatMarketData(marketData) {
     text += '*Commodities & Crypto*\n';
     marketData.commodities.forEach(c => {
       const emoji = c.dayChange >= 0 ? '📈' : '📉';
-      const priceStr = c.name === 'Bitcoin' ? `$${c.price.toFixed(0)}` : `$${c.price.toFixed(2)}`;
-      text += `${emoji} ${c.name}: ${priceStr} (${c.dayChange.toFixed(2)}% | WoW ${c.weekChange.toFixed(2)}%)\n`;
+      const priceStr = c.name === 'Bitcoin' ? `$${c.price.toLocaleString()}` : `$${c.price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+      text += `${emoji} ${c.name}: ${priceStr} (${c.dayChange >= 0 ? '+' : ''}${c.dayChange.toFixed(2)}% | WoW ${c.weekChange >= 0 ? '+' : ''}${c.weekChange.toFixed(2)}%)\n`;
     });
   }
   return text || 'Market data unavailable';
 }
 
-function v109_sendToSlack(message) {
+function v110_sendToSlack(message) {
   const options = {
     method: 'post',
     contentType: 'application/json',
@@ -1090,30 +1071,31 @@ function v109_sendToSlack(message) {
   }
 }
 
-function v109_sendErrorToSlack(error) {
+function v110_sendErrorToSlack(error) {
   const message = {
     blocks: [
-      {type: 'header', text: {type: 'plain_text', text: '❌ Error'}},
-      {type: 'section', text: {type: 'mrkdwn', text: `*Error:* ${v109_truncate(error.toString(), 500)}`}}
+      {type: 'header', text: {type: 'plain_text', text: '❌ System Error'}},
+      {type: 'section', text: {type: 'mrkdwn', text: `*Error Detail:* ${v110_truncate(error.toString(), 500)}`}},
+      {type: 'context', elements: [{type: 'mrkdwn', text: 'Daily BIZ News Agent 🤖 v11.0'}]}
     ]
   };
-  try { v109_sendToSlack(message); } catch (e) {}
+  try { v110_sendToSlack(message); } catch (e) {}
 }
 
 // ==================== TRIGGERS ====================
 
-function v109_testScript() {
-  Logger.log('🧪 Testing v10.9 - Fact-Based Insights...\n');
-  v109_sendDailyNewsSummary();
+function v110_testScript() {
+  Logger.log('🧪 Testing v11.0 - Robust & Diverse Insights...\n');
+  v110_sendDailyNewsSummary();
   Logger.log('\n✅ Test complete!');
 }
 
-function v109_createDailyTrigger() {
+function v110_createDailyTrigger() {
   ScriptApp.getProjectTriggers().forEach(t => {
-    if (t.getHandlerFunction() === 'v109_sendDailyNewsSummary') {
+    if (t.getHandlerFunction() === 'v110_sendDailyNewsSummary' || t.getHandlerFunction() === 'v109_sendDailyNewsSummary') {
       ScriptApp.deleteTrigger(t);
     }
   });
-  ScriptApp.newTrigger('v109_sendDailyNewsSummary').timeBased().atHour(8).everyDays(1).create();
+  ScriptApp.newTrigger('v110_sendDailyNewsSummary').timeBased().atHour(8).everyDays(1).create();
   Logger.log('✅ Daily trigger created for 8:00 AM');
 }
