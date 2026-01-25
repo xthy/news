@@ -61,7 +61,7 @@ SLACK_WEBHOOK_URL = config_data.get("SLACK_WEBHOOK_URL", "")
 LOG_SLACK_WEBHOOK_URL = config_data.get("LOG_SLACK_WEBHOOK_URL", "")
 SPREADSHEET_ID = config_data.get("SPREADSHEET_ID", "18KrjCdEEcNJrmNRAV19nhwAoya9l65gzH3ypFYaRlHM")
 HISTORY_SHEET_NAME = "paywalled_pdf"
-HISTORY_DAYS = 30
+HISTORY_DAYS = 7
 AB_TEST_MODE = False
 
 def normalize(t):
