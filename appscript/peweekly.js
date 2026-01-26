@@ -1,10 +1,9 @@
 /**
- * PE Weekly Roundup v3.8
- * - MAJOR: 중복 뉴스 대폭 강화
- * - 회사/이벤트당 최대 기사 수 제한
- * - 향상된 시그니처 추출
- * - 더 공격적인 GPT dedup
- * - 최종 다양성 체크 추가
+ * PE Weekly Roundup v4.0
+ * - MAJOR: GUARANTEED news count per region
+ * - ENHANCED: PE-specific scoring (Buyouts, Fundraising focus)
+ * - FILTER: Stricter penalty for general scams and non-PE noise
+ * - ROBUST: Backfill logic if GPT dedup fails or over-cuts
  */
 
 // ==================== Config ====================
@@ -20,8 +19,11 @@ var Config = {
 
   KOREA_ARTICLES: 10,
   ASIA_MENA_ARTICLES: 10,
-  US_ARTICLES: 7,
-  EUROPE_ARTICLES: 7,
+  US_ARTICLES: 8,
+  EUROPE_ARTICLES: 8,
+
+  // Minimum required before fallback
+  REQUIRED_MIN_PER_REGION: 5,
 
   // 같은 회사/이벤트 최대 기사 수
   MAX_PER_COMPANY: 2,
@@ -135,6 +137,8 @@ var BAD_TITLE_PATTERNS = [
   /news digest/i,
   /dating rumor/i,
   /relationship with/i,
+  /nominations|awards|call for/i,
+  /podcast|webinar|register now/i,
   /^\s*\d{1,2}\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i
 ];
 
@@ -142,73 +146,103 @@ var BAD_TITLE_PATTERNS = [
 
 function runWeeklyPEBrief() {
   try {
-    Logger.log('🚀 Starting PE Weekly Roundup v3.8...\n');
+    Logger.log('🚀 Starting PE Weekly Roundup v4.0...\n');
 
-    // 1. Fetch all articles by region
-    var regionData = fetchAllNewsByRegion();
+    // 1. Fetch all articles
+    var rawData = fetchAllNewsByRegion();
 
-    // 2. Reclassify by content
-    regionData = reclassifyByContent(regionData);
+    // 2. Reclassify by content (ensure region accuracy)
+    var regionData = reclassifyByContent(rawData);
 
-    Logger.log('\n📊 After content reclassification:');
+    Logger.log('\n📊 After initial collection:');
     Logger.log('   Korea: ' + regionData.korea.length);
     Logger.log('   Asia/MENA: ' + regionData.asia.length);
     Logger.log('   US: ' + regionData.us.length);
     Logger.log('   Europe: ' + regionData.europe.length);
 
-    // 3. ENHANCED DEDUP per region
-    Logger.log('\n🔄 Enhanced deduplication...');
-    regionData.korea = enhancedDedup(regionData.korea, 'korea');
-    regionData.asia = enhancedDedup(regionData.asia, 'asia');
-    regionData.us = enhancedDedup(regionData.us, 'us');
-    regionData.europe = enhancedDedup(regionData.europe, 'europe');
+    // 3. Process each region with EXPLICIT GUARANTEE
+    var korea = processRegionWithGuarantee(regionData.korea, Config.KOREA_ARTICLES, 'korea');
+    var asiaMena = processRegionWithGuarantee(regionData.asia, Config.ASIA_MENA_ARTICLES, 'asia');
+    var us = processRegionWithGuarantee(regionData.us, Config.US_ARTICLES, 'us');
+    var europe = processRegionWithGuarantee(regionData.europe, Config.EUROPE_ARTICLES, 'europe');
 
-    Logger.log('\n📊 After enhanced dedup:');
-    Logger.log('   Korea: ' + regionData.korea.length);
-    Logger.log('   Asia/MENA: ' + regionData.asia.length);
-    Logger.log('   US: ' + regionData.us.length);
-    Logger.log('   Europe: ' + regionData.europe.length);
+    Logger.log('\n✅ Final article counts (GUARANTEED):');
+    Logger.log('   Korea: ' + korea.length + '/' + Config.KOREA_ARTICLES);
+    Logger.log('   Asia/MENA: ' + asiaMena.length + '/' + Config.ASIA_MENA_ARTICLES);
+    Logger.log('   US: ' + us.length + '/' + Config.US_ARTICLES);
+    Logger.log('   Europe: ' + europe.length + '/' + Config.EUROPE_ARTICLES);
 
-    // 4. Score and pre-select articles
-    var koreaRaw = selectTopArticles(regionData.korea, Config.KOREA_ARTICLES * 2, 'korea');
-    var asiaMenaRaw = selectTopArticles(regionData.asia, Config.ASIA_MENA_ARTICLES * 2, 'asia');
-    var usRaw = selectTopArticles(regionData.us, Config.US_ARTICLES * 2, 'us');
-    var europeRaw = selectTopArticles(regionData.europe, Config.EUROPE_ARTICLES * 2, 'europe');
-
-    // 5. AGGRESSIVE GPT-based final dedup
-    Logger.log('\n🤖 GPT-based aggressive deduplication...');
-    var korea = gptAggressiveDedup(koreaRaw, 'Korea', Config.KOREA_ARTICLES);
-    var asiaMena = gptAggressiveDedup(asiaMenaRaw, 'Asia/MENA', Config.ASIA_MENA_ARTICLES);
-    var us = gptAggressiveDedup(usRaw, 'US', Config.US_ARTICLES);
-    var europe = gptAggressiveDedup(europeRaw, 'Europe', Config.EUROPE_ARTICLES);
-
-    // 6. Final diversity check
-    Logger.log('\n✨ Final diversity check...');
-    korea = enforceDiversity(korea, 'Korea');
-    asiaMena = enforceDiversity(asiaMena, 'Asia/MENA');
-    us = enforceDiversity(us, 'US');
-    europe = enforceDiversity(europe, 'Europe');
-
-    Logger.log('\n✅ Final article counts:');
-    Logger.log('   Korea: ' + korea.length);
-    Logger.log('   Asia/MENA: ' + asiaMena.length);
-    Logger.log('   US: ' + us.length);
-    Logger.log('   Europe: ' + europe.length);
-
-    // 7. Generate highlights
+    // 4. Generate highlights
     var highlights = generateHighlights({ korea: korea, asiaMena: asiaMena, us: us, europe: europe });
 
-    // 8. Send to Slack
+    // 5. Send to Slack
     var message = formatSlackMessage(highlights, korea, asiaMena, us, europe);
     sendToSlack(message);
 
-    Logger.log('\n✅ PE Weekly Roundup sent successfully!');
+    Logger.log('\n✅ PE Weekly Roundup v4.0 sent successfully!');
 
   } catch (error) {
-    Logger.log('❌ ERROR: ' + error.toString());
+    Logger.log('❌ FATAL ERROR: ' + error.toString());
     Logger.log(error.stack);
     sendErrorToSlack(error);
   }
+}
+
+/**
+ * Ensures the target count for a region by applying scoring, dedup, GPT filter, and backfilling.
+ */
+function processRegionWithGuarantee(articles, targetCount, regionName) {
+  Logger.log('\n🎯 Processing [' + regionName.toUpperCase() + '] (Target: ' + targetCount + ')');
+
+  if (!articles || articles.length === 0) {
+    Logger.log('   ⚠️ No articles found for ' + regionName);
+    return [];
+  }
+
+  // A. Scoring
+  articles.forEach(function (a) {
+    a.score = scoreArticle(a, regionName);
+  });
+
+  // Sort by score
+  articles.sort(function (a, b) { return b.score - a.score; });
+
+  // B. Pre-GPT Aggressive Dedup (by signature)
+  var uniquePreGpt = enhancedDedup(articles, regionName);
+  Logger.log('   → Deduplicated to ' + uniquePreGpt.length + ' candidates');
+
+  // Filter out low scores (less than -100 are definitely bad)
+  var filtered = uniquePreGpt.filter(function (a) { return a.score > -150; });
+
+  if (filtered.length === 0) {
+    Logger.log('   ⚠️ All articles filtered out (low score)');
+    return [];
+  }
+
+  // C. GPT Select
+  // Prepare candidates for GPT (top targetCount * 3)
+  var gptCandidates = filtered.slice(0, targetCount * 3);
+  var gptResult = gptAggressiveDedup(gptCandidates, regionName, targetCount);
+
+  // D. Robust Backfill
+  // If GPT returned fewer than target, or we need more, fill from the remaining candidates
+  if (gptResult.length < targetCount && filtered.length > gptResult.length) {
+    Logger.log('   ⚠️ GPT returned ' + gptResult.length + ', backfilling to ' + targetCount);
+    var seenLinks = new Set(gptResult.map(function (a) { return a.link; }));
+
+    for (var i = 0; i < filtered.length && gptResult.length < targetCount; i++) {
+      if (!seenLinks.has(filtered[i].link)) {
+        gptResult.push(filtered[i]);
+        seenLinks.add(filtered[i].link);
+      }
+    }
+  }
+
+  // E. Final diversity check
+  var final = enforceDiversity(gptResult, regionName).slice(0, targetCount);
+
+  Logger.log('   ✓ Final count for ' + regionName + ': ' + final.length);
+  return final;
 }
 
 // ==================== FETCH NEWS ====================
@@ -634,37 +668,69 @@ function selectTopArticles(articles, count, region) {
 
 function scoreArticle(article, region) {
   var score = 0;
-  var text = (article.title + ' ' + article.description).toLowerCase();
+  var title = article.title.toLowerCase();
+  var desc = article.description.toLowerCase();
+  var text = (title + ' ' + desc).toLowerCase();
 
+  // 1. Source Weight
   score += getSourceScore(article.link);
   score += (article.priority === 1) ? 30 : 15;
 
-  if (text.match(/\$\d+(\.\d+)?\s*billion/i)) score += 40;
-  else if (text.match(/\$\d+\s*million/i)) score += 15;
+  // 2. High Value PE Activity (+)
+  if (text.match(/\$\d+(\.\d+)?\s*billion/i) || text.match(/\d+(\.\d+)?\s*(bn|bn\b)/i)) score += 50;
+  else if (text.match(/\$\d+\s*million/i) || text.match(/\d+\s*(m|m\b)/i)) score += 20;
 
-  var peFirms = ['kkr', 'blackstone', 'carlyle', 'apollo', 'tpg', 'bain capital', 'warburg'];
-  if (peFirms.some(function (f) { return text.indexOf(f) !== -1; })) score += 25;
+  var peDeals = ['acquisition', 'buyout', 'merger', 'takeover', 'majority stake', 'privatize', 'delisting', 'm&a', 'lbo', 'secondary'];
+  peDeals.forEach(function (kw) { if (text.indexOf(kw) !== -1) score += 25; });
 
-  if (text.indexOf('acquisition') !== -1 || text.indexOf('buyout') !== -1) score += 20;
-  if (text.indexOf('ipo') !== -1) score += 20;
-  if (text.indexOf('fund close') !== -1 || text.indexOf('raises fund') !== -1) score += 25;
+  var fundraising = ['fund close', 'raises fund', 'fundraising', 'hard cap', 'final close', 'capital commit', 'flagship fund'];
+  fundraising.forEach(function (kw) { if (text.indexOf(kw) !== -1) score += 35; });
 
-  if (text.indexOf('scandal') !== -1 || text.indexOf('fraud') !== -1) score += 40;
-  if (text.indexOf('investigation') !== -1 || text.indexOf('sanctions') !== -1) score += 35;
+  var peFirms = ['kkr', 'blackstone', 'carlyle', 'apollo', 'tpg', 'bain capital', 'warburg', 'eqt', 'cvc', 'advent', 'h&f', 'silver lake', 'thoma bravo', 'vista equity', 'partners group'];
+  if (peFirms.some(function (f) { return text.indexOf(f) !== -1; })) score += 30;
 
-  var hoursAgo = (Date.now() - new Date(article.publishedAt).getTime()) / (1000 * 60 * 60);
-  if (hoursAgo < 24) score += 15;
-  else if (hoursAgo < 72) score += 10;
+  // 3. Sector Focus (+) - Tech/Infra/Healthcare
+  var hotSectors = ['tech', 'software', 'healthcare', 'medical', 'infrastructure', 'energy', 'ai', 'semiconductor', 'data center'];
+  hotSectors.forEach(function (s) { if (text.indexOf(s) !== -1) score += 10; });
 
+  // 4. Korean PE Context (+)
   if (region === 'korea') {
-    if (text.indexOf('mbk') !== -1 || text.indexOf('imm') !== -1) score += 30;
-    if (text.indexOf('fss') !== -1 || text.indexOf('homeplus') !== -1) score += 30;
+    if (text.indexOf('mbk') !== -1 || text.indexOf('imm') !== -1 || text.indexOf('jc partners') !== -1 || text.indexOf('viamc') !== -1) score += 40;
+    if (text.indexOf('chosun') !== -1 || text.indexOf('hankyung') !== -1 || text.indexOf('ked global') !== -1) score += 10;
   }
 
   if (region === 'asia') {
     var swf = ['pif', 'mubadala', 'adia', 'qia', 'temasek', 'gic'];
-    if (swf.some(function (s) { return text.indexOf(s) !== -1; })) score += 30;
+    if (swf.some(function (s) { return text.indexOf(s) !== -1; })) score += 35;
   }
+
+  // 5. Freshness (+)
+  var hoursAgo = (Date.now() - new Date(article.publishedAt).getTime()) / (1000 * 60 * 60);
+  if (hoursAgo < 24) score += 20;
+  else if (hoursAgo < 72) score += 15;
+
+  // 6. NOISE REDUCTION / NEGATIVE SCORING (-)
+
+  // A. Local Scams / Crimes (High Penalty)
+  var scams = ['repatriates', 'scam', 'fraud', 'illegal', 'police', 'arrest', 'suspect', 'crime suspect', 'criminals', 'victim', 'repatriated', 'scammed'];
+  scams.forEach(function (kw) {
+    if (text.indexOf(kw) !== -1) {
+      // Small penalty if it's MBK or a major firm (might be a legitimate scandal), 
+      // but huge penalty for general "scam" news.
+      var isMajorFirm = peFirms.concat(['mbk', 'imm']).some(function (f) { return text.indexOf(f) !== -1; });
+      if (!isMajorFirm) score -= 150;
+    }
+  });
+
+  // B. Soft news / Opinion / Routine (-)
+  var softNews = ['nominations', 'call for', 'women in pe', 'side letter', 'podcast', 'webinar', 'how to', 'opinion', 'letter from', 'weekly roundup', 'daily digest', 'congratulate', 'awards', 'deal of the year entry', 'top 10'];
+  softNews.forEach(function (kw) {
+    if (text.indexOf(kw) !== -1) score -= 100;
+  });
+
+  // C. Title Length Penalty (too short/long usually spam)
+  if (title.length < 30) score -= 50;
+  if (title.length > 200) score -= 20;
 
   return score;
 }
@@ -681,15 +747,14 @@ function gptAggressiveDedup(articles, region, targetCount) {
       return i + '. ' + a.title;
     }).join('\n');
 
-    var prompt = 'Review these ' + region + ' PE news. Find ALL DUPLICATES (same story/event/deal).\n\n' +
+    var prompt = 'Review these ' + region + ' news titles for Private Equity professionals. Select only HIGH-STAKES stories (Mega-deals, Flagship fundraisings, GP spinoffs, Major scandals).\n\n' +
       'ARTICLES:\n' + articleList + '\n\n' +
-      'DUPLICATE RULES:\n' +
-      '- Same company + same event = DUPLICATE (e.g., 2+ MBK fraud articles = keep best 1)\n' +
-      '- Same deal with different angles = DUPLICATE\n' +
-      '- Same PE firm + similar target = likely DUPLICATE\n' +
-      '- Be AGGRESSIVE - prioritize diversity over completeness\n\n' +
-      'Return exactly ' + targetCount + ' best articles.\n' +
-      'JSON: {"keep": [0,3,5...]} - indices of ' + targetCount + ' diverse, high-quality articles\n\nJSON only:';
+      'CRITICAL RULES:\n' +
+      '- IGNORE routine news (call for nominations, webinars, internal newsletters, "Women in PE" awards, basic industry opinion).\n' +
+      '- PRIORITIZE actual transactions, exits, and fundraising closures.\n' +
+      '- ELIMINATE DUPLICATES (same deal/firm = keep only best 1).\n\n' +
+      'Return exactly ' + targetCount + ' unique indices in order of importance.\n' +
+      'JSON: {"keep": [0,3,5...]}';
 
     var response = callGPT(prompt, 1000);
     var result = parseJSON(response);
