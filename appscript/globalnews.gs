@@ -79,39 +79,39 @@ const NEWS_SOURCEX = [
 
 // Alias functions to match the README
 function sendDailyNewsSummary() {
-  v109_sendDailyNewsSummary();
+  v110_sendDailyNewsSummary();
 }
 
-function v109_sendDailyNewsSummary() {
+function v110_sendDailyNewsSummary() {
   try {
-    Logger.log('🚀 v10.9 -  Insights\n');
+    Logger.log('🚀 v11.0 - Robust & Diverse Insights\n');
 
-    const allArticles = v109_fetchAllNews();
+    const allArticles = v110_fetchAllNews();
     Logger.log(`\n📰 Collected: ${allArticles.length} articles`);
     
-    v109_validate24HourWindow(allArticles);
+    v110_validate24HourWindow(allArticles);
 
-    const intlArticles = v109_processWithGuarantee(
+    const intlArticles = v110_processWithGuarantee(
       allArticles.filter(a => a.section === 'intl'),
       CONFIG.REQUIRED_INTL_ARTICLES,
       'intl'
     );
     Logger.log(`\n✅ International: ${intlArticles.length}/${CONFIG.REQUIRED_INTL_ARTICLES}`);
-    v109_logSourceDistribution(intlArticles, 'International');
+    v110_logSourceDistribution(intlArticles, 'International');
 
-    const intlTopics = v109_extractTopics(intlArticles);
+    const intlTopics = v110_extractTopics(intlArticles);
     Logger.log(`   → International topics: ${intlTopics.join(', ')}`);
 
-    const koreaArticles = v109_processWithGuarantee(
+    const koreaArticles = v110_processWithGuarantee(
       allArticles.filter(a => a.section === 'korea'),
       CONFIG.REQUIRED_KOREA_ARTICLES,
       'korea',
       intlTopics
     );
     Logger.log(`\n✅ Korea: ${koreaArticles.length}/${CONFIG.REQUIRED_KOREA_ARTICLES}`);
-    v109_logSourceDistribution(koreaArticles, 'Korea');
+    v110_logSourceDistribution(koreaArticles, 'Korea');
 
-    const marketData = v109_fetchMarketData();
+    const marketData = v110_fetchMarketData();
     Logger.log('\n📊 Market data fetched');
 
     const aiSummary = v110_generateExecutiveInsights(intlArticles, koreaArticles, marketData);
@@ -150,9 +150,9 @@ function v110_generateExecutiveInsights(intlArticles, koreaArticles, marketData)
   }
 
   const attempts = [
-    { minLen: 80, maxLen: 250, temp: 0.3 },
-    { minLen: 60, maxLen: 300, temp: 0.5 },
-    { minLen: 50, maxLen: 350, temp: 0.7 }
+    { minLen: 40, maxLen: 400, temp: 0.3 },
+    { minLen: 30, maxLen: 500, temp: 0.5 },
+    { minLen: 20, maxLen: 600, temp: 0.7 }
   ];
 
   let lastError = "";
@@ -196,87 +196,86 @@ function v110_generateExecutiveInsights(intlArticles, koreaArticles, marketData)
   };
 }
 
-function v109_generateFactBasedInsights(intlArticles, koreaArticles, marketData, params) {
+function v110_generateFactBasedInsights(intlArticles, koreaArticles, marketData, params) {
   try {
     const intlContext = intlArticles.map((a, i) => {
       let context = `${i + 1}. [${a.source}] ${a.title}`;
       if (a.aiReasoning) context += `\n   분석: ${a.aiReasoning}`;
-      if (a.keyFacts) context += `\n   핵심: ${a.keyFacts}`;
       return context;
     }).join('\n\n');
 
     const koreaContext = koreaArticles.map((a, i) => {
       let context = `${i + 1}. [${a.source}] ${a.title}`;
       if (a.aiReasoning) context += `\n   분석: ${a.aiReasoning}`;
-      if (a.keyFacts) context += `\n   핵심: ${a.keyFacts}`;
       return context;
     }).join('\n\n');
 
-    const marketContext = v109_formatMarketContextForAI(marketData);
+    const marketContext = v110_formatMarketContextForAI(marketData);
 
-    const prompt = `당신은 글로벌 비즈니스 리더와 임원을 위한 일간 리포트를 작성하는 수석 전략 분석가입니다.
-제공된 뉴스 기사들을 분석하여 가장 신뢰도 높고 임팩트 있는 인사이트를 작성하세요.
+    const prompt = `You are a Senior Strategic Analyst writing a high-level briefing for global business executives.
+Based on the provided news, deliver exactly ${CONFIG.REQUIRED_MAX_INSIGHTS} professional insights in English.
 
-=== 시장 데이터 ===
+**STRICT RULES:**
+- DO NOT start sentences with vague references like "This event," "This trend," or "This development."
+- ALWAYS start each insight with a concrete entity (Person, Company, Country, or Specific Event).
+- Focus on FACTUAL reporting first, then provide the strategic implication.
+
+=== MARKET DATA ===
 ${marketContext}
 
-=== 국제 뉴스 주요 헤드라인 ===
-${intlContext || '없음'}
+=== INTERNATIONAL NEWS ===
+${intlContext || 'None'}
 
-=== 한국 뉴스 주요 헤드라인 ===
-${koreaContext || '없음'}
+=== KOREA NEWS ===
+${koreaContext || 'None'}
 
-**중요 지침:**
-1. **정확히 ${CONFIG.REQUIRED_MAX_INSIGHTS}개의 인사이트를 작성하세요.**
-2. **다양성 확보 (Variety):** 
-   - 단순히 "반도체 호조", "금리 동결" 같은 매일 반복되는 뻔한 이야기보다, 지정학적 변화, 산업 구조 개편, 규제 변화, 인구/사회적 거시 전망 등을 포함하세요.
-   - 금융(주식/환율)에만 치우치지 말고, 기술, 정책, 에너지, 글로벌 공급망 등 다양한 섹터를 다루세요.
-3. **신뢰성 및 선정 기준 (Credibility):**
-   - 글로벌 또는 국가적 영향력이 확실한 주제를 선택하세요.
-   - 특정 중소기업이나 지엽적인 소식(예: 특정 해운사의 사업 재편 등)은 그것이 산업 전체의 변곡점을 시사하지 않는 한 배제하세요.
-   - "장금상선"과 같은 지엽적인 사례보다는 글로벌 해운 물류망의 변화 같은 거시적 관점에서 접근하세요.
-4. **작성 형식:**
-   - **핵심 사실** + **구체적 데이터(금액, 수치, 날짜)** + **임원 관점의 시사점**.
-   - 각 인사이트는 100~200자 내외(2~3문장)로 작성하세요.
-   - "이는...", "투자자 입장에서는..." 등 상투적인 표현은 지양하고 담백하게 시사점을 제시하세요.
+**WRITING GUIDELINES:**
+1. **Insight Count:** Exactly ${CONFIG.REQUIRED_MAX_INSIGHTS} items.
+2. **Structure:** [Core News Fact] + [Specific Data/Context] + [Strategic Implication/Outlook].
+3. **Length:** 150-250 characters per insight (2-3 sentences).
+4. **Tone:** Professional, objective, and strategic business English.
 
-JSON 형식으로만 답변하세요:
+**GOOD EXAMPLES:**
+- "Donald Trump has threatened to impose significant tariffs on Canada, citing concerns over its trade ties with China. While Canada denies any plans for a free trade deal with Beijing, the threat escalates tensions ahead of the USMCA renegotiations. Businesses must reassess North American supply chain risks."
+- "The U.S. Government is investing $1.6 billion into a domestic rare earths group to break China's mineral monopoly. This strategic move aims to secure critical supply chains for the defense and tech sectors while reducing reliance on foreign adversaries. Investors should watch for shifting capital flows in the battery material industry."
+
+Return response ONLY in JSON format:
 {
   "insights": [
-    "인사이트 1 (거시/정책 위주)",
-    "인사이트 2 (산업/기술 위주)",
-    "인사이트 3 (국제 정세 위주)",
-    "인사이트 4 (한국 경제 위주)",
-    "인사이트 5 (전략적 시사점)",
-    "인사이트 6 (자유 주제 - 임팩트 중심)",
-    "인사이트 7 (예비/추가)"
+    "Fact-based insight 1 starting with a concrete entity",
+    "Fact-based insight 2 starting with a concrete entity",
+    "Fact-based insight 3 starting with a concrete entity",
+    "Fact-based insight 4 starting with a concrete entity",
+    "Fact-based insight 5 starting with a concrete entity",
+    "Fact-based insight 6 starting with a concrete entity",
+    "Fact-based insight 7 starting with a concrete entity"
   ]
 }`;
 
     Logger.log(`     → Calling GPT (temp=${params.temp})...`);
-    const response = v109_callGPT(prompt, 4096, params.temp);
+    const response = v110_callGPT(prompt, 4096, params.temp);
     
-    Logger.log(`     → Got response: ${response.length} chars`);
-    
-    const summary = v109_extractJSON(response);
+    const summary = v110_extractJSON(response);
     
     if (!summary || !summary.insights || !Array.isArray(summary.insights)) {
       Logger.log(`     ✗ Invalid response structure`);
       return { insights: [] };
     }
     
-    const validInsights = summary.insights.filter(i => {
-      if (!i || typeof i !== 'string') return false;
-      const len = i.length;
-      const isValid = len >= params.minLen && len <= params.maxLen;
-      if (!isValid) {
-        Logger.log(`     ⚠️ Invalid length (${len}): "${i.substring(0, 50)}..."`);
+    const validInsights = summary.insights.map(i => {
+      if (typeof i === 'object' && i !== null) {
+        let body = i.insight || i.text || i.content || i.fact || "";
+        if (i.implication) body += ` ${i.implication}`;
+        return body || JSON.stringify(i);
       }
-      return isValid;
-    });
+      return i;
+    }).filter(i => {
+      if (!i || typeof i !== 'string') return false;
+      const clean = i.replace(/^\d+[\.\)]\s*/, '').trim(); 
+      return clean.length >= params.minLen; // Relax max length check, GPT knows best
+    }).map(i => i.replace(/^\d+[\.\)]\s*/, '').trim());
     
     Logger.log(`     → Valid insights: ${validInsights.length}/${summary.insights.length}`);
-    
     return { insights: validInsights };
 
   } catch (error) {
@@ -287,7 +286,7 @@ JSON 형식으로만 답변하세요:
 
 // ==================== DEDUPLICATION & JSON EXTRACTION (Same as v10.8) ====================
 
-function v109_deduplicateInsights(insights) {
+function v110_deduplicateInsights(insights) {
   if (!insights || insights.length === 0) return [];
   
   Logger.log(`   🔍 Deduplicating ${insights.length} insights...`);
@@ -298,7 +297,7 @@ function v109_deduplicateInsights(insights) {
     let isDuplicate = false;
     
     for (const existing of unique) {
-      const similarity = v109_calculateInsightSimilarity(insight, existing);
+      const similarity = v110_calculateInsightSimilarity(insight, existing);
       
       if (similarity > CONFIG.INSIGHT_SIMILARITY_THRESHOLD) {
         Logger.log(`      ✗ Duplicate (${(similarity * 100).toFixed(0)}%): "${insight.substring(0, 50)}..."`);
@@ -316,7 +315,7 @@ function v109_deduplicateInsights(insights) {
   return unique;
 }
 
-function v109_calculateInsightSimilarity(str1, str2) {
+function v110_calculateInsightSimilarity(str1, str2) {
   const extractKeyEntities = (str) => {
     const entities = [];
     const majorEntities = [
@@ -361,7 +360,7 @@ function v109_calculateInsightSimilarity(str1, str2) {
   return shared / total;
 }
 
-function v109_extractJSON(response) {
+function v110_extractJSON(response) {
   Logger.log(`     → Extracting JSON from ${response.length} chars`);
   
   const patterns = [
@@ -399,10 +398,10 @@ function v109_extractJSON(response) {
   return null;
 }
 
-// ==================== ALL OTHER FUNCTIONS (Copy from v10.8, rename v108 → v109) ====================
+// ==================== ALL OTHER FUNCTIONS (Copy from v10.8, rename v108 → v110) ====================
 // I'll include the essential ones below for completeness:
 
-function v109_extractTopics(articles) {
+function v110_extractTopics(articles) {
   const topics = new Set();
   articles.forEach(a => {
     const title = a.title.toLowerCase();
@@ -421,7 +420,7 @@ function v109_extractTopics(articles) {
   return Array.from(topics);
 }
 
-function v109_validate24HourWindow(articles) {
+function v110_validate24HourWindow(articles) {
   const now = Date.now();
   const hoursBack24 = now - (24 * 60 * 60 * 1000);
   const stats = { total: articles.length, within24h: 0, older: 0, avgHoursAgo: 0 };
@@ -443,7 +442,7 @@ function v109_validate24HourWindow(articles) {
   if (stats.older > 0) Logger.log(`   ⚠️ Warning: ${stats.older} articles outside 24h window`);
 }
 
-function v109_logSourceDistribution(articles, sectionName) {
+function v110_logSourceDistribution(articles, sectionName) {
   const sourceCounts = {};
   articles.forEach(a => sourceCounts[a.source] = (sourceCounts[a.source] || 0) + 1);
   const uniqueSources = Object.keys(sourceCounts).length;
@@ -454,7 +453,7 @@ function v109_logSourceDistribution(articles, sectionName) {
   });
 }
 
-function v109_removeDuplicatesAggressive(articles) {
+function v110_removeDuplicatesAggressive(articles) {
   Logger.log(`   🔍 Aggressive deduplication: ${articles.length} articles`);
   const unique = [];
   const seen = new Set();
@@ -463,7 +462,7 @@ function v109_removeDuplicatesAggressive(articles) {
     if (seen.has(normalized)) continue;
     let isDuplicate = false;
     for (const existing of unique) {
-      const similarity = v109_calculateEnhancedSimilarity(article.title, existing.title);
+      const similarity = v110_calculateEnhancedSimilarity(article.title, existing.title);
       if (similarity > CONFIG.SIMILARITY_THRESHOLD) {
         if (article.score > existing.score) {
           const idx = unique.indexOf(existing);
@@ -482,7 +481,7 @@ function v109_removeDuplicatesAggressive(articles) {
   return unique;
 }
 
-function v109_calculateEnhancedSimilarity(str1, str2) {
+function v110_calculateEnhancedSimilarity(str1, str2) {
   const extract = (str) => {
     const normalized = str.toLowerCase();
     const words = normalized.split(/\s+/);
@@ -502,7 +501,7 @@ function v109_calculateEnhancedSimilarity(str1, str2) {
   return Math.min(jaccard + properNounBonus, 1.0);
 }
 
-function v109_ensureSourceDiversity(articles, requiredCount) {
+function v110_ensureSourceDiversity(articles, requiredCount) {
   if (articles.length <= requiredCount) return articles;
   const sourceCounts = {};
   const selected = [];
@@ -527,13 +526,13 @@ function v109_ensureSourceDiversity(articles, requiredCount) {
   return selected;
 }
 
-function v109_processWithGuarantee(articles, requiredCount, sectionType, intlTopics = []) {
+function v110_processWithGuarantee(articles, requiredCount, sectionType, intlTopics = []) {
   Logger.log(`\n🎯 Processing ${sectionType} - GUARANTEE ${requiredCount}`);
   Logger.log(`   Input: ${articles.length} articles`);
   if (articles.length === 0) return [];
-  articles.forEach(a => a.score = v109_headlineScore(a, sectionType, intlTopics));
+  articles.forEach(a => a.score = v110_headlineScore(a, sectionType, intlTopics));
   articles.sort((a, b) => b.score - a.score);
-  let filtered = v109_removeDuplicatesAggressive(articles);
+  let filtered = v110_removeDuplicatesAggressive(articles);
   filtered = filtered.filter(a => a.score > 0);
   Logger.log(`   → After filter: ${filtered.length} articles`);
   if (filtered.length < requiredCount) {
@@ -541,19 +540,19 @@ function v109_processWithGuarantee(articles, requiredCount, sectionType, intlTop
     return filtered.slice(0, requiredCount);
   }
   const candidates = filtered.slice(0, CONFIG.STAGE1_CANDIDATES);
-  let analyzed = v109_perplexityAnalysis(candidates, sectionType);
+  let analyzed = v110_perplexityAnalysis(candidates, sectionType);
   if (analyzed.length < CONFIG.STAGE2_PERPLEXITY) {
     Logger.log(`   ⚠️ Perplexity insufficient, using top ${CONFIG.STAGE2_PERPLEXITY}`);
     analyzed = candidates.slice(0, CONFIG.STAGE2_PERPLEXITY);
   }
-  let final = v109_gptFinalCuration(analyzed, sectionType, requiredCount);
+  let final = v110_gptFinalCuration(analyzed, sectionType, requiredCount);
   if (final.length < requiredCount) {
     Logger.log(`   ⚠️ GPT insufficient, backfilling`);
     const used = new Set(final.map(a => a.title));
     const backfill = analyzed.filter(a => !used.has(a.title)).slice(0, requiredCount - final.length);
     final = [...final, ...backfill];
   }
-  final = v109_ensureSourceDiversity(final, requiredCount);
+  final = v110_ensureSourceDiversity(final, requiredCount);
   final = final.slice(0, requiredCount);
   Logger.log(`   → Final: ${final.length} (GUARANTEED)`);
   return final;
@@ -652,7 +651,7 @@ function v110_headlineScore(article, sectionType, intlTopics = []) {
   return score;
 }
 
-function v109_callPerplexity(prompt, maxTokens = 1000) {
+function v110_callPerplexity(prompt, maxTokens = 1000) {
   const url = 'https://api.perplexity.ai/chat/completions';
   const payload = {
     model: CONFIG.PERPLEXITY_MODEL,
@@ -677,7 +676,7 @@ function v109_callPerplexity(prompt, maxTokens = 1000) {
   return json.choices[0].message.content.trim();
 }
 
-function v109_callGPT(prompt, maxTokens = 4096, temperature = 0.3) {
+function v110_callGPT(prompt, maxTokens = 4096, temperature = 0.3) {
   const url = 'https://api.openai.com/v1/chat/completions';
   const payload = {
     model: CONFIG.GPT_MODEL,
@@ -701,7 +700,7 @@ function v109_callGPT(prompt, maxTokens = 4096, temperature = 0.3) {
   return json.choices[0].message.content.trim();
 }
 
-function v109_perplexityAnalysis(articles, sectionType) {
+function v110_perplexityAnalysis(articles, sectionType) {
   if (!CONFIG.PERPLEXITY_API_KEY || articles.length === 0) {
     Logger.log('   ⚠️ Skipping Perplexity');
     return articles.slice(0, CONFIG.STAGE2_PERPLEXITY);
@@ -712,7 +711,7 @@ function v109_perplexityAnalysis(articles, sectionType) {
       return `${i}. [${a.source}] ${a.title}${desc}`;
     }).join('\n\n');
     const prompt = `Analyze and select ${CONFIG.STAGE2_PERPLEXITY} most important HEADLINES. Avoid duplicates.\n\nHeadlines:\n${articleList}\n\nReturn JSON:\n{"selected": [{"index": 3, "reasoning": "...", "key_facts": "..."}]}`;
-    const response = v109_callPerplexity(prompt, 2000);
+    const response = v110_callPerplexity(prompt, 2000);
     let cleaned = response.replace(/```json/gi, '').replace(/```/g, '').trim();
     const match = cleaned.match(/\{[\s\S]*\}/);
     if (match) cleaned = match[0];
@@ -732,7 +731,7 @@ function v109_perplexityAnalysis(articles, sectionType) {
   }
 }
 
-function v109_gptFinalCuration(articles, sectionType, requiredCount) {
+function v110_gptFinalCuration(articles, sectionType, requiredCount) {
   if (!CONFIG.OPENAI_API_KEY || articles.length === 0) return articles.slice(0, requiredCount);
   try {
     const articleList = articles.map((a, i) => {
@@ -740,7 +739,7 @@ function v109_gptFinalCuration(articles, sectionType, requiredCount) {
       return `${i}. [${a.source}] ${a.title}${reasoning}`;
     }).join('\n\n');
     const prompt = `Select ${requiredCount} most critical HEADLINES. Avoid duplicates.\n\nArticles:\n${articleList}\n\nReturn JSON array: [3, 7, 1, ...]`;
-    const response = v109_callGPT(prompt, 300);
+    const response = v110_callGPT(prompt, 300);
     let cleaned = response.replace(/```json/gi, '').replace(/```/g, '');
     const match = cleaned.match(/\[[\d\s,]+\]/);
     if (!match) return articles.slice(0, requiredCount);
@@ -761,12 +760,12 @@ function v109_gptFinalCuration(articles, sectionType, requiredCount) {
 
 // ==================== RSS & MARKET (Same as v10.8, rename) ====================
 
-function v109_fetchAllNews() {
+function v110_fetchAllNews() {
   const allArticles = [];
   const cutoffTime = new Date(Date.now() - CONFIG.NEWS_HOURS_BACK * 60 * 60 * 1000);
   NEWS_SOURCEX.forEach(source => {
     try {
-      let articles = v109_fetchRSS(source);
+      let articles = v110_fetchRSS(source);
       articles = articles.filter(a => new Date(a.publishedAt) > cutoffTime);
       articles = articles.slice(0, CONFIG.MAX_ARTICLES_PER_SOURCE);
       articles.forEach(a => {
@@ -782,7 +781,7 @@ function v109_fetchAllNews() {
   return allArticles;
 }
 
-function v109_fetchRSS(source) {
+function v110_fetchRSS(source) {
   try {
     const response = UrlFetchApp.fetch(source.url, {
       muteHttpExceptions: true,
@@ -794,7 +793,7 @@ function v109_fetchRSS(source) {
     const root = document.getRootElement();
     let items;
     if (root.getChild('channel')) {
-      items = root.getChild('channel').getChildren('item');
+       items = root.getChild('channel').getChildren('item');
     } else {
       const ns = root.getNamespace();
       items = root.getChildren('entry', ns);
@@ -802,19 +801,19 @@ function v109_fetchRSS(source) {
     const articles = [];
     items.forEach(item => {
       try {
-        let link = v109_getText(item, 'link');
+        let link = v110_getText(item, 'link');
         if (!link) {
           const linkEl = item.getChild('link');
           if (linkEl) link = linkEl.getAttribute('href')?.getValue() || linkEl.getText();
         }
-        const title = v109_cleanTitle(v109_getText(item, 'title'));
+        const title = v110_cleanTitle(v110_getText(item, 'title'));
         if (!title || title.length < 20) return;
         articles.push({
-          source: v109_extractSource(source.name, link),
-          title: v109_deepClean(title),
-          link: v109_deepClean(link),
-          description: v109_cleanDesc(v109_getText(item, 'description') || v109_getText(item, 'summary')),
-          publishedAt: v109_parseDate(v109_getText(item, 'pubDate') || v109_getText(item, 'published')),
+          source: v110_extractSource(source.name, link),
+          title: v110_deepClean(title),
+          link: v110_deepClean(link),
+          description: v110_cleanDesc(v110_getText(item, 'description') || v110_getText(item, 'summary')),
+          publishedAt: v110_parseDate(v110_getText(item, 'pubDate') || v110_getText(item, 'published')),
           score: 0
         });
       } catch (e) {}
@@ -825,12 +824,12 @@ function v109_fetchRSS(source) {
   }
 }
 
-function v109_getText(element, childName) {
+function v110_getText(element, childName) {
   const child = element.getChild(childName);
   return child ? child.getText() : null;
 }
 
-function v109_extractSource(feedName, link) {
+function v110_extractSource(feedName, link) {
   if (feedName.includes('Google News') || feedName.includes('Breaking')) {
     if (link) {
       if (link.includes('wsj.com')) return 'WSJ';
@@ -854,35 +853,35 @@ function v109_extractSource(feedName, link) {
   return feedName.replace(/Google News - /g, '').replace(/ - .*$/g, '').trim();
 }
 
-function v109_cleanTitle(title) {
+function v110_cleanTitle(title) {
   if (!title) return '';
   return title.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').replace(/ - [\w\s\.\-&]+(\.com|\.net)$/gi, '').replace(/ \| .*$/, '').trim();
 }
 
-function v109_cleanDesc(desc) {
+function v110_cleanDesc(desc) {
   if (!desc) return '';
   return desc.replace(/<[^>]*>/g, '').trim();
 }
 
-function v109_parseDate(dateStr) {
+function v110_parseDate(dateStr) {
   return dateStr ? new Date(dateStr) : new Date();
 }
 
-function v109_deepClean(text) {
+function v110_deepClean(text) {
   if (!text) return '';
   return text.replace(/[\r\n\u2028\u2029]+/g, ' ').replace(/%0[A-D]/gi, ' ').replace(/<br\s*\/?>/gi, ' ').replace(/\s+/g, ' ').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').trim();
 }
 
-function v109_fetchMarketData() {
+function v110_fetchMarketData() {
   return {
-    usStocks: v109_fetchStockData(CONFIG.MARKET_SYMBOLS.US_STOCKS),
-    koreaStocks: v109_fetchStockData(CONFIG.MARKET_SYMBOLS.KOREA_STOCKS),
-    commodities: v109_fetchStockData(CONFIG.MARKET_SYMBOLS.COMMODITIES),
-    fxRates: v109_fetchFXRates(CONFIG.MARKET_SYMBOLS.FX_RATES)
+    usStocks: v110_fetchStockData(CONFIG.MARKET_SYMBOLS.US_STOCKS),
+    koreaStocks: v110_fetchStockData(CONFIG.MARKET_SYMBOLS.KOREA_STOCKS),
+    commodities: v110_fetchStockData(CONFIG.MARKET_SYMBOLS.COMMODITIES),
+    fxRates: v110_fetchFXRates(CONFIG.MARKET_SYMBOLS.FX_RATES)
   };
 }
 
-function v109_fetchFXRates(symbols) {
+function v110_fetchFXRates(symbols) {
   const data = [];
   const names = {'KRW=X': 'USD/KRW', 'EURKRW=X': 'EUR/KRW', 'JPYKRW=X': 'JPY/KRW'};
   symbols.forEach(symbol => {
@@ -905,18 +904,18 @@ function v109_fetchFXRates(symbols) {
   return data;
 }
 
-function v109_fetchStockData(symbols) {
+function v110_fetchStockData(symbols) {
   const data = [];
   symbols.forEach(symbol => {
     try {
-      const result = v109_fetchYahoo(symbol);
+      const result = v110_fetchYahoo(symbol);
       if (result) data.push(result);
     } catch (e) {}
   });
   return data;
 }
 
-function v109_fetchYahoo(symbol) {
+function v110_fetchYahoo(symbol) {
   try {
     const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=1mo&interval=1d`;
     const response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
@@ -947,7 +946,7 @@ function v109_fetchYahoo(symbol) {
   }
 }
 
-function v109_formatMarketContextForAI(marketData) {
+function v110_formatMarketContextForAI(marketData) {
   let context = '';
   if (marketData.usStocks && marketData.usStocks.length > 0) {
     context += 'US: ';
@@ -984,17 +983,27 @@ function v109_formatMarketContextForAI(marketData) {
 
 // ==================== SLACK ====================
 
-function v109_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketData) {
+function v110_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketData) {
   const blocks = [];
-  const today = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-  blocks.push({type: 'header', text: {type: 'plain_text', text: `📰 Global - Korea Business Brief (${today})`, emoji: true}});
+  const dateObj = new Date();
+  const dateStr = dateObj.toLocaleDateString('en-US', { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric' 
+  });
+  const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const dd = String(dateObj.getDate()).padStart(2, '0');
+  
+  blocks.push({type: 'header', text: {type: 'plain_text', text: `Global Business Brief (${mm}/${dd})`, emoji: true}});
+  blocks.push({type: 'section', text: {type: 'mrkdwn', text: `*Date:* ${dateStr}`}});
   blocks.push({type: 'divider'});
   blocks.push({type: 'header', text: {type: 'plain_text', text: '📊 Market Snapshot', emoji: true}});
   blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(v110_formatMarketData(marketData), 2900)}});
   blocks.push({type: 'divider'});
   if (aiSummary.insights && aiSummary.insights.length > 0) {
-    blocks.push({type: 'header', text: {type: 'plain_text', text: '🎯 Executive Insights (Strategic View)', emoji: true}});
-    const insightsText = aiSummary.insights.map((i, idx) => `*${idx + 1}.* ${v110_truncate(i, 450)}`).join('\n\n');
+    blocks.push({type: 'header', text: {type: 'plain_text', text: '🎯 Executive Insights', emoji: true}});
+    const insightsText = aiSummary.insights.map((i, idx) => `*${idx + 1}.* ${v110_truncate(i, 500)}`).join('\n\n');
     blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(insightsText, 2900)}});
     blocks.push({type: 'divider'});
   }
