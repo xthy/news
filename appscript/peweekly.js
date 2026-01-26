@@ -1,9 +1,7 @@
 /**
- * PE Weekly Roundup v4.0
- * - MAJOR: GUARANTEED news count per region
- * - ENHANCED: PE-specific scoring (Buyouts, Fundraising focus)
- * - FILTER: Stricter penalty for general scams and non-PE noise
- * - ROBUST: Backfill logic if GPT dedup fails or over-cuts
+ * PE Weekly Roundup v4.2
+ * - FIX: Slack link formatting (Escaping special characters in titles)
+ * - ENHANCED: Title cleaning & URL stabilization
  */
 
 // ==================== Config ====================
@@ -137,8 +135,9 @@ var BAD_TITLE_PATTERNS = [
   /news digest/i,
   /dating rumor/i,
   /relationship with/i,
-  /nominations|awards|call for/i,
-  /podcast|webinar|register now/i,
+  /nominations|awards|call for|entry|entries/i,
+  /podcast|webinar|register now|summit|conference/i,
+  /side letter|women in pe|awards/i,
   /^\s*\d{1,2}\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i
 ];
 
@@ -200,47 +199,40 @@ function processRegionWithGuarantee(articles, targetCount, regionName) {
   }
 
   // A. Scoring
-  articles.forEach(function (a) {
-    a.score = scoreArticle(a, regionName);
-  });
-
-  // Sort by score
+  articles.forEach(function (a) { a.score = scoreArticle(a, regionName); });
   articles.sort(function (a, b) { return b.score - a.score; });
 
-  // B. Pre-GPT Aggressive Dedup (by signature)
-  var uniquePreGpt = enhancedDedup(articles, regionName);
-  Logger.log('   → Deduplicated to ' + uniquePreGpt.length + ' candidates');
-
-  // Filter out low scores (less than -100 are definitely bad)
-  var filtered = uniquePreGpt.filter(function (a) { return a.score > -150; });
+  // B. Initial Deduplication
+  var initialUnique = enhancedDedup(articles, regionName);
+  var filtered = initialUnique.filter(function (a) { return a.score > -150; });
 
   if (filtered.length === 0) {
-    Logger.log('   ⚠️ All articles filtered out (low score)');
+    Logger.log('   ⚠️ All articles filtered out for ' + regionName);
     return [];
   }
 
-  // C. GPT Select
-  // Prepare candidates for GPT (top targetCount * 3)
+  // C. GPT Selection (Top 3x target count as candidates)
   var gptCandidates = filtered.slice(0, targetCount * 3);
   var gptResult = gptAggressiveDedup(gptCandidates, regionName, targetCount);
 
-  // D. Robust Backfill
-  // If GPT returned fewer than target, or we need more, fill from the remaining candidates
-  if (gptResult.length < targetCount && filtered.length > gptResult.length) {
-    Logger.log('   ⚠️ GPT returned ' + gptResult.length + ', backfilling to ' + targetCount);
-    var seenLinks = new Set(gptResult.map(function (a) { return a.link; }));
+  // D. ENFORCE DIVERSITY FIRST
+  var diverse = enforceDiversity(gptResult, regionName);
 
-    for (var i = 0; i < filtered.length && gptResult.length < targetCount; i++) {
+  // E. STRICT BACKFILL to reach targetCount
+  // We use our high-quality 'filtered' list as the source for backfilling
+  if (diverse.length < targetCount && filtered.length > diverse.length) {
+    Logger.log('   ⚠️ Current count ' + diverse.length + ' below target ' + targetCount + ', backfilling...');
+    var seenLinks = new Set(diverse.map(function (a) { return a.link; }));
+
+    for (var i = 0; i < filtered.length && diverse.length < targetCount; i++) {
       if (!seenLinks.has(filtered[i].link)) {
-        gptResult.push(filtered[i]);
+        diverse.push(filtered[i]);
         seenLinks.add(filtered[i].link);
       }
     }
   }
 
-  // E. Final diversity check
-  var final = enforceDiversity(gptResult, regionName).slice(0, targetCount);
-
+  var final = diverse.slice(0, targetCount);
   Logger.log('   ✓ Final count for ' + regionName + ': ' + final.length);
   return final;
 }
@@ -327,10 +319,13 @@ function fetchRSS(url) {
         if (!isValidTitle(title)) return;
         if (!link) return;
 
+        // Clean link to prevent whitespace issues
+        link = link.trim().replace(/[\r\n\t]/g, '');
+
         articles.push({
           title: title,
           link: link,
-          description: desc.replace(/<[^>]*>/g, '').substring(0, 200),
+          description: desc.replace(/<[^>]*>/g, '').substring(0, 300),
           publishedAt: pubDate ? new Date(pubDate) : new Date(),
           score: 0
         });
@@ -955,7 +950,7 @@ function formatSlackMessage(highlights, korea, asiaMena, us, europe) {
 
   blocks.push({
     type: 'context',
-    elements: [{ type: 'mrkdwn', text: '🤖 Weekly PE News Curation Agent | ' + total + ' articles | v3.8' }]
+    elements: [{ type: 'mrkdwn', text: '🤖 Weekly PE News Curation Agent | ' + total + ' articles | v4.2' }]
   });
 
   return { blocks: blocks };
@@ -969,12 +964,28 @@ function addSection(blocks, title, articles) {
 
   if (articles.length > 0) {
     var text = articles.map(function (a, i) {
-      return (i + 1) + '. <' + a.link + '|' + a.title + '>';
+      var safeTitle = sanitizeForSlack(a.title);
+      return (i + 1) + '. <' + a.link + '|' + safeTitle + '>';
     }).join('\n');
     addTextBlocks(blocks, text);
   } else {
     blocks.push({ type: 'section', text: { type: 'mrkdwn', text: '_No articles this week_' } });
   }
+}
+
+/**
+ * Escapes special characters for Slack mrkdwn to prevent formatting breakage.
+ * <, >, and & are the primary targets in Slack's <URL|TEXT> syntax.
+ */
+function sanitizeForSlack(text) {
+  if (!text) return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\|/g, ' ') // Pipes also break the <URL|TEXT> syntax
+    .replace(/[\r\n]+/g, ' ')
+    .trim();
 }
 
 function addTextBlocks(blocks, text) {
