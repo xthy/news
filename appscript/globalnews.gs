@@ -43,7 +43,7 @@ const CONFIG = {
 const NEWS_SOURCEX = [
   {name: 'WSJ - World', url: 'https://feeds.content.dowjones.io/public/rss/RSSWorldNews', section: 'intl', tier: 1},
   {name: 'WSJ - Markets', url: 'https://feeds.content.dowjones.io/public/rss/RSSMarketsMain', section: 'intl', tier: 1},
-  {name: 'WSJ - Business', url: 'https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml', section: 'intl', tier: 1},
+  {name: 'WSJ - Business', url: 'https://feeds.content.dowjones.io/public/rss/RSSBusiness', section: 'intl', tier: 1},
   {name: 'FT - World', url: 'https://www.ft.com/world?format=rss', section: 'intl', tier: 1},
   {name: 'FT - Companies', url: 'https://www.ft.com/companies?format=rss', section: 'intl', tier: 1},
   {name: 'NYT - Business', url: 'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml', section: 'intl', tier: 1},
@@ -60,7 +60,7 @@ const NEWS_SOURCEX = [
   {name: 'WaPo Business', url: 'https://feeds.washingtonpost.com/rss/business', section: 'intl', tier: 2},
   
   {name: '조선일보 경제', url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/economy/?outputType=xml', section: 'korea', tier: 1},
-  {name: '조선일보 산업', url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/industry/?outputType=xml', section: 'korea', tier: 1},
+  {name: '조선일보 산업', url: 'https://news.google.com/rss/search?q=site:chosun.com+산업+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
   {name: '중앙일보 경제', url: 'https://news.google.com/rss/search?q=site:joongang.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
   {name: '동아일보 경제', url: 'https://rss.donga.com/economy.xml', section: 'korea', tier: 1},
   {name: '한국경제', url: 'https://news.google.com/rss/search?q=site:hankyung.com+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
@@ -71,6 +71,9 @@ const NEWS_SOURCEX = [
   {name: '전자신문', url: 'https://news.google.com/rss/search?q=site:etnews.com+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
   {name: '연합뉴스 경제', url: 'https://news.google.com/rss/search?q=site:yna.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
   {name: '이데일리', url: 'https://news.google.com/rss/search?q=site:edaily.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
+  {name: '경향신문 경제', url: 'https://news.google.com/rss/search?q=site:khan.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
+  {name: '한겨레 경제', url: 'https://news.google.com/rss/search?q=site:hani.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
+  {name: '한국일보 경제', url: 'https://news.google.com/rss/search?q=site:hankookilbo.com+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
   {name: 'Korea Breaking', url: 'https://news.google.com/rss/search?q=korea+속보+OR+긴급+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
   {name: 'Korea Times', url: 'https://news.google.com/rss/search?q=korea+business+OR+samsung+OR+hyundai+when:24h&hl=en-US&gl=US&ceid=US:en', section: 'korea', tier: 2}
 ];
@@ -213,12 +216,13 @@ function v110_generateFactBasedInsights(intlArticles, koreaArticles, marketData,
     const marketContext = v110_formatMarketContextForAI(marketData);
 
     const prompt = `You are a Senior Strategic Analyst writing a high-level briefing for global business executives.
-Based on the provided news, deliver exactly ${CONFIG.REQUIRED_MAX_INSIGHTS} professional insights in English.
+Based on the provided news, deliver exactly ${CONFIG.REQUIRED_MAX_INSIGHTS} distinct professional insights in English.
 
 **STRICT RULES:**
-- DO NOT start sentences with vague references like "This event," "This trend," or "This development."
-- ALWAYS start each insight with a concrete entity (Person, Company, Country, or Specific Event).
-- Focus on FACTUAL reporting first, then provide the strategic implication.
+- DO NOT start all sentences with the same entity (e.g., avoid "Trump..." in every point).
+- DO NOT use vague references like "This event," "This trend," or "This development."
+- EACH insight must cover a DIFFERENT topic (e.g., if one covers trade, another should cover energy, tech, or monetary policy).
+- Focus on the STRATEGIC IMPACT: "Why does this matter to a CEO or Investor?"
 
 === MARKET DATA ===
 ${marketContext}
@@ -230,25 +234,24 @@ ${intlContext || 'None'}
 ${koreaContext || 'None'}
 
 **WRITING GUIDELINES:**
-1. **Insight Count:** Exactly ${CONFIG.REQUIRED_MAX_INSIGHTS} items.
-2. **Structure:** [Core News Fact] + [Specific Data/Context] + [Strategic Implication/Outlook].
-3. **Length:** 150-250 characters per insight (2-3 sentences).
-4. **Tone:** Professional, objective, and strategic business English.
+1. **Diversity:** Ensure coverage across different sectors (Tech, Geopolitics, Finance, Energy).
+2. **Structure:** [The Fact] + [Critical Analysis] + [Future Outlook/Risk].
+3. **Length:** Max 300 characters. Be concise but impactful.
+4. **Tone:** Sharp, professional, and forward-looking.
 
-**GOOD EXAMPLES:**
-- "Donald Trump has threatened to impose significant tariffs on Canada, citing concerns over its trade ties with China. While Canada denies any plans for a free trade deal with Beijing, the threat escalates tensions ahead of the USMCA renegotiations. Businesses must reassess North American supply chain risks."
-- "The U.S. Government is investing $1.6 billion into a domestic rare earths group to break China's mineral monopoly. This strategic move aims to secure critical supply chains for the defense and tech sectors while reducing reliance on foreign adversaries. Investors should watch for shifting capital flows in the battery material industry."
+**GOOD EXAMPLE:**
+"The record $1.1T US trade deficit, despite aggressive tariff rhetoric, underscores the deep structural reliance on Asian manufacturing. Executives should expect continued currency volatility and supply chain friction as re-shoring efforts face labor bottlenecks. Diversification into Southeast Asian hubs remains a critical hedge."
 
 Return response ONLY in JSON format:
 {
   "insights": [
-    "Fact-based insight 1 starting with a concrete entity",
-    "Fact-based insight 2 starting with a concrete entity",
-    "Fact-based insight 3 starting with a concrete entity",
-    "Fact-based insight 4 starting with a concrete entity",
-    "Fact-based insight 5 starting with a concrete entity",
-    "Fact-based insight 6 starting with a concrete entity",
-    "Fact-based insight 7 starting with a concrete entity"
+    "Insight 1 (e.g., Geopolitics/Trade)",
+    "Insight 2 (e.g., Tech/AI Regulation)",
+    "Insight 3 (e.g., Energy/Climate)",
+    "Insight 4 (e.g., Korea Market/Export)",
+    "Insight 5 (e.g., Monetary Policy/Inflation)",
+    "Insight 6 (e.g., Global Finance)",
+    "Insight 7 (e.g., Supply Chain)"
   ]
 }`;
 
@@ -319,45 +322,49 @@ function v110_calculateInsightSimilarity(str1, str2) {
   const extractKeyEntities = (str) => {
     const entities = [];
     const majorEntities = [
-      '대만', 'taiwan', 'tsmc',
-      '반도체', 'semiconductor', 'chip',
-      '삼성', 'samsung', 'sk하이닉스', 'sk',
-      '미국', 'usa', 'america',
-      '무관세', 'tariff', '관세',
-      '투자', 'investment',
-      '코스피', 'kospi',
-      'fed', '연준', 'powell', '파월',
-      '트럼프', 'trump',
-      '러시아', 'russia', '우크라이나', 'ukraine',
-      '중국', 'china',
-      'etf', '규제', 'regulation',
-      '현대차', 'hyundai',
-      '환율', 'exchange rate'
+      '대만', 'taiwan', 'tsmc', '반도체', 'semiconductor', 'chip',
+      '삼성', 'samsung', 'sk하이닉스', 'sk', '미국', 'usa', 'america',
+      '무관세', 'tariff', '관세', '투자', 'investment', '코스피', 'kospi',
+      'fed', '연준', 'powell', '파월', '트럼프', 'trump', '러시아', 'russia',
+      '우크라이나', 'ukraine', '중국', 'china', 'etf', '규제', 'regulation',
+      '현대차', 'hyundai', '환율', 'exchange rate', '북한', 'north korea',
+      '이란', 'iran', '이스라엘', 'israel', 'energy', '에너지', 'oil', '유가'
     ];
     
     const lower = str.toLowerCase();
     majorEntities.forEach(entity => {
-      if (lower.includes(entity)) {
-        entities.push(entity);
-      }
+      if (lower.includes(entity)) entities.push(entity);
     });
-    
     return entities;
   };
   
   const entities1 = extractKeyEntities(str1);
   const entities2 = extractKeyEntities(str2);
   
-  if (entities1.length === 0 || entities2.length === 0) return 0;
-  
-  const shared = entities1.filter(e => entities2.includes(e)).length;
-  const total = new Set([...entities1, ...entities2]).size;
-  
-  if (shared >= 2) {
-    return 0.8;
+  // Calculate entity Jaccard similarity
+  let entitySimilarity = 0;
+  if (entities1.length > 0 && entities2.length > 0) {
+    const shared = entities1.filter(e => entities2.includes(e)).length;
+    const total = new Set([...entities1, ...entities2]).size;
+    entitySimilarity = shared / total;
   }
   
-  return shared / total;
+  // Calculate text Jaccard similarity (on words > 3 chars)
+  const extractWords = (str) => {
+    return new Set(str.toLowerCase().split(/\W+/).filter(w => w.length > 3));
+  };
+  const words1 = extractWords(str1);
+  const words2 = extractWords(str2);
+  
+  let textSimilarity = 0;
+  if (words1.size > 0 && words2.size > 0) {
+    const sharedWords = [...words1].filter(w => words2.has(w)).length;
+    const totalWords = new Set([...words1, ...words2]).size;
+    textSimilarity = sharedWords / totalWords;
+  }
+  
+  // Weighted average: 60% entities, 40% words
+  return (entitySimilarity * 0.6) + (textSimilarity * 0.4);
 }
 
 function v110_extractJSON(response) {
@@ -503,24 +510,44 @@ function v110_calculateEnhancedSimilarity(str1, str2) {
 
 function v110_ensureSourceDiversity(articles, requiredCount) {
   if (articles.length <= requiredCount) return articles;
+  
   const sourceCounts = {};
   const selected = [];
   const remaining = [...articles];
+  
+  // Rule: Try to pick at least one from each source first, then allow more
   while (selected.length < requiredCount && remaining.length > 0) {
-    let bestIdx = 0;
-    let minCount = Infinity;
+    let bestIdx = -1;
+    let minSourceCount = Infinity;
+    let maxArticleScore = -Infinity;
+
     for (let i = 0; i < remaining.length; i++) {
-      const source = remaining[i].source;
-      const count = sourceCounts[source] || 0;
-      if (count < minCount) {
-        minCount = count;
-        bestIdx = i;
-      }
+        const source = remaining[i].source;
+        const count = sourceCounts[source] || 0;
+        
+        // Priority 1: Lower occurrence of source
+        // Priority 2: Higher article score/rank
+        if (count < minSourceCount) {
+            minSourceCount = count;
+            maxArticleScore = remaining[i].score || 0;
+            bestIdx = i;
+        } else if (count === minSourceCount) {
+            if ((remaining[i].score || 0) > maxArticleScore) {
+                maxArticleScore = remaining[i].score || 0;
+                bestIdx = i;
+            }
+        }
     }
-    const article = remaining.splice(bestIdx, 1)[0];
-    selected.push(article);
-    sourceCounts[article.source] = (sourceCounts[article.source] || 0) + 1;
+
+    if (bestIdx !== -1) {
+        const article = remaining.splice(bestIdx, 1)[0];
+        selected.push(article);
+        sourceCounts[article.source] = (sourceCounts[article.source] || 0) + 1;
+    } else {
+        break;
+    }
   }
+
   const uniqueSources = Object.keys(sourceCounts).length;
   Logger.log(`   → Source diversity: ${uniqueSources} unique sources in ${selected.length} articles`);
   return selected;
@@ -559,16 +586,16 @@ function v110_processWithGuarantee(articles, requiredCount, sectionType, intlTop
 }
 
 function v110_headlineScore(article, sectionType, intlTopics = []) {
-  let score = article.sourceTier === 1 ? 40 : 20;
+  let score = article.sourceTier === 1 ? 40 : 25; // Slight boost to Tier 2 for diversity
   const text = (article.title + ' ' + article.description).toLowerCase();
   const title = article.title.toLowerCase();
   const source = article.source.toLowerCase();
   
-  if (source.includes('wsj') || source.includes('ft')) score += 20;
+  if (source.includes('wsj') || source.includes('ft')) score += 18;
   else if (source.includes('bloomberg') || source.includes('economist')) score += 15;
   else if (source.includes('nyt') || source.includes('reuters')) score += 12;
 
-  // -- 1. 가중치 높은 매크로/전략 키워드 (Variety 보완) --
+  // -- 1. Macro/Strategic keywords --
   const macroKeywords = [
     '지정학', 'geopolitics', '공급망', 'supply chain', '규제', 'regulation', 
     '인구', 'demographics', '에너지', 'energy', '전략', 'strategy', 
@@ -580,67 +607,49 @@ function v110_headlineScore(article, sectionType, intlTopics = []) {
     if (text.includes(kw)) score += 15;
   });
 
-  // -- 2. 제외 키워드 (Strict Filter) --
+  // -- 2. Exclude non-business content --
   const columnKeywords = ['칼럼', 'column', '[칼럼]', '오피니언', 'opinion', '[오피니언]', '기고', 'editorial', 'commentary', '데스크', '[데스크]', 'op-ed', '사설', '논평', '기자수첩', '취재수첩'];
-  for (const kw of columnKeywords) {
-    if (text.includes(kw) || title.includes(kw)) return -1000;
-  }
+  for (const kw of columnKeywords) if (text.includes(kw) || title.includes(kw)) return -1000;
   
   const excludeKeywords = ['sport', 'football', 'soccer', 'baseball', 'basketball', 'k-pop', 'kpop', 'celebrity', 'entertainment', 'hollywood', 'movie', 'actor', 'actress', 'netflix', 'grammy', 'oscar', '연예', '드라마', '영화', '가수', '배우'];
-  for (const kw of excludeKeywords) {
-    if (text.includes(kw)) return -1000;
-  }
+  for (const kw of excludeKeywords) if (text.includes(kw)) return -1000;
 
-  // -- 3. 지엽적/반복적 금융 데이터 필터링 (Credibility & Variety 보완) --
-  const trivialMarketKeywords = ['환율 종가', '환율 마감', '달러 환율', '원 오른', '원 내린', '원 상승', '원 하락', '시황', '장중', '상승 출발', '하락 출발', '금값 최고', '은값 최고'];
+  // -- 3. Filter trivial market/data entries --
+  const trivialMarketKeywords = ['환율 종가', '환율 마감', '달러 환율', '원 오른', '원 내린', '원 상승', '원 하락', '시황', '장중', '상승 출발', '하락 출발', '금값 최고', '은값 최고', '금값 돌파'];
   for (const kw of trivialMarketKeywords) {
-    if (title.includes(kw)) score -= 25;
+    if (title.includes(kw)) {
+      if (!title.includes('사상 최고') && !title.includes('급등') && !title.includes('급락')) score -= 25;
+    }
   }
 
-  const trivialKeywords = [
-    '통장', '적금', '예금', '넣으면', '받는', '월 50만', '월50만', '목돈', '특판', 
-    '중과세', '다주택자', '양도세', '취득세', '인구감소지역', '비규제지역', 
-    '응찰', '입찰', '계약', '공사비', '특별시', '광역시', '인센티브', 
-    '공기관 이전', '지원금', '보조금 가이드', '방법', '어떻게', '팁'
-  ];
+  // Trivial consumer/personal finance
+  const trivialKeywords = ['통장', '적금', '예금', '넣으면', '받는', '월 50만', '월50만', '목돈', '특판', '중과세', '다주택자', '양도세', '취득세', '입찰', '계약', '공사비'];
   for (const kw of trivialKeywords) {
     if (title.includes(kw)) {
       const majorKeywords = ['정부', '금융위', '기재부', '금리', '정책', '법', '규제', '대통령', '장관', 'fed', '중앙은행'];
-      let hasMajor = false;
-      for (const major of majorKeywords) {
-        if (title.includes(major)) {
-          hasMajor = true;
-          break;
-        }
-      }
-      if (!hasMajor) return -1000;
+      let hasMajorCount = 0;
+      majorKeywords.forEach(m => { if (title.includes(m)) hasMajorCount++; });
+      if (hasMajorCount === 0) return -1000;
+      score -= 10;
     }
   }
 
-  // -- 4. 섹션별 특화 및 신설 키워드 --
+  // -- 4. Section specific Scoring --
   if (sectionType === 'intl') {
-    const majorKeywords = ['breaking', 'urgent', 'crisis', 'war', 'strike', 'fed', 'ecb', 'boj', 'rate', 'inflation', 'recession', 'tariff', 'sanctions', 'trade war', 'china', 'russia', 'ukraine', 'taiwan', 'iran', 'trump', 'biden', 'powell', 'apple', 'microsoft', 'nvidia', 'tesla', 'openai'];
-    majorKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 12;
-    });
+    const majorKeywords = ['breaking', 'urgent', 'crisis', 'war', 'strike', 'fed', 'ecb', 'boj', 'rate', 'inflation', 'recession', 'tariff', 'sanctions', 'trade war', 'china', 'russia', 'ukraine', 'taiwan', 'iran', 'trump', 'biden', 'powell', 'apple', 'microsoft', 'nvidia', 'tesla', 'openai', 'ceasefire'];
+    majorKeywords.forEach(kw => { if (text.includes(kw)) score += 12; });
   }
 
   if (sectionType === 'korea') {
-    // 중복 기사 방지 (국제 주제가 한국 섹션에 너무 많지 않게)
-    for (const topic of intlTopics) {
-      if (title.includes(topic)) score -= 30;
-    }
+    // International topic overlap penalty
+    for (const topic of intlTopics) if (title.includes(topic)) score -= 25;
 
-    // 다양성 보완 (자동차, 원전, 배터리 등)
-    const diversifyKeywords = ['자동차', '현대차', '기아', '원전', '에너지', '배터리', 'k-배터리', '방산', '방위산업', '바이오', '제약', '플랫폼', '네이버', '카카오'];
-    diversifyKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 10;
-    });
+    // Diversity themes (Industrial sectors)
+    const diversifyKeywords = ['자동차', '현대차', '기아', '원전', '에너지', '배터리', 'k-배터리', '방산', '방위산업', '바이오', '제약', '플랫폼', '네이버', '카카오', '반도체', '하이닉스', 'sk'];
+    diversifyKeywords.forEach(kw => { if (text.includes(kw)) score += 10; });
 
-    const majorKeywords = ['kospi', 'kosdaq', '4800', '5000', '사상', '최고', '최저', '금리', '기준금리', '정책', '규제', '법안', '정부', '금융위', '공정위', '기재부', '삼성', 'samsung', 'sk하이닉스', '현대', 'hyundai', '반도체', '수출', '무역', '환율', 'gdp', '성장률', '인수', '합병', 'm&a', '구조조정', '상장'];
-    majorKeywords.forEach(kw => {
-      if (text.includes(kw)) score += 10;
-    });
+    const majorKeywords = ['kospi', 'kosdaq', '사상 최고', '기준금리', '정책', '규제', '법안', '금융위', '공정위', '기재부', '삼성', 'samsung', '수출', '무역', 'gdp', '성장률', '인수합병', 'm&a', '구조조정', '상장'];
+    majorKeywords.forEach(kw => { if (text.includes(kw)) score += 10; });
   }
 
   const hoursAgo = (Date.now() - new Date(article.publishedAt)) / (1000 * 60 * 60);
@@ -694,10 +703,27 @@ function v110_callGPT(prompt, maxTokens = 4096, temperature = 0.3) {
     payload: JSON.stringify(payload),
     muteHttpExceptions: true
   };
-  const response = UrlFetchApp.fetch(url, options);
-  const json = JSON.parse(response.getContentText());
-  if (json.error) throw new Error(json.error.message);
-  return json.choices[0].message.content.trim();
+
+  let lastError;
+  for (let i = 0; i < 3; i++) {
+    try {
+      const response = UrlFetchApp.fetch(url, options);
+      const json = JSON.parse(response.getContentText());
+      if (json.error) {
+        if (json.error.code === 'server_error' || json.error.type === 'server_error' || response.getResponseCode() >= 500) {
+          lastError = json.error.message || 'Server Error';
+          Utilities.sleep(1000 * (i + 1));
+          continue;
+        }
+        throw new Error(json.error.message);
+      }
+      return json.choices[0].message.content.trim();
+    } catch (e) {
+      lastError = e.toString();
+      Utilities.sleep(1000 * (i + 1));
+    }
+  }
+  throw new Error(`GPT failed after 3 attempts. Last error: ${lastError}`);
 }
 
 function v110_perplexityAnalysis(articles, sectionType) {
