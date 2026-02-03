@@ -1,0 +1,132 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-02-01  8:55:50.59 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-02-01 08:55:51,472 - INFO - [__main__] - Target Date Range: 2026-01-31 ~ 2026-02-01
+2026-02-01 08:55:51,472 - INFO - [__main__] - ============================================================
+2026-02-01 08:55:51,473 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-02-01 08:55:51,473 - INFO - [__main__] - ============================================================
+2026-02-01 08:55:51,473 - INFO - [WDM] - ====== WebDriver manager ======
+2026-02-01 08:55:52,468 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-01 08:55:52,488 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-01 08:55:52,498 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-01 08:55:52,534 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-02-01 08:55:52,536 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-01 08:55:52,536 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-01 08:55:52,579 - INFO - [WDM] - Driver downloading response is 200
+2026-02-01 08:55:52,662 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-01 08:55:52,768 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-02-01 08:55:54,436 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-02-01 08:55:54,436 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-02-01 08:55:54,436 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-02-01 08:55:54,436 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-31...
+2026-02-01 08:55:54,436 - INFO - [__main__] - [hankyung] Starting login process...
+2026-02-01 08:56:00,363 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-02-01 08:56:00,367 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-02-01 08:56:02,793 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-02-01 08:56:05,137 - INFO - [__main__] - [Hankyung] Collection complete. Found 0 articles.
+2026-02-01 08:56:05,137 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-31 ~ 2026-02-01)...
+2026-02-01 08:56:05,137 - INFO - [__main__] - [thebell] Starting login process...
+2026-02-01 08:56:07,307 - ERROR - [__main__] - [thebell] Login failed: Message: element not interactable
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0xec1213
+	0xec1254
+	0xcae52b
+	0xcfa5c8
+	0xcef1c8
+	0xd1b4ec
+	0xceec34
+	0xd1b6a4
+	0xd3db13
+	0xd1b2e6
+	0xced321
+	0xcee1d4
+	0x1115254
+	0x111080b
+	0x112d0ea
+	0xedb118
+	0xee311d
+	0xec9518
+	0xec96d9
+	0xeb3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 233, in login
+    self.driver.find_element(By.ID, creds["btn_id"]).click()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 121, in click
+    self._execute(Command.CLICK_ELEMENT)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 574, in _execute
+    return self._parent.execute(command, params)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 447, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0xec1213
+	0xec1254
+	0xcae52b
+	0xcfa5c8
+	0xcef1c8
+	0xd1b4ec
+	0xceec34
+	0xd1b6a4
+	0xd3db13
+	0xd1b2e6
+	0xced321
+	0xcee1d4
+	0x1115254
+	0x111080b
+	0x112d0ea
+	0xedb118
+	0xee311d
+	0xec9518
+	0xec96d9
+	0xeb3a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+
+2026-02-01 08:56:07,310 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-02-01 08:56:07,310 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-02-01 08:56:09,318 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-02-01 08:56:09,319 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-02-01 08:56:09,319 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-02-01 08:56:11,285 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-02-01 08:56:11,285 - INFO - [__main__] - [TheBell] Collection complete. Found 0 articles.
+2026-02-01 08:56:11,285 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-31...
+2026-02-01 08:56:11,285 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-02-01 08:56:16,867 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-02-01 08:56:16,869 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-02-01 08:56:19,595 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-02-01 08:56:22,271 - INFO - [__main__] - [DealSite+] Collection complete. Found 0 articles.
+2026-02-01 08:56:22,271 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-31...
+2026-02-01 08:56:22,272 - INFO - [__main__] - [investchosun] Starting login process...
+2026-02-01 08:56:27,935 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-02-01 08:56:27,937 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-02-01 08:56:30,231 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-02-01 08:56:30,688 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-01 08:56:30,690 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-01 08:56:32,335 - INFO - [__main__] - [History] Loaded 337 URLs and 337 titles from history.
+2026-02-01 08:56:32,336 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 0
+2026-02-01 08:56:32,336 - INFO - [__main__] - No new unique articles found.
+2026-02-01 08:56:33,088 - INFO - [__main__] - 
+============================================================
+2026-02-01 08:56:33,089 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-02-01 08:56:33,089 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-02-01  8:56:35.33 
+================================================== 
+ 

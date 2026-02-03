@@ -1,0 +1,159 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-01-24  8:55:50.48 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-24 08:55:51,657 - INFO - [__main__] - Target Date Range: 2026-01-23 ~ 2026-01-24
+2026-01-24 08:55:51,658 - INFO - [__main__] - ============================================================
+2026-01-24 08:55:51,658 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-24 08:55:51,658 - INFO - [__main__] - ============================================================
+2026-01-24 08:55:51,658 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-24 08:55:52,636 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-24 08:55:52,667 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-24 08:55:52,677 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-24 08:55:52,715 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-01-24 08:55:52,717 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-24 08:55:52,717 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-24 08:55:52,761 - INFO - [WDM] - Driver downloading response is 200
+2026-01-24 08:55:52,846 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-24 08:55:52,950 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-01-24 08:55:54,579 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-24 08:55:54,579 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-24 08:55:54,579 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-24 08:55:54,579 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-23...
+2026-01-24 08:55:54,579 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-24 08:56:00,436 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-24 08:56:00,438 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-24 08:56:02,702 - INFO - [__main__] - [Hankyung] Found: 쿠팡 투자자 "韓정부가 차별" 美개입 요청…통상분쟁 번지나 (20260123)
+2026-01-24 08:56:02,711 - INFO - [__main__] - [Hankyung] Found: SK엠유·울산GPS 소수지분 인수 우협에 스틱·한투PE 선정 (20260123)
+2026-01-24 08:56:02,719 - INFO - [__main__] - [Hankyung] Found: 장민영 신임 기업은행장, 노조 저지로 첫 출근 무산 (20260123)
+2026-01-24 08:56:02,728 - INFO - [__main__] - [Hankyung] Found: 계열사 35% 줄인 카카오, CA협의체도 '군살 빼기' (20260123)
+2026-01-24 08:56:02,736 - INFO - [__main__] - [Hankyung] Found: EQT, 글로벌 세컨더리 전문 PEF 콜러캐피탈 32억달러 인수 (20260123)
+2026-01-24 08:56:02,870 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-24 08:56:05,094 - INFO - [__main__] - [Hankyung] Found: 한화투자증권, 두나무 지분 안 판다 (20260123)
+2026-01-24 08:56:05,104 - INFO - [__main__] - [Hankyung] Found: SK엠유·울산GPS 소수지분 인수 우협에 스틱·한투PE 선정 (20260123)
+2026-01-24 08:56:05,113 - INFO - [__main__] - [Hankyung] Found: TKG태광, 日 야소지마 인수 안 하기로 (20260123)
+2026-01-24 08:56:05,121 - INFO - [__main__] - [Hankyung] Found: [단독] 창광실업, 세아에삽 품는다… 제조·산업재 영역으로 사업 확대 (20260123)
+2026-01-24 08:56:05,130 - INFO - [__main__] - [Hankyung] Found: 두산밥캣, 獨 바커노이슨 인수 안 한다 (20260123)
+2026-01-24 08:56:05,251 - INFO - [__main__] - [Hankyung] Collection complete. Found 10 articles.
+2026-01-24 08:56:05,251 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-23 ~ 2026-01-24)...
+2026-01-24 08:56:05,251 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-24 08:56:10,862 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-24 08:56:10,864 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-24 08:56:10,864 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-24 08:56:13,598 - INFO - [__main__] - [TheBell] Found: 한국 딜로이트 그룹, 새 총괄대표에 길기완 부문대표 선출 (2026-01-23)
+2026-01-24 08:56:13,612 - INFO - [__main__] - [TheBell] Found: 스틱-한투PE 컨소시엄, 울산GPS·SK엠유 품는다 (2026-01-23)
+2026-01-24 08:56:13,638 - INFO - [__main__] - [TheBell] Found: 반년 새 3배 뛴 에이치브이엠…키움PE, 우주 테마 메자닌 투자 적중 (2026-01-23)
+2026-01-24 08:56:13,652 - INFO - [__main__] - [TheBell] Found: 코리아와이드파트너스, 해밀 지분 49% 매각 재추진 (2026-01-23)
+2026-01-24 08:56:13,667 - INFO - [__main__] - [TheBell] Found: 울산 AI 데이터센터 매각, '토종 vs 외국계' 4파전 구도 (2026-01-23)
+2026-01-24 08:56:13,705 - INFO - [__main__] - [TheBell] Found: 스카이레이크, '솔루스 CFL' 다시 품는다 (2026-01-23)
+2026-01-24 08:56:13,772 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-24 08:56:13,772 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-24 08:56:13,772 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-24 08:56:16,306 - INFO - [__main__] - [TheBell] Found: 한국 딜로이트 그룹, 새 총괄대표에 길기완 부문대표 선출 (2026-01-23)
+2026-01-24 08:56:16,320 - INFO - [__main__] - [TheBell] Found: 스톤브릿지벤처, 리브스메드 '멀티플 60배' 잭팟 (2026-01-23)
+2026-01-24 08:56:16,346 - INFO - [__main__] - [TheBell] Found: 주간 VC 투자 브리핑(1.19~23) (2026-01-23)
+2026-01-24 08:56:16,396 - INFO - [__main__] - [TheBell] Found: 반년 새 3배 뛴 에이치브이엠…키움PE, 우주 테마 메자닌 투자 적중 (2026-01-23)
+2026-01-24 08:56:16,436 - INFO - [__main__] - [TheBell] Found: JB인베, 뮤직테크 '나이비'에 20억 투자 (2026-01-23)
+2026-01-24 08:56:16,464 - INFO - [__main__] - [TheBell] Found: '팁스 명가' 소풍벤처스, 추천기업 매칭률 ‘80%’ (2026-01-23)
+2026-01-24 08:56:16,500 - INFO - [__main__] - [TheBell] Found: 스카이레이크, '솔루스 CFL' 다시 품는다 (2026-01-23)
+2026-01-24 08:56:16,527 - INFO - [__main__] - [TheBell] Found: 캐스팅엔, '80억' 브릿지 라운드 막바지 (2026-01-23)
+2026-01-24 08:56:16,554 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-24 08:56:16,554 - INFO - [__main__] - [TheBell] Collection complete. Found 14 articles.
+2026-01-24 08:56:16,554 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-23...
+2026-01-24 08:56:16,554 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-24 08:56:22,155 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-24 08:56:22,159 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-24 08:56:24,679 - INFO - [__main__] - [DealSite+] Found: 계엄 한파 이겨낸 자본시장…장중 코스피 5000 축포 (2026-01-23)
+2026-01-24 08:56:24,697 - INFO - [__main__] - [DealSite+] Found: "수상의 조건…완성도·설계 역량·시장 기여도" (2026-01-23)
+2026-01-24 08:56:24,714 - INFO - [__main__] - [DealSite+] Found: 70만닉스의 주역 BoA메릴린치…11조 인텔 딜 성사 (2026-01-23)
+2026-01-24 08:56:24,732 - INFO - [__main__] - [DealSite+] Found: 행동주의 벗어난 KCGI…바른 지배구조 안내자로 (2026-01-23)
+2026-01-24 08:56:24,749 - INFO - [__main__] - [DealSite+] Found: 정교한 자문역량 입증한 JP모건…글로벌IB 2연패 (2026-01-23)
+2026-01-24 08:56:24,767 - INFO - [__main__] - [DealSite+] Found: 스타트업 자문 명가 세움…메인스트림 도약 (2026-01-23)
+2026-01-24 08:56:24,786 - INFO - [__main__] - [DealSite+] Found: 민준선의 삼일 24조·157건으로…3년 연속 1위 (2026-01-23)
+2026-01-24 08:56:24,804 - INFO - [__main__] - [DealSite+] Found: 어피니티 버거킹 재팬 6배 차익…그린필드 신기원 (2026-01-23)
+2026-01-24 08:56:24,821 - INFO - [__main__] - [DealSite+] Found: "한국 자본시장 대도약…코스피 5000 너머 1만피로" (2026-01-23)
+2026-01-24 08:56:24,839 - INFO - [__main__] - [DealSite+] Found: 압도적인 1위 김앤장…대통령이 극찬한 협상력 (2026-01-23)
+2026-01-24 08:56:24,856 - INFO - [__main__] - [DealSite+] Found: 23조 자문한 삼정…대기업 카브아웃 전문성 빛났다 (2026-01-23)
+2026-01-24 08:56:24,948 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-24 08:56:27,407 - INFO - [__main__] - [DealSite+] Found: 계엄 한파 이겨낸 자본시장…장중 코스피 5000 축포 (2026-01-23)
+2026-01-24 08:56:27,427 - INFO - [__main__] - [DealSite+] Found: "수상의 조건…완성도·설계 역량·시장 기여도" (2026-01-23)
+2026-01-24 08:56:27,449 - INFO - [__main__] - [DealSite+] Found: 70만닉스의 주역 BoA메릴린치…11조 인텔 딜 성사 (2026-01-23)
+2026-01-24 08:56:27,469 - INFO - [__main__] - [DealSite+] Found: 행동주의 벗어난 KCGI…바른 지배구조 안내자로 (2026-01-23)
+2026-01-24 08:56:27,487 - INFO - [__main__] - [DealSite+] Found: 스타트업 자문 명가 세움…메인스트림 도약 (2026-01-23)
+2026-01-24 08:56:27,506 - INFO - [__main__] - [DealSite+] Found: 민준선의 삼일 24조·157건으로…3년 연속 1위 (2026-01-23)
+2026-01-24 08:56:27,526 - INFO - [__main__] - [DealSite+] Found: 어피니티 버거킹 재팬 6배 차익…그린필드 신기원 (2026-01-23)
+2026-01-24 08:56:27,544 - INFO - [__main__] - [DealSite+] Found: "한국 자본시장 대도약…코스피 5000 너머 1만피로" (2026-01-23)
+2026-01-24 08:56:27,562 - INFO - [__main__] - [DealSite+] Found: 압도적인 1위 김앤장…대통령이 극찬한 협상력 (2026-01-23)
+2026-01-24 08:56:27,581 - INFO - [__main__] - [DealSite+] Found: 23조 자문한 삼정…대기업 카브아웃 전문성 빛났다 (2026-01-23)
+2026-01-24 08:56:27,599 - INFO - [__main__] - [DealSite+] Found: 에이스톤, '메탄 측정' 메텍홀딩스에 10억 베팅 (2026-01-23)
+2026-01-24 08:56:27,681 - INFO - [__main__] - [DealSite+] Collection complete. Found 22 articles.
+2026-01-24 08:56:27,681 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-23...
+2026-01-24 08:56:27,681 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-24 08:56:33,363 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-24 08:56:33,365 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-24 08:56:35,602 - INFO - [__main__] - [InvestChosun] Found: 스틱-한투PE, 울산GPS·SK엠유 소수지분 인수 우선협상대상자 선정 (2026-01-23)
+2026-01-24 08:56:35,617 - INFO - [__main__] - [InvestChosun] Found: 이지스, 역삼 센터필드 매각 주관사 선정 강행…27일 제안서 접수 마감 (2026-01-23)
+2026-01-24 08:56:35,631 - INFO - [__main__] - [InvestChosun] Found: 빅딜 무산된 두산밥캣…獨 바커노이슨 고밸류가 걸림돌 (2026-01-23)
+2026-01-24 08:56:35,645 - INFO - [__main__] - [InvestChosun] Found: 적자폭 늘어난 롯데케미칼, 회사채 상환 유예에도 여전한 차입 부담 (2026-01-23)
+2026-01-24 08:56:35,705 - INFO - [__main__] - [InvestChosun] Collection complete. Found 4 articles.
+2026-01-24 08:56:36,221 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-24 08:56:36,223 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-24 08:56:37,406 - INFO - [__main__] - [History] Loaded 129 URLs and 129 titles from history.
+2026-01-24 08:56:37,406 - INFO - [__main__] - [History] Skipping Duplicate (URL): 두산밥캣, 獨 바커노이슨 인수 안 한다 [Hankyung]
+2026-01-24 08:56:37,406 - INFO - [__main__] - [History] Skipping Duplicate (URL): 스카이레이크, '솔루스 CFL' 다시 품는다 [TheBell]
+2026-01-24 08:56:37,406 - INFO - [__main__] - [History] Skipping Duplicate (URL): '팁스 명가' 소풍벤처스, 추천기업 매칭률 ‘80%’ [TheBell]
+2026-01-24 08:56:37,406 - INFO - [__main__] - [History] Skipping Duplicate (URL): 캐스팅엔, '80억' 브릿지 라운드 막바지 [TheBell]
+2026-01-24 08:56:37,406 - INFO - [__main__] - [History] Skipping Duplicate (URL): 에이스톤, '메탄 측정' 메텍홀딩스에 10억 베팅 [DealSitePlus]
+2026-01-24 08:56:37,406 - INFO - [__main__] - [History] Skipping Duplicate (URL): 빅딜 무산된 두산밥캣…獨 바커노이슨 고밸류가 걸림돌 [InvestChosun]
+2026-01-24 08:56:37,406 - INFO - [__main__] - [History] Skipping Duplicate (URL): 적자폭 늘어난 롯데케미칼, 회사채 상환 유예에도 여전한 차입 부담 [InvestChosun]
+2026-01-24 08:56:37,406 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 29
+2026-01-24 08:56:37,406 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-24 08:56:37,406 - INFO - [__main__] - [PDF] [1/29] Processing: 쿠팡 투자자 "韓정부가 차별" 美개입 요청…통상분쟁 번지나 (Hankyung)
+2026-01-24 08:56:44,250 - INFO - [__main__] - [PDF] [2/29] Processing: SK엠유·울산GPS 소수지분 인수 우협에 스틱·한투PE 선정 (Hankyung)
+2026-01-24 08:56:50,741 - INFO - [__main__] - [PDF] [3/29] Processing: 장민영 신임 기업은행장, 노조 저지로 첫 출근 무산 (Hankyung)
+2026-01-24 08:56:57,170 - INFO - [__main__] - [PDF] [4/29] Processing: 계열사 35% 줄인 카카오, CA협의체도 '군살 빼기' (Hankyung)
+2026-01-24 08:57:03,699 - INFO - [__main__] - [PDF] [5/29] Processing: EQT, 글로벌 세컨더리 전문 PEF 콜러캐피탈 32억달러 인수 (Hankyung)
+2026-01-24 08:57:10,152 - INFO - [__main__] - [PDF] [6/29] Processing: 한화투자증권, 두나무 지분 안 판다 (Hankyung)
+2026-01-24 08:57:16,559 - INFO - [__main__] - [PDF] [7/29] Processing: TKG태광, 日 야소지마 인수 안 하기로 (Hankyung)
+2026-01-24 08:57:22,987 - INFO - [__main__] - [PDF] [8/29] Processing: [단독] 창광실업, 세아에삽 품는다… 제조·산업재 영역으로 사업 확대 (Hankyung)
+2026-01-24 08:57:29,502 - INFO - [__main__] - [PDF] [9/29] Processing: 한국 딜로이트 그룹, 새 총괄대표에 길기완 부문대표 선출 (TheBell)
+2026-01-24 08:57:36,120 - INFO - [__main__] - [PDF] [10/29] Processing: 스틱-한투PE 컨소시엄, 울산GPS·SK엠유 품는다 (TheBell)
+2026-01-24 08:57:42,551 - INFO - [__main__] - [PDF] [11/29] Processing: 반년 새 3배 뛴 에이치브이엠…키움PE, 우주 테마 메자닌 투자 적중 (TheBell)
+2026-01-24 08:57:49,044 - INFO - [__main__] - [PDF] [12/29] Processing: 코리아와이드파트너스, 해밀 지분 49% 매각 재추진 (TheBell)
+2026-01-24 08:57:55,529 - INFO - [__main__] - [PDF] [13/29] Processing: 울산 AI 데이터센터 매각, '토종 vs 외국계' 4파전 구도 (TheBell)
+2026-01-24 08:58:02,010 - INFO - [__main__] - [PDF] [14/29] Processing: 스톤브릿지벤처, 리브스메드 '멀티플 60배' 잭팟 (TheBell)
+2026-01-24 08:58:08,504 - INFO - [__main__] - [PDF] [15/29] Processing: 주간 VC 투자 브리핑(1.19~23) (TheBell)
+2026-01-24 08:58:15,024 - INFO - [__main__] - [PDF] [16/29] Processing: JB인베, 뮤직테크 '나이비'에 20억 투자 (TheBell)
+2026-01-24 08:58:21,555 - INFO - [__main__] - [PDF] [17/29] Processing: 계엄 한파 이겨낸 자본시장…장중 코스피 5000 축포 (DealSitePlus)
+2026-01-24 08:58:28,637 - INFO - [__main__] - [PDF] [18/29] Processing: "수상의 조건…완성도·설계 역량·시장 기여도" (DealSitePlus)
+2026-01-24 08:58:35,751 - INFO - [__main__] - [PDF] [19/29] Processing: 70만닉스의 주역 BoA메릴린치…11조 인텔 딜 성사 (DealSitePlus)
+2026-01-24 08:58:42,749 - INFO - [__main__] - [PDF] [20/29] Processing: 행동주의 벗어난 KCGI…바른 지배구조 안내자로 (DealSitePlus)
+2026-01-24 08:58:49,642 - INFO - [__main__] - [PDF] [21/29] Processing: 정교한 자문역량 입증한 JP모건…글로벌IB 2연패 (DealSitePlus)
+2026-01-24 08:58:56,603 - INFO - [__main__] - [PDF] [22/29] Processing: 스타트업 자문 명가 세움…메인스트림 도약 (DealSitePlus)
+2026-01-24 08:59:03,633 - INFO - [__main__] - [PDF] [23/29] Processing: 민준선의 삼일 24조·157건으로…3년 연속 1위 (DealSitePlus)
+2026-01-24 08:59:10,603 - INFO - [__main__] - [PDF] [24/29] Processing: 어피니티 버거킹 재팬 6배 차익…그린필드 신기원 (DealSitePlus)
+2026-01-24 08:59:17,559 - INFO - [__main__] - [PDF] [25/29] Processing: "한국 자본시장 대도약…코스피 5000 너머 1만피로" (DealSitePlus)
+2026-01-24 08:59:24,545 - INFO - [__main__] - [PDF] [26/29] Processing: 압도적인 1위 김앤장…대통령이 극찬한 협상력 (DealSitePlus)
+2026-01-24 08:59:31,475 - INFO - [__main__] - [PDF] [27/29] Processing: 23조 자문한 삼정…대기업 카브아웃 전문성 빛났다 (DealSitePlus)
+2026-01-24 08:59:38,442 - INFO - [__main__] - [PDF] [28/29] Processing: 스틱-한투PE, 울산GPS·SK엠유 소수지분 인수 우선협상대상자 선정 (InvestChosun)
+2026-01-24 08:59:45,049 - INFO - [__main__] - [PDF] [29/29] Processing: 이지스, 역삼 센터필드 매각 주관사 선정 강행…27일 제안서 접수 마감 (InvestChosun)
+2026-01-24 08:59:51,582 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-24 08:59:53,115 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-24 08:59:56,326 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1_MKnJwb5u352kJ21Vk5lSSTUN4uPhCAW/view?usp=drivesdk
+2026-01-24 08:59:57,992 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-24 09:00:00,705 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1lbYZ2DpvkgXqAQCPySzTbXpjmZ0FhsBZ/view?usp=drivesdk
+2026-01-24 09:00:03,122 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-24 09:00:06,282 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/119zOHnF2_fVzr2ZGLilMKCO-iEIJxnCj/view?usp=drivesdk
+2026-01-24 09:00:06,693 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-24 09:00:11,437 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/17eXCcoQvqw1BWXsiVB891HlnFhvZAiPN/view?usp=drivesdk
+2026-01-24 09:00:12,078 - INFO - [__main__] - [History] Updated sheet with 29 new articles.
+2026-01-24 09:00:12,921 - INFO - [__main__] - 
+============================================================
+2026-01-24 09:00:12,921 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-24 09:00:12,921 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-24  9:00:15.29 
+================================================== 
+ 

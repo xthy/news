@@ -1,0 +1,174 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-01-30  8:55:50.57 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-30 08:55:51,357 - INFO - [__main__] - Target Date Range: 2026-01-29 ~ 2026-01-30
+2026-01-30 08:55:51,358 - INFO - [__main__] - ============================================================
+2026-01-30 08:55:51,358 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-30 08:55:51,358 - INFO - [__main__] - ============================================================
+2026-01-30 08:55:51,359 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-30 08:55:52,264 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-30 08:55:52,287 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-30 08:55:52,297 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-30 08:55:52,331 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-01-30 08:55:52,333 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-30 08:55:52,333 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-30 08:55:52,376 - INFO - [WDM] - Driver downloading response is 200
+2026-01-30 08:55:52,460 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-30 08:55:52,566 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-01-30 08:55:54,011 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-30 08:55:54,011 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-30 08:55:54,011 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-30 08:55:54,011 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-29...
+2026-01-30 08:55:54,011 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-30 08:56:00,013 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-30 08:56:00,016 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-30 08:56:02,260 - INFO - [__main__] - [Hankyung] Found: 현대글로비스도 쾌속질주…올해 매출 30조원 벽 넘는다 (20260129)
+2026-01-30 08:56:02,268 - INFO - [__main__] - [Hankyung] Found: 삼성 "HBM 매출 3배 확대"…SK "점유율 압도 자신" (20260129)
+2026-01-30 08:56:02,278 - INFO - [__main__] - [Hankyung] Found: 정기선 "인도는 HD현대 새 성장동력" (20260129)
+2026-01-30 08:56:02,286 - INFO - [__main__] - [Hankyung] Found: 현대차, 비싼차 팔아 버텼다…올 관세 뚫을 무기는 신차 (20260129)
+2026-01-30 08:56:02,295 - INFO - [__main__] - [Hankyung] Found: 'AI폰' 갤S26 띄우고 휴머노이드 성과 낸다 (20260129)
+2026-01-30 08:56:02,375 - INFO - [__main__] - [Hankyung] Found: NH투자증권, 영업익·순익 '1조 시대' (20260129)
+2026-01-30 08:56:02,384 - INFO - [__main__] - [Hankyung] Found: '불닭 신화' 삼양식품 매출 2조 돌파…해외 매출이 80% (20260129)
+2026-01-30 08:56:02,392 - INFO - [__main__] - [Hankyung] Found: 무궁화신탁 부실 돌려막기 … 인수기업에 '폭탄' 떠넘긴 PEF ④ [구멍 뚫린 자본시장] (20260129)
+2026-01-30 08:56:02,400 - INFO - [__main__] - [Hankyung] Found: 삼성전자, 4분기 스마트폰 영업익 1.9조…TV·가전은 관세 '직격탄' (20260129)
+2026-01-30 08:56:02,408 - INFO - [__main__] - [Hankyung] Found: 현대글로비스, 매출 29.6조원…'역대 최대' 실적 썼다 (20260129)
+2026-01-30 08:56:02,424 - INFO - [__main__] - [Hankyung] Found: 현대차, 4조원 美 관세 손실에도 역대 최대 매출 기록 (20260129)
+2026-01-30 08:56:02,432 - INFO - [__main__] - [Hankyung] Found: 동양생명 조직 체계 정비…"AX 맞춰 유연성 강화" (20260129)
+2026-01-30 08:56:02,440 - INFO - [__main__] - [Hankyung] Found: 포스코인터, 영업익 1.2조 '사상 최대'…3년 연속 '1조 클럽' 수성 (20260129)
+2026-01-30 08:56:02,449 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-30 08:56:04,639 - INFO - [__main__] - [Hankyung] Found: "xAI·스페이스X 등 투자로 28조원 벌 것…M&A에 투입" (20260129)
+2026-01-30 08:56:04,647 - INFO - [__main__] - [Hankyung] Found: [단독] "스페이스X로 번 돈 재투자"…박현주의 '28조 승부수' (20260129)
+2026-01-30 08:56:04,655 - INFO - [__main__] - [Hankyung] Found: 쥬베룩 매각설에…프리미어 "매각 타이밍 아냐…성장에 주력할 것" (20260129)
+2026-01-30 08:56:04,813 - INFO - [__main__] - [Hankyung] Collection complete. Found 16 articles.
+2026-01-30 08:56:04,814 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-29 ~ 2026-01-30)...
+2026-01-30 08:56:04,814 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-30 08:56:10,397 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-30 08:56:10,399 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-30 08:56:10,399 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-30 08:56:12,302 - INFO - [__main__] - [TheBell] Found: 소시어스·웰투시, 엠앤씨솔루션 내달 예비입찰 진행 (2026-01-30)
+2026-01-30 08:56:12,332 - INFO - [__main__] - [TheBell] Found: 어펄마, 세아에삽 투자 IRR 40%…추가 엑시트 기대 (2026-01-30)
+2026-01-30 08:56:12,349 - INFO - [__main__] - [TheBell] Found: EQT, SK쉴더스 매각 하이라이트 '사이버보안 성장세' (2026-01-29)
+2026-01-30 08:56:12,364 - INFO - [__main__] - [TheBell] Found: '수익화 요원' SKC, SK리비오 매각 카드 '만지작' (2026-01-29)
+2026-01-30 08:56:12,401 - INFO - [__main__] - [TheBell] Found: 'SPA 임박' 부산에쿼티파트너스, 넥스플렉스 인수 추진 (2026-01-29)
+2026-01-30 08:56:12,417 - INFO - [__main__] - [TheBell] Found: HL로보틱스, 중복상장 이슈에 투자유치 논의 '속도조절' (2026-01-29)
+2026-01-30 08:56:12,433 - INFO - [__main__] - [TheBell] Found: 시지바이오 M&A 우협 선정 임박…국내외 FI 군침 (2026-01-29)
+2026-01-30 08:56:12,448 - INFO - [__main__] - [TheBell] Found: SK에코-FI 엑시트 협상 본격화, '구주 밸류에이션' 관건 (2026-01-30)
+2026-01-30 08:56:12,463 - INFO - [__main__] - [TheBell] Found: EQT파트너스, '6조 몸값' SK쉴더스 매각 추진 (2026-01-29)
+2026-01-30 08:56:12,501 - INFO - [__main__] - [TheBell] Found: '실적 반등 속도' 중고나라, 올 하반기 매각 작업 착수 (2026-01-30)
+2026-01-30 08:56:12,516 - INFO - [__main__] - [TheBell] Found: 맥쿼리PE, LG CNS 엑시트로 '1조' 벌었다 (2026-01-30)
+2026-01-30 08:56:12,530 - INFO - [__main__] - [TheBell] Found: 어펄마캐피탈, 화성코스메틱 리파이낸싱 완료 (2026-01-29)
+2026-01-30 08:56:12,552 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-30 08:56:12,552 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-30 08:56:12,552 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-30 08:56:14,372 - INFO - [__main__] - [TheBell] Found: 소시어스·웰투시, 엠앤씨솔루션 내달 예비입찰 진행 (2026-01-30)
+2026-01-30 08:56:14,422 - INFO - [__main__] - [TheBell] Found: 어펄마, 세아에삽 투자 IRR 40%…추가 엑시트 기대 (2026-01-30)
+2026-01-30 08:56:14,449 - INFO - [__main__] - [TheBell] Found: 정근호 스틱벤처스 대표, 내년 말까지 하우스 잔류 (2026-01-29)
+2026-01-30 08:56:14,489 - INFO - [__main__] - [TheBell] Found: VC 자율규제 첫 평가, ‘중대형 쏠림’ 우려 (2026-01-29)
+2026-01-30 08:56:14,517 - INFO - [__main__] - [TheBell] Found: '수익화 요원' SKC, SK리비오 매각 카드 '만지작' (2026-01-29)
+2026-01-30 08:56:14,567 - INFO - [__main__] - [TheBell] Found: HL로보틱스, 중복상장 이슈에 투자유치 논의 '속도조절' (2026-01-29)
+2026-01-30 08:56:14,582 - INFO - [__main__] - [TheBell] Found: 시지바이오 M&A 우협 선정 임박…국내외 FI 군침 (2026-01-29)
+2026-01-30 08:56:14,607 - INFO - [__main__] - [TheBell] Found: '투자 유치 속도' 케어링, 1차 200억 모집 성공 (2026-01-29)
+2026-01-30 08:56:14,622 - INFO - [__main__] - [TheBell] Found: 파이온코퍼, 2년 만에 시리즈B 100억 추진 (2026-01-29)
+2026-01-30 08:56:14,622 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-01-30 08:56:16,389 - INFO - [__main__] - [TheBell] Found: SK에코-FI 엑시트 협상 본격화, '구주 밸류에이션' 관건 (2026-01-30)
+2026-01-30 08:56:16,418 - INFO - [__main__] - [TheBell] Found: UTC인베, '238억' 일본 LP 품은 스코펀 결성 (2026-01-29)
+2026-01-30 08:56:16,445 - INFO - [__main__] - [TheBell] Found: '실적 반등 속도' 중고나라, 올 하반기 매각 작업 착수 (2026-01-30)
+2026-01-30 08:56:16,460 - INFO - [__main__] - [TheBell] Found: 맥쿼리PE, LG CNS 엑시트로 '1조' 벌었다 (2026-01-30)
+2026-01-30 08:56:16,498 - INFO - [__main__] - [TheBell] Found: IMM인베, 인도 '섀도우팩스' 상장...첫 회수 기대 (2026-01-29)
+2026-01-30 08:56:16,513 - INFO - [__main__] - [TheBell] Found: 어펄마캐피탈, 화성코스메틱 리파이낸싱 완료 (2026-01-29)
+2026-01-30 08:56:16,586 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-30 08:56:16,586 - INFO - [__main__] - [TheBell] Collection complete. Found 27 articles.
+2026-01-30 08:56:16,586 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-29...
+2026-01-30 08:56:16,586 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-30 08:56:22,203 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-30 08:56:22,205 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-30 08:56:24,690 - INFO - [__main__] - [DealSite+] Found: 코드네임 내슈빌-다빈치…15조 두나무 옮겼다 (2026-01-30)
+2026-01-30 08:56:24,707 - INFO - [__main__] - [DealSite+] Found: 하나손보만으론 부족…위기감 느낀 하나금융 '승부수' (2026-01-30)
+2026-01-30 08:56:24,725 - INFO - [__main__] - [DealSite+] Found: NH·대신 비올 인수금융…이주현-이중헌의 우정 (2026-01-29)
+2026-01-30 08:56:24,743 - INFO - [__main__] - [DealSite+] Found: 2-3위 합병에 4000억 베팅…CGV와 결승전 (2026-01-29)
+2026-01-30 08:56:24,894 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-30 08:56:27,380 - INFO - [__main__] - [DealSite+] Found: 데스틴파워 프리IPO 105억…코스닥 문 드린다 (2026-01-30)
+2026-01-30 08:56:27,402 - INFO - [__main__] - [DealSite+] Found: 'K엔비디아 퓨리오사' 7000억 조달…벌써 2조 가치 (2026-01-30)
+2026-01-30 08:56:27,420 - INFO - [__main__] - [DealSite+] Found: HB서 독립한 안신영…6년 만에 1000억 돌파 (2026-01-30)
+2026-01-30 08:56:27,437 - INFO - [__main__] - [DealSite+] Found: 코드네임 내슈빌-다빈치…15조 두나무 옮겼다 (2026-01-30)
+2026-01-30 08:56:27,455 - INFO - [__main__] - [DealSite+] Found: NH·대신 비올 인수금융…이주현-이중헌의 우정 (2026-01-29)
+2026-01-30 08:56:27,472 - INFO - [__main__] - [DealSite+] Found: 2-3위 합병에 4000억 베팅…CGV와 결승전 (2026-01-29)
+2026-01-30 08:56:27,490 - INFO - [__main__] - [DealSite+] Found: 2% 지분 남긴 이유…상왕 경영의 포석 (2026-01-29)
+2026-01-30 08:56:27,613 - INFO - [__main__] - [DealSite+] Collection complete. Found 11 articles.
+2026-01-30 08:56:27,613 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-29...
+2026-01-30 08:56:27,613 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-30 08:56:33,279 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-30 08:56:33,282 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-30 08:56:35,459 - INFO - [__main__] - [InvestChosun] Found: '한화' 회사채 잘 팔리는데…한화비전, 초도 발행 앞두고 긴장 (2026-01-29)
+2026-01-30 08:56:35,474 - INFO - [__main__] - [InvestChosun] Found: 건설채 만기 줄줄이…등급 따라 엇갈린 차환 전략 (2026-01-29)
+2026-01-30 08:56:35,528 - INFO - [__main__] - [InvestChosun] Collection complete. Found 2 articles.
+2026-01-30 08:56:35,999 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-30 08:56:36,001 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-30 08:56:37,262 - INFO - [__main__] - [History] Loaded 265 URLs and 265 titles from history.
+2026-01-30 08:56:37,262 - INFO - [__main__] - [History] Skipping Duplicate (URL): '실적 반등 속도' 중고나라, 올 하반기 매각 작업 착수 [TheBell]
+2026-01-30 08:56:37,262 - INFO - [__main__] - [History] Skipping Duplicate (URL): 맥쿼리PE, LG CNS 엑시트로 '1조' 벌었다 [TheBell]
+2026-01-30 08:56:37,262 - INFO - [__main__] - [History] Skipping Duplicate (URL): 어펄마캐피탈, 화성코스메틱 리파이낸싱 완료 [TheBell]
+2026-01-30 08:56:37,262 - INFO - [__main__] - [History] Skipping Duplicate (URL): IMM인베, 인도 '섀도우팩스' 상장...첫 회수 기대 [TheBell]
+2026-01-30 08:56:37,263 - INFO - [__main__] - [History] Skipping Duplicate (URL): 건설채 만기 줄줄이…등급 따라 엇갈린 차환 전략 [InvestChosun]
+2026-01-30 08:56:37,263 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 39
+2026-01-30 08:56:37,263 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-30 08:56:37,263 - INFO - [__main__] - [PDF] [1/39] Processing: 현대글로비스도 쾌속질주…올해 매출 30조원 벽 넘는다 (Hankyung)
+2026-01-30 08:56:43,851 - INFO - [__main__] - [PDF] [2/39] Processing: 삼성 "HBM 매출 3배 확대"…SK "점유율 압도 자신" (Hankyung)
+2026-01-30 08:56:50,436 - INFO - [__main__] - [PDF] [3/39] Processing: 정기선 "인도는 HD현대 새 성장동력" (Hankyung)
+2026-01-30 08:56:56,855 - INFO - [__main__] - [PDF] [4/39] Processing: 현대차, 비싼차 팔아 버텼다…올 관세 뚫을 무기는 신차 (Hankyung)
+2026-01-30 08:57:03,352 - INFO - [__main__] - [PDF] [5/39] Processing: 'AI폰' 갤S26 띄우고 휴머노이드 성과 낸다 (Hankyung)
+2026-01-30 08:57:09,822 - INFO - [__main__] - [PDF] [6/39] Processing: NH투자증권, 영업익·순익 '1조 시대' (Hankyung)
+2026-01-30 08:57:16,329 - INFO - [__main__] - [PDF] [7/39] Processing: '불닭 신화' 삼양식품 매출 2조 돌파…해외 매출이 80% (Hankyung)
+2026-01-30 08:57:22,852 - INFO - [__main__] - [PDF] [8/39] Processing: 무궁화신탁 부실 돌려막기 … 인수기업에 '폭탄' 떠넘긴 PEF ④ [구멍 뚫린 자본시장] (Hankyung)
+2026-01-30 08:57:29,423 - INFO - [__main__] - [PDF] [9/39] Processing: 삼성전자, 4분기 스마트폰 영업익 1.9조…TV·가전은 관세 '직격탄' (Hankyung)
+2026-01-30 08:57:35,919 - INFO - [__main__] - [PDF] [10/39] Processing: 현대글로비스, 매출 29.6조원…'역대 최대' 실적 썼다 (Hankyung)
+2026-01-30 08:57:42,414 - INFO - [__main__] - [PDF] [11/39] Processing: 현대차, 4조원 美 관세 손실에도 역대 최대 매출 기록 (Hankyung)
+2026-01-30 08:57:48,917 - INFO - [__main__] - [PDF] [12/39] Processing: 동양생명 조직 체계 정비…"AX 맞춰 유연성 강화" (Hankyung)
+2026-01-30 08:57:55,372 - INFO - [__main__] - [PDF] [13/39] Processing: 포스코인터, 영업익 1.2조 '사상 최대'…3년 연속 '1조 클럽' 수성 (Hankyung)
+2026-01-30 08:58:01,985 - INFO - [__main__] - [PDF] [14/39] Processing: "xAI·스페이스X 등 투자로 28조원 벌 것…M&A에 투입" (Hankyung)
+2026-01-30 08:58:08,552 - INFO - [__main__] - [PDF] [15/39] Processing: [단독] "스페이스X로 번 돈 재투자"…박현주의 '28조 승부수' (Hankyung)
+2026-01-30 08:58:15,193 - INFO - [__main__] - [PDF] [16/39] Processing: 쥬베룩 매각설에…프리미어 "매각 타이밍 아냐…성장에 주력할 것" (Hankyung)
+2026-01-30 08:58:21,660 - INFO - [__main__] - [PDF] [17/39] Processing: 소시어스·웰투시, 엠앤씨솔루션 내달 예비입찰 진행 (TheBell)
+2026-01-30 08:58:28,238 - INFO - [__main__] - [PDF] [18/39] Processing: 어펄마, 세아에삽 투자 IRR 40%…추가 엑시트 기대 (TheBell)
+2026-01-30 08:58:34,765 - INFO - [__main__] - [PDF] [19/39] Processing: EQT, SK쉴더스 매각 하이라이트 '사이버보안 성장세' (TheBell)
+2026-01-30 08:58:41,230 - INFO - [__main__] - [PDF] [20/39] Processing: '수익화 요원' SKC, SK리비오 매각 카드 '만지작' (TheBell)
+2026-01-30 08:58:47,666 - INFO - [__main__] - [PDF] [21/39] Processing: 'SPA 임박' 부산에쿼티파트너스, 넥스플렉스 인수 추진 (TheBell)
+2026-01-30 08:58:54,235 - INFO - [__main__] - [PDF] [22/39] Processing: HL로보틱스, 중복상장 이슈에 투자유치 논의 '속도조절' (TheBell)
+2026-01-30 08:59:00,695 - INFO - [__main__] - [PDF] [23/39] Processing: 시지바이오 M&A 우협 선정 임박…국내외 FI 군침 (TheBell)
+2026-01-30 08:59:07,278 - INFO - [__main__] - [PDF] [24/39] Processing: SK에코-FI 엑시트 협상 본격화, '구주 밸류에이션' 관건 (TheBell)
+2026-01-30 08:59:13,814 - INFO - [__main__] - [PDF] [25/39] Processing: EQT파트너스, '6조 몸값' SK쉴더스 매각 추진 (TheBell)
+2026-01-30 08:59:20,349 - INFO - [__main__] - [PDF] [26/39] Processing: 정근호 스틱벤처스 대표, 내년 말까지 하우스 잔류 (TheBell)
+2026-01-30 08:59:26,817 - INFO - [__main__] - [PDF] [27/39] Processing: VC 자율규제 첫 평가, ‘중대형 쏠림’ 우려 (TheBell)
+2026-01-30 08:59:33,352 - INFO - [__main__] - [PDF] [28/39] Processing: '투자 유치 속도' 케어링, 1차 200억 모집 성공 (TheBell)
+2026-01-30 08:59:39,806 - INFO - [__main__] - [PDF] [29/39] Processing: 파이온코퍼, 2년 만에 시리즈B 100억 추진 (TheBell)
+2026-01-30 08:59:46,272 - INFO - [__main__] - [PDF] [30/39] Processing: UTC인베, '238억' 일본 LP 품은 스코펀 결성 (TheBell)
+2026-01-30 08:59:52,703 - INFO - [__main__] - [PDF] [31/39] Processing: 코드네임 내슈빌-다빈치…15조 두나무 옮겼다 (DealSitePlus)
+2026-01-30 08:59:59,927 - INFO - [__main__] - [PDF] [32/39] Processing: 하나손보만으론 부족…위기감 느낀 하나금융 '승부수' (DealSitePlus)
+2026-01-30 09:00:06,852 - INFO - [__main__] - [PDF] [33/39] Processing: NH·대신 비올 인수금융…이주현-이중헌의 우정 (DealSitePlus)
+2026-01-30 09:00:13,625 - INFO - [__main__] - [PDF] [34/39] Processing: 2-3위 합병에 4000억 베팅…CGV와 결승전 (DealSitePlus)
+2026-01-30 09:00:20,515 - INFO - [__main__] - [PDF] [35/39] Processing: 데스틴파워 프리IPO 105억…코스닥 문 드린다 (DealSitePlus)
+2026-01-30 09:00:27,368 - INFO - [__main__] - [PDF] [36/39] Processing: 'K엔비디아 퓨리오사' 7000억 조달…벌써 2조 가치 (DealSitePlus)
+2026-01-30 09:00:34,243 - INFO - [__main__] - [PDF] [37/39] Processing: HB서 독립한 안신영…6년 만에 1000억 돌파 (DealSitePlus)
+2026-01-30 09:00:40,995 - INFO - [__main__] - [PDF] [38/39] Processing: 2% 지분 남긴 이유…상왕 경영의 포석 (DealSitePlus)
+2026-01-30 09:00:47,759 - INFO - [__main__] - [PDF] [39/39] Processing: '한화' 회사채 잘 팔리는데…한화비전, 초도 발행 앞두고 긴장 (InvestChosun)
+2026-01-30 09:00:54,359 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-30 09:00:57,617 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-30 09:01:09,048 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1IXqgEByBHNK9V24vgS3eNLr23UONDZgS/view?usp=drivesdk
+2026-01-30 09:01:12,097 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-30 09:01:15,220 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1vrgpfmcsGDOhJUxgMvVYsWbqCsbStPV8/view?usp=drivesdk
+2026-01-30 09:01:16,957 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-30 09:01:24,349 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1noSZlBtaTTZEb5LNv1qCpNIesa-hna_4/view?usp=drivesdk
+2026-01-30 09:01:24,566 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-30 09:01:31,003 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1qcaEtdk99yj1X73GZYZnUFC4XCs2hm43/view?usp=drivesdk
+2026-01-30 09:01:31,722 - INFO - [__main__] - [History] Updated sheet with 39 new articles.
+2026-01-30 09:01:32,565 - INFO - [__main__] - 
+============================================================
+2026-01-30 09:01:32,565 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-30 09:01:32,565 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-30  9:01:35.07 
+================================================== 
+ 

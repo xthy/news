@@ -1,0 +1,595 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-01-27  8:55:50.33 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-27 08:55:51,273 - INFO - [__main__] - Target Date Range: 2026-01-26 ~ 2026-01-27
+2026-01-27 08:55:51,275 - INFO - [__main__] - ============================================================
+2026-01-27 08:55:51,275 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-27 08:55:51,275 - INFO - [__main__] - ============================================================
+2026-01-27 08:55:51,275 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-27 08:55:52,258 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 08:55:52,280 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 08:55:52,290 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 08:55:52,326 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-01-27 08:55:52,327 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-27 08:55:52,327 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-27 08:55:52,370 - INFO - [WDM] - Driver downloading response is 200
+2026-01-27 08:55:52,454 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 08:55:52,560 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-01-27 08:55:54,242 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-27 08:55:54,242 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-27 08:55:54,242 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-27 08:55:54,242 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-26...
+2026-01-27 08:55:54,243 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-27 08:56:00,083 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-27 08:56:00,084 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-27 08:56:02,322 - INFO - [__main__] - [Hankyung] Found: 원화약세·증시 충격 고려…국민연금, 해외투자 속도조절 나섰다 (20260126)
+2026-01-27 08:56:02,331 - INFO - [__main__] - [Hankyung] Found: 국민연금, 주가 올라도 '기계적 매도' 안한다 (20260126)
+2026-01-27 08:56:02,339 - INFO - [__main__] - [Hankyung] Found: 국민연금, 국내주식 비중 늘린다…'기계적 매도'는 한시 유예 (20260126)
+2026-01-27 08:56:02,500 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-27 08:56:04,709 - INFO - [__main__] - [Hankyung] Found: 새해 첫 빅딜 SK엠유·울산GPS 실제 승자는 '한투증권' (20260126)
+2026-01-27 08:56:04,718 - INFO - [__main__] - [Hankyung] Found: 공정위, 어피니티 롯데렌탈 인수 불허…PEF 볼트온 인수에 제동 (20260126)
+2026-01-27 08:56:04,864 - INFO - [__main__] - [Hankyung] Collection complete. Found 5 articles.
+2026-01-27 08:56:04,864 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-26 ~ 2026-01-27)...
+2026-01-27 08:56:04,864 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-27 08:56:10,512 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-27 08:56:10,515 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-27 08:56:10,515 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-27 08:56:14,879 - INFO - [__main__] - [TheBell] Found: '매각 없다' 한아아이앤티, M&A로 사세 확장 추진 (2026-01-26)
+2026-01-27 08:56:14,929 - INFO - [__main__] - [TheBell] Found: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (2026-01-26)
+2026-01-27 08:56:14,944 - INFO - [__main__] - [TheBell] Found: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (2026-01-26)
+2026-01-27 08:56:14,974 - INFO - [__main__] - [TheBell] Found: '극장가 빅딜' 뛰어든 IMM크레딧, 실탄 마련 방안은 (2026-01-26)
+2026-01-27 08:56:15,044 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-27 08:56:15,044 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-27 08:56:15,044 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-27 08:56:21,763 - INFO - [__main__] - [TheBell] Found: 니바코퍼레이션, '150억' 시리즈B 라운드 시동 (2026-01-27)
+2026-01-27 08:56:21,778 - INFO - [__main__] - [TheBell] Found: 신한벤처투자, 바이오 회수 사이클 진입 (2026-01-27)
+2026-01-27 08:56:21,816 - INFO - [__main__] - [TheBell] Found: 위밋모빌리티, IPO 주관사에 삼성증권 낙점 (2026-01-27)
+2026-01-27 08:56:21,856 - INFO - [__main__] - [TheBell] Found: 진에딧, '시리즈B-1' 2200만달러 클로징 임박 (2026-01-26)
+2026-01-27 08:56:21,872 - INFO - [__main__] - [TheBell] Found: 지스트기술지주, VC 등록…듀얼 라이선스 겸업 (2026-01-26)
+2026-01-27 08:56:21,977 - INFO - [__main__] - [TheBell] Found: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (2026-01-26)
+2026-01-27 08:56:21,992 - INFO - [__main__] - [TheBell] Found: NH벤처, 엑시트 앞둔 포트 4~5곳…선순환 본궤도 (2026-01-26)
+2026-01-27 08:56:22,018 - INFO - [__main__] - [TheBell] Found: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (2026-01-26)
+2026-01-27 08:56:22,018 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-01-27 08:56:25,798 - INFO - [__main__] - [TheBell] Found: STO 인가, ‘절차 논란’ 넘어 법적 리스크로 번지나 (2026-01-26)
+2026-01-27 08:56:25,813 - INFO - [__main__] - [TheBell] Found: 농진원, AC사업 절반 축소…4곳 선정에 경쟁 예고 (2026-01-26)
+2026-01-27 08:56:25,945 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-27 08:56:25,945 - INFO - [__main__] - [TheBell] Collection complete. Found 14 articles.
+2026-01-27 08:56:25,945 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-26...
+2026-01-27 08:56:25,945 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-27 08:56:31,534 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-27 08:56:31,536 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-27 08:56:34,117 - INFO - [__main__] - [DealSite+] Found: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (2026-01-27)
+2026-01-27 08:56:34,134 - INFO - [__main__] - [DealSite+] Found: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (2026-01-27)
+2026-01-27 08:56:34,155 - INFO - [__main__] - [DealSite+] Found: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (2026-01-26)
+2026-01-27 08:56:34,314 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-27 08:56:36,830 - INFO - [__main__] - [DealSite+] Found: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (2026-01-27)
+2026-01-27 08:56:36,848 - INFO - [__main__] - [DealSite+] Found: 더화이트커뮤 브릿지 프리IPO…150억 더 모은다 (2026-01-27)
+2026-01-27 08:56:36,867 - INFO - [__main__] - [DealSite+] Found: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (2026-01-27)
+2026-01-27 08:56:36,885 - INFO - [__main__] - [DealSite+] Found: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (2026-01-26)
+2026-01-27 08:56:36,903 - INFO - [__main__] - [DealSite+] Found: '컨설타비스트' 미리…PER 50배 KKR 모델 가동 (2026-01-26)
+2026-01-27 08:56:36,921 - INFO - [__main__] - [DealSite+] Found: 한국벤처투자 1차 출자…4.4조 펀드 만든다 (2026-01-26)
+2026-01-27 08:56:36,939 - INFO - [__main__] - [DealSite+] Found: 퓨리오사AI 증시 데뷔 무대의 중요성 (2026-01-26)
+2026-01-27 08:56:37,070 - INFO - [__main__] - [DealSite+] Collection complete. Found 10 articles.
+2026-01-27 08:56:37,070 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-26...
+2026-01-27 08:56:37,070 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-27 08:56:42,687 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-27 08:56:42,690 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-27 08:56:44,929 - INFO - [__main__] - [InvestChosun] Found: 롯데-어피너티, 공정위 롯데렌탈 기업결합 불허에 이의신청 검토 (2026-01-26)
+2026-01-27 08:56:44,943 - INFO - [__main__] - [InvestChosun] Found: LS에식스솔루션즈 상장 철회 여파...올해 대기업 계열 IPO 전반 '우려 확산' (2026-01-26)
+2026-01-27 08:56:44,960 - INFO - [__main__] - [InvestChosun] Found: 롯데렌탈 매각 제동에 조달 전략 다시 짜야할 롯데그룹 (2026-01-26)
+2026-01-27 08:56:44,980 - INFO - [__main__] - [InvestChosun] Found: 이번주 5000억 대경오앤티 매각 예비입찰 마감…외국계 SI·PE 각축 (2026-01-26)
+2026-01-27 08:56:44,994 - INFO - [__main__] - [InvestChosun] Found: 공정위, 어피너티의 롯데렌탈·SK렌터카 결합 제동 (2026-01-26)
+2026-01-27 08:56:45,008 - INFO - [__main__] - [InvestChosun] Found: LS, 에식스솔루션즈 상장 신청 철회 (2026-01-26)
+2026-01-27 08:56:45,022 - INFO - [__main__] - [InvestChosun] Found: 베인캐피탈, 에코마케팅 2차 공개매수 개시…이후 상장폐지 추진 (2026-01-26)
+2026-01-27 08:56:45,041 - INFO - [__main__] - [InvestChosun] Collection complete. Found 7 articles.
+2026-01-27 08:56:45,530 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 31
+2026-01-27 08:56:45,530 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-27 08:56:45,530 - INFO - [__main__] - [PDF] [1/31] Processing: 원화약세·증시 충격 고려…국민연금, 해외투자 속도조절 나섰다 (Hankyung)
+2026-01-27 08:56:52,381 - INFO - [__main__] - [PDF] [2/31] Processing: 국민연금, 주가 올라도 '기계적 매도' 안한다 (Hankyung)
+2026-01-27 08:56:58,929 - INFO - [__main__] - [PDF] [3/31] Processing: 국민연금, 국내주식 비중 늘린다…'기계적 매도'는 한시 유예 (Hankyung)
+2026-01-27 08:57:05,477 - INFO - [__main__] - [PDF] [4/31] Processing: 새해 첫 빅딜 SK엠유·울산GPS 실제 승자는 '한투증권' (Hankyung)
+2026-01-27 08:57:12,029 - INFO - [__main__] - [PDF] [5/31] Processing: 공정위, 어피니티 롯데렌탈 인수 불허…PEF 볼트온 인수에 제동 (Hankyung)
+2026-01-27 08:57:18,543 - INFO - [__main__] - [PDF] [6/31] Processing: '매각 없다' 한아아이앤티, M&A로 사세 확장 추진 (TheBell)
+2026-01-27 08:57:25,088 - INFO - [__main__] - [PDF] [7/31] Processing: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (TheBell)
+2026-01-27 08:57:31,622 - INFO - [__main__] - [PDF] [8/31] Processing: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (TheBell)
+2026-01-27 08:57:38,097 - INFO - [__main__] - [PDF] [9/31] Processing: '극장가 빅딜' 뛰어든 IMM크레딧, 실탄 마련 방안은 (TheBell)
+2026-01-27 08:57:44,789 - INFO - [__main__] - [PDF] [10/31] Processing: 니바코퍼레이션, '150억' 시리즈B 라운드 시동 (TheBell)
+2026-01-27 08:57:51,312 - INFO - [__main__] - [PDF] [11/31] Processing: 신한벤처투자, 바이오 회수 사이클 진입 (TheBell)
+2026-01-27 08:57:57,769 - INFO - [__main__] - [PDF] [12/31] Processing: 위밋모빌리티, IPO 주관사에 삼성증권 낙점 (TheBell)
+2026-01-27 08:58:04,207 - INFO - [__main__] - [PDF] [13/31] Processing: 진에딧, '시리즈B-1' 2200만달러 클로징 임박 (TheBell)
+2026-01-27 08:58:10,692 - INFO - [__main__] - [PDF] [14/31] Processing: 지스트기술지주, VC 등록…듀얼 라이선스 겸업 (TheBell)
+2026-01-27 08:58:17,142 - INFO - [__main__] - [PDF] [15/31] Processing: NH벤처, 엑시트 앞둔 포트 4~5곳…선순환 본궤도 (TheBell)
+2026-01-27 08:58:23,589 - INFO - [__main__] - [PDF] [16/31] Processing: STO 인가, ‘절차 논란’ 넘어 법적 리스크로 번지나 (TheBell)
+2026-01-27 08:58:30,115 - INFO - [__main__] - [PDF] [17/31] Processing: 농진원, AC사업 절반 축소…4곳 선정에 경쟁 예고 (TheBell)
+2026-01-27 08:58:36,628 - INFO - [__main__] - [PDF] [18/31] Processing: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (DealSitePlus)
+2026-01-27 08:58:43,787 - INFO - [__main__] - [PDF] [19/31] Processing: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (DealSitePlus)
+2026-01-27 08:58:50,615 - INFO - [__main__] - [PDF] [20/31] Processing: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (DealSitePlus)
+2026-01-27 08:58:57,439 - INFO - [__main__] - [PDF] [21/31] Processing: 더화이트커뮤 브릿지 프리IPO…150억 더 모은다 (DealSitePlus)
+2026-01-27 08:59:04,196 - INFO - [__main__] - [PDF] [22/31] Processing: '컨설타비스트' 미리…PER 50배 KKR 모델 가동 (DealSitePlus)
+2026-01-27 08:59:11,015 - INFO - [__main__] - [PDF] [23/31] Processing: 한국벤처투자 1차 출자…4.4조 펀드 만든다 (DealSitePlus)
+2026-01-27 08:59:17,890 - INFO - [__main__] - [PDF] [24/31] Processing: 퓨리오사AI 증시 데뷔 무대의 중요성 (DealSitePlus)
+2026-01-27 08:59:25,719 - INFO - [__main__] - [PDF] [25/31] Processing: 롯데-어피너티, 공정위 롯데렌탈 기업결합 불허에 이의신청 검토 (InvestChosun)
+2026-01-27 08:59:32,334 - INFO - [__main__] - [PDF] [26/31] Processing: LS에식스솔루션즈 상장 철회 여파...올해 대기업 계열 IPO 전반 '우려 확산' (InvestChosun)
+2026-01-27 08:59:38,829 - INFO - [__main__] - [PDF] [27/31] Processing: 롯데렌탈 매각 제동에 조달 전략 다시 짜야할 롯데그룹 (InvestChosun)
+2026-01-27 08:59:45,333 - INFO - [__main__] - [PDF] [28/31] Processing: 이번주 5000억 대경오앤티 매각 예비입찰 마감…외국계 SI·PE 각축 (InvestChosun)
+2026-01-27 08:59:51,815 - INFO - [__main__] - [PDF] [29/31] Processing: 공정위, 어피너티의 롯데렌탈·SK렌터카 결합 제동 (InvestChosun)
+2026-01-27 08:59:58,203 - INFO - [__main__] - [PDF] [30/31] Processing: LS, 에식스솔루션즈 상장 신청 철회 (InvestChosun)
+2026-01-27 09:00:04,627 - INFO - [__main__] - [PDF] [31/31] Processing: 베인캐피탈, 에코마케팅 2차 공개매수 개시…이후 상장폐지 추진 (InvestChosun)
+2026-01-27 09:00:11,048 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-27 09:00:12,379 - ERROR - [__main__] - Failed to upload to Google Drive: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 796, in upload_to_google_drive
+    creds.refresh(Request())
+    ~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-01-27 09:00:15,136 - ERROR - [__main__] - Failed to upload to Google Drive: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 796, in upload_to_google_drive
+    creds.refresh(Request())
+    ~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-01-27 09:00:16,906 - ERROR - [__main__] - Failed to upload to Google Drive: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 796, in upload_to_google_drive
+    creds.refresh(Request())
+    ~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-01-27 09:00:18,728 - ERROR - [__main__] - Failed to upload to Google Drive: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 796, in upload_to_google_drive
+    creds.refresh(Request())
+    ~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\credentials.py", line 412, in refresh
+    ) = reauth.refresh_grant(
+        ~~~~~~~~~~~~~~~~~~~~^
+        request,
+        ^^^^^^^^
+    ...<6 lines>...
+        enable_reauth_refresh=self._enable_reauth_refresh,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\reauth.py", line 370, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google\oauth2\_client.py", line 69, in _handle_error_response
+    raise exceptions.RefreshError(
+        error_details, response_data, retryable=retryable_error
+    )
+google.auth.exceptions.RefreshError: ('invalid_grant: Token has been expired or revoked.', {'error': 'invalid_grant', 'error_description': 'Token has been expired or revoked.'})
+2026-01-27 09:00:19,409 - INFO - [__main__] - 
+============================================================
+2026-01-27 09:00:19,409 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-27 09:00:19,409 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-27  9:00:21.74 
+================================================== 
+ 
+================================================== 
+[Paywall Agent] Start Time: 2026-01-27  9:49:14.97 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-27 09:49:15,897 - INFO - [__main__] - Target Date Range: 2026-01-26 ~ 2026-01-27
+2026-01-27 09:49:15,897 - INFO - [__main__] - ============================================================
+2026-01-27 09:49:15,897 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-27 09:49:15,897 - INFO - [__main__] - ============================================================
+2026-01-27 09:49:15,897 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-01-27 09:49:15,897 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-27 09:49:16,769 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 09:49:16,790 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 09:49:16,800 - INFO - [WDM] - Driver [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192\chromedriver-win32/chromedriver.exe] found in cache
+2026-01-27 09:49:17,911 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-27 09:49:17,911 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-27 09:49:17,911 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-27 09:49:17,911 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-26...
+2026-01-27 09:49:17,911 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-27 09:49:23,844 - WARNING - [__main__] - [hankyung] Alert detected: 사용자 정보를 확인할 수 없습니다. 로그인을 다시해주세요.
+2026-01-27 09:49:23,846 - INFO - [__main__] - [hankyung] Alert dismissed
+2026-01-27 09:49:23,846 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-27 09:49:23,933 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-27 09:49:25,993 - WARNING - [__main__] - [Hankyung] Alert detected on section page: 유료고객 전용입니다. 로그인 하시거나 유료회원으로 가입해주세요.
+2026-01-27 09:49:25,996 - INFO - [__main__] - [Hankyung] Alert dismissed
+2026-01-27 09:49:27,024 - INFO - [__main__] - [Hankyung] Found: 국민연금·신세계 반대에…이지스, 센터필드 매각 중단 (20260127)
+2026-01-27 09:49:27,033 - INFO - [__main__] - [Hankyung] Found: 국민연금, 국내주식 비중 늘린다…'기계적 매도'는 한시 유예 (20260126)
+2026-01-27 09:49:27,043 - INFO - [__main__] - [Hankyung] Found: LS, 에식스솔루션즈 상장 신청 철회 (20260126)
+2026-01-27 09:49:27,072 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-27 09:49:29,126 - WARNING - [__main__] - [Hankyung] Alert detected on section page: 유료고객 전용입니다. 로그인 하시거나 유료회원으로 가입해주세요.
+2026-01-27 09:49:29,128 - INFO - [__main__] - [Hankyung] Alert dismissed
+2026-01-27 09:49:30,145 - INFO - [__main__] - [Hankyung] Found: 국민연금·신세계 반대에…이지스, 센터필드 매각 중단 (20260127)
+2026-01-27 09:49:30,157 - INFO - [__main__] - [Hankyung] Found: 국민연금, 국내주식 비중 늘린다…'기계적 매도'는 한시 유예 (20260126)
+2026-01-27 09:49:30,166 - INFO - [__main__] - [Hankyung] Found: LS, 에식스솔루션즈 상장 신청 철회 (20260126)
+2026-01-27 09:49:30,195 - INFO - [__main__] - [Hankyung] Collection complete. Found 6 articles.
+2026-01-27 09:49:30,195 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-26 ~ 2026-01-27)...
+2026-01-27 09:49:30,195 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-27 09:49:35,746 - WARNING - [__main__] - [thebell] Alert detected: 아이디를 입력해주세요
+2026-01-27 09:49:35,749 - INFO - [__main__] - [thebell] Alert dismissed
+2026-01-27 09:49:35,749 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-27 09:49:35,759 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-27 09:49:35,759 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-27 09:49:37,281 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-27 09:49:37,283 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-27 09:49:38,290 - WARNING - [__main__] - [TheBell] No articles found on page 1. Stopping pagination.
+2026-01-27 09:49:38,290 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-27 09:49:38,290 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-27 09:49:39,940 - WARNING - [__main__] - [TheBell] Alert detected: 로그인이 필요합니다.
+다시 로그인 해주세요.
+2026-01-27 09:49:39,942 - INFO - [__main__] - [TheBell] Alert dismissed
+2026-01-27 09:49:40,947 - WARNING - [__main__] - [TheBell] No articles found on page 1. Stopping pagination.
+2026-01-27 09:49:40,947 - INFO - [__main__] - [TheBell] Collection complete. Found 0 articles.
+2026-01-27 09:49:40,947 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-26...
+2026-01-27 09:49:40,947 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-27 09:49:46,799 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-27 09:49:46,802 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-27 09:49:50,094 - INFO - [__main__] - [DealSite+] Found: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (2026-01-27)
+2026-01-27 09:49:50,114 - INFO - [__main__] - [DealSite+] Found: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (2026-01-27)
+2026-01-27 09:49:50,133 - INFO - [__main__] - [DealSite+] Found: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (2026-01-26)
+2026-01-27 09:49:50,309 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-27 09:49:53,039 - INFO - [__main__] - [DealSite+] Found: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (2026-01-27)
+2026-01-27 09:49:53,060 - INFO - [__main__] - [DealSite+] Found: 더화이트커뮤 브릿지 프리IPO…150억 더 모은다 (2026-01-27)
+2026-01-27 09:49:53,077 - INFO - [__main__] - [DealSite+] Found: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (2026-01-27)
+2026-01-27 09:49:53,097 - INFO - [__main__] - [DealSite+] Found: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (2026-01-26)
+2026-01-27 09:49:53,115 - INFO - [__main__] - [DealSite+] Found: '컨설타비스트' 미리…PER 50배 KKR 모델 가동 (2026-01-26)
+2026-01-27 09:49:53,134 - INFO - [__main__] - [DealSite+] Found: 한국벤처투자 1차 출자…4.4조 펀드 만든다 (2026-01-26)
+2026-01-27 09:49:53,151 - INFO - [__main__] - [DealSite+] Found: 퓨리오사AI 증시 데뷔 무대의 중요성 (2026-01-26)
+2026-01-27 09:49:53,273 - INFO - [__main__] - [DealSite+] Collection complete. Found 10 articles.
+2026-01-27 09:49:53,273 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-26...
+2026-01-27 09:49:53,273 - INFO - [__main__] - [investchosun] Starting login process...
+================================================== 
+[Paywall Agent] Start Time: 2026-01-27  9:53:47.79 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-27 09:53:48,572 - INFO - [__main__] - Target Date Range: 2026-01-26 ~ 2026-01-27
+2026-01-27 09:53:48,572 - INFO - [__main__] - ============================================================
+2026-01-27 09:53:48,572 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-27 09:53:48,572 - INFO - [__main__] - ============================================================
+2026-01-27 09:53:48,572 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-27 09:53:49,433 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 09:53:49,450 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 09:53:49,460 - INFO - [WDM] - Driver [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192\chromedriver-win32/chromedriver.exe] found in cache
+2026-01-27 09:53:50,582 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-27 09:53:50,582 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-27 09:53:50,582 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-27 09:53:50,582 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-26...
+2026-01-27 09:53:50,582 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-27 09:53:56,414 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-27 09:53:56,417 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-27 09:53:58,664 - INFO - [__main__] - [Hankyung] Found: 국민연금·신세계 반대에…이지스, 센터필드 매각 중단 (20260127)
+2026-01-27 09:53:58,673 - INFO - [__main__] - [Hankyung] Found: 국민연금, 국내주식 비중 늘린다…'기계적 매도'는 한시 유예 (20260126)
+2026-01-27 09:53:58,682 - INFO - [__main__] - [Hankyung] Found: 유암코 신임 대표에 김윤우 (20260126)
+2026-01-27 09:53:58,690 - INFO - [__main__] - [Hankyung] Found: 혈액제제로 美 뚫은 녹십자…매출 사상 최대 (20260126)
+2026-01-27 09:53:58,851 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-27 09:54:01,061 - INFO - [__main__] - [Hankyung] Found: 새해 첫 빅딜 SK엠유·울산GPS 실제 승자는 '한투증권' (20260126)
+2026-01-27 09:54:01,069 - INFO - [__main__] - [Hankyung] Found: 롯데그룹 "유동성 충분…렌탈 매각은 계속 검토" (20260126)
+2026-01-27 09:54:01,077 - INFO - [__main__] - [Hankyung] Found: "롯데·SK렌터카 빼면 다 영세업자…둘 합치면 경쟁자 없어" (20260126)
+2026-01-27 09:54:01,085 - INFO - [__main__] - [Hankyung] Found: 롯데·SK렌터카 기업결합 무산…"둘 합치면 경쟁자 없어" (20260126)
+2026-01-27 09:54:01,095 - INFO - [__main__] - [Hankyung] Found: 하나·한투금융, MG손보 인수전 뛰어들었다 (20260126)
+2026-01-27 09:54:01,141 - INFO - [__main__] - [Hankyung] Found: 공정위, 어피니티 롯데렌탈 인수 불허…PEF 볼트온 인수에 제동 (20260126)
+2026-01-27 09:54:01,213 - INFO - [__main__] - [Hankyung] Collection complete. Found 10 articles.
+2026-01-27 09:54:01,213 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-26 ~ 2026-01-27)...
+2026-01-27 09:54:01,213 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-27 09:54:06,793 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-27 09:54:06,795 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-27 09:54:06,795 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-27 09:54:10,317 - INFO - [__main__] - [TheBell] Found: '매각 없다' 한아아이앤티, M&A로 사세 확장 추진 (2026-01-26)
+2026-01-27 09:54:10,372 - INFO - [__main__] - [TheBell] Found: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (2026-01-26)
+2026-01-27 09:54:10,387 - INFO - [__main__] - [TheBell] Found: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (2026-01-26)
+2026-01-27 09:54:10,414 - INFO - [__main__] - [TheBell] Found: '극장가 빅딜' 뛰어든 IMM크레딧, 실탄 마련 방안은 (2026-01-26)
+2026-01-27 09:54:10,486 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-27 09:54:10,486 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-27 09:54:10,486 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-27 09:54:13,905 - INFO - [__main__] - [TheBell] Found: 나우IB캐피탈, 삼진식품 전량 엑시트…300억 이상 회수 (2026-01-27)
+2026-01-27 09:54:13,921 - INFO - [__main__] - [TheBell] Found: 아이벡스메디칼, 기평 통과…예심청구 임박 (2026-01-27)
+2026-01-27 09:54:13,949 - INFO - [__main__] - [TheBell] Found: 니바코퍼레이션, '150억' 시리즈B 라운드 시동 (2026-01-27)
+2026-01-27 09:54:13,965 - INFO - [__main__] - [TheBell] Found: 신한벤처투자, 바이오 회수 사이클 진입 (2026-01-27)
+2026-01-27 09:54:14,007 - INFO - [__main__] - [TheBell] Found: 위밋모빌리티, IPO 주관사에 삼성증권 낙점 (2026-01-27)
+2026-01-27 09:54:14,046 - INFO - [__main__] - [TheBell] Found: 진에딧, '시리즈B-1' 2200만달러 클로징 임박 (2026-01-26)
+2026-01-27 09:54:14,061 - INFO - [__main__] - [TheBell] Found: 지스트기술지주, VC 등록…듀얼 라이선스 겸업 (2026-01-26)
+2026-01-27 09:54:14,146 - INFO - [__main__] - [TheBell] Found: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (2026-01-26)
+2026-01-27 09:54:14,162 - INFO - [__main__] - [TheBell] Found: NH벤처, 엑시트 앞둔 포트 4~5곳…선순환 본궤도 (2026-01-26)
+2026-01-27 09:54:14,162 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-01-27 09:54:17,794 - INFO - [__main__] - [TheBell] Found: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (2026-01-26)
+2026-01-27 09:54:17,844 - INFO - [__main__] - [TheBell] Found: STO 인가, ‘절차 논란’ 넘어 법적 리스크로 번지나 (2026-01-26)
+2026-01-27 09:54:17,859 - INFO - [__main__] - [TheBell] Found: 농진원, AC사업 절반 축소…4곳 선정에 경쟁 예고 (2026-01-26)
+2026-01-27 09:54:17,976 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-27 09:54:17,976 - INFO - [__main__] - [TheBell] Collection complete. Found 16 articles.
+2026-01-27 09:54:17,976 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-26...
+2026-01-27 09:54:17,976 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-27 09:54:23,570 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-27 09:54:23,575 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-27 09:54:26,413 - INFO - [__main__] - [DealSite+] Found: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (2026-01-27)
+2026-01-27 09:54:26,432 - INFO - [__main__] - [DealSite+] Found: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (2026-01-27)
+2026-01-27 09:54:26,449 - INFO - [__main__] - [DealSite+] Found: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (2026-01-26)
+2026-01-27 09:54:26,643 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-27 09:54:29,177 - INFO - [__main__] - [DealSite+] Found: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (2026-01-27)
+2026-01-27 09:54:29,194 - INFO - [__main__] - [DealSite+] Found: 더화이트커뮤 브릿지 프리IPO…150억 더 모은다 (2026-01-27)
+2026-01-27 09:54:29,213 - INFO - [__main__] - [DealSite+] Found: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (2026-01-27)
+2026-01-27 09:54:29,231 - INFO - [__main__] - [DealSite+] Found: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (2026-01-26)
+2026-01-27 09:54:29,250 - INFO - [__main__] - [DealSite+] Found: '컨설타비스트' 미리…PER 50배 KKR 모델 가동 (2026-01-26)
+2026-01-27 09:54:29,270 - INFO - [__main__] - [DealSite+] Found: 한국벤처투자 1차 출자…4.4조 펀드 만든다 (2026-01-26)
+2026-01-27 09:54:29,290 - INFO - [__main__] - [DealSite+] Found: 퓨리오사AI 증시 데뷔 무대의 중요성 (2026-01-26)
+2026-01-27 09:54:29,412 - INFO - [__main__] - [DealSite+] Collection complete. Found 10 articles.
+2026-01-27 09:54:29,412 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-26...
+2026-01-27 09:54:29,412 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-27 09:54:35,016 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-27 09:54:35,018 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-27 09:54:37,333 - INFO - [__main__] - [InvestChosun] Found: 롯데-어피너티, 공정위 롯데렌탈 기업결합 불허에 이의신청 검토 (2026-01-26)
+2026-01-27 09:54:37,348 - INFO - [__main__] - [InvestChosun] Found: LS에식스솔루션즈 상장 철회 여파...올해 대기업 계열 IPO 전반 '우려 확산' (2026-01-26)
+2026-01-27 09:54:37,362 - INFO - [__main__] - [InvestChosun] Found: 롯데렌탈 매각 제동에 조달 전략 다시 짜야할 롯데그룹 (2026-01-26)
+2026-01-27 09:54:37,377 - INFO - [__main__] - [InvestChosun] Found: 이번주 5000억 대경오앤티 매각 예비입찰 마감…외국계 SI·PE 각축 (2026-01-26)
+2026-01-27 09:54:37,397 - INFO - [__main__] - [InvestChosun] Found: 공정위, 어피너티의 롯데렌탈·SK렌터카 결합 제동 (2026-01-26)
+2026-01-27 09:54:37,411 - INFO - [__main__] - [InvestChosun] Found: LS, 에식스솔루션즈 상장 신청 철회 (2026-01-26)
+2026-01-27 09:54:37,426 - INFO - [__main__] - [InvestChosun] Found: 베인캐피탈, 에코마케팅 2차 공개매수 개시…이후 상장폐지 추진 (2026-01-26)
+2026-01-27 09:54:37,444 - INFO - [__main__] - [InvestChosun] Collection complete. Found 7 articles.
+2026-01-27 09:54:50,918 - INFO - [google_auth_oauthlib.flow] - "GET /?state=NYlnY5LrnoUQBD9kEBWvs1StSsDRtp&code=4/0ASc3gC0MXMlrkTc5mTkYFEhjPunHsMdJOvVM9tqhnWeqP68L_hz-MNBYCrg3jb26zuT5lg&scope=https://www.googleapis.com/auth/drive.file%20https://www.googleapis.com/auth/spreadsheets HTTP/1.1" 200 65
+2026-01-27 09:54:51,143 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 09:54:51,144 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 09:54:52,798 - INFO - [__main__] - [History] Loaded 164 URLs and 164 titles from history.
+2026-01-27 09:54:52,798 - INFO - [__main__] - [History] Skipping Duplicate (URL): '극장가 빅딜' 뛰어든 IMM크레딧, 실탄 마련 방안은 [TheBell]
+2026-01-27 09:54:52,798 - INFO - [__main__] - [History] Skipping Duplicate (URL): 농진원, AC사업 절반 축소…4곳 선정에 경쟁 예고 [TheBell]
+2026-01-27 09:54:52,798 - INFO - [__main__] - [History] Skipping Duplicate (URL): 퓨리오사AI 증시 데뷔 무대의 중요성 [DealSitePlus]
+2026-01-27 09:54:52,799 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 35
+2026-01-27 09:54:52,799 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-27 09:54:52,799 - INFO - [__main__] - [PDF] [1/35] Processing: 국민연금·신세계 반대에…이지스, 센터필드 매각 중단 (Hankyung)
+2026-01-27 09:54:59,562 - INFO - [__main__] - [PDF] [2/35] Processing: 국민연금, 국내주식 비중 늘린다…'기계적 매도'는 한시 유예 (Hankyung)
+2026-01-27 09:55:06,051 - INFO - [__main__] - [PDF] [3/35] Processing: 유암코 신임 대표에 김윤우 (Hankyung)
+2026-01-27 09:55:12,481 - INFO - [__main__] - [PDF] [4/35] Processing: 혈액제제로 美 뚫은 녹십자…매출 사상 최대 (Hankyung)
+2026-01-27 09:55:19,003 - INFO - [__main__] - [PDF] [5/35] Processing: 새해 첫 빅딜 SK엠유·울산GPS 실제 승자는 '한투증권' (Hankyung)
+2026-01-27 09:55:25,541 - INFO - [__main__] - [PDF] [6/35] Processing: 롯데그룹 "유동성 충분…렌탈 매각은 계속 검토" (Hankyung)
+2026-01-27 09:55:31,966 - INFO - [__main__] - [PDF] [7/35] Processing: "롯데·SK렌터카 빼면 다 영세업자…둘 합치면 경쟁자 없어" (Hankyung)
+2026-01-27 09:55:38,547 - INFO - [__main__] - [PDF] [8/35] Processing: 롯데·SK렌터카 기업결합 무산…"둘 합치면 경쟁자 없어" (Hankyung)
+2026-01-27 09:55:45,125 - INFO - [__main__] - [PDF] [9/35] Processing: 하나·한투금융, MG손보 인수전 뛰어들었다 (Hankyung)
+2026-01-27 09:55:51,618 - INFO - [__main__] - [PDF] [10/35] Processing: 공정위, 어피니티 롯데렌탈 인수 불허…PEF 볼트온 인수에 제동 (Hankyung)
+2026-01-27 09:55:58,128 - INFO - [__main__] - [PDF] [11/35] Processing: '매각 없다' 한아아이앤티, M&A로 사세 확장 추진 (TheBell)
+2026-01-27 09:56:04,672 - INFO - [__main__] - [PDF] [12/35] Processing: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (TheBell)
+2026-01-27 09:56:11,156 - INFO - [__main__] - [PDF] [13/35] Processing: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (TheBell)
+2026-01-27 09:56:17,604 - INFO - [__main__] - [PDF] [14/35] Processing: 나우IB캐피탈, 삼진식품 전량 엑시트…300억 이상 회수 (TheBell)
+2026-01-27 09:56:24,024 - INFO - [__main__] - [PDF] [15/35] Processing: 아이벡스메디칼, 기평 통과…예심청구 임박 (TheBell)
+2026-01-27 09:56:30,442 - INFO - [__main__] - [PDF] [16/35] Processing: 니바코퍼레이션, '150억' 시리즈B 라운드 시동 (TheBell)
+2026-01-27 09:56:36,995 - INFO - [__main__] - [PDF] [17/35] Processing: 신한벤처투자, 바이오 회수 사이클 진입 (TheBell)
+2026-01-27 09:56:43,482 - INFO - [__main__] - [PDF] [18/35] Processing: 위밋모빌리티, IPO 주관사에 삼성증권 낙점 (TheBell)
+2026-01-27 09:56:50,020 - INFO - [__main__] - [PDF] [19/35] Processing: 진에딧, '시리즈B-1' 2200만달러 클로징 임박 (TheBell)
+2026-01-27 09:56:56,598 - INFO - [__main__] - [PDF] [20/35] Processing: 지스트기술지주, VC 등록…듀얼 라이선스 겸업 (TheBell)
+2026-01-27 09:57:03,029 - INFO - [__main__] - [PDF] [21/35] Processing: NH벤처, 엑시트 앞둔 포트 4~5곳…선순환 본궤도 (TheBell)
+2026-01-27 09:57:09,473 - INFO - [__main__] - [PDF] [22/35] Processing: STO 인가, ‘절차 논란’ 넘어 법적 리스크로 번지나 (TheBell)
+2026-01-27 09:57:16,014 - INFO - [__main__] - [PDF] [23/35] Processing: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (DealSitePlus)
+2026-01-27 09:57:22,914 - INFO - [__main__] - [PDF] [24/35] Processing: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (DealSitePlus)
+2026-01-27 09:57:29,657 - INFO - [__main__] - [PDF] [25/35] Processing: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (DealSitePlus)
+2026-01-27 09:57:36,530 - INFO - [__main__] - [PDF] [26/35] Processing: 더화이트커뮤 브릿지 프리IPO…150억 더 모은다 (DealSitePlus)
+2026-01-27 09:57:43,285 - INFO - [__main__] - [PDF] [27/35] Processing: '컨설타비스트' 미리…PER 50배 KKR 모델 가동 (DealSitePlus)
+2026-01-27 09:57:50,180 - INFO - [__main__] - [PDF] [28/35] Processing: 한국벤처투자 1차 출자…4.4조 펀드 만든다 (DealSitePlus)
+2026-01-27 09:57:57,047 - INFO - [__main__] - [PDF] [29/35] Processing: 롯데-어피너티, 공정위 롯데렌탈 기업결합 불허에 이의신청 검토 (InvestChosun)
+2026-01-27 09:58:03,749 - INFO - [__main__] - [PDF] [30/35] Processing: LS에식스솔루션즈 상장 철회 여파...올해 대기업 계열 IPO 전반 '우려 확산' (InvestChosun)
+2026-01-27 09:58:10,243 - INFO - [__main__] - [PDF] [31/35] Processing: 롯데렌탈 매각 제동에 조달 전략 다시 짜야할 롯데그룹 (InvestChosun)
+2026-01-27 09:58:16,745 - INFO - [__main__] - [PDF] [32/35] Processing: 이번주 5000억 대경오앤티 매각 예비입찰 마감…외국계 SI·PE 각축 (InvestChosun)
+2026-01-27 09:58:23,209 - INFO - [__main__] - [PDF] [33/35] Processing: 공정위, 어피너티의 롯데렌탈·SK렌터카 결합 제동 (InvestChosun)
+2026-01-27 09:58:29,585 - INFO - [__main__] - [PDF] [34/35] Processing: LS, 에식스솔루션즈 상장 신청 철회 (InvestChosun)
+2026-01-27 09:58:36,002 - INFO - [__main__] - [PDF] [35/35] Processing: 베인캐피탈, 에코마케팅 2차 공개매수 개시…이후 상장폐지 추진 (InvestChosun)
+2026-01-27 09:58:42,416 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-27 09:58:44,444 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 09:58:48,096 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1VDni6YgqfwcZc2FDjXLn3elkcCRLo_L3/view?usp=drivesdk
+2026-01-27 09:58:50,621 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 09:58:53,517 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1LCyF6mSsmKhdHz8FgpU0PZcmpSCO2ywc/view?usp=drivesdk
+2026-01-27 09:58:54,868 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 09:58:59,704 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1jZm3H_BbWA5Qdo-oTcWM9wVpvhHmnAPK/view?usp=drivesdk
+2026-01-27 09:59:01,332 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 09:59:05,579 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1f3bJwTomtCluLX4IQP2K9huts6GXWSp9/view?usp=drivesdk
+2026-01-27 09:59:07,148 - INFO - [__main__] - [History] Updated sheet with 35 new articles.
+2026-01-27 09:59:08,282 - INFO - [__main__] - 
+============================================================
+2026-01-27 09:59:08,282 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-27 09:59:08,282 - INFO - [__main__] - ============================================================
+Please visit this URL to authorize this application: https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=225739810868-q5m11hl6b0ktj15gmp9aq513dv3mjtki.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A55265%2F&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.file+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fspreadsheets&state=NYlnY5LrnoUQBD9kEBWvs1StSsDRtp&access_type=offline
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-27  9:59:10.88 
+================================================== 
+ 
+================================================== 
+[Paywall Agent] Start Time: 2026-01-27 10:05:41.92 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-27 10:05:42,725 - INFO - [__main__] - Target Date Range: 2026-01-26 ~ 2026-01-27
+2026-01-27 10:05:42,725 - INFO - [__main__] - ============================================================
+2026-01-27 10:05:42,726 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-27 10:05:42,726 - INFO - [__main__] - ============================================================
+2026-01-27 10:05:42,726 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-27 10:05:43,600 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 10:05:43,654 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-27 10:05:43,665 - INFO - [WDM] - Driver [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192\chromedriver-win32/chromedriver.exe] found in cache
+2026-01-27 10:05:44,770 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-27 10:05:44,770 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-27 10:05:44,770 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-27 10:05:44,770 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-26...
+2026-01-27 10:05:44,770 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-27 10:05:51,546 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-27 10:05:51,548 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-27 10:05:53,891 - INFO - [__main__] - [Hankyung] Found: 국민연금·신세계 반대에…이지스, 센터필드 매각 중단 (20260127)
+2026-01-27 10:05:53,901 - INFO - [__main__] - [Hankyung] Found: 국민연금, 국내주식 비중 늘린다…'기계적 매도'는 한시 유예 (20260126)
+2026-01-27 10:05:53,909 - INFO - [__main__] - [Hankyung] Found: 유암코 신임 대표에 김윤우 (20260126)
+2026-01-27 10:05:53,918 - INFO - [__main__] - [Hankyung] Found: 혈액제제로 美 뚫은 녹십자…매출 사상 최대 (20260126)
+2026-01-27 10:05:54,085 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-27 10:05:56,305 - INFO - [__main__] - [Hankyung] Found: 새해 첫 빅딜 SK엠유·울산GPS 실제 승자는 '한투증권' (20260126)
+2026-01-27 10:05:56,315 - INFO - [__main__] - [Hankyung] Found: 롯데그룹 "유동성 충분…렌탈 매각은 계속 검토" (20260126)
+2026-01-27 10:05:56,323 - INFO - [__main__] - [Hankyung] Found: "롯데·SK렌터카 빼면 다 영세업자…둘 합치면 경쟁자 없어" (20260126)
+2026-01-27 10:05:56,331 - INFO - [__main__] - [Hankyung] Found: 롯데·SK렌터카 기업결합 무산…"둘 합치면 경쟁자 없어" (20260126)
+2026-01-27 10:05:56,348 - INFO - [__main__] - [Hankyung] Found: 하나·한투금융, MG손보 인수전 뛰어들었다 (20260126)
+2026-01-27 10:05:56,416 - INFO - [__main__] - [Hankyung] Found: 공정위, 어피니티 롯데렌탈 인수 불허…PEF 볼트온 인수에 제동 (20260126)
+2026-01-27 10:05:56,529 - INFO - [__main__] - [Hankyung] Collection complete. Found 10 articles.
+2026-01-27 10:05:56,529 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-26 ~ 2026-01-27)...
+2026-01-27 10:05:56,530 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-27 10:06:03,183 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-27 10:06:03,185 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-27 10:06:03,185 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-27 10:06:06,985 - INFO - [__main__] - [TheBell] Found: '매각 없다' 한아아이앤티, M&A로 사세 확장 추진 (2026-01-26)
+2026-01-27 10:06:07,038 - INFO - [__main__] - [TheBell] Found: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (2026-01-26)
+2026-01-27 10:06:07,057 - INFO - [__main__] - [TheBell] Found: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (2026-01-26)
+2026-01-27 10:06:07,085 - INFO - [__main__] - [TheBell] Found: '극장가 빅딜' 뛰어든 IMM크레딧, 실탄 마련 방안은 (2026-01-26)
+2026-01-27 10:06:07,165 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-27 10:06:07,165 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-27 10:06:07,165 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-27 10:06:10,964 - INFO - [__main__] - [TheBell] Found: HB인베, 성장M&A펀드 청산…Net IRR 15% 육박 (2026-01-27)
+2026-01-27 10:06:10,979 - INFO - [__main__] - [TheBell] Found: 나우IB캐피탈, 삼진식품 전량 엑시트…300억 이상 회수 (2026-01-27)
+2026-01-27 10:06:10,996 - INFO - [__main__] - [TheBell] Found: 아이벡스메디칼, 기평 통과…예심청구 임박 (2026-01-27)
+2026-01-27 10:06:11,050 - INFO - [__main__] - [TheBell] Found: 니바코퍼레이션, '150억' 시리즈B 라운드 시동 (2026-01-27)
+2026-01-27 10:06:11,076 - INFO - [__main__] - [TheBell] Found: 신한벤처투자, 바이오 회수 사이클 진입 (2026-01-27)
+2026-01-27 10:06:11,116 - INFO - [__main__] - [TheBell] Found: 위밋모빌리티, IPO 주관사에 삼성증권 낙점 (2026-01-27)
+2026-01-27 10:06:11,156 - INFO - [__main__] - [TheBell] Found: 진에딧, '시리즈B-1' 2200만달러 클로징 임박 (2026-01-26)
+2026-01-27 10:06:11,172 - INFO - [__main__] - [TheBell] Found: 지스트기술지주, VC 등록…듀얼 라이선스 겸업 (2026-01-26)
+2026-01-27 10:06:11,277 - INFO - [__main__] - [TheBell] Found: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (2026-01-26)
+2026-01-27 10:06:11,277 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-01-27 10:06:15,828 - INFO - [__main__] - [TheBell] Found: NH벤처, 엑시트 앞둔 포트 4~5곳…선순환 본궤도 (2026-01-26)
+2026-01-27 10:06:15,855 - INFO - [__main__] - [TheBell] Found: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (2026-01-26)
+2026-01-27 10:06:15,905 - INFO - [__main__] - [TheBell] Found: STO 인가, ‘절차 논란’ 넘어 법적 리스크로 번지나 (2026-01-26)
+2026-01-27 10:06:15,921 - INFO - [__main__] - [TheBell] Found: 농진원, AC사업 절반 축소…4곳 선정에 경쟁 예고 (2026-01-26)
+2026-01-27 10:06:16,033 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-27 10:06:16,033 - INFO - [__main__] - [TheBell] Collection complete. Found 17 articles.
+2026-01-27 10:06:16,033 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-26...
+2026-01-27 10:06:16,033 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-27 10:06:22,017 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-27 10:06:22,019 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-27 10:06:24,946 - INFO - [__main__] - [DealSite+] Found: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (2026-01-27)
+2026-01-27 10:06:24,978 - INFO - [__main__] - [DealSite+] Found: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (2026-01-27)
+2026-01-27 10:06:24,998 - INFO - [__main__] - [DealSite+] Found: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (2026-01-26)
+2026-01-27 10:06:25,176 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-27 10:06:27,919 - INFO - [__main__] - [DealSite+] Found: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (2026-01-27)
+2026-01-27 10:06:27,938 - INFO - [__main__] - [DealSite+] Found: 더화이트커뮤 브릿지 프리IPO…150억 더 모은다 (2026-01-27)
+2026-01-27 10:06:27,958 - INFO - [__main__] - [DealSite+] Found: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (2026-01-27)
+2026-01-27 10:06:27,977 - INFO - [__main__] - [DealSite+] Found: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (2026-01-26)
+2026-01-27 10:06:27,995 - INFO - [__main__] - [DealSite+] Found: '컨설타비스트' 미리…PER 50배 KKR 모델 가동 (2026-01-26)
+2026-01-27 10:06:28,013 - INFO - [__main__] - [DealSite+] Found: 한국벤처투자 1차 출자…4.4조 펀드 만든다 (2026-01-26)
+2026-01-27 10:06:28,032 - INFO - [__main__] - [DealSite+] Found: 퓨리오사AI 증시 데뷔 무대의 중요성 (2026-01-26)
+2026-01-27 10:06:28,178 - INFO - [__main__] - [DealSite+] Collection complete. Found 10 articles.
+2026-01-27 10:06:28,178 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-26...
+2026-01-27 10:06:28,178 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-27 10:06:34,476 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-27 10:06:34,481 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-27 10:06:36,754 - INFO - [__main__] - [InvestChosun] Found: 롯데-어피너티, 공정위 롯데렌탈 기업결합 불허에 이의신청 검토 (2026-01-26)
+2026-01-27 10:06:36,770 - INFO - [__main__] - [InvestChosun] Found: LS에식스솔루션즈 상장 철회 여파...올해 대기업 계열 IPO 전반 '우려 확산' (2026-01-26)
+2026-01-27 10:06:36,785 - INFO - [__main__] - [InvestChosun] Found: 롯데렌탈 매각 제동에 조달 전략 다시 짜야할 롯데그룹 (2026-01-26)
+2026-01-27 10:06:36,800 - INFO - [__main__] - [InvestChosun] Found: 이번주 5000억 대경오앤티 매각 예비입찰 마감…외국계 SI·PE 각축 (2026-01-26)
+2026-01-27 10:06:36,815 - INFO - [__main__] - [InvestChosun] Found: 공정위, 어피너티의 롯데렌탈·SK렌터카 결합 제동 (2026-01-26)
+2026-01-27 10:06:36,832 - INFO - [__main__] - [InvestChosun] Found: LS, 에식스솔루션즈 상장 신청 철회 (2026-01-26)
+2026-01-27 10:06:36,848 - INFO - [__main__] - [InvestChosun] Found: 베인캐피탈, 에코마케팅 2차 공개매수 개시…이후 상장폐지 추진 (2026-01-26)
+2026-01-27 10:06:36,867 - INFO - [__main__] - [InvestChosun] Collection complete. Found 7 articles.
+2026-01-27 10:06:37,451 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 10:06:37,453 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 10:06:38,962 - INFO - [__main__] - [History] Loaded 164 URLs and 164 titles from history.
+2026-01-27 10:06:38,962 - INFO - [__main__] - [History] Skipping Duplicate (URL): '극장가 빅딜' 뛰어든 IMM크레딧, 실탄 마련 방안은 [TheBell]
+2026-01-27 10:06:38,962 - INFO - [__main__] - [History] Skipping Duplicate (URL): 농진원, AC사업 절반 축소…4곳 선정에 경쟁 예고 [TheBell]
+2026-01-27 10:06:38,962 - INFO - [__main__] - [History] Skipping Duplicate (URL): 퓨리오사AI 증시 데뷔 무대의 중요성 [DealSitePlus]
+2026-01-27 10:06:38,962 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 36
+2026-01-27 10:06:38,962 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-27 10:06:38,962 - INFO - [__main__] - [PDF] [1/36] Processing: 국민연금·신세계 반대에…이지스, 센터필드 매각 중단 (Hankyung)
+2026-01-27 10:06:45,811 - INFO - [__main__] - [PDF] [2/36] Processing: 국민연금, 국내주식 비중 늘린다…'기계적 매도'는 한시 유예 (Hankyung)
+2026-01-27 10:06:52,395 - INFO - [__main__] - [PDF] [3/36] Processing: 유암코 신임 대표에 김윤우 (Hankyung)
+2026-01-27 10:06:58,877 - INFO - [__main__] - [PDF] [4/36] Processing: 혈액제제로 美 뚫은 녹십자…매출 사상 최대 (Hankyung)
+2026-01-27 10:07:05,431 - INFO - [__main__] - [PDF] [5/36] Processing: 새해 첫 빅딜 SK엠유·울산GPS 실제 승자는 '한투증권' (Hankyung)
+2026-01-27 10:07:12,045 - INFO - [__main__] - [PDF] [6/36] Processing: 롯데그룹 "유동성 충분…렌탈 매각은 계속 검토" (Hankyung)
+2026-01-27 10:07:18,490 - INFO - [__main__] - [PDF] [7/36] Processing: "롯데·SK렌터카 빼면 다 영세업자…둘 합치면 경쟁자 없어" (Hankyung)
+2026-01-27 10:07:25,080 - INFO - [__main__] - [PDF] [8/36] Processing: 롯데·SK렌터카 기업결합 무산…"둘 합치면 경쟁자 없어" (Hankyung)
+2026-01-27 10:07:31,680 - INFO - [__main__] - [PDF] [9/36] Processing: 하나·한투금융, MG손보 인수전 뛰어들었다 (Hankyung)
+2026-01-27 10:07:38,213 - INFO - [__main__] - [PDF] [10/36] Processing: 공정위, 어피니티 롯데렌탈 인수 불허…PEF 볼트온 인수에 제동 (Hankyung)
+2026-01-27 10:07:44,780 - INFO - [__main__] - [PDF] [11/36] Processing: '매각 없다' 한아아이앤티, M&A로 사세 확장 추진 (TheBell)
+2026-01-27 10:07:51,331 - INFO - [__main__] - [PDF] [12/36] Processing: 그래비티-S&S인베, 성호전자와 디이에스 인수 완료 (TheBell)
+2026-01-27 10:07:58,101 - INFO - [__main__] - [PDF] [13/36] Processing: APC PE, '벌크선 해운' STX그린로지스 매각 추진 (TheBell)
+2026-01-27 10:08:04,582 - INFO - [__main__] - [PDF] [14/36] Processing: HB인베, 성장M&A펀드 청산…Net IRR 15% 육박 (TheBell)
+2026-01-27 10:08:11,225 - INFO - [__main__] - [PDF] [15/36] Processing: 나우IB캐피탈, 삼진식품 전량 엑시트…300억 이상 회수 (TheBell)
+2026-01-27 10:08:17,855 - INFO - [__main__] - [PDF] [16/36] Processing: 아이벡스메디칼, 기평 통과…예심청구 임박 (TheBell)
+2026-01-27 10:08:24,557 - INFO - [__main__] - [PDF] [17/36] Processing: 니바코퍼레이션, '150억' 시리즈B 라운드 시동 (TheBell)
+2026-01-27 10:08:31,412 - INFO - [__main__] - [PDF] [18/36] Processing: 신한벤처투자, 바이오 회수 사이클 진입 (TheBell)
+2026-01-27 10:08:38,112 - INFO - [__main__] - [PDF] [19/36] Processing: 위밋모빌리티, IPO 주관사에 삼성증권 낙점 (TheBell)
+2026-01-27 10:08:44,782 - INFO - [__main__] - [PDF] [20/36] Processing: 진에딧, '시리즈B-1' 2200만달러 클로징 임박 (TheBell)
+2026-01-27 10:08:51,697 - INFO - [__main__] - [PDF] [21/36] Processing: 지스트기술지주, VC 등록…듀얼 라이선스 겸업 (TheBell)
+2026-01-27 10:08:58,383 - INFO - [__main__] - [PDF] [22/36] Processing: NH벤처, 엑시트 앞둔 포트 4~5곳…선순환 본궤도 (TheBell)
+2026-01-27 10:09:05,168 - INFO - [__main__] - [PDF] [23/36] Processing: STO 인가, ‘절차 논란’ 넘어 법적 리스크로 번지나 (TheBell)
+2026-01-27 10:09:11,947 - INFO - [__main__] - [PDF] [24/36] Processing: 백기사 혹은 트로이목마…전국극장 구조조정 포석 (DealSitePlus)
+2026-01-27 10:09:19,407 - INFO - [__main__] - [PDF] [25/36] Processing: 딜로이트안진 길잃은 K라인…길기완의 학연 차단 (DealSitePlus)
+2026-01-27 10:09:26,513 - INFO - [__main__] - [PDF] [26/36] Processing: 李정부 사모펀드 경계령에…불똥맞은 어피니티 (DealSitePlus)
+2026-01-27 10:09:33,530 - INFO - [__main__] - [PDF] [27/36] Processing: 더화이트커뮤 브릿지 프리IPO…150억 더 모은다 (DealSitePlus)
+2026-01-27 10:09:40,538 - INFO - [__main__] - [PDF] [28/36] Processing: '컨설타비스트' 미리…PER 50배 KKR 모델 가동 (DealSitePlus)
+2026-01-27 10:09:47,583 - INFO - [__main__] - [PDF] [29/36] Processing: 한국벤처투자 1차 출자…4.4조 펀드 만든다 (DealSitePlus)
+2026-01-27 10:09:54,746 - INFO - [__main__] - [PDF] [30/36] Processing: 롯데-어피너티, 공정위 롯데렌탈 기업결합 불허에 이의신청 검토 (InvestChosun)
+2026-01-27 10:10:01,810 - INFO - [__main__] - [PDF] [31/36] Processing: LS에식스솔루션즈 상장 철회 여파...올해 대기업 계열 IPO 전반 '우려 확산' (InvestChosun)
+2026-01-27 10:10:08,551 - INFO - [__main__] - [PDF] [32/36] Processing: 롯데렌탈 매각 제동에 조달 전략 다시 짜야할 롯데그룹 (InvestChosun)
+2026-01-27 10:10:15,245 - INFO - [__main__] - [PDF] [33/36] Processing: 이번주 5000억 대경오앤티 매각 예비입찰 마감…외국계 SI·PE 각축 (InvestChosun)
+2026-01-27 10:10:21,930 - INFO - [__main__] - [PDF] [34/36] Processing: 공정위, 어피너티의 롯데렌탈·SK렌터카 결합 제동 (InvestChosun)
+2026-01-27 10:10:28,515 - INFO - [__main__] - [PDF] [35/36] Processing: LS, 에식스솔루션즈 상장 신청 철회 (InvestChosun)
+2026-01-27 10:10:35,203 - INFO - [__main__] - [PDF] [36/36] Processing: 베인캐피탈, 에코마케팅 2차 공개매수 개시…이후 상장폐지 추진 (InvestChosun)
+2026-01-27 10:10:41,815 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-27 10:10:47,127 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 10:10:50,071 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1nPMxUAFZRKowGWX7QzKPiMjHeZAk546N/view?usp=drivesdk
+2026-01-27 10:10:56,822 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 10:10:59,919 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1QwixWI-uZe_wHna0yx4h4nOtqly0gLro/view?usp=drivesdk
+2026-01-27 10:11:03,354 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 10:11:06,468 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/14L8GyZ6T9L9j-Kor-nhIV_0mB-5EzNjk/view?usp=drivesdk
+2026-01-27 10:11:10,649 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-27 10:11:13,671 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1kTcARq7Mat_Vz4S4qzzBv7nuoEXAGxC_/view?usp=drivesdk
+2026-01-27 10:11:14,898 - INFO - [__main__] - [History] Updated sheet with 36 new articles.
+2026-01-27 10:11:15,832 - INFO - [__main__] - 
+============================================================
+2026-01-27 10:11:15,832 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-27 10:11:15,832 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-27 10:11:18.46 
+================================================== 
+ 

@@ -1,0 +1,162 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-01-29  8:55:50.79 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-29 08:55:51,972 - INFO - [__main__] - Target Date Range: 2026-01-28 ~ 2026-01-29
+2026-01-29 08:55:51,973 - INFO - [__main__] - ============================================================
+2026-01-29 08:55:51,973 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-29 08:55:51,973 - INFO - [__main__] - ============================================================
+2026-01-29 08:55:51,974 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-29 08:55:53,145 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-29 08:55:53,168 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-29 08:55:53,177 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-29 08:55:53,210 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-01-29 08:55:53,212 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-29 08:55:53,212 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-29 08:55:53,256 - INFO - [WDM] - Driver downloading response is 200
+2026-01-29 08:55:53,340 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-29 08:55:53,445 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-01-29 08:55:55,030 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-29 08:55:55,030 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-29 08:55:55,031 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-29 08:55:55,031 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-28...
+2026-01-29 08:55:55,031 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-29 08:56:00,868 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-29 08:56:00,870 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-29 08:56:03,133 - INFO - [__main__] - [Hankyung] Found: HBM이 이끈 하이닉스 매직…영업이익률 58% '역대급' (20260128)
+2026-01-29 08:56:03,143 - INFO - [__main__] - [Hankyung] Found: 배터리 적자에도 선방한 SK이노 (20260128)
+2026-01-29 08:56:03,151 - INFO - [__main__] - [Hankyung] Found: SK, 美에 AI투자법인 설립…'실탄 100억弗'로 스타트업 베팅 (20260128)
+2026-01-29 08:56:03,161 - INFO - [__main__] - [Hankyung] Found: SK하이닉스 이익률, 7년만에 TSMC 추월 (20260128)
+2026-01-29 08:56:03,172 - INFO - [__main__] - [Hankyung] Found: 전관 로비 먹혔나…금융당국, 대주주 심사 줄줄이 승인 ③ [구멍 뚫린 자본시장] (20260128)
+2026-01-29 08:56:03,234 - INFO - [__main__] - [Hankyung] Found: 금융사 사들여 꼭두각시 만든 오창석…개인회사에 수백억 꽂았다 ③ [구멍 뚫린 자본시장] (20260128)
+2026-01-29 08:56:03,242 - INFO - [__main__] - [Hankyung] Found: 쿠팡 美 로비액, 1년새 30% 줄었다 (20260128)
+2026-01-29 08:56:03,251 - INFO - [__main__] - [Hankyung] Found: OLED의 힘…LGD, 4년 만에 흑자전환 (20260128)
+2026-01-29 08:56:03,259 - INFO - [__main__] - [Hankyung] Found: 40% 넘는 배당률…우선주 악용해 횡령 의혹도 ③ [구멍 뚫린 자본시장] (20260128)
+2026-01-29 08:56:03,267 - INFO - [__main__] - [Hankyung] Found: SK證, 무궁화신탁 인수 추진…"자기 돈으로 폭탄 떠안는 꼴" ③ [구멍 뚫린 자본시장] (20260128)
+2026-01-29 08:56:03,275 - INFO - [__main__] - [Hankyung] Found: 맥쿼리PE, LG CNS 전량 블록딜…총 수익 1조 육박 (20260128)
+2026-01-29 08:56:03,302 - INFO - [__main__] - [Hankyung] Found: PEF운용사협의회, 협회 전환 논의 본격화…제도권 소통 창구 마련 속도 (20260128)
+2026-01-29 08:56:03,310 - INFO - [__main__] - [Hankyung] Found: 현대모비스, 작년 매출 61.1조·영업이익 3.3조 '사상 최대' (20260128)
+2026-01-29 08:56:03,318 - INFO - [__main__] - [Hankyung] Found: 퍼스트바이오테라퓨틱스, 317억 원 규모 시리즈D 투자 유치 [VC 브리핑] (20260128)
+2026-01-29 08:56:03,326 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-29 08:56:05,495 - INFO - [__main__] - [Hankyung] Found: PEF운용사협의회, 협회 전환 논의 본격화…제도권 소통 창구 마련 속도 (20260128)
+2026-01-29 08:56:05,642 - INFO - [__main__] - [Hankyung] Collection complete. Found 15 articles.
+2026-01-29 08:56:05,642 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-28 ~ 2026-01-29)...
+2026-01-29 08:56:05,642 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-29 08:56:11,238 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-29 08:56:11,240 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-29 08:56:11,240 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-29 08:56:14,964 - INFO - [__main__] - [TheBell] Found: '실적 반등 속도' 중고나라, 올 하반기 매각 작업 착수 (2026-01-29)
+2026-01-29 08:56:14,979 - INFO - [__main__] - [TheBell] Found: 맥쿼리PE, LG CNS 엑시트로 '1조' 벌었다 (2026-01-29)
+2026-01-29 08:56:14,993 - INFO - [__main__] - [TheBell] Found: 어펄마캐피탈, 화성코스메틱 리파이낸싱 완료 (2026-01-29)
+2026-01-29 08:56:15,008 - INFO - [__main__] - [TheBell] Found: '프롬더스킨' 바이오모아메디칼, 첫 투자 유치 추진 (2026-01-28)
+2026-01-29 08:56:15,023 - INFO - [__main__] - [TheBell] Found: 태광산업, 애경산업 '2080 사태' 피해 수치 요청…가격 조정 수순 (2026-01-28)
+2026-01-29 08:56:15,061 - INFO - [__main__] - [TheBell] Found: 우리은행, '2.6조' SK이노 LNG 발전소 인수금융 셀다운 마무리 (2026-01-28)
+2026-01-29 08:56:15,088 - INFO - [__main__] - [TheBell] Found: 칼라일, 'KFC·투썸' 담보 묶어 6700억 조달…KB·하나·한투 주선 (2026-01-28)
+2026-01-29 08:56:15,102 - INFO - [__main__] - [TheBell] Found: GS칼텍스, 대경오앤티 인수 검토…주주 동의가 '관건' (2026-01-28)
+2026-01-29 08:56:15,164 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-29 08:56:15,164 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-29 08:56:15,164 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-29 08:56:18,512 - INFO - [__main__] - [TheBell] Found: '실적 반등 속도' 중고나라, 올 하반기 매각 작업 착수 (2026-01-29)
+2026-01-29 08:56:18,527 - INFO - [__main__] - [TheBell] Found: 맥쿼리PE, LG CNS 엑시트로 '1조' 벌었다 (2026-01-29)
+2026-01-29 08:56:18,565 - INFO - [__main__] - [TheBell] Found: IMM인베, 인도 '섀도우팩스' 상장...첫 회수 기대 (2026-01-29)
+2026-01-29 08:56:18,580 - INFO - [__main__] - [TheBell] Found: 어펄마캐피탈, 화성코스메틱 리파이낸싱 완료 (2026-01-29)
+2026-01-29 08:56:18,617 - INFO - [__main__] - [TheBell] Found: 업스테이지, 코스피 간다…5월 예비심사 청구 윤곽 (2026-01-28)
+2026-01-29 08:56:18,633 - INFO - [__main__] - [TheBell] Found: '프롬더스킨' 바이오모아메디칼, 첫 투자 유치 추진 (2026-01-28)
+2026-01-29 08:56:18,647 - INFO - [__main__] - [TheBell] Found: '버추얼 IP' 스콘, 시리즈A 클로징 임박 (2026-01-28)
+2026-01-29 08:56:18,674 - INFO - [__main__] - [TheBell] Found: 태광산업, 애경산업 '2080 사태' 피해 수치 요청…가격 조정 수순 (2026-01-28)
+2026-01-29 08:56:18,718 - INFO - [__main__] - [TheBell] Found: 200억 모으는 왁티, 투자 하이라이트 '브랜드 마케팅 역량' (2026-01-28)
+2026-01-29 08:56:18,743 - INFO - [__main__] - [TheBell] Found: 칼라일, 'KFC·투썸' 담보 묶어 6700억 조달…KB·하나·한투 주선 (2026-01-28)
+2026-01-29 08:56:18,755 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-01-29 08:56:21,746 - INFO - [__main__] - [TheBell] Found: ‘시니어 토탈 케어’ 케어닥, 200억 프리IPO 순항 (2026-01-28)
+2026-01-29 08:56:21,805 - INFO - [__main__] - [TheBell] Found: '블록체인 지갑' 원셀프월드, 80억 시리즈A 돌입 (2026-01-28)
+2026-01-29 08:56:21,820 - INFO - [__main__] - [TheBell] Found: 인사이트에퀴티파트너스, 300억 그로쓰펀드 결성 (2026-01-28)
+2026-01-29 08:56:21,835 - INFO - [__main__] - [TheBell] Found: 파블로항공, 110억 프리IPO 브릿지 클로징 (2026-01-28)
+2026-01-29 08:56:21,850 - INFO - [__main__] - [TheBell] Found: 크립톤, 지역투자 보폭 키운다…경남 거점 확대 (2026-01-28)
+2026-01-29 08:56:21,864 - INFO - [__main__] - [TheBell] Found: '직방'에서 독립한 브리즈인베, 2년 만에 자본잠식 (2026-01-28)
+2026-01-29 08:56:21,932 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-29 08:56:21,932 - INFO - [__main__] - [TheBell] Collection complete. Found 24 articles.
+2026-01-29 08:56:21,932 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-28...
+2026-01-29 08:56:21,932 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-29 08:56:27,511 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-29 08:56:27,513 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-29 08:56:29,914 - INFO - [__main__] - [DealSite+] Found: 최대주주 교체에…"정책자금 수급향방은" (2026-01-28)
+2026-01-29 08:56:30,089 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-29 08:56:32,563 - INFO - [__main__] - [DealSite+] Found: 토큰증권 기업 바이셀에…엑스페릭스 30억 투자 (2026-01-28)
+2026-01-29 08:56:32,580 - INFO - [__main__] - [DealSite+] Found: 최대주주 교체에…"정책자금 수급향방은" (2026-01-28)
+2026-01-29 08:56:32,758 - INFO - [__main__] - [DealSite+] Collection complete. Found 3 articles.
+2026-01-29 08:56:32,758 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-28...
+2026-01-29 08:56:32,758 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-29 08:56:38,411 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-29 08:56:38,413 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-29 08:56:40,655 - INFO - [__main__] - [InvestChosun] Found: 건설채 만기 줄줄이…등급 따라 엇갈린 차환 전략 (2026-01-29)
+2026-01-29 08:56:40,683 - INFO - [__main__] - [InvestChosun] Found: SK하이닉스, 美 자회사에 최대 14.4조 출자…AI 투자 법인 전환 (2026-01-28)
+2026-01-29 08:56:40,697 - INFO - [__main__] - [InvestChosun] Found: 중소·벤처도 모회사 상장됐다면 '일단 스톱'…연간 계획 어그러진 IPO 업계 (2026-01-28)
+2026-01-29 08:56:40,716 - INFO - [__main__] - [InvestChosun] Found: SK에코플랜트, IPO 대신 FI 지분 매입 추진…회계처리 위반·중복상장에 발목 (2026-01-28)
+2026-01-29 08:56:40,730 - INFO - [__main__] - [InvestChosun] Found: 맥쿼리PE, LG CNS 지분 8.3% 블록딜…보유지분 전량 매각 (2026-01-28)
+2026-01-29 08:56:40,745 - INFO - [__main__] - [InvestChosun] Found: 1거래소-1은행 완화 검토에 업비트 탐내는 시중은행…속타는 IPO 삼수생 케이뱅크 (2026-01-28)
+2026-01-29 08:56:40,769 - INFO - [__main__] - [InvestChosun] Collection complete. Found 6 articles.
+2026-01-29 08:56:41,225 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-29 08:56:41,226 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-29 08:56:42,510 - INFO - [__main__] - [History] Loaded 231 URLs and 231 titles from history.
+2026-01-29 08:56:42,510 - INFO - [__main__] - [History] Skipping Duplicate (URL): GS칼텍스, 대경오앤티 인수 검토…주주 동의가 '관건' [TheBell]
+2026-01-29 08:56:42,510 - INFO - [__main__] - [History] Skipping Duplicate (URL): 인사이트에퀴티파트너스, 300억 그로쓰펀드 결성 [TheBell]
+2026-01-29 08:56:42,510 - INFO - [__main__] - [History] Skipping Duplicate (URL): 파블로항공, 110억 프리IPO 브릿지 클로징 [TheBell]
+2026-01-29 08:56:42,510 - INFO - [__main__] - [History] Skipping Duplicate (URL): 크립톤, 지역투자 보폭 키운다…경남 거점 확대 [TheBell]
+2026-01-29 08:56:42,510 - INFO - [__main__] - [History] Skipping Duplicate (URL): '직방'에서 독립한 브리즈인베, 2년 만에 자본잠식 [TheBell]
+2026-01-29 08:56:42,510 - INFO - [__main__] - [History] Skipping Duplicate (URL): 1거래소-1은행 완화 검토에 업비트 탐내는 시중은행…속타는 IPO 삼수생 케이뱅크 [InvestChosun]
+2026-01-29 08:56:42,510 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 34
+2026-01-29 08:56:42,510 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-29 08:56:42,511 - INFO - [__main__] - [PDF] [1/34] Processing: HBM이 이끈 하이닉스 매직…영업이익률 58% '역대급' (Hankyung)
+2026-01-29 08:56:49,210 - INFO - [__main__] - [PDF] [2/34] Processing: 배터리 적자에도 선방한 SK이노 (Hankyung)
+2026-01-29 08:56:55,680 - INFO - [__main__] - [PDF] [3/34] Processing: SK, 美에 AI투자법인 설립…'실탄 100억弗'로 스타트업 베팅 (Hankyung)
+2026-01-29 08:57:02,196 - INFO - [__main__] - [PDF] [4/34] Processing: SK하이닉스 이익률, 7년만에 TSMC 추월 (Hankyung)
+2026-01-29 08:57:08,797 - INFO - [__main__] - [PDF] [5/34] Processing: 전관 로비 먹혔나…금융당국, 대주주 심사 줄줄이 승인 ③ [구멍 뚫린 자본시장] (Hankyung)
+2026-01-29 08:57:15,295 - INFO - [__main__] - [PDF] [6/34] Processing: 금융사 사들여 꼭두각시 만든 오창석…개인회사에 수백억 꽂았다 ③ [구멍 뚫린 자본시장] (Hankyung)
+2026-01-29 08:57:21,938 - INFO - [__main__] - [PDF] [7/34] Processing: 쿠팡 美 로비액, 1년새 30% 줄었다 (Hankyung)
+2026-01-29 08:57:28,459 - INFO - [__main__] - [PDF] [8/34] Processing: OLED의 힘…LGD, 4년 만에 흑자전환 (Hankyung)
+2026-01-29 08:57:35,157 - INFO - [__main__] - [PDF] [9/34] Processing: 40% 넘는 배당률…우선주 악용해 횡령 의혹도 ③ [구멍 뚫린 자본시장] (Hankyung)
+2026-01-29 08:57:41,601 - INFO - [__main__] - [PDF] [10/34] Processing: SK證, 무궁화신탁 인수 추진…"자기 돈으로 폭탄 떠안는 꼴" ③ [구멍 뚫린 자본시장] (Hankyung)
+2026-01-29 08:57:48,077 - INFO - [__main__] - [PDF] [11/34] Processing: 맥쿼리PE, LG CNS 전량 블록딜…총 수익 1조 육박 (Hankyung)
+2026-01-29 08:57:54,560 - INFO - [__main__] - [PDF] [12/34] Processing: PEF운용사협의회, 협회 전환 논의 본격화…제도권 소통 창구 마련 속도 (Hankyung)
+2026-01-29 08:58:01,072 - INFO - [__main__] - [PDF] [13/34] Processing: 현대모비스, 작년 매출 61.1조·영업이익 3.3조 '사상 최대' (Hankyung)
+2026-01-29 08:58:07,576 - INFO - [__main__] - [PDF] [14/34] Processing: 퍼스트바이오테라퓨틱스, 317억 원 규모 시리즈D 투자 유치 [VC 브리핑] (Hankyung)
+2026-01-29 08:58:14,154 - INFO - [__main__] - [PDF] [15/34] Processing: '실적 반등 속도' 중고나라, 올 하반기 매각 작업 착수 (TheBell)
+2026-01-29 08:58:20,719 - INFO - [__main__] - [PDF] [16/34] Processing: 맥쿼리PE, LG CNS 엑시트로 '1조' 벌었다 (TheBell)
+2026-01-29 08:58:27,186 - INFO - [__main__] - [PDF] [17/34] Processing: 어펄마캐피탈, 화성코스메틱 리파이낸싱 완료 (TheBell)
+2026-01-29 08:58:33,629 - INFO - [__main__] - [PDF] [18/34] Processing: '프롬더스킨' 바이오모아메디칼, 첫 투자 유치 추진 (TheBell)
+2026-01-29 08:58:40,190 - INFO - [__main__] - [PDF] [19/34] Processing: 태광산업, 애경산업 '2080 사태' 피해 수치 요청…가격 조정 수순 (TheBell)
+2026-01-29 08:58:46,697 - INFO - [__main__] - [PDF] [20/34] Processing: 우리은행, '2.6조' SK이노 LNG 발전소 인수금융 셀다운 마무리 (TheBell)
+2026-01-29 08:58:53,098 - INFO - [__main__] - [PDF] [21/34] Processing: 칼라일, 'KFC·투썸' 담보 묶어 6700억 조달…KB·하나·한투 주선 (TheBell)
+2026-01-29 08:58:59,538 - INFO - [__main__] - [PDF] [22/34] Processing: IMM인베, 인도 '섀도우팩스' 상장...첫 회수 기대 (TheBell)
+2026-01-29 08:59:06,898 - INFO - [__main__] - [PDF] [23/34] Processing: 업스테이지, 코스피 간다…5월 예비심사 청구 윤곽 (TheBell)
+2026-01-29 08:59:13,348 - INFO - [__main__] - [PDF] [24/34] Processing: '버추얼 IP' 스콘, 시리즈A 클로징 임박 (TheBell)
+2026-01-29 08:59:19,771 - INFO - [__main__] - [PDF] [25/34] Processing: 200억 모으는 왁티, 투자 하이라이트 '브랜드 마케팅 역량' (TheBell)
+2026-01-29 08:59:26,328 - INFO - [__main__] - [PDF] [26/34] Processing: ‘시니어 토탈 케어’ 케어닥, 200억 프리IPO 순항 (TheBell)
+2026-01-29 08:59:32,807 - INFO - [__main__] - [PDF] [27/34] Processing: '블록체인 지갑' 원셀프월드, 80억 시리즈A 돌입 (TheBell)
+2026-01-29 08:59:39,277 - INFO - [__main__] - [PDF] [28/34] Processing: 최대주주 교체에…"정책자금 수급향방은" (DealSitePlus)
+2026-01-29 08:59:46,368 - INFO - [__main__] - [PDF] [29/34] Processing: 토큰증권 기업 바이셀에…엑스페릭스 30억 투자 (DealSitePlus)
+2026-01-29 08:59:53,192 - INFO - [__main__] - [PDF] [30/34] Processing: 건설채 만기 줄줄이…등급 따라 엇갈린 차환 전략 (InvestChosun)
+2026-01-29 08:59:59,805 - INFO - [__main__] - [PDF] [31/34] Processing: SK하이닉스, 美 자회사에 최대 14.4조 출자…AI 투자 법인 전환 (InvestChosun)
+2026-01-29 09:00:06,230 - INFO - [__main__] - [PDF] [32/34] Processing: 중소·벤처도 모회사 상장됐다면 '일단 스톱'…연간 계획 어그러진 IPO 업계 (InvestChosun)
+2026-01-29 09:00:12,808 - INFO - [__main__] - [PDF] [33/34] Processing: SK에코플랜트, IPO 대신 FI 지분 매입 추진…회계처리 위반·중복상장에 발목 (InvestChosun)
+2026-01-29 09:00:19,302 - INFO - [__main__] - [PDF] [34/34] Processing: 맥쿼리PE, LG CNS 지분 8.3% 블록딜…보유지분 전량 매각 (InvestChosun)
+2026-01-29 09:00:25,716 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-29 09:00:28,684 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-29 09:00:31,925 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1BWK6qhW76seZ7PL88bBCg8pXOaK8cD8z/view?usp=drivesdk
+2026-01-29 09:00:34,633 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-29 09:00:37,596 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/13lPd9AO_kRRQ49fP9zCtn0gjGnAavebO/view?usp=drivesdk
+2026-01-29 09:00:38,025 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-29 09:00:41,193 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1ASgQLUosKrA4A9ZOD7H7THO5yw-mwKZy/view?usp=drivesdk
+2026-01-29 09:00:42,283 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-29 09:00:46,423 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1Zv3nNAqZXF26kwFLlcGXMndT8IUby5d8/view?usp=drivesdk
+2026-01-29 09:00:47,199 - INFO - [__main__] - [History] Updated sheet with 34 new articles.
+2026-01-29 09:00:48,023 - INFO - [__main__] - 
+============================================================
+2026-01-29 09:00:48,023 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-29 09:00:48,023 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-29  9:00:50.32 
+================================================== 
+ 

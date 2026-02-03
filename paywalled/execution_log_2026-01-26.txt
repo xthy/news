@@ -1,0 +1,83 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-01-26  8:55:50.48 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-26 08:55:51,338 - INFO - [__main__] - Target Date Range: 2026-01-25 ~ 2026-01-26
+2026-01-26 08:55:51,339 - INFO - [__main__] - ============================================================
+2026-01-26 08:55:51,339 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-26 08:55:51,339 - INFO - [__main__] - ============================================================
+2026-01-26 08:55:51,339 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-26 08:55:52,184 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-26 08:55:52,206 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-26 08:55:52,215 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-26 08:55:52,251 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-01-26 08:55:52,253 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-26 08:55:52,253 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-26 08:55:52,296 - INFO - [WDM] - Driver downloading response is 200
+2026-01-26 08:55:52,380 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-26 08:55:52,486 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-01-26 08:55:53,771 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-26 08:55:53,771 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-26 08:55:53,771 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-26 08:55:53,771 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-25...
+2026-01-26 08:55:53,771 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-26 08:55:59,587 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-26 08:55:59,589 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-26 08:56:02,004 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-26 08:56:04,277 - INFO - [__main__] - [Hankyung] Found: '글로벌 PEF' 베인캐피탈…에코마케팅 2차 공개매수 (20260125)
+2026-01-26 08:56:04,285 - INFO - [__main__] - [Hankyung] Found: 베인캐피탈, 에코마케팅 2차 공개매수 나선다 (20260125)
+2026-01-26 08:56:04,294 - INFO - [__main__] - [Hankyung] Found: [단독] 세아에삽 품는 창광실업…K조선 슈퍼호황 올라탄다 (20260125)
+2026-01-26 08:56:04,434 - INFO - [__main__] - [Hankyung] Collection complete. Found 3 articles.
+2026-01-26 08:56:04,434 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-25 ~ 2026-01-26)...
+2026-01-26 08:56:04,434 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-26 08:56:10,045 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-26 08:56:10,047 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-26 08:56:10,047 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-26 08:56:13,296 - INFO - [__main__] - [TheBell] Found: '극장가 빅딜' 뛰어든 IMM크레딧, 실탄 마련 방안은 (2026-01-26)
+2026-01-26 08:56:13,425 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-26 08:56:13,425 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-26 08:56:13,425 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-26 08:56:16,482 - INFO - [__main__] - [TheBell] Found: 농진원, AC사업 절반 축소…4곳 선정에 경쟁 예고 (2026-01-26)
+2026-01-26 08:56:16,638 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-26 08:56:16,638 - INFO - [__main__] - [TheBell] Collection complete. Found 2 articles.
+2026-01-26 08:56:16,638 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-25...
+2026-01-26 08:56:16,638 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-26 08:56:22,057 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-26 08:56:22,059 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-26 08:56:24,730 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-26 08:56:27,189 - INFO - [__main__] - [DealSite+] Found: 퓨리오사AI 증시 데뷔 무대는 어디 (2026-01-26)
+2026-01-26 08:56:27,364 - INFO - [__main__] - [DealSite+] Collection complete. Found 1 articles.
+2026-01-26 08:56:27,364 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-25...
+2026-01-26 08:56:27,364 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-26 08:56:33,038 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-26 08:56:33,040 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-26 08:56:35,332 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-01-26 08:56:35,878 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-26 08:56:35,880 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-26 08:56:37,193 - INFO - [__main__] - [History] Loaded 158 URLs and 158 titles from history.
+2026-01-26 08:56:37,193 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 6
+2026-01-26 08:56:37,193 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-26 08:56:37,193 - INFO - [__main__] - [PDF] [1/6] Processing: '글로벌 PEF' 베인캐피탈…에코마케팅 2차 공개매수 (Hankyung)
+2026-01-26 08:56:43,909 - INFO - [__main__] - [PDF] [2/6] Processing: 베인캐피탈, 에코마케팅 2차 공개매수 나선다 (Hankyung)
+2026-01-26 08:56:50,360 - INFO - [__main__] - [PDF] [3/6] Processing: [단독] 세아에삽 품는 창광실업…K조선 슈퍼호황 올라탄다 (Hankyung)
+2026-01-26 08:56:56,860 - INFO - [__main__] - [PDF] [4/6] Processing: '극장가 빅딜' 뛰어든 IMM크레딧, 실탄 마련 방안은 (TheBell)
+2026-01-26 08:57:03,468 - INFO - [__main__] - [PDF] [5/6] Processing: 농진원, AC사업 절반 축소…4곳 선정에 경쟁 예고 (TheBell)
+2026-01-26 08:57:10,518 - INFO - [__main__] - [PDF] [6/6] Processing: 퓨리오사AI 증시 데뷔 무대는 어디 (DealSitePlus)
+2026-01-26 08:57:18,580 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-26 08:57:19,103 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-26 08:57:22,349 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1IAuC9MqoPboFfKiaG7UvUd9M9hic9jiD/view?usp=drivesdk
+2026-01-26 08:57:22,771 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-26 08:57:25,231 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1kFBOEclM6r7cvJb9Gdf8r-YyOtWDG3YU/view?usp=drivesdk
+2026-01-26 08:57:25,442 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-26 08:57:29,539 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1t1B31iCZKX_mfrUFuHrnvVopsI2Sal9T/view?usp=drivesdk
+2026-01-26 08:57:30,130 - INFO - [__main__] - [History] Updated sheet with 6 new articles.
+2026-01-26 08:57:31,178 - INFO - [__main__] - 
+============================================================
+2026-01-26 08:57:31,178 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-26 08:57:31,178 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-26  8:57:33.50 
+================================================== 
+ 

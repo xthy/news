@@ -1,0 +1,143 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-01-23  8:55:50.26 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-23 08:55:51,163 - INFO - [__main__] - Target Date Range: 2026-01-22 ~ 2026-01-23
+2026-01-23 08:55:51,164 - INFO - [__main__] - ============================================================
+2026-01-23 08:55:51,164 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-23 08:55:51,164 - INFO - [__main__] - ============================================================
+2026-01-23 08:55:51,165 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-23 08:55:52,171 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-23 08:55:52,197 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-23 08:55:52,208 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-23 08:55:52,244 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-01-23 08:55:52,246 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-23 08:55:52,246 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-23 08:55:52,288 - INFO - [WDM] - Driver downloading response is 200
+2026-01-23 08:55:52,372 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-23 08:55:52,479 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-01-23 08:55:53,816 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-23 08:55:53,816 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-23 08:55:53,816 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-23 08:55:53,817 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-22...
+2026-01-23 08:55:53,817 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-23 08:55:59,696 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-23 08:55:59,698 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-23 08:56:01,959 - INFO - [__main__] - [Hankyung] Found: SBVA, 1500억 규모 소버린AI펀드 결성…"AI·딥테크 분야 집중 투자" (20260122)
+2026-01-23 08:56:01,967 - INFO - [__main__] - [Hankyung] Found: 한국맥쿼리, 카이스트 금융전문대학원에 장학금 전달 (20260122)
+2026-01-23 08:56:01,976 - INFO - [__main__] - [Hankyung] Found: 국민연금 손 놓친 이지스운용…LP ‘연쇄 이탈’ 우려 확산 (20260122)
+2026-01-23 08:56:02,158 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-23 08:56:04,359 - INFO - [__main__] - [Hankyung] Found: 두산밥캣, 獨 바커노이슨 인수 안 한다 (20260123)
+2026-01-23 08:56:04,516 - INFO - [__main__] - [Hankyung] Collection complete. Found 4 articles.
+2026-01-23 08:56:04,516 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-22 ~ 2026-01-23)...
+2026-01-23 08:56:04,516 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-23 08:56:10,120 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-23 08:56:10,123 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-23 08:56:10,123 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-23 08:56:13,983 - INFO - [__main__] - [TheBell] Found: 스카이레이크, 12호 펀드로 솔루스 CFL 품는다 (2026-01-23)
+2026-01-23 08:56:14,011 - INFO - [__main__] - [TheBell] Found: 일본 야소지마, 현지 사모펀드 품에 안긴다 (2026-01-22)
+2026-01-23 08:56:14,039 - INFO - [__main__] - [TheBell] Found: MBK파트너스, '8000억 몸값' 넥스플렉스 매각 타진 (2026-01-22)
+2026-01-23 08:56:14,056 - INFO - [__main__] - [TheBell] Found: 화인자산운용-KB인베, '올릭스' 엑시트로 IRR 30% 달성 (2026-01-22)
+2026-01-23 08:56:14,072 - INFO - [__main__] - [TheBell] Found: '꽃놀이패' 쥔 얼라인, JB금융지주 장기 보유 가닥 (2026-01-22)
+2026-01-23 08:56:14,087 - INFO - [__main__] - [TheBell] Found: KB증권 PE, 마크운용·교원플로우와 1000억 크레딧펀드 결성 (2026-01-22)
+2026-01-23 08:56:14,112 - INFO - [__main__] - [TheBell] Found: 얼라인파트너스, '3500억' JB금융지주 리파이낸싱 완료 (2026-01-22)
+2026-01-23 08:56:14,139 - INFO - [__main__] - [TheBell] Found: 도미누스인베스트먼트, 코스모그룹 CB에 330억 투자 (2026-01-22)
+2026-01-23 08:56:14,209 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-23 08:56:14,209 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-23 08:56:14,209 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-23 08:56:18,033 - INFO - [__main__] - [TheBell] Found: '팁스 명가' 소풍벤처스, 추천기업 매칭률 ‘80%’ (2026-01-23)
+2026-01-23 08:56:18,073 - INFO - [__main__] - [TheBell] Found: 스카이레이크, 12호 펀드로 솔루스 CFL 품는다 (2026-01-23)
+2026-01-23 08:56:18,099 - INFO - [__main__] - [TheBell] Found: 캐스팅엔, '80억' 브릿지 라운드 막바지 (2026-01-23)
+2026-01-23 08:56:18,137 - INFO - [__main__] - [TheBell] Found: 화인자산운용-KB인베, '올릭스' 엑시트로 IRR 30% 달성 (2026-01-22)
+2026-01-23 08:56:18,152 - INFO - [__main__] - [TheBell] Found: KB증권 PE, 마크운용·교원플로우와 1000억 크레딧펀드 결성 (2026-01-22)
+2026-01-23 08:56:18,231 - INFO - [__main__] - [TheBell] Found: '중기부 경고 반복' 티움투자, VC 라이선스 존속 시험대 (2026-01-22)
+2026-01-23 08:56:18,246 - INFO - [__main__] - [TheBell] Found: 스마일게이트인베, '인벤티지랩' 부분 회수…멀티플 3배 이상 (2026-01-22)
+2026-01-23 08:56:18,281 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-01-23 08:56:21,598 - INFO - [__main__] - [TheBell] Found: 얼라인파트너스, '3500억' JB금융지주 리파이낸싱 완료 (2026-01-22)
+2026-01-23 08:56:21,625 - INFO - [__main__] - [TheBell] Found: 도미누스인베스트먼트, 코스모그룹 CB에 330억 투자 (2026-01-22)
+2026-01-23 08:56:21,653 - INFO - [__main__] - [TheBell] Found: 한국정보통신, 서울투자에 또 수혈…중형 VC 도약 뒷받침 (2026-01-22)
+2026-01-23 08:56:21,787 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-23 08:56:21,787 - INFO - [__main__] - [TheBell] Collection complete. Found 18 articles.
+2026-01-23 08:56:21,787 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-22...
+2026-01-23 08:56:21,787 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-23 08:56:27,415 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-23 08:56:27,418 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-23 08:56:30,036 - INFO - [__main__] - [DealSite+] Found: 미국식 성과주의 도입…"1.5만원까지 끌어올려" (2026-01-22)
+2026-01-23 08:56:30,054 - INFO - [__main__] - [DealSite+] Found: 윤희웅이 일으킨 화우…율촌 패장의 권토중래 (2026-01-22)
+2026-01-23 08:56:30,074 - INFO - [__main__] - [DealSite+] Found: 부동산으로 메운 카카오 공백…성장판 닫힌 세종 (2026-01-22)
+2026-01-23 08:56:30,091 - INFO - [__main__] - [DealSite+] Found: 본업 흔들리자 신사업 베팅…뷰티스킨, M&A '승부수' (2026-01-22)
+2026-01-23 08:56:30,109 - INFO - [__main__] - [DealSite+] Found: SC엔지 품은 반도그룹, 주택 넘어 플랜트로 외연 확장 (2026-01-22)
+2026-01-23 08:56:30,247 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-23 08:56:32,772 - INFO - [__main__] - [DealSite+] Found: 에이스톤, '메탄 측정' 메텍홀딩스에 10억 베팅 (2026-01-23)
+2026-01-23 08:56:32,790 - INFO - [__main__] - [DealSite+] Found: 손정의-김동관-올트먼…글로벌 인맥왕 이준표 (2026-01-22)
+2026-01-23 08:56:32,807 - INFO - [__main__] - [DealSite+] Found: "코스닥 95%가 개미…정부 마중물로 3000 가자" (2026-01-22)
+2026-01-23 08:56:32,825 - INFO - [__main__] - [DealSite+] Found: 미국식 성과주의 도입…"1.5만원까지 끌어올려" (2026-01-22)
+2026-01-23 08:56:32,843 - INFO - [__main__] - [DealSite+] Found: 윤희웅이 일으킨 화우…율촌 패장의 권토중래 (2026-01-22)
+2026-01-23 08:56:32,878 - INFO - [__main__] - [DealSite+] Found: 메디치-IBK 세번째 호흡…세컨더리 600억 결성 (2026-01-22)
+2026-01-23 08:56:33,008 - INFO - [__main__] - [DealSite+] Collection complete. Found 11 articles.
+2026-01-23 08:56:33,008 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-22...
+2026-01-23 08:56:33,008 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-23 08:56:38,689 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-23 08:56:38,691 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-23 08:56:40,917 - INFO - [__main__] - [InvestChosun] Found: 빅딜 무산된 두산밥캣…獨 바커노이슨 고밸류가 걸림돌 (2026-01-23)
+2026-01-23 08:56:40,932 - INFO - [__main__] - [InvestChosun] Found: 적자폭 늘어난 롯데케미칼, 회사채 상환 유예에도 여전한 차입 부담 (2026-01-23)
+2026-01-23 08:56:40,947 - INFO - [__main__] - [InvestChosun] Found: 한국금융지주, 한국투자증권에 1조5000억원 수혈…유상증자 참여 (2026-01-22)
+2026-01-23 08:56:40,961 - INFO - [__main__] - [InvestChosun] Found: SK 울산 AI데이터센터, 23일 소수지분 매각 입찰 진행 (2026-01-22)
+2026-01-23 08:56:40,980 - INFO - [__main__] - [InvestChosun] Found: 스틱-한투PE, 울산GPS 소수지분 인수전 승자 유력 (2026-01-22)
+2026-01-23 08:56:41,011 - INFO - [__main__] - [InvestChosun] Collection complete. Found 5 articles.
+2026-01-23 08:56:41,523 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-23 08:56:41,525 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-23 08:56:42,888 - INFO - [__main__] - [History] Loaded 99 URLs and 99 titles from history.
+2026-01-23 08:56:42,888 - INFO - [__main__] - [History] Skipping Duplicate (URL): 메디치-IBK 세번째 호흡…세컨더리 600억 결성 [DealSitePlus]
+2026-01-23 08:56:42,888 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 30
+2026-01-23 08:56:42,888 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-23 08:56:42,889 - INFO - [__main__] - [PDF] [1/30] Processing: SBVA, 1500억 규모 소버린AI펀드 결성…"AI·딥테크 분야 집중 투자" (Hankyung)
+2026-01-23 08:56:49,607 - INFO - [__main__] - [PDF] [2/30] Processing: 한국맥쿼리, 카이스트 금융전문대학원에 장학금 전달 (Hankyung)
+2026-01-23 08:56:56,042 - INFO - [__main__] - [PDF] [3/30] Processing: 국민연금 손 놓친 이지스운용…LP ‘연쇄 이탈’ 우려 확산 (Hankyung)
+2026-01-23 08:57:02,666 - INFO - [__main__] - [PDF] [4/30] Processing: 두산밥캣, 獨 바커노이슨 인수 안 한다 (Hankyung)
+2026-01-23 08:57:09,077 - INFO - [__main__] - [PDF] [5/30] Processing: 스카이레이크, 12호 펀드로 솔루스 CFL 품는다 (TheBell)
+2026-01-23 08:57:16,496 - INFO - [__main__] - [PDF] [6/30] Processing: 일본 야소지마, 현지 사모펀드 품에 안긴다 (TheBell)
+2026-01-23 08:57:22,970 - INFO - [__main__] - [PDF] [7/30] Processing: MBK파트너스, '8000억 몸값' 넥스플렉스 매각 타진 (TheBell)
+2026-01-23 08:57:29,403 - INFO - [__main__] - [PDF] [8/30] Processing: 화인자산운용-KB인베, '올릭스' 엑시트로 IRR 30% 달성 (TheBell)
+2026-01-23 08:57:35,848 - INFO - [__main__] - [PDF] [9/30] Processing: '꽃놀이패' 쥔 얼라인, JB금융지주 장기 보유 가닥 (TheBell)
+2026-01-23 08:57:42,341 - INFO - [__main__] - [PDF] [10/30] Processing: KB증권 PE, 마크운용·교원플로우와 1000억 크레딧펀드 결성 (TheBell)
+2026-01-23 08:57:48,803 - INFO - [__main__] - [PDF] [11/30] Processing: 얼라인파트너스, '3500억' JB금융지주 리파이낸싱 완료 (TheBell)
+2026-01-23 08:57:55,216 - INFO - [__main__] - [PDF] [12/30] Processing: 도미누스인베스트먼트, 코스모그룹 CB에 330억 투자 (TheBell)
+2026-01-23 08:58:01,656 - INFO - [__main__] - [PDF] [13/30] Processing: '팁스 명가' 소풍벤처스, 추천기업 매칭률 ‘80%’ (TheBell)
+2026-01-23 08:58:08,098 - INFO - [__main__] - [PDF] [14/30] Processing: 캐스팅엔, '80억' 브릿지 라운드 막바지 (TheBell)
+2026-01-23 08:58:14,541 - INFO - [__main__] - [PDF] [15/30] Processing: '중기부 경고 반복' 티움투자, VC 라이선스 존속 시험대 (TheBell)
+2026-01-23 08:58:22,749 - INFO - [__main__] - [PDF] [16/30] Processing: 스마일게이트인베, '인벤티지랩' 부분 회수…멀티플 3배 이상 (TheBell)
+2026-01-23 08:58:29,202 - INFO - [__main__] - [PDF] [17/30] Processing: 한국정보통신, 서울투자에 또 수혈…중형 VC 도약 뒷받침 (TheBell)
+2026-01-23 08:58:35,666 - INFO - [__main__] - [PDF] [18/30] Processing: 미국식 성과주의 도입…"1.5만원까지 끌어올려" (DealSitePlus)
+2026-01-23 08:58:42,757 - INFO - [__main__] - [PDF] [19/30] Processing: 윤희웅이 일으킨 화우…율촌 패장의 권토중래 (DealSitePlus)
+2026-01-23 08:58:49,617 - INFO - [__main__] - [PDF] [20/30] Processing: 부동산으로 메운 카카오 공백…성장판 닫힌 세종 (DealSitePlus)
+2026-01-23 08:58:56,484 - INFO - [__main__] - [PDF] [21/30] Processing: 본업 흔들리자 신사업 베팅…뷰티스킨, M&A '승부수' (DealSitePlus)
+2026-01-23 08:59:03,307 - INFO - [__main__] - [PDF] [22/30] Processing: SC엔지 품은 반도그룹, 주택 넘어 플랜트로 외연 확장 (DealSitePlus)
+2026-01-23 08:59:10,092 - INFO - [__main__] - [PDF] [23/30] Processing: 에이스톤, '메탄 측정' 메텍홀딩스에 10억 베팅 (DealSitePlus)
+2026-01-23 08:59:16,906 - INFO - [__main__] - [PDF] [24/30] Processing: 손정의-김동관-올트먼…글로벌 인맥왕 이준표 (DealSitePlus)
+2026-01-23 08:59:23,807 - INFO - [__main__] - [PDF] [25/30] Processing: "코스닥 95%가 개미…정부 마중물로 3000 가자" (DealSitePlus)
+2026-01-23 08:59:30,643 - INFO - [__main__] - [PDF] [26/30] Processing: 빅딜 무산된 두산밥캣…獨 바커노이슨 고밸류가 걸림돌 (InvestChosun)
+2026-01-23 08:59:37,258 - INFO - [__main__] - [PDF] [27/30] Processing: 적자폭 늘어난 롯데케미칼, 회사채 상환 유예에도 여전한 차입 부담 (InvestChosun)
+2026-01-23 08:59:43,766 - INFO - [__main__] - [PDF] [28/30] Processing: 한국금융지주, 한국투자증권에 1조5000억원 수혈…유상증자 참여 (InvestChosun)
+2026-01-23 08:59:50,129 - INFO - [__main__] - [PDF] [29/30] Processing: SK 울산 AI데이터센터, 23일 소수지분 매각 입찰 진행 (InvestChosun)
+2026-01-23 08:59:56,553 - INFO - [__main__] - [PDF] [30/30] Processing: 스틱-한투PE, 울산GPS 소수지분 인수전 승자 유력 (InvestChosun)
+2026-01-23 09:00:02,951 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-23 09:00:03,833 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-23 09:00:06,543 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1gLOnhYrQeVZ_GGuk8aquJwaQLq2Z1jtF/view?usp=drivesdk
+2026-01-23 09:00:09,466 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-23 09:00:15,424 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1UQkTr75_vdXnMEvUQ2uLKIPzR3u1uFkZ/view?usp=drivesdk
+2026-01-23 09:00:17,235 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-23 09:00:20,909 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1-d_fSb-4xD9qOqbiOL57y2n29nuMbvkM/view?usp=drivesdk
+2026-01-23 09:00:22,044 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-23 09:00:25,415 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/13cRdvQ5HyFv7Yhx79RV52RsmaBWfN88D/view?usp=drivesdk
+2026-01-23 09:00:26,178 - INFO - [__main__] - [History] Updated sheet with 30 new articles.
+2026-01-23 09:00:27,040 - INFO - [__main__] - 
+============================================================
+2026-01-23 09:00:27,040 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-23 09:00:27,040 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-23  9:00:29.34 
+================================================== 
+ 

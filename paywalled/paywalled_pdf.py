@@ -99,7 +99,7 @@ CREDENTIALS = {
         "pws": ["equity"],
         "input_id": "id",
         "input_pw": "pw",
-        "btn_id": "btn1"
+        "btn_selector": "#login_form #btn1"
     },
     "hankyung": {
         "login_url": "https://marketinsight.hankyung.com/",
@@ -228,9 +228,11 @@ class BaseCrawler:
             logger.debug(f"[{site_key}] Login page loaded, current URL: {self.driver.current_url}")
             
             if site_key == "thebell":
-                self.driver.find_element(By.ID, creds["input_id"]).send_keys(creds["ids"][0])
+                self.wait.until(EC.presence_of_element_located((By.ID, creds["input_id"]))).send_keys(creds["ids"][0])
                 self.driver.find_element(By.ID, creds["input_pw"]).send_keys(creds["pws"][0])
-                self.driver.find_element(By.ID, creds["btn_id"]).click()
+                login_btn = self.driver.find_element(By.CSS_SELECTOR, creds["btn_selector"])
+                self.driver.execute_script("arguments[0].click();", login_btn)
+                
                 
             elif site_key == "dealsiteplus":
                 self.driver.find_element(By.ID, creds["input_id"]).send_keys(creds["ids"][0])

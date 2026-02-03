@@ -1,0 +1,145 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-01-21  8:55:50.51 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-01-21 08:55:51,715 - INFO - [__main__] - Target Date Range: 2026-01-20 ~ 2026-01-21
+2026-01-21 08:55:51,716 - INFO - [__main__] - ============================================================
+2026-01-21 08:55:51,716 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-01-21 08:55:51,716 - INFO - [__main__] - ============================================================
+2026-01-21 08:55:51,717 - INFO - [WDM] - ====== WebDriver manager ======
+2026-01-21 08:55:52,536 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-21 08:55:52,558 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-21 08:55:52,568 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-21 08:55:52,603 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-01-21 08:55:52,605 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-21 08:55:52,605 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-01-21 08:55:52,646 - INFO - [WDM] - Driver downloading response is 200
+2026-01-21 08:55:52,731 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-01-21 08:55:52,836 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-01-21 08:55:54,730 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-01-21 08:55:54,730 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-01-21 08:55:54,730 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-01-21 08:55:54,730 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-01-20...
+2026-01-21 08:55:54,730 - INFO - [__main__] - [hankyung] Starting login process...
+2026-01-21 08:56:00,624 - INFO - [__main__] - [hankyung] Login completed successfully
+2026-01-21 08:56:00,626 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-01-21 08:56:02,896 - INFO - [__main__] - [Hankyung] Found: 행동주의 공세 몰린 도용환…30년 키운 토종 PEF '눈물의 매각' (20260120)
+2026-01-21 08:56:02,906 - INFO - [__main__] - [Hankyung] Found: 얼라인 "미리캐피탈, 스틱 주주가치 제고할 좋은 대주주 역할 기대" (20260120)
+2026-01-21 08:56:02,913 - INFO - [__main__] - [Hankyung] Found: 행동주의 공세 몰린 도용환 …30년 키운 토종 PEF '눈물의 매각' (20260120)
+2026-01-21 08:56:02,922 - INFO - [__main__] - [Hankyung] Found: '1세대 PEF' 스틱, 미리캐피탈에 경영권 판다 (20260120)
+2026-01-21 08:56:02,930 - INFO - [__main__] - [Hankyung] Found: 애경 '치약 리콜' 골머리…태광 매각 앞두고 변수로 (20260120)
+2026-01-21 08:56:02,990 - INFO - [__main__] - [Hankyung] Found: 자금 맡긴 연기금들 스틱 경영권 매각에 촉각 (20260120)
+2026-01-21 08:56:03,007 - INFO - [__main__] - [Hankyung] Found: 홈플러스 "회생 위해 3000억 운영자금 필요…산은·메리츠 참여해달라" (20260120)
+2026-01-21 08:56:03,024 - INFO - [__main__] - [Hankyung] Found: 얼라인 최후 통첩에 응답한 스틱인베…밸류업 발표에 주가 급등 (20260120)
+2026-01-21 08:56:03,065 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-01-21 08:56:05,201 - INFO - [__main__] - [Hankyung] Found: 행동주의 공세 몰린 도용환…30년 키운 토종 PEF '눈물의 매각' (20260120)
+2026-01-21 08:56:05,210 - INFO - [__main__] - [Hankyung] Found: 퓨리오사AI, 7370억 프리 IPO 펀딩 준비…국내외 주요 투자자들 타진 (20260120)
+2026-01-21 08:56:05,218 - INFO - [__main__] - [Hankyung] Found: 얼라인 "미리캐피탈, 스틱 주주가치 제고할 좋은 대주주 역할 기대" (20260120)
+2026-01-21 08:56:05,226 - INFO - [__main__] - [Hankyung] Found: 행동주의 공세 몰린 도용환 …30년 키운 토종 PEF '눈물의 매각' (20260120)
+2026-01-21 08:56:05,279 - INFO - [__main__] - [Hankyung] Found: 홈플러스 "회생 위해 3000억 운영자금 필요…산은·메리츠 참여해달라" (20260120)
+2026-01-21 08:56:05,351 - INFO - [__main__] - [Hankyung] Collection complete. Found 13 articles.
+2026-01-21 08:56:05,351 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-01-20 ~ 2026-01-21)...
+2026-01-21 08:56:05,351 - INFO - [__main__] - [thebell] Starting login process...
+2026-01-21 08:56:13,815 - INFO - [__main__] - [thebell] Login completed successfully
+2026-01-21 08:56:13,817 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-01-21 08:56:13,817 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-01-21 08:56:17,159 - INFO - [__main__] - [TheBell] Found: 한앤코, 그린에코솔루션 매각 배경 '컨티뉴에이션펀드 만기' (2026-01-20)
+2026-01-21 08:56:17,174 - INFO - [__main__] - [TheBell] Found: 업스테이지, 1.3조 밸류에도 프리IPO '오버부킹' (2026-01-20)
+2026-01-21 08:56:17,204 - INFO - [__main__] - [TheBell] Found: '우협 임박' SK엠유·울산GPS, 인수금융 짝짓기 윤곽 (2026-01-20)
+2026-01-21 08:56:17,291 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-21 08:56:17,291 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-01-21 08:56:17,292 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-01-21 08:56:20,902 - INFO - [__main__] - [TheBell] Found: 삼양화학그룹, 600억 해외펀드 출자…글로벌 투자 성과 (2026-01-21)
+2026-01-21 08:56:20,917 - INFO - [__main__] - [TheBell] Found: '루키 LLC' 와프인베, 모태펀드 중심 확장 가속 (2026-01-21)
+2026-01-21 08:56:20,943 - INFO - [__main__] - [TheBell] Found: '프리미엄 향수' 르페르소나, 프리시리즈A 투자 유치 (2026-01-21)
+2026-01-21 08:56:20,970 - INFO - [__main__] - [TheBell] Found: SV인베, 글로벌로 판 넓힌다…AUM 2조 가시권 (2026-01-21)
+2026-01-21 08:56:21,031 - INFO - [__main__] - [TheBell] Found: 알바트로스인베, AI펀드 '490억' 2차 클로징 (2026-01-20)
+2026-01-21 08:56:21,046 - INFO - [__main__] - [TheBell] Found: K2인베스트, 단일 최대 펀드레이징…3000억 정조준 (2026-01-20)
+2026-01-21 08:56:21,088 - INFO - [__main__] - [TheBell] Found: 블루포인트, 'IPO·M&A' 성과 16건…AUM 2000억 도전 (2026-01-20)
+2026-01-21 08:56:21,115 - INFO - [__main__] - [TheBell] Found: 업스테이지, 국대 AI 2차전…파라미터 2배 키운다 (2026-01-20)
+2026-01-21 08:56:21,130 - INFO - [__main__] - [TheBell] Found: 한앤코, 그린에코솔루션 매각 배경 '컨티뉴에이션펀드 만기' (2026-01-20)
+2026-01-21 08:56:21,144 - INFO - [__main__] - [TheBell] Found: 'VC ERP' 똑똑, CVC 러브콜 배경은 (2026-01-20)
+2026-01-21 08:56:21,155 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-01-21 08:56:24,177 - INFO - [__main__] - [TheBell] Found: 업스테이지, 1.3조 밸류에도 프리IPO '오버부킹' (2026-01-20)
+2026-01-21 08:56:24,202 - INFO - [__main__] - [TheBell] Found: IMM인베, 스타트업펀드 증액…마수걸이 투자도 마쳐 (2026-01-20)
+2026-01-21 08:56:24,217 - INFO - [__main__] - [TheBell] Found: '우협 임박' SK엠유·울산GPS, 인수금융 짝짓기 윤곽 (2026-01-20)
+2026-01-21 08:56:24,232 - INFO - [__main__] - [TheBell] Found: '대만 VC' 앱웍스, 2400억 펀드 결성…한국 투자 확대 시동 (2026-01-20)
+2026-01-21 08:56:24,344 - INFO - [__main__] - [TheBell] Reached articles older than target. Stopping pagination for this section.
+2026-01-21 08:56:24,344 - INFO - [__main__] - [TheBell] Collection complete. Found 17 articles.
+2026-01-21 08:56:24,344 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-01-20...
+2026-01-21 08:56:24,344 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-01-21 08:56:30,071 - INFO - [__main__] - [dealsiteplus] Login completed successfully
+2026-01-21 08:56:30,073 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-01-21 08:56:32,427 - INFO - [__main__] - [DealSite+] Found: 족쇄 풀린 VC업계의 성과와 책임 (2026-01-21)
+2026-01-21 08:56:32,444 - INFO - [__main__] - [DealSite+] Found: 유증 좌초가 부른 엑시트…이브이첨단소재, SC엔지 '눈물의 매각' (2026-01-20)
+2026-01-21 08:56:32,461 - INFO - [__main__] - [DealSite+] Found: 한솔인티큐브 품는 플레이버스, 관건은 '재원 확보' (2026-01-20)
+2026-01-21 08:56:32,618 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-01-21 08:56:34,971 - INFO - [__main__] - [DealSite+] Found: 족쇄 풀린 VC업계의 성과와 책임 (2026-01-21)
+2026-01-21 08:56:34,987 - INFO - [__main__] - [DealSite+] Found: 대전투자금융, 정책펀드 매칭자금 175억 출자 (2026-01-21)
+2026-01-21 08:56:35,004 - INFO - [__main__] - [DealSite+] Found: 8600억 신화 설계자…신기천의 마지막 소명 (2026-01-20)
+2026-01-21 08:56:35,159 - INFO - [__main__] - [DealSite+] Collection complete. Found 6 articles.
+2026-01-21 08:56:35,159 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-01-20...
+2026-01-21 08:56:35,159 - INFO - [__main__] - [investchosun] Starting login process...
+2026-01-21 08:56:40,811 - INFO - [__main__] - [investchosun] Login completed successfully
+2026-01-21 08:56:40,813 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-01-21 08:56:43,025 - INFO - [__main__] - [InvestChosun] Found: 한국도 극명해지는 K자 양극화…올해 대기업 M&A '큰 장' 기대 (2026-01-21)
+2026-01-21 08:56:43,039 - INFO - [__main__] - [InvestChosun] Found: 도용환 스틱인베 회장, 보유 지분 11.4% 미리캐피탈에 매각 (2026-01-20)
+2026-01-21 08:56:43,053 - INFO - [__main__] - [InvestChosun] Found: SK 울산 AI 데이터센터, KKR·브룩필드 등 외사간 투자 경쟁 치열 (2026-01-20)
+2026-01-21 08:56:43,067 - INFO - [__main__] - [InvestChosun] Found: 정부 '국유재산 매각 금지령'…산은·수은의 대한항공·HMM 회수도 제동 (2026-01-20)
+2026-01-21 08:56:43,106 - INFO - [__main__] - [InvestChosun] Collection complete. Found 4 articles.
+2026-01-21 08:56:43,610 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-21 08:56:43,611 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-21 08:56:44,804 - INFO - [__main__] - [History] Loaded 50 URLs and 50 titles from history.
+2026-01-21 08:56:44,804 - INFO - [__main__] - [History] Skipping Duplicate (URL): 얼라인 최후 통첩에 응답한 스틱인베…밸류업 발표에 주가 급등 [Hankyung]
+2026-01-21 08:56:44,804 - INFO - [__main__] - [History] Skipping Duplicate (URL): 한앤코, 그린에코솔루션 매각 배경 '컨티뉴에이션펀드 만기' [TheBell]
+2026-01-21 08:56:44,804 - INFO - [__main__] - [History] Skipping Duplicate (URL): 업스테이지, 1.3조 밸류에도 프리IPO '오버부킹' [TheBell]
+2026-01-21 08:56:44,804 - INFO - [__main__] - [History] Skipping Duplicate (URL): '우협 임박' SK엠유·울산GPS, 인수금융 짝짓기 윤곽 [TheBell]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): 알바트로스인베, AI펀드 '490억' 2차 클로징 [TheBell]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): K2인베스트, 단일 최대 펀드레이징…3000억 정조준 [TheBell]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): 블루포인트, 'IPO·M&A' 성과 16건…AUM 2000억 도전 [TheBell]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): 업스테이지, 국대 AI 2차전…파라미터 2배 키운다 [TheBell]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): 'VC ERP' 똑똑, CVC 러브콜 배경은 [TheBell]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): IMM인베, 스타트업펀드 증액…마수걸이 투자도 마쳐 [TheBell]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): '대만 VC' 앱웍스, 2400억 펀드 결성…한국 투자 확대 시동 [TheBell]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): 한솔인티큐브 품는 플레이버스, 관건은 '재원 확보' [DealSitePlus]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): 8600억 신화 설계자…신기천의 마지막 소명 [DealSitePlus]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): SK 울산 AI 데이터센터, KKR·브룩필드 등 외사간 투자 경쟁 치열 [InvestChosun]
+2026-01-21 08:56:44,805 - INFO - [__main__] - [History] Skipping Duplicate (URL): 정부 '국유재산 매각 금지령'…산은·수은의 대한항공·HMM 회수도 제동 [InvestChosun]
+2026-01-21 08:56:44,805 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 16
+2026-01-21 08:56:44,805 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-01-21 08:56:44,805 - INFO - [__main__] - [PDF] [1/16] Processing: 행동주의 공세 몰린 도용환…30년 키운 토종 PEF '눈물의 매각' (Hankyung)
+2026-01-21 08:56:51,609 - INFO - [__main__] - [PDF] [2/16] Processing: 얼라인 "미리캐피탈, 스틱 주주가치 제고할 좋은 대주주 역할 기대" (Hankyung)
+2026-01-21 08:56:58,045 - INFO - [__main__] - [PDF] [3/16] Processing: '1세대 PEF' 스틱, 미리캐피탈에 경영권 판다 (Hankyung)
+2026-01-21 08:57:04,478 - INFO - [__main__] - [PDF] [4/16] Processing: 애경 '치약 리콜' 골머리…태광 매각 앞두고 변수로 (Hankyung)
+2026-01-21 08:57:10,990 - INFO - [__main__] - [PDF] [5/16] Processing: 자금 맡긴 연기금들 스틱 경영권 매각에 촉각 (Hankyung)
+2026-01-21 08:57:22,685 - INFO - [__main__] - [PDF] [6/16] Processing: 홈플러스 "회생 위해 3000억 운영자금 필요…산은·메리츠 참여해달라" (Hankyung)
+2026-01-21 08:57:29,158 - INFO - [__main__] - [PDF] [7/16] Processing: 퓨리오사AI, 7370억 프리 IPO 펀딩 준비…국내외 주요 투자자들 타진 (Hankyung)
+2026-01-21 08:57:35,720 - INFO - [__main__] - [PDF] [8/16] Processing: 삼양화학그룹, 600억 해외펀드 출자…글로벌 투자 성과 (TheBell)
+2026-01-21 08:57:42,369 - INFO - [__main__] - [PDF] [9/16] Processing: '루키 LLC' 와프인베, 모태펀드 중심 확장 가속 (TheBell)
+2026-01-21 08:57:48,803 - INFO - [__main__] - [PDF] [10/16] Processing: '프리미엄 향수' 르페르소나, 프리시리즈A 투자 유치 (TheBell)
+2026-01-21 08:57:55,401 - INFO - [__main__] - [PDF] [11/16] Processing: SV인베, 글로벌로 판 넓힌다…AUM 2조 가시권 (TheBell)
+2026-01-21 08:58:01,893 - INFO - [__main__] - [PDF] [12/16] Processing: 족쇄 풀린 VC업계의 성과와 책임 (DealSitePlus)
+2026-01-21 08:58:09,926 - INFO - [__main__] - [PDF] [13/16] Processing: 유증 좌초가 부른 엑시트…이브이첨단소재, SC엔지 '눈물의 매각' (DealSitePlus)
+2026-01-21 08:58:16,738 - INFO - [__main__] - [PDF] [14/16] Processing: 대전투자금융, 정책펀드 매칭자금 175억 출자 (DealSitePlus)
+2026-01-21 08:58:23,491 - INFO - [__main__] - [PDF] [15/16] Processing: 한국도 극명해지는 K자 양극화…올해 대기업 M&A '큰 장' 기대 (InvestChosun)
+2026-01-21 08:58:30,184 - INFO - [__main__] - [PDF] [16/16] Processing: 도용환 스틱인베 회장, 보유 지분 11.4% 미리캐피탈에 매각 (InvestChosun)
+2026-01-21 08:58:36,577 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-01-21 08:58:37,998 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-21 08:58:40,714 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1uM9_AaKXXduTFdwUX6j3vBaFcYVTEBz3/view?usp=drivesdk
+2026-01-21 08:58:41,508 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-21 08:58:44,612 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1_mGGZCW07YG1Scg0pWv7zvpVsFzDOCNQ/view?usp=drivesdk
+2026-01-21 08:58:45,228 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-21 08:58:48,034 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/11XNxFmoV15QSXtJz-vPFRq6CPBvfSZJ7/view?usp=drivesdk
+2026-01-21 08:58:48,423 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-01-21 08:58:51,125 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1CmNn2t95DGEAFmYEmtOmgw8ofHkpMjhj/view?usp=drivesdk
+2026-01-21 08:58:51,851 - INFO - [__main__] - [History] Updated sheet with 16 new articles.
+2026-01-21 08:58:52,880 - INFO - [__main__] - 
+============================================================
+2026-01-21 08:58:52,880 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-01-21 08:58:52,880 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-01-21  8:58:55.23 
+================================================== 
+ 
