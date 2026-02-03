@@ -16,6 +16,7 @@ paywalled/temp_*/
 # Logs and Data
 paywalled/paywalled_scraper_*.log
 paywalled/config.json
+appscript/secrets.gs
 *.json
 
 # OS files
