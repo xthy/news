@@ -734,8 +734,9 @@ ${titles}
 }
 
 **절대 원칙: 
-1. 같은 사건 기사는 1개만
-2. 다른 사건은 각각 유지!**`;
+1. 같은 사건 기사만 1개로 병합 (가장 팩트가 풍부한 기사 선택)
+2. 서로 다른 회사/딜/실적은 무조건 각각 유지! (예: 블랙스톤 실적, EQT 매각, 롯데카드 이슈는 다 별개임)
+3. 비즈니스 가치가 없는 기사(단순 홍보, 아이돌 공연, 맛집/건물 소개 등)만 제외!**`;
 
   var payload = {
     model: 'gpt-4o-mini',
@@ -852,9 +853,13 @@ function filterAgainstHistoricalNews(articles) {
       var currentGroup = KEYWORD_GROUPING[article.keyword] || article.keyword;
       var historicalGroup = KEYWORD_GROUPING[historical.keyword] || historical.keyword;
 
-      // ⭐ 방법 1: 제목 유사도 체크 (70% 이상일 때만 중복)
+      // ⭐ 방법 1: 제목 유사도 체크 (기준 상향 70% -> 85%)
+      // Market 그룹(PE 뉴스)은 중요도가 높으므로 더 엄격하게 똑같아야만 제거 (85% 이상)
+      // 일반 소비재(버거킹 등)는 70%만 넘어도 중복으로 봄
+      var threshold = (currentGroup === 'Market') ? 0.85 : 0.7;
+
       var similarity = calculateTitleSimilarity(article.title, historical.title);
-      if (similarity >= 0.7) {  // 70% 이상 유사하면 중복 (60%는 너무 strict)
+      if (similarity >= threshold) {
         isDuplicate = true;
         duplicateInfo = {
           title: historical.title,
@@ -1217,13 +1222,24 @@ function removeDuplicatesFromAllArticles(articles) {
 function peSmartFilteringAndValidation(articles) {
   Logger.log('\n🎯 === 3단계: PE 필터링 ===');
 
+  var relevant = [];
   for (var i = 0; i < articles.length; i++) {
-    articles[i].importanceScore = calculatePEImportanceScore(articles[i]);
-  }
+    var a = articles[i];
 
-  var relevant = articles.filter(function (a) {
-    return a.importanceScore >= 2;
-  });
+    // 원티드 특별 검증: career 관련 단어 없으면 무조건 스킵
+    if (a.keyword === '원티드') {
+      var text = (a.title + ' ' + a.description).toLowerCase();
+      if (!/채용|취업|이직|커리어|매칭|원티드랩|연봉|직군/.test(text)) {
+        Logger.log('  ❌ 원티드 노이즈 제거: "' + a.title.substring(0, 40) + '..."');
+        continue;
+      }
+    }
+
+    a.importanceScore = calculatePEImportanceScore(a);
+    if (a.importanceScore >= 2) {
+      relevant.push(a);
+    }
+  }
 
   Logger.log('✅ ' + articles.length + '개 → ' + relevant.length + '개');
   return relevant;

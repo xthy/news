@@ -32,7 +32,7 @@ const CONFIG = {
   MARKET_SYMBOLS: {
     US_STOCKS: ['^GSPC', '^DJI', '^IXIC'],
     KOREA_STOCKS: ['^KS11', '^KQ11'],
-    COMMODITIES: ['GC=F', 'CL=F', 'BTC-USD'],
+    COMMODITIES: ['GC=F', 'SI=F', 'CL=F', 'BTC-USD'],
     FX_RATES: ['KRW=X', 'EURKRW=X', 'JPYKRW=X']
   }
 };
@@ -899,12 +899,182 @@ function v110_deepClean(text) {
 }
 
 function v110_fetchMarketData() {
+  Logger.log('🚀 Market Fetch v11.6 (Naver Tables for Commodities)');
+  
+  // 1. Korea Markets & FX from Naver Finance
+  const naverData = v110_fetchNaverFinance();
+  
+  // 2. US Stocks from Yahoo
+  const usStocks = v110_fetchStockData(CONFIG.MARKET_SYMBOLS.US_STOCKS);
+  
+  // 3. Commodities from Naver Detail Tables (Polling API is unreliable)
+  const commodities = v110_fetchCommoditiesFromNaverTable();
+  
+  // 4. Add Bitcoin from Yahoo (Naver doesn't have it)
+  const btcData = v110_fetchStockData(['BTC-USD']);
+  if (btcData && btcData.length > 0) {
+    commodities.push(btcData[0]);
+  }
+
+  // 5. Get FX Rates (Naver provides USD/KRW)
+  const fxRates = v110_fetchFXRates(CONFIG.MARKET_SYMBOLS.FX_RATES);
+  const usdKrwFromNaver = naverData.find(d => d.symbol === 'FX_USDKRW');
+  if (usdKrwFromNaver) {
+    const idx = fxRates.findIndex(f => f.name === 'USD/KRW');
+    if (idx !== -1) fxRates[idx] = usdKrwFromNaver;
+    else fxRates.push(usdKrwFromNaver);
+  }
+
+  // 6. Map Korea Stocks from Naver
+  const koreaStocks = [
+    naverData.find(d => d.symbol === 'KOSPI'),
+    naverData.find(d => d.symbol === 'KOSDAQ')
+  ].filter(Boolean);
+
   return {
-    usStocks: v110_fetchStockData(CONFIG.MARKET_SYMBOLS.US_STOCKS),
-    koreaStocks: v110_fetchStockData(CONFIG.MARKET_SYMBOLS.KOREA_STOCKS),
-    commodities: v110_fetchStockData(CONFIG.MARKET_SYMBOLS.COMMODITIES),
-    fxRates: v110_fetchFXRates(CONFIG.MARKET_SYMBOLS.FX_RATES)
+    usStocks: usStocks,
+    koreaStocks: koreaStocks.length > 0 ? koreaStocks : v110_fetchStockData(CONFIG.MARKET_SYMBOLS.KOREA_STOCKS),
+    commodities: commodities,
+    fxRates: fxRates
   };
+}
+
+function v110_fetchCommoditiesFromNaverTable() {
+  const commodities = [];
+  const items = [
+    { code: 'CMDT_GC', name: 'Gold' },
+    { code: 'CMDT_SI', name: 'Silver' },
+    { code: 'OIL_CL', name: 'Oil (WTI)' }
+  ];
+
+  items.forEach(item => {
+    try {
+      const url = `https://finance.naver.com/marketindex/worldDailyQuote.naver?marketindexCd=${item.code}&fdtc=2&page=1`;
+      const resp = UrlFetchApp.fetch(url, { 
+        muteHttpExceptions: true, 
+        headers: { 'User-Agent': 'Mozilla/5.0' } 
+      });
+      
+      if (resp.getResponseCode() === 200) {
+        const html = resp.getContentText('EUC-KR');
+        
+          // Improved regex to handle whitespace and newlines inside <td>
+          const rowRegex = /<tr[^>]*>[\s\S]*?<td class="date">[\s\n]*(\d{4}\.\d{2}\.\d{2})[\s\n]*<\/td>([\s\S]*?)<\/tr>/;
+          const rowMatch = html.match(rowRegex);
+          
+          if (rowMatch) {
+            const rowContent = rowMatch[2];
+            // Columns in order: Closing Price, Change, Change%
+            const cellRegex = /<td class="num">([\s\S]*?)<\/td>/g;
+            const cells = [];
+            let m;
+            while ((m = cellRegex.exec(rowContent)) !== null) {
+              // Clean up HTML tags (like <img>) and trim whitespace/newlines
+              let val = m[1].replace(/<[^>]*>/g, '').replace(/[\r\n\t]+/g, ' ').trim();
+              cells.push(val);
+            }
+            
+            if (cells.length >= 3) {
+              const price = parseFloat(cells[0].replace(/,/g, ''));
+              // The 3rd cell (index 2) is the percentage
+              const change = parseFloat(cells[2].replace(/%/g, '').replace(/,/g, '').trim());
+              
+              commodities.push({ name: item.name, price: price, dayChange: change });
+              Logger.log(`   [Naver Table] ${item.name}: $${price} (${change}%)`);
+            }
+          } else {
+          Logger.log(`   ⚠️ Could not find data row for ${item.name}`);
+        }
+      }
+    } catch (e) {
+      Logger.log(`⚠️ Naver table fetch failed for ${item.name}: ${e.message}`);
+    }
+  });
+  
+  return commodities;
+}
+
+
+
+function v110_fetchBitcoinReliable() {
+  try {
+    const prompt = `Search for the current price of Bitcoin (BTC) in USD as of today, February 2, 2026.
+Identify the live trading price on global exchanges during this market crash.
+Return ONLY a valid JSON object. 
+Format: {"price": <numeric_value>, "change": <numeric_percentage_change>}
+(Example: {"price": 95000.5, "change": -2.4})`;
+    const response = v110_callPerplexity(prompt, 500);
+    const json = v110_extractJSON_Market(response);
+    if (json && json.price) {
+      const p = parseFloat(String(json.price).replace(/[^0-9.]/g, ''));
+      const c = parseFloat(String(json.change || 0).replace(/[^0-9.-]/g, ''));
+      return {name: 'Bitcoin', price: p, dayChange: c, weekChange: 0};
+    }
+  } catch (e) {
+    Logger.log(`⚠️ Bitcoin fetch failed: ${e.message}`);
+  }
+  return null;
+}
+
+
+
+
+
+function v110_fetchNaverFinance() {
+  const data = [];
+  try {
+    // Stable Mobile API for everything
+    const codes = [
+      {code: 'KOSPI', category: 'domestic', type: 'index'},
+      {code: 'KOSDAQ', category: 'domestic', type: 'index'},
+      {code: 'FX_USDKRW', category: 'exchange', type: 'price'},
+      {code: 'FX_EURKRW', category: 'exchange', type: 'price'},
+      {code: 'FX_JPYKRW', category: 'exchange', type: 'price'}
+    ];
+
+    // Domestic Indexes (KOSPI/KOSDAQ)
+    codes.filter(c => c.category === 'domestic').forEach(c => {
+       try {
+         const url = `https://m.stock.naver.com/api/index/${c.code}/basic`;
+         const resp = UrlFetchApp.fetch(url, {muteHttpExceptions:true});
+         if (resp.getResponseCode() === 200) {
+           const json = JSON.parse(resp.getContentText());
+           const price = Number(json.closePrice.replace(/,/g, ''));
+           data.push({
+             symbol: c.code,
+             name: c.code,
+             price: price,
+             dayChange: Number(json.fluctuationsRatio),
+             source: 'Naver'
+           });
+         }
+       } catch (e) {}
+    });
+
+    // Exchange Rates
+    const fxUrl = 'https://m.stock.naver.com/front-api/v1/marketIndex/prices?category=exchange&recurrent=true';
+    const fxResp = UrlFetchApp.fetch(fxUrl, { muteHttpExceptions: true });
+    if (fxResp.getResponseCode() === 200) {
+      const fxJson = JSON.parse(fxResp.getContentText());
+      const list = fxJson.result || [];
+      list.forEach(fx => {
+        if (['USD', 'EUR', 'JPY'].includes(fx.itemCode)) {
+           data.push({
+             symbol: `FX_${fx.itemCode}KRW`,
+             name: `${fx.itemCode}/KRW`,
+             price: Number(fx.closePrice.replace(/,/g, '')),
+             dayChange: Number(fx.fluctuationsRatio),
+             weekChange: 0,
+             source: 'Naver'
+           });
+        }
+      });
+    }
+
+  } catch (e) {
+    Logger.log(`❌ Naver Finance Error: ${e.message}`);
+  }
+  return data;
 }
 
 function v110_fetchFXRates(symbols) {
@@ -912,20 +1082,14 @@ function v110_fetchFXRates(symbols) {
   const names = {'KRW=X': 'USD/KRW', 'EURKRW=X': 'EUR/KRW', 'JPYKRW=X': 'JPY/KRW'};
   symbols.forEach(symbol => {
     try {
-      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=5d&interval=1d`;
-      const response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
-      if (response.getResponseCode() !== 200) return;
-      const json = JSON.parse(response.getContentText());
-      const result = json.chart.result[0];
-      const meta = result.meta;
-      const quotes = result.indicators.quote[0];
-      const allPrices = quotes.close.filter(p => p != null);
-      const currentPrice = meta.regularMarketPrice || allPrices[allPrices.length - 1];
-      const previousClose = meta.previousClose || allPrices[allPrices.length - 2];
-      const dayChange = previousClose ? ((currentPrice - previousClose) / previousClose) * 100 : 0;
-      const weekChange = allPrices.length >= 5 ? ((allPrices[allPrices.length - 1] - allPrices[allPrices.length - 5]) / allPrices[allPrices.length - 5]) * 100 : 0;
-      data.push({ symbol: symbol, name: names[symbol] || symbol, price: currentPrice, dayChange: dayChange, weekChange: weekChange });
-    } catch (e) {}
+      const result = v110_fetchYahoo(symbol);
+      if (result) {
+        if (names[symbol]) result.name = names[symbol];
+        data.push(result);
+      }
+    } catch (e) {
+      Logger.log(`❌ FX Error (${symbol}): ${e.toString()}`);
+    }
   });
   return data;
 }
@@ -943,33 +1107,128 @@ function v110_fetchStockData(symbols) {
 
 function v110_fetchYahoo(symbol) {
   try {
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=1mo&interval=1d`;
-    const response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    const cacheBuster = Date.now();
+    let currentPrice, dayChange, previousClose;
+    
+    // 1. Try Finance Quote for latest real-time data first
+    try {
+      const quoteUrl = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(symbol)}&_=${cacheBuster}`;
+      const qResp = UrlFetchApp.fetch(quoteUrl, { muteHttpExceptions: true, headers: { 'User-Agent': 'Mozilla/5.0' } });
+      if (qResp.getResponseCode() === 200) {
+        const qJson = JSON.parse(qResp.getContentText());
+        const quote = qJson.quoteResponse?.result?.[0];
+        if (quote) {
+          currentPrice = quote.regularMarketPrice;
+          dayChange = quote.regularMarketChangePercent;
+          previousClose = quote.regularMarketPreviousClose;
+          Logger.log(`   [Quote] ${symbol}: ${currentPrice} (${dayChange}%)`);
+        }
+      }
+    } catch (e) {
+      Logger.log(`   ⚠️ Quote API failed for ${symbol}: ${e.message}`);
+    }
+
+    // 2. Fetch Chart for historical data and WoW
+    const chartUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=1mo&interval=1d&_=${cacheBuster}`;
+    const response = UrlFetchApp.fetch(chartUrl, { 
+      muteHttpExceptions: true,
+      headers: { 'User-Agent': 'Mozilla/5.0' }
+    });
+    
     if (response.getResponseCode() !== 200) return null;
     const json = JSON.parse(response.getContentText());
+    if (!json.chart?.result?.[0]) return null;
+
     const result = json.chart.result[0];
     const meta = result.meta;
     const quotes = result.indicators.quote[0];
     const allPrices = quotes.close.filter(p => p != null);
-    const currentPrice = meta.regularMarketPrice || allPrices[allPrices.length - 1];
-    const previousClose = meta.previousClose || allPrices[allPrices.length - 2];
-    const dayChange = previousClose ? ((currentPrice - previousClose) / previousClose) * 100 : 0;
-    const weekChange = allPrices.length >= 5 ? ((allPrices[allPrices.length - 1] - allPrices[allPrices.length - 5]) / allPrices[allPrices.length - 5]) * 100 : 0;
+    
+    if (allPrices.length === 0) return null;
+
+    // Fallback if Quote API failed - calculate from chart data
+    if (currentPrice === undefined || dayChange === undefined) {
+      currentPrice = meta.regularMarketPrice || allPrices[allPrices.length - 1];
+      // Use yesterday's close from chart data (second to last value)
+      previousClose = allPrices.length >= 2 ? allPrices[allPrices.length - 2] : null;
+      // Only use meta.previousClose if chart data doesn't have enough history
+      if (!previousClose) previousClose = meta.previousClose;
+      dayChange = previousClose ? ((currentPrice - previousClose) / previousClose) * 100 : 0;
+      Logger.log(`   [Chart Fallback] ${symbol}: ${currentPrice} (${dayChange.toFixed(2)}%) prev=${previousClose}`);
+    }
+
+    // WoW calculation (5 trading days ago)
+    const weekAgoPrice = allPrices.length >= 6 ? allPrices[allPrices.length - 6] : allPrices[0];
+    const weekChange = weekAgoPrice ? ((currentPrice - weekAgoPrice) / weekAgoPrice) * 100 : 0;
+
     const names = {
       '^GSPC': 'S&P 500', '^DJI': 'Dow Jones', '^IXIC': 'NASDAQ',
-      '^KS11': 'KOSPI', '^KQ11': 'KOSDAQ',
-      'GC=F': 'Gold', 'CL=F': 'Oil (WTI)', 'BTC-USD': 'Bitcoin'
+      'GC=F': 'Gold', 'SI=F': 'Silver', 'CL=F': 'Oil (WTI)', 'BTC-USD': 'Bitcoin'
     };
+
     return {
       symbol: symbol,
       name: names[symbol] || symbol,
       price: currentPrice,
       dayChange: dayChange,
-      weekChange: weekChange
+      weekChange: weekChange,
+      isStale: (Date.now() / 1000 - (meta.regularMarketTime || 0)) > 21600 // Over 6 hours is stale for a daily brief
     };
   } catch (e) {
+    Logger.log(`❌ Error in fetchYahoo for ${symbol}: ${e.toString()}`);
     return null;
   }
+}
+
+/**
+ * Validates market data against latest news headlines.
+ * If news says "KOSPI collapsed to 2400" but market data says "2550", 
+ * we use the headline data as the source of truth for the brief.
+ */
+function v110_validateMarketDataWithAI(marketData, articles) {
+  if (!CONFIG.OPENAI_API_KEY) return marketData;
+
+  try {
+    const headlines = articles.slice(0, 30).map(a => a.title).join('\n');
+    const currentBrief = JSON.stringify(marketData);
+
+const prompt = `You are a Precision Market Auditor.
+Compare the Data below with the Headlines.
+
+=== MARKET DATA (FROM API/SEARCH) ===
+${currentBrief}
+
+=== NEWS HEADLINES (GROUND TRUTH) ===
+${headlines}
+
+**TASK:**
+1. If a value in the Market Data is clearly wrong compared to the headlines (e.g., news says "KOSPI 4940" but Data says "2500"), CORRECT IT.
+2. If news says "USD/KRW broke 1450" but Data is lower, CORRECT IT.
+3. For Bitcoin and Commodities, ensure they match the sentiment and any mentioned levels in global headlines.
+4. If the Data looks reasonable and roughly matches the news, DO NOT CHANGE IT.
+
+Return the JSON object only.`;
+
+    const response = v110_callGPT(prompt, 2000, 0.1);
+    const cleaned = v110_extractJSON_Market(response);
+    
+    if (cleaned) {
+      Logger.log(`   ✓ AI Validation complete. Updates applied if discrepancies were found.`);
+      return cleaned;
+    }
+  } catch (e) {
+    Logger.log(`   ⚠️ AI Validation failed: ${e.message}`);
+  }
+  return marketData;
+}
+
+function v110_extractJSON_Market(response) {
+  try {
+    let cleaned = response.replace(/```json/gi, '').replace(/```/g, '').trim();
+    const match = cleaned.match(/\{[\s\S]*\}/);
+    if (match) return JSON.parse(match[0]);
+  } catch (e) {}
+  return null;
 }
 
 function v110_formatMarketContextForAI(marketData) {
@@ -1022,7 +1281,6 @@ function v110_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketD
   const dd = String(dateObj.getDate()).padStart(2, '0');
   
   blocks.push({type: 'header', text: {type: 'plain_text', text: `Global Business Brief (${mm}/${dd})`, emoji: true}});
-  blocks.push({type: 'section', text: {type: 'mrkdwn', text: `*Date:* ${dateStr}`}});
   blocks.push({type: 'divider'});
   blocks.push({type: 'header', text: {type: 'plain_text', text: '📊 Market Snapshot', emoji: true}});
   blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(v110_formatMarketData(marketData), 2900)}});
@@ -1058,39 +1316,102 @@ function v110_truncate(text, maxLength) {
 
 function v110_formatMarketData(marketData) {
   let text = '';
+  
   if (marketData.usStocks && marketData.usStocks.length > 0) {
     text += '*US Markets*\n';
     marketData.usStocks.forEach(s => {
+      if (!s) return;
       const emoji = s.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${s.name}: ${s.price.toLocaleString(undefined, {minimumFractionDigits: 2})} (${s.dayChange >= 0 ? '+' : ''}${s.dayChange.toFixed(2)}% | WoW ${s.weekChange >= 0 ? '+' : ''}${s.weekChange.toFixed(2)}%)\n`;
+      text += `${emoji} ${s.name}: ${Number(s.price).toLocaleString(undefined, {minimumFractionDigits: 2})} (${s.dayChange >= 0 ? '+' : ''}${Number(s.dayChange).toFixed(2)}%)\n`;
     });
-    text += '\n';
   }
+
   if (marketData.koreaStocks && marketData.koreaStocks.length > 0) {
-    text += '*Korea Markets*\n';
+    text += '\n*Korea Markets*\n';
     marketData.koreaStocks.forEach(s => {
+      if (!s) return;
       const emoji = s.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${s.name}: ${s.price.toLocaleString()} (${s.dayChange >= 0 ? '+' : ''}${s.dayChange.toFixed(2)}% | WoW ${s.weekChange >= 0 ? '+' : ''}${s.weekChange.toFixed(2)}%)\n`;
+      text += `${emoji} ${s.name}: ${Number(s.price).toLocaleString(undefined, {minimumFractionDigits: 2})} (${s.dayChange >= 0 ? '+' : ''}${Number(s.dayChange).toFixed(2)}%)\n`;
     });
-    text += '\n';
   }
+
   if (marketData.fxRates && marketData.fxRates.length > 0) {
-    text += '*FX Rates*\n';
+    text += '\n*FX Rates*\n';
     marketData.fxRates.forEach(fx => {
+      if (!fx) return;
       const emoji = fx.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${fx.name}: ${fx.price.toFixed(2)} (${fx.dayChange >= 0 ? '+' : ''}${fx.dayChange.toFixed(2)}% | WoW ${fx.weekChange >= 0 ? '+' : ''}${fx.weekChange.toFixed(2)}%)\n`;
+      text += `${emoji} ${fx.name}: ${Number(fx.price).toFixed(2)} (${fx.dayChange >= 0 ? '+' : ''}${Number(fx.dayChange).toFixed(2)}%)\n`;
     });
-    text += '\n';
   }
+
   if (marketData.commodities && marketData.commodities.length > 0) {
-    text += '*Commodities & Crypto*\n';
+    text += '\n*Commodities & Crypto*\n';
     marketData.commodities.forEach(c => {
+      if (!c) return;
       const emoji = c.dayChange >= 0 ? '📈' : '📉';
-      const priceStr = c.name === 'Bitcoin' ? `$${c.price.toLocaleString()}` : `$${c.price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-      text += `${emoji} ${c.name}: ${priceStr} (${c.dayChange >= 0 ? '+' : ''}${c.dayChange.toFixed(2)}% | WoW ${c.weekChange >= 0 ? '+' : ''}${c.weekChange.toFixed(2)}%)\n`;
+      const priceStr = c.name === 'Bitcoin' ? `$${Number(c.price).toLocaleString()}` : `$${Number(c.price).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+      text += `${emoji} ${c.name}: ${priceStr} (${c.dayChange >= 0 ? '+' : ''}${Number(c.dayChange).toFixed(2)}%)\n`;
     });
   }
+  
   return text || 'Market data unavailable';
+}
+
+// === DEBUG FUNCTION ===
+function debugCommodityAPI() {
+  Logger.log('=== Naver Metals (Gold, Silver) ===');
+  try {
+    const metalsUrl = 'https://stock.naver.com/api/polling/marketindex/metals/GCcv1,SIcv1';
+    const resp = UrlFetchApp.fetch(metalsUrl, { muteHttpExceptions: true, headers: { 'User-Agent': 'Mozilla/5.0' } });
+    Logger.log(`Status: ${resp.getResponseCode()}`);
+    const json = JSON.parse(resp.getContentText());
+    (json.datas || []).forEach(item => {
+      Logger.log(`${item.name} (${item.reutersCode}):`);
+      Logger.log(`  closePrice: ${item.closePrice}`);
+      Logger.log(`  fluctuationsRatio: ${item.fluctuationsRatio}%`);
+      Logger.log(`  fluctuations: ${item.fluctuations}`);
+      Logger.log(`  compareToPreviousClosePrice: ${item.compareToPreviousClosePrice}`);
+    });
+  } catch (e) {
+    Logger.log(`Error: ${e.message}`);
+  }
+  
+  Logger.log('');
+  Logger.log('=== Naver Energy (WTI Oil) ===');
+  try {
+    const oilUrl = 'https://stock.naver.com/api/polling/marketindex/energy/CLcv1';
+    const resp = UrlFetchApp.fetch(oilUrl, { muteHttpExceptions: true, headers: { 'User-Agent': 'Mozilla/5.0' } });
+    Logger.log(`Status: ${resp.getResponseCode()}`);
+    const json = JSON.parse(resp.getContentText());
+    (json.datas || []).forEach(item => {
+      Logger.log(`${item.name} (${item.reutersCode}):`);
+      Logger.log(`  closePrice: ${item.closePrice}`);
+      Logger.log(`  fluctuationsRatio: ${item.fluctuationsRatio}%`);
+      Logger.log(`  fluctuations: ${item.fluctuations}`);
+    });
+  } catch (e) {
+    Logger.log(`Error: ${e.message}`);
+  }
+  
+  Logger.log('');
+  Logger.log('=== Yahoo Bitcoin ===');
+  try {
+    const url = 'https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?range=1d&interval=1d';
+    const resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true, headers: { 'User-Agent': 'Mozilla/5.0' } });
+    Logger.log(`Status: ${resp.getResponseCode()}`);
+    if (resp.getResponseCode() === 200) {
+      const json = JSON.parse(resp.getContentText());
+      const meta = json.chart?.result?.[0]?.meta;
+      if (meta) {
+        Logger.log(`Current Price: ${meta.regularMarketPrice}`);
+        Logger.log(`Previous Close: ${meta.previousClose}`);
+        const change = ((meta.regularMarketPrice - meta.previousClose) / meta.previousClose) * 100;
+        Logger.log(`Calculated Change: ${change.toFixed(2)}%`);
+      }
+    }
+  } catch (e) {
+    Logger.log(`Error: ${e.message}`);
+  }
 }
 
 function v110_sendToSlack(message) {

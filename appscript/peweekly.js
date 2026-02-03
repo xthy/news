@@ -15,17 +15,17 @@ var Config = {
 
   DAYS_BACK: 7,
 
-  KOREA_ARTICLES: 10,
-  ASIA_MENA_ARTICLES: 10,
-  US_ARTICLES: 8,
-  EUROPE_ARTICLES: 8,
+  KOREA_ARTICLES: 7,
+  ASIA_MENA_ARTICLES: 7,
+  US_ARTICLES: 7,
+  EUROPE_ARTICLES: 7,
 
   // Minimum required before fallback
   REQUIRED_MIN_PER_REGION: 5,
 
   // 같은 회사/이벤트 최대 기사 수
-  MAX_PER_COMPANY: 2,
-  MAX_PER_EVENT: 2
+  MAX_PER_COMPANY: 1,
+  MAX_PER_EVENT: 1
 };
 
 // ==================== SOURCE QUALITY ====================
@@ -47,23 +47,19 @@ var SOURCE_QUALITY = {
     'marketbeat', 'zacks', 'benzinga', 'gurufocus', 'ts2.tech',
     'citybiz', 'thehawk.in', 'inkl', 'spilled.gg', 'tweaktown',
     'technology org', 'jakarta globe', 'ssbcrack', 'cryptorank',
-    'techstock', 'sporting goods intelligence'
+    'techstock', 'sporting goods intelligence', 'wallapop', 'catalan news'
   ]
 };
 
 // ==================== KOREAN ENTITIES ====================
 
 var KOREAN_ENTITIES = [
-  'korea', 'korean', 'seoul', 'kospi', 'kosdaq', 'won ',
-  'mbk partners', 'mbk ', 'imm investment', 'imm ', 'anchor equity', 'arc capital',
-  'altos ventures', 'atinum', 'stic investments',
-  'samsung', 'hyundai', 'sk group', 'sk ', 'lg group', 'lg ',
-  'lotte', 'cj group', 'cj ', 'kakao', 'naver', 'coupang', 'musinsa',
-  'hybe', 'dunamu', 'upbit', 'toss', 'homeplus', 'emart', 'shinsegae',
-  'hanwha', 'posco', 'kia', 'celltrion', 'krafton', 'nexon', 'netmarble',
-  'yanolja', 'woowa', 'daangn', 'doosan', 'ecorbit', 'chindata',
-  'bang si-hyuk', 'kim kwang-il', 'fss ', 'financial supervisory',
-  'chosun', 'joongang', 'hankyung', 'maeil', 'ked global', 'yonhap'
+  'kospi', 'kosdaq', 'won ', 'krw', 'republic of korea', 'south korea',
+  'mbk partners', 'mbk ', 'imm investment', 'imm ', 'anchor equity', 'jkl partners', 'viamc',
+  'altos ventures', 'atinum', 'stic investments', 'hahn & company', 'hahn & co',
+  'samsung', 'hyundai', 'sk group', 'lg group', 'lotte', 'hanwha', 'posco',
+  'kakao', 'naver', 'coupang', 'musinsa', 'toss', 'dunamu', 'upbit',
+  'korea zinc', 'koryo zinc', 'young poong', 'homeplus', 'hallyu'
 ];
 
 // ==================== NEWS SOURCES ====================
@@ -356,36 +352,33 @@ function isValidTitle(title) {
 function cleanTitle(title) {
   if (!title) return '';
 
+  // 1. Remove HTML tags
   title = title.replace(/<[^>]*>/g, '');
-  title = title.replace(/^Exclusive\s*[\|:\-–—]\s*/gi, '');
-  title = title.replace(/\.?\s*Details here\.?$/gi, '');
 
-  var sourcesToRemove = [
-    'Bloomberg', 'Reuters', 'WSJ', 'Wall Street Journal', 'FT', 'Financial Times',
-    'NYT', 'New York Times', 'CNBC', 'Forbes', 'TechCrunch', 'Yahoo', 'AP', 'AFP',
-    'PitchBook', 'PE Hub', 'Private Equity International', 'Business Wire', 'PR Newswire',
-    '조선일보', '조선비즈', 'CHOSUNBIZ', 'Chosunbiz', '중앙일보', 'JoongAng',
-    '한경', 'Hankyung', '매일경제', 'MK', 'Korea Times', 'Korea Herald',
-    'The Australian', 'Nikkei', 'Nikkei Asia', 'DealStreetAsia',
-    'TradingView', 'TweakTown', 'Bitget', 'Soap Central', 'MSN',
-    'SSBCrack', 'SSBCrack News', 'CryptoRank', 'TechStock²',
-    'Sporting Goods Intelligence', 'Sporting Goods Intelligence Europe'
+  // 2. Remove common prefixes
+  title = title.replace(/^(Exclusive|Breaking|Update|Report|Sources|Analysis|Opinion|Flash)\s*[\|:\-–—\.]\s*/gi, '');
+
+  // 3. Define a comprehensive list of sources to strip from the END of the title
+  var sources = [
+    'Bloomberg', 'Reuters', 'WSJ', 'Wall Street Journal', 'Financial Times', 'FT', 'Nikkei', 'Nikkei Asia',
+    'NYT', 'New York Times', 'CNBC', 'Forbes', 'Fortune', 'TechCrunch', 'Business Insider', 'Yahoo Finance',
+    'The Business Times', 'Business Times', 'DealStreetAsia', 'Tech in Asia', 'CoinDesk', 'Cointelegraph',
+    'Chosun', 'Chosunbiz', 'Hankyung', 'JoongAng', 'Maeil Business', 'MK', 'Korea Herald', 'Korea Times',
+    'KED Global', 'Pulsenews', 'Investing.com', 'Barron\'s', 'Axios', 'The Information', 'PitchBook', 'PE Hub',
+    'PE Insights', 'Private Equity International', 'PEI', 'AltAssets', 'Meyka', 'KoreaTechDesk', 'Catalan News'
   ];
 
-  sourcesToRemove.forEach(function (source) {
-    var patterns = [
-      new RegExp('\\s*[-–—]\\s*' + escapeRegex(source) + '\\s*$', 'gi'),
-      new RegExp('\\s*\\|\\s*' + escapeRegex(source) + '\\s*$', 'gi')
-    ];
-    patterns.forEach(function (p) {
-      title = title.replace(p, '');
-    });
+  // Robust regex: matches optional separator (-, |, :, by) + source name + optional trailing junk at the very end
+  sources.forEach(function (s) {
+    var regex = new RegExp('\\s*[-–—|:]\\s*' + escapeRegex(s) + '(\\.(com|net|org))?\\s*$', 'i');
+    title = title.replace(regex, '');
   });
 
-  title = title.replace(/\s*[-–—]\s*[a-z0-9]+\.[a-z]{2,}(\.[a-z]{2,})?\s*$/gi, '');
-  title = title.replace(/^(United States|UK|Europe|Asia|Africa|Middle East)\s*[-–—]\s*/gi, '');
+  // 4. Remove generic regional prefixes at the start
+  title = title.replace(/^(South Korea|Korea|Japan|China|Asia|US|USA|Europe|UK|UK & Europe)\s*[-–—|:]\s*/gi, '');
 
-  return title.replace(/\s+/g, ' ').trim();
+  // 5. Clean up any leftover punctuation or whitespace
+  return title.replace(/\s*[\|:\-–—]\s*$/g, '').replace(/\s+/g, ' ').trim();
 }
 
 function escapeRegex(string) {
@@ -402,6 +395,8 @@ function reclassifyByContent(data) {
   all.forEach(function (article) {
     var text = (article.title + ' ' + article.description).toLowerCase();
 
+    // STRICT Korea check: Must have a strong Korean entity keyword. 
+    // "Korea" alone is not enough if it's a US company like Zerohash.
     var isKorean = KOREAN_ENTITIES.some(function (entity) {
       return text.indexOf(entity.toLowerCase()) !== -1;
     });
@@ -690,8 +685,12 @@ function scoreArticle(article, region) {
 
   // 4. Korean PE Context (+)
   if (region === 'korea') {
-    if (text.indexOf('mbk') !== -1 || text.indexOf('imm') !== -1 || text.indexOf('jc partners') !== -1 || text.indexOf('viamc') !== -1) score += 40;
-    if (text.indexOf('chosun') !== -1 || text.indexOf('hankyung') !== -1 || text.indexOf('ked global') !== -1) score += 10;
+    if (text.indexOf('mbk') !== -1 || text.indexOf('hahn') !== -1 || text.indexOf('korea zinc') !== -1) score += 50;
+
+    // Penalty for "Homeplus" if it's just repeating same "troubled" or "sells" trope without a new $ amount
+    if (text.indexOf('homeplus') !== -1) {
+      if (!extractAmount(text)) score -= 60;
+    }
   }
 
   if (region === 'asia') {
@@ -742,14 +741,16 @@ function gptAggressiveDedup(articles, region, targetCount) {
       return i + '. ' + a.title;
     }).join('\n');
 
-    var prompt = 'Review these ' + region + ' news titles for Private Equity professionals. Select only HIGH-STAKES stories (Mega-deals, Flagship fundraisings, GP spinoffs, Major scandals).\n\n' +
-      'ARTICLES:\n' + articleList + '\n\n' +
-      'CRITICAL RULES:\n' +
-      '- IGNORE routine news (call for nominations, webinars, internal newsletters, "Women in PE" awards, basic industry opinion).\n' +
-      '- PRIORITIZE actual transactions, exits, and fundraising closures.\n' +
-      '- ELIMINATE DUPLICATES (same deal/firm = keep only best 1).\n\n' +
-      'Return exactly ' + targetCount + ' unique indices in order of importance.\n' +
-      'JSON: {"keep": [0,3,5...]}';
+    var prompt = 'You are a Senior Investment Associate at a Tier-1 Global PE Firm. Review these ' + region + ' news titles as of February 2, 2026.\n\n' +
+      '### ARTICLES:\n' + articleList + '\n\n' +
+      '### CRITICAL FILTERING RULES (BE EXTREMELY STRICT):\n' +
+      '1. NO OLD NEWS: If it mentions acquisitions from 2023-2025 (like Naver/Wallapop), REJECT it.\n' +
+      '2. NO CORPORATE PR: "Secures contract", "launches service", "partnership MoU" is NOT a PE deal. REJECT.\n' +
+      '3. NO GENERAL NEWS: Government budgets, bts/kpop rumors, philanthropic donations. REJECT.\n' +
+      '4. FOCUS ON: Real Buyouts, Minority Investments ($50M+), Fund Closures, IPOs, GP-led Secondaries.\n' +
+      '5. DEDUPLICATION: If multiple sources report the same deal, pick the most "business-like" title.\n\n' +
+      'Return exactly ' + targetCount + ' unique indices in order of strategic importance.\n' +
+      'JSON FORMAT: {"keep": [0,3,5...]}';
 
     var response = callGPT(prompt, 1000);
     var result = parseJSON(response);
@@ -809,42 +810,47 @@ function generateHighlights(regions) {
 
   try {
     var context = '';
+    var total = 0;
 
     if (regions.korea.length > 0) {
       context += '\n[KOREA]\n' + regions.korea.slice(0, 5).map(function (a) {
         return '• ' + a.title;
       }).join('\n');
+      total += regions.korea.length;
     }
 
     if (regions.asiaMena.length > 0) {
       context += '\n\n[ASIA-PACIFIC & MENA]\n' + regions.asiaMena.slice(0, 5).map(function (a) {
         return '• ' + a.title;
       }).join('\n');
+      total += regions.asiaMena.length;
     }
 
     if (regions.us.length > 0) {
       context += '\n\n[US]\n' + regions.us.slice(0, 5).map(function (a) {
         return '• ' + a.title;
       }).join('\n');
+      total += regions.us.length;
     }
 
     if (regions.europe.length > 0) {
       context += '\n\n[EUROPE]\n' + regions.europe.slice(0, 4).map(function (a) {
         return '• ' + a.title;
       }).join('\n');
+      total += regions.europe.length;
     }
 
-    var prompt = 'Create 7 DIVERSE weekly highlights for PE professionals.\n\n' +
-      'STORIES:' + context + '\n\n' +
-      'REQUIREMENTS:\n' +
-      '• Exactly 7 bullets, each 3-4 sentences\n' +
-      '• NO MORE THAN 1 article per company/event\n' +
-      '• Distribution: 2 Korea, 2 Asia-Pacific/MENA, 2 US, 1 Europe\n' +
-      '• Start with [Region] tag\n' +
-      '• Include what happened + why it matters\n' +
-      '• PRIORITIZE scandals/risks if available\n' +
-      '• ENSURE DIVERSITY - no repeated companies\n\n' +
-      'Return JSON: {"highlights": ["[Korea] ...", "[US] ..."]}\n\nJSON only:';
+    var prompt = 'You are a Senior Investment Officer. Synthesize the provided headlines into 7 high-impact weekly highlights. Focus on the most significant global capital movements.\n\n' +
+      '### TARGET DATE: Week of Jan 26 - Feb 2, 2026\n\n' +
+      '### HEADLINES BY REGION:\n' + context + '\n\n' +
+      '### MANDATORY WRITING RULES:\n' +
+      '1. TOTAL COUNT: Exactly 7 bullets. No exceptions.\n' +
+      '2. GLOBAL BALANCE: Max 2 from Korea. Ensure at least one from each other region (US, Europe, Asia-Pacific/MENA).\n' +
+      '3. ZERO BUZZWORDS: Strictly ban "underscores", "highlights", "strategic move", "revitalize", "bullish outlook", "momentum", "strategic play". If you use these, the memo is rejected.\n' +
+      '4. IC-READY TONE: Use clinical, concise language focusing on: Valuation (if available), Deal Type (Carve-out, LBO, Secondary), and Market Impact.\n\n' +
+      'Example of correct tone:\n' +
+      '[US] Francisco Partners / Jamf - $2.2B take-private acquisition completed. This represents a typical delisting play in the crowded MDM sector, likely aiming for aggressive cost-cutting and portfolio integration.\n\n' +
+      'Return JSON: {"highlights": ["[Region] ...", ...]}\n\nJSON only:';
 
     var response = callGPT(prompt, 3500);
     var result = parseJSON(response);
@@ -856,6 +862,7 @@ function generateHighlights(regions) {
     return fallbackHighlights(regions);
 
   } catch (e) {
+    Logger.log('Highlight generation error: ' + e.toString());
     return fallbackHighlights(regions);
   }
 }
