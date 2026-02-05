@@ -151,6 +151,7 @@ def setup_driver():
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-extensions")
     options.add_argument("--disable-images")
+    options.page_load_strategy = 'eager'
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
     
     # Block permission popups and dialogs
@@ -233,51 +234,112 @@ class BaseCrawler:
     def login(self, site_key):
         creds = CREDENTIALS[site_key]
         logger.info(f"[{site_key}] Starting login process...")
-        logger.debug(f"[{site_key}] Login URL: {creds['login_url']}")
         try:
-            self.driver.get(creds["login_url"])
+            try:
+                self.driver.get(creds["login_url"])
+            except TimeoutException:
+                logger.warning(f"[{site_key}] Timeout loading login page, stopping and proceeding")
+                self.driver.execute_script("window.stop();")
             time.sleep(2)
-            logger.debug(f"[{site_key}] Login page loaded, current URL: {self.driver.current_url}")
+            
+            # Use broader wait for any login field to appear
+            wait = WebDriverWait(self.driver, 15)
             
             if site_key == "thebell":
-                self.wait.until(EC.presence_of_element_located((By.ID, creds["input_id"]))).send_keys(creds["ids"][0])
-                self.driver.find_element(By.ID, creds["input_pw"]).send_keys(creds["pws"][0])
-                login_btn = self.driver.find_element(By.CSS_SELECTOR, creds["btn_selector"])
-                self.driver.execute_script("arguments[0].click();", login_btn)
-                
+                # TheBell often has duplicate 'id' elements for mobile/desktop. 
+                # Find all and pick the visible one.
+                try:
+                    # Specific approach: find visible ones
+                    for field_id in ["id", "pw"]:
+                        elements = self.driver.find_elements(By.ID, field_id)
+                        target = None
+                        for el in elements:
+                            if el.is_displayed():
+                                target = el
+                                break
+                        if not target and elements:
+                            target = elements[0]
+                        
+                        if target:
+                            target.clear()
+                            target.send_keys(creds["ids"][0] if field_id == "id" else creds["pws"][0])
+                        else:
+                            # Direct fallback
+                            self.driver.execute_script(f"document.getElementById('{field_id}').value='{creds['ids'][0] if field_id == 'id' else creds['pws'][0]}';")
+
+                    time.sleep(0.5)
+                    # Find visible login button
+                    btn_selectors = [creds["btn_selector"], "#btn1", "a#btn1", ".btnLogin", "input[type='submit']"]
+                    login_btn = None
+                    for sel in btn_selectors:
+                        try:
+                            btns = self.driver.find_elements(By.CSS_SELECTOR, sel)
+                            for b in btns:
+                                if b.is_displayed():
+                                    login_btn = b
+                                    break
+                            if login_btn: break
+                        except: continue
+                    
+                    if login_btn:
+                        self.driver.execute_script("arguments[0].click();", login_btn)
+                    else:
+                        self.driver.execute_script("document.getElementById('btn1').click();")
+                except Exception as e:
+                    logger.warning(f"[{site_key}] Advanced login attempt failed: {e}")
+                    # Ultimate fallback
+                    self.driver.execute_script(f"document.getElementById('id').value='{creds['ids'][0]}';")
+                    self.driver.execute_script(f"document.getElementById('pw').value='{creds['pws'][0]}';")
+                    self.driver.execute_script("document.getElementById('btn1').click();")
                 
             elif site_key == "dealsiteplus":
-                self.driver.find_element(By.ID, creds["input_id"]).send_keys(creds["ids"][0])
+                wait.until(EC.element_to_be_clickable((By.ID, creds["input_id"]))).send_keys(creds["ids"][0])
                 self.driver.find_element(By.ID, creds["input_pw"]).send_keys(creds["pws"][0])
-                # Usually enter works, or find submit button
+                time.sleep(0.5)
                 self.driver.find_element(By.ID, creds["input_pw"]).submit()
                 
             elif site_key == "hankyung":
-                self.driver.find_element(By.ID, creds["input_id"]).send_keys(creds["ids"][0])
-                self.driver.find_element(By.ID, creds["input_pw"]).send_keys(creds["pws"][0])
+                user_el = wait.until(EC.element_to_be_clickable((By.ID, creds["input_id"])))
+                user_el.clear()
+                user_el.send_keys(creds["ids"][0])
+                pw_el = self.driver.find_element(By.ID, creds["input_pw"])
+                pw_el.clear()
+                pw_el.send_keys(creds["pws"][0])
+                time.sleep(0.5)
                 self.driver.find_element(By.CSS_SELECTOR, creds["btn_selector"]).click()
                 
             elif site_key == "investchosun":
-                # InvestChosun sometimes tricky with explicit waits
-                self.wait.until(EC.element_to_be_clickable((By.ID, creds["input_id"]))).send_keys(creds["ids"][0])
-                self.driver.find_element(By.ID, creds["input_pw"]).send_keys(creds["pws"][0])
+                user_el = wait.until(EC.element_to_be_clickable((By.ID, creds["input_id"])))
+                user_el.clear()
+                user_el.send_keys(creds["ids"][0])
+                pw_el = self.driver.find_element(By.ID, creds["input_pw"])
+                pw_el.clear()
+                pw_el.send_keys(creds["pws"][0])
+                time.sleep(0.5)
                 login_btn = self.driver.find_element(By.CSS_SELECTOR, creds["btn_selector"])
                 self.driver.execute_script("arguments[0].click();", login_btn)
 
             time.sleep(3)
             
-            # Handle any alerts that might appear
+            # Handle any alerts (important for "Login Failed" or "Session full" messages)
             try:
                 alert = self.driver.switch_to.alert
                 alert_text = alert.text
                 logger.warning(f"[{site_key}] Alert detected: {alert_text}")
-                alert.dismiss()  # or alert.accept() depending on what you want
-                logger.info(f"[{site_key}] Alert dismissed")
+                alert.accept() 
+                logger.info(f"[{site_key}] Alert accepted")
+                time.sleep(1)
             except:
-                pass  # No alert present
+                pass
             
-            logger.info(f"[{site_key}] Login completed successfully")
-            logger.debug(f"[{site_key}] Post-login URL: {self.driver.current_url}")
+            # Verification: Check if we are still on login page
+            curr_url = self.driver.current_url
+            if any(x in curr_url.lower() for x in ["login", "signin", "member"]):
+                # Check for common login failure markers or if we just stayed on same page
+                logger.warning(f"[{site_key}] Still on login-related URL: {curr_url}. Login might have failed.")
+            else:
+                logger.info(f"[{site_key}] Login completed successfully (URL changed)")
+                
         except Exception as e:
             logger.error(f"[{site_key}] Login failed: {e}", exc_info=True)
 
@@ -300,7 +362,11 @@ class TheBellCrawler(BaseCrawler):
             while True:
                 url = f"{base_url}&page={page}"
                 logger.info(f"[TheBell] Scanning Page {page}: {url}")
-                self.driver.get(url)
+                try:
+                    self.driver.get(url)
+                except TimeoutException:
+                    logger.warning(f"[TheBell] Timeout loading {url}, attempting to stop and partial parse")
+                    self.driver.execute_script("window.stop();")
                 time.sleep(1.5)
                 
                 # Handle any alerts
@@ -314,35 +380,43 @@ class TheBellCrawler(BaseCrawler):
                 except:
                     pass  # No alert present
                 
-                # More robust selector for TheBell news list
-                # Targeting div.listBox or div.articleBox (seen in some variants)
-                page_articles = self.driver.find_elements(By.CSS_SELECTOR, "div.listBox li, div.articleBox li, div.newsList li")
+                # Broader selector for articles
+                page_articles = self.driver.find_elements(By.CSS_SELECTOR, "div.listBox li, div.articleBox li, div.newsList li, .listBox dl, .articleBox dl")
                 
+                if not page_articles:
+                    # Fallback to any dl/li in content
+                    page_articles = self.driver.find_elements(By.CSS_SELECTOR, "#contents dl, #contents li")
+
                 if not page_articles:
                     logger.warning(f"[TheBell] No articles found on page {page}. Stopping pagination.")
                     break
                     
-                found_target = False
-                found_older = False
+                found_target_on_page = False
+                found_older_on_page = False
                 
                 for item in page_articles:
                     try:
+                        # Skip if item is likely not an article (too small, sidebar)
+                        if item.size['height'] < 20: continue
+
                         # 1. Capture Date
                         date_text = ""
-                        # Try span.date or dd.userBox
                         try:
-                            date_el = item.find_element(By.CSS_SELECTOR, "span.date, dd.userBox")
+                            # Try common date containers
+                            date_el = item.find_element(By.CSS_SELECTOR, "span.date, dd.userBox, .date")
                             date_text = date_el.text.strip()
                         except:
-                            # Search anywhere in item text for date pattern
+                            # Search in whole item text
                             m = re.search(r'\d{4}-\d{2}-\d{2}', item.text)
                             if m: date_text = m.group(0)
                         
                         if not date_text: continue
 
-                        # Parse date (handle YYYY-MM-DD or full YYYY-MM-DD HH:MM:SS)
+                        # Parse date
                         try:
-                            clean_date = re.search(r'\d{4}-\d{2}-\d{2}', date_text).group(0)
+                            clean_date_match = re.search(r'\d{4}-\d{2}-\d{2}', date_text)
+                            if not clean_date_match: continue
+                            clean_date = clean_date_match.group(0)
                             article_date = datetime.strptime(clean_date, "%Y-%m-%d").date()
                         except:
                             continue
@@ -350,31 +424,32 @@ class TheBellCrawler(BaseCrawler):
                         # Check date range
                         if START_DATE.date() <= article_date <= TODAY.date():
                             # 2. Find Link and Title
-                            link_el = None
-                            try:
-                                # Look for a.txtE or any anchor with significant text
-                                link_el = item.find_element(By.CSS_SELECTOR, "a.txtE, dt a, a")
-                            except: pass
-
-                            if not link_el: continue
-
-                            href = link_el.get_attribute("href")
+                            # Look for all links, pick the one with most text
+                            links = item.find_elements(By.TAG_NAME, "a")
+                            if not links: continue
                             
-                            # CRITICAL: Exclude Code 00 and Search pages. 
-                            # 'keyword=' was removed as it blocked legitimate keyword-themed articles.
+                            best_link = None
+                            max_len = 0
+                            for l in links:
+                                t = l.text.strip().split('\n')[0].strip()
+                                if len(t) > max_len:
+                                    max_len = len(t)
+                                    best_link = l
+                            
+                            if not best_link or max_len < 5: 
+                                continue
+
+                            href = best_link.get_attribute("href")
                             if not href: continue
+                            
+                            title = best_link.text.strip().split('\n')[0].strip()
+                            
                             href_lower = href.lower()
-                            if "code=00" in href_lower or "thebell+note" in href_lower or \
-                               "search.asp" in href_lower or "keywordnews.asp" in href_lower or \
-                               "newslistshort.asp" in href_lower:
+                            # Standard exclusions
+                            if any(x in href_lower for x in ["code=00", "thebell+note", "search.asp", "keywordnews.asp", "newslistshort.asp"]):
                                 continue
                                 
-                            # Take only the first line for the title (to avoid including descriptions)
-                            title_raw = link_el.text.strip()
-                            title = title_raw.split('\n')[0].strip()
-                            
-                            # '키워드' was removed from blacklist as it's often used in valid titles.
-                            if len(title) < 5 or "검색결과" in title or "검색된" in title:
+                            if "검색결과" in title or "검색된" in title:
                                 continue
 
                             # Fix relative links
@@ -384,27 +459,25 @@ class TheBellCrawler(BaseCrawler):
                             if not any(d['url'] == href for d in target_links):
                                 target_links.append({"site": "TheBell", "title": title, "url": href, "date": clean_date})
                                 logger.info(f"[TheBell] Found: {title} ({clean_date})")
-                                found_target = True
+                                found_target_on_page = True
                         elif article_date < START_DATE.date():
-                            logger.debug(f"[TheBell] Older article found: {article_date}")
-                            found_older = True
+                            found_older_on_page = True
                     except Exception as e:
                         continue
                 
-                # Pagination logic
-                if found_older:
-                    logger.info(f"[TheBell] Reached articles older than target. Stopping pagination for this section.")
+                # Pagination logic: 
+                # Move to next page if we found target items OR if we haven't seen older items yet
+                # Stop if we hit a page with ONLY older items (if page > 1)
+                
+                if found_older_on_page and not found_target_on_page and page > 1:
+                    logger.info(f"[TheBell] Page {page} has only older articles. Stopping.")
                     break
                 
-                if not found_target and page > 1: 
-                    # If we found nothing targeted on page 2+, and didn't hit older, 
-                    # it might mean gaps or we are just seeing unrelated stuff?
-                    # But safer to rely on 'found_older' to stop.
-                    pass
+                if page >= 2 and not found_target_on_page and found_older_on_page:
+                    break
 
                 page += 1
-                if page > 10: # Safety break
-                    logger.warning(f"[TheBell] Reached safety limit of 10 pages")
+                if page > 7: # Safety break
                     break
         
         logger.info(f"[TheBell] Collection complete. Found {len(target_links)} articles.")
@@ -424,7 +497,11 @@ class HankyungCrawler(BaseCrawler):
         
         for section_url in urls:
             logger.info(f"[Hankyung] Scanning Section: {section_url}")
-            self.driver.get(section_url)
+            try:
+                self.driver.get(section_url)
+            except TimeoutException:
+                logger.warning(f"[Hankyung] Timeout loading {section_url}, stopping and proceeding")
+                self.driver.execute_script("window.stop();")
             time.sleep(2)
             
             # Handle any alerts (e.g., app installation prompts)
@@ -521,7 +598,11 @@ class InvestChosunCrawler(BaseCrawler):
         # Strictly use CatID 12 (Deal) as requested
         url = "https://www.investchosun.com/svc/news/tlist.html?catid=12"
         logger.info(f"[InvestChosun] Navigating to: {url}")
-        self.driver.get(url)
+        try:
+            self.driver.get(url)
+        except TimeoutException:
+            logger.warning(f"[InvestChosun] Timeout loading {url}, stopping and proceeding")
+            self.driver.execute_script("window.stop();")
         time.sleep(2)
         
         articles = self.driver.find_elements(By.CSS_SELECTOR, "li")
@@ -585,7 +666,11 @@ class DealSitePlusCrawler(BaseCrawler):
         
         for section_url in urls:
             logger.info(f"[DealSite+] Scanning: {section_url}")
-            self.driver.get(section_url)
+            try:
+                self.driver.get(section_url)
+            except TimeoutException:
+                logger.warning(f"[DealSite+] Timeout loading {section_url}, stopping and proceeding")
+                self.driver.execute_script("window.stop();")
             time.sleep(2)
             
             # Generic list item detection - adjusting based on common practices since DOM not fully known
@@ -698,7 +783,13 @@ def generate_pdf_for_link(driver, link_info, index, total):
         elif site == "Hankyung" and "/article/" in url:
             target_url = url.replace("/article/", "/print/")
 
-        driver.get(target_url)
+        try:
+            driver.get(target_url)
+        except TimeoutException:
+            logger.warning(f"[PDF] Timeout loading {target_url}, stopping and proceeding with partial content")
+            driver.execute_script("window.stop();")
+        # Block window.print() to prevent hang
+        driver.execute_script("window.print = function() { console.log('print blocked'); };")
         time.sleep(3)
         
         # Inject Readability
@@ -1081,13 +1172,42 @@ def send_slack_notification(webhook_url, site_pdfs, all_links, date_str):
         logger.error(f"Slack notify error: {e}")
 
 def forward_logs_to_slack(webhook_url):
-    """Sends current execution logs to Slack."""
+    """Sends current execution logs from the execution_log file to Slack in chunks."""
+    if not webhook_url: return
     try:
         import requests
-        summary = slack_handler.get_summary()
-        if summary:
-            requests.post(webhook_url, json={"text": f"📋 *Execution Log Summary*\n```\n{summary[-3000:]}\n```"}, timeout=10)
-    except: pass
+        log_filename = f"execution_log_{datetime.now().strftime('%Y-%m-%d')}.txt"
+        
+        content = ""
+        if os.path.exists(log_filename):
+            try:
+                with open(log_filename, "r", encoding="utf-8", errors="replace") as f:
+                    content = f.read()
+            except: pass
+        
+        if not content:
+            content = slack_handler.get_summary()
+            
+        if content:
+            # We take the last 15,000 characters to cover the most relevant recent logs
+            # and send them in chunks of 3,800 characters to avoid Slack truncation.
+            MAX_TOTAL_CHARS = 15000
+            CHUNK_SIZE = 3800
+            
+            if len(content) > MAX_TOTAL_CHARS:
+                content = "...\n[Earlier logs truncated]\n" + content[-MAX_TOTAL_CHARS:]
+            
+            chunks = [content[i:i+CHUNK_SIZE] for i in range(0, len(content), CHUNK_SIZE)]
+            
+            for i, chunk in enumerate(chunks):
+                title = f"📋 *Execution Log ({i+1}/{len(chunks)})*" if len(chunks) > 1 else f"📋 *Execution Log ({log_filename})*"
+                payload = {
+                    "text": f"{title}\n```\n{chunk}\n```"
+                }
+                requests.post(webhook_url, json=payload, timeout=10)
+    except:
+        pass
+
 
 
 # ────────────────────────────────────────────────
