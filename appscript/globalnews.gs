@@ -1,6 +1,6 @@
 /**
- * Global Headlines Summary - Version 11.0
- * Robust Insights, Diverse Macro Topics, and Credibility Filters
+ * Global Headlines Summary - Version 11.1
+ * Improved headline quality, broken link prevention, and enhanced AI curation
  */
 
 // ==================== CONFIGURATION (Same) ====================
@@ -41,40 +41,46 @@ const CONFIG = {
 // [All NEWS_SOURCEX same as before]
 
 const NEWS_SOURCEX = [
+  // ========== TIER 0: Front Page / Top Stories / Editorially Curated ==========
+  // These feeds contain ONLY what editors chose as headlines — highest signal
+  {name: 'NYT - Top Stories', url: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml', section: 'intl', tier: 0},
+  {name: 'FT - Home', url: 'https://www.ft.com/?format=rss', section: 'intl', tier: 0},
+  {name: 'BBC - Top Stories', url: 'http://feeds.bbci.co.uk/news/rss.xml', section: 'intl', tier: 0},
+  {name: 'Google News - Top Business', url: 'https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtVnVHZ0pWVXlnQVAB?hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 0},
+  {name: 'Google News - World', url: 'https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtVnVHZ0pWVXlnQVAB?hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 0},
+  {name: 'Reuters - Top', url: 'https://news.google.com/rss/search?q=site:reuters.com+when:12h&hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 0},
+  
+  {name: 'Google News - KR Top', url: 'https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 0},
+  {name: 'Google News - KR Business', url: 'https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtdHZHZ0pMVWlnQVAB?hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 0},
+  {name: '조선일보 주요', url: 'https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml', section: 'korea', tier: 0},
+  
+  // ========== TIER 1: Section Feeds from Premium Sources ==========
   {name: 'WSJ - World', url: 'https://feeds.content.dowjones.io/public/rss/RSSWorldNews', section: 'intl', tier: 1},
   {name: 'WSJ - Markets', url: 'https://feeds.content.dowjones.io/public/rss/RSSMarketsMain', section: 'intl', tier: 1},
-  {name: 'WSJ - Business', url: 'https://feeds.content.dowjones.io/public/rss/RSSBusiness', section: 'intl', tier: 1},
-  {name: 'FT - World', url: 'https://www.ft.com/world?format=rss', section: 'intl', tier: 1},
-  {name: 'FT - Companies', url: 'https://www.ft.com/companies?format=rss', section: 'intl', tier: 1},
   {name: 'NYT - Business', url: 'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml', section: 'intl', tier: 1},
   {name: 'NYT - World', url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', section: 'intl', tier: 1},
+  {name: 'FT - Companies', url: 'https://www.ft.com/companies?format=rss', section: 'intl', tier: 1},
   {name: 'Bloomberg', url: 'https://news.google.com/rss/search?q=site:bloomberg.com+business+OR+economy+when:24h&hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 1},
   {name: 'Reuters Business', url: 'https://news.google.com/rss/search?q=site:reuters.com+business+OR+economy+when:24h&hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 1},
   {name: 'Economist', url: 'https://news.google.com/rss/search?q=site:economist.com+economy+OR+policy+when:24h&hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 1},
-  {name: 'Reuters Breaking', url: 'https://news.google.com/rss/search?q=site:reuters.com+breaking+OR+urgent+when:24h&hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 1},
-  {name: 'AP Breaking', url: 'https://news.google.com/rss/search?q=site:apnews.com+breaking+OR+urgent+when:24h&hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 1},
-  {name: 'Major Disasters', url: 'https://news.google.com/rss/search?q=disaster+OR+emergency+OR+crisis+when:24h&hl=en-US&gl=US&ceid=US:en', section: 'intl', tier: 1},
+  
+  {name: '조선일보 경제', url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/economy/?outputType=xml', section: 'korea', tier: 1},
+  {name: '중앙일보 경제', url: 'https://news.google.com/rss/search?q=site:joongang.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
+  {name: '동아일보 경제', url: 'https://rss.donga.com/economy.xml', section: 'korea', tier: 1},
+  {name: '한국경제', url: 'https://news.google.com/rss/search?q=site:hankyung.com+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
+  {name: '매일경제', url: 'https://www.mk.co.kr/rss/30100041/', section: 'korea', tier: 1},
+  {name: '연합뉴스 경제', url: 'https://news.google.com/rss/search?q=site:yna.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
+  
+  // ========== TIER 2: Secondary / Supplementary Sources ==========
   {name: 'BBC Business', url: 'http://feeds.bbci.co.uk/news/business/rss.xml', section: 'intl', tier: 2},
   {name: 'CNBC', url: 'https://www.cnbc.com/id/100003114/device/rss/rss.html', section: 'intl', tier: 2},
   {name: 'Guardian Business', url: 'https://www.theguardian.com/uk/business/rss', section: 'intl', tier: 2},
   {name: 'WaPo Business', url: 'https://feeds.washingtonpost.com/rss/business', section: 'intl', tier: 2},
   
-  {name: '조선일보 경제', url: 'https://www.chosun.com/arc/outboundfeeds/rss/category/economy/?outputType=xml', section: 'korea', tier: 1},
-  {name: '조선일보 산업', url: 'https://news.google.com/rss/search?q=site:chosun.com+산업+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
-  {name: '중앙일보 경제', url: 'https://news.google.com/rss/search?q=site:joongang.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
-  {name: '동아일보 경제', url: 'https://rss.donga.com/economy.xml', section: 'korea', tier: 1},
-  {name: '한국경제', url: 'https://news.google.com/rss/search?q=site:hankyung.com+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
-  {name: '매일경제', url: 'https://www.mk.co.kr/rss/30100041/', section: 'korea', tier: 1},
-  {name: '매일경제 증권', url: 'https://www.mk.co.kr/rss/50200011/', section: 'korea', tier: 1},
-  {name: '서울경제', url: 'https://news.google.com/rss/search?q=site:sedaily.com+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
-  {name: '머니투데이', url: 'https://news.google.com/rss/search?q=site:mt.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
-  {name: '전자신문', url: 'https://news.google.com/rss/search?q=site:etnews.com+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
-  {name: '연합뉴스 경제', url: 'https://news.google.com/rss/search?q=site:yna.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
-  {name: '이데일리', url: 'https://news.google.com/rss/search?q=site:edaily.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
-  {name: '경향신문 경제', url: 'https://news.google.com/rss/search?q=site:khan.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
-  {name: '한겨레 경제', url: 'https://news.google.com/rss/search?q=site:hani.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
-  {name: '한국일보 경제', url: 'https://news.google.com/rss/search?q=site:hankookilbo.com+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
-  {name: 'Korea Breaking', url: 'https://news.google.com/rss/search?q=korea+속보+OR+긴급+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 1},
+  {name: '서울경제', url: 'https://news.google.com/rss/search?q=site:sedaily.com+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
+  {name: '머니투데이', url: 'https://news.google.com/rss/search?q=site:mt.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
+  {name: '전자신문', url: 'https://news.google.com/rss/search?q=site:etnews.com+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
+  {name: '이데일리', url: 'https://news.google.com/rss/search?q=site:edaily.co.kr+경제+when:24h&hl=ko&gl=KR&ceid=KR:ko', section: 'korea', tier: 2},
   {name: 'Korea Times', url: 'https://news.google.com/rss/search?q=korea+business+OR+samsung+OR+hyundai+when:24h&hl=en-US&gl=US&ceid=US:en', section: 'korea', tier: 2}
 ];
 
@@ -87,14 +93,14 @@ function sendDailyNewsSummary() {
 
 function v110_sendDailyNewsSummary() {
   try {
-    Logger.log('🚀 v11.0 - Robust & Diverse Insights\n');
+    Logger.log('🚀 v11.1 - Headline Quality & Link Fix\n');
 
     const allArticles = v110_fetchAllNews();
     Logger.log(`\n📰 Collected: ${allArticles.length} articles`);
     
     v110_validate24HourWindow(allArticles);
 
-    const intlArticles = v110_processWithGuarantee(
+    const intlArticles = v110_processWithQuality(
       allArticles.filter(a => a.section === 'intl'),
       CONFIG.REQUIRED_INTL_ARTICLES,
       'intl'
@@ -105,7 +111,7 @@ function v110_sendDailyNewsSummary() {
     const intlTopics = v110_extractTopics(intlArticles);
     Logger.log(`   → International topics: ${intlTopics.join(', ')}`);
 
-    const koreaArticles = v110_processWithGuarantee(
+    const koreaArticles = v110_processWithQuality(
       allArticles.filter(a => a.section === 'korea'),
       CONFIG.REQUIRED_KOREA_ARTICLES,
       'korea',
@@ -216,12 +222,15 @@ function v110_generateFactBasedInsights(intlArticles, koreaArticles, marketData,
     const marketContext = v110_formatMarketContextForAI(marketData);
 
     const prompt = `You are a Senior Strategic Analyst writing a high-level briefing for global business executives.
-Based on the provided news, deliver exactly ${CONFIG.REQUIRED_MAX_INSIGHTS} distinct professional insights in English.
+Based on the provided news, deliver EXACTLY 6 distinct professional insights in English.
+Your insights MUST be perfectly balanced:
+- EXACTLY 3 insights derived from INTERNATIONAL NEWS.
+- EXACTLY 3 insights derived from KOREA NEWS.
 
 **STRICT RULES:**
 - DO NOT start all sentences with the same entity (e.g., avoid "Trump..." in every point).
 - DO NOT use vague references like "This event," "This trend," or "This development."
-- EACH insight must cover a DIFFERENT topic (e.g., if one covers trade, another should cover energy, tech, or monetary policy).
+- EACH insight must cover a DIFFERENT topic (e.g., if one covers trade, another should cover tech, or monetary policy).
 - Focus on the STRATEGIC IMPACT: "Why does this matter to a CEO or Investor?"
 
 === MARKET DATA ===
@@ -242,16 +251,15 @@ ${koreaContext || 'None'}
 **GOOD EXAMPLE:**
 "The record $1.1T US trade deficit, despite aggressive tariff rhetoric, underscores the deep structural reliance on Asian manufacturing. Executives should expect continued currency volatility and supply chain friction as re-shoring efforts face labor bottlenecks. Diversification into Southeast Asian hubs remains a critical hedge."
 
-Return response ONLY in JSON format:
+Return response ONLY in JSON format. DO NOT include prefixes like "Insight 1:" or "International News:" in the text itself. Just write the insight directly.
 {
   "insights": [
-    "Insight 1 (e.g., Geopolitics/Trade)",
-    "Insight 2 (e.g., Tech/AI Regulation)",
-    "Insight 3 (e.g., Energy/Climate)",
-    "Insight 4 (e.g., Korea Market/Export)",
-    "Insight 5 (e.g., Monetary Policy/Inflation)",
-    "Insight 6 (e.g., Global Finance)",
-    "Insight 7 (e.g., Supply Chain)"
+    "[International] The record $1.1T US trade deficit...",
+    "[International] Another critical global insight...",
+    "[International] A third global insight...",
+    "[Korea] SK Hynix's $21B investment in the Yongin...",
+    "[Korea] Another critical corporate insight...",
+    "[Korea] A third critical Korean insight..."
   ]
 }`;
 
@@ -511,11 +519,12 @@ function v110_calculateEnhancedSimilarity(str1, str2) {
 function v110_ensureSourceDiversity(articles, requiredCount) {
   if (articles.length <= requiredCount) return articles;
   
+  const maxPerSource = Math.max(2, Math.floor(requiredCount / CONFIG.MIN_SOURCE_DIVERSITY));
   const sourceCounts = {};
   const selected = [];
   const remaining = [...articles];
   
-  // Rule: Try to pick at least one from each source first, then allow more
+  // Rule: Pick from least-represented sources first, enforce max cap per source
   while (selected.length < requiredCount && remaining.length > 0) {
     let bestIdx = -1;
     let minSourceCount = Infinity;
@@ -524,6 +533,9 @@ function v110_ensureSourceDiversity(articles, requiredCount) {
     for (let i = 0; i < remaining.length; i++) {
         const source = remaining[i].source;
         const count = sourceCounts[source] || 0;
+        
+        // Skip if this source already hit the cap
+        if (count >= maxPerSource) continue;
         
         // Priority 1: Lower occurrence of source
         // Priority 2: Higher article score/rank
@@ -544,53 +556,61 @@ function v110_ensureSourceDiversity(articles, requiredCount) {
         selected.push(article);
         sourceCounts[article.source] = (sourceCounts[article.source] || 0) + 1;
     } else {
+        // All remaining sources hit cap, relax the cap for remaining slots
+        const leftover = remaining.sort((a, b) => (b.score || 0) - (a.score || 0));
+        while (selected.length < requiredCount && leftover.length > 0) {
+            selected.push(leftover.shift());
+        }
         break;
     }
   }
 
   const uniqueSources = Object.keys(sourceCounts).length;
-  Logger.log(`   → Source diversity: ${uniqueSources} unique sources in ${selected.length} articles`);
+  Logger.log(`   → Source diversity: ${uniqueSources} unique sources in ${selected.length} articles (max ${maxPerSource}/source)`);
   return selected;
 }
 
-function v110_processWithGuarantee(articles, requiredCount, sectionType, intlTopics = []) {
-  Logger.log(`\n🎯 Processing ${sectionType} - GUARANTEE ${requiredCount}`);
+function v110_processWithQuality(articles, requiredCount, sectionType, intlTopics = []) {
+  Logger.log(`\n🎯 Processing ${sectionType} - Target up to ${requiredCount} high-quality articles`);
   Logger.log(`   Input: ${articles.length} articles`);
   if (articles.length === 0) return [];
   articles.forEach(a => a.score = v110_headlineScore(a, sectionType, intlTopics));
   articles.sort((a, b) => b.score - a.score);
   let filtered = v110_removeDuplicatesAggressive(articles);
   filtered = filtered.filter(a => a.score > 0);
-  Logger.log(`   → After filter: ${filtered.length} articles`);
-  if (filtered.length < requiredCount) {
-    Logger.log(`   ⚠️ Insufficient articles (${filtered.length} < ${requiredCount})`);
-    return filtered.slice(0, requiredCount);
-  }
+  Logger.log(`   → After rule-based filter: ${filtered.length} articles`);
+  
   const candidates = filtered.slice(0, CONFIG.STAGE1_CANDIDATES);
-  let analyzed = v110_perplexityAnalysis(candidates, sectionType);
-  if (analyzed.length < CONFIG.STAGE2_PERPLEXITY) {
-    Logger.log(`   ⚠️ Perplexity insufficient, using top ${CONFIG.STAGE2_PERPLEXITY}`);
-    analyzed = candidates.slice(0, CONFIG.STAGE2_PERPLEXITY);
+  const analyzed = v110_perplexityAnalysis(candidates, sectionType);
+  
+  if (analyzed.length === 0) {
+    Logger.log(`   ⚠️ Stage 2 rejected all articles.`);
+    return [];
   }
-  let final = v110_gptFinalCuration(analyzed, sectionType, requiredCount);
-  if (final.length < requiredCount) {
-    Logger.log(`   ⚠️ GPT insufficient, backfilling`);
-    const used = new Set(final.map(a => a.title));
-    const backfill = analyzed.filter(a => !used.has(a.title)).slice(0, requiredCount - final.length);
-    final = [...final, ...backfill];
-  }
+  
+  // Send the strictly filtered ones to Stage 3 for final selection/ranking
+  let final = v110_gptFinalCuration(analyzed, sectionType, Math.min(analyzed.length, requiredCount));
+  
+  // Ensure source diversity but do NOT pad if we fall short
   final = v110_ensureSourceDiversity(final, requiredCount);
-  final = final.slice(0, requiredCount);
-  Logger.log(`   → Final: ${final.length} (GUARANTEED)`);
+  
+  Logger.log(`   → Final count: ${final.length} (Strictly Evaluated)`);
   return final;
 }
 
 function v110_headlineScore(article, sectionType, intlTopics = []) {
-  let score = article.sourceTier === 1 ? 40 : 25; // Slight boost to Tier 2 for diversity
+  // Tier 0 (front page/top stories) gets highest base score
+  let score = article.sourceTier === 0 ? 60 : (article.sourceTier === 1 ? 40 : 25);
   const text = (article.title + ' ' + article.description).toLowerCase();
   const title = article.title.toLowerCase();
   const source = article.source.toLowerCase();
   
+  // Quality gate: reject broken/URL/garbage titles
+  if (/^https?:\/\//i.test(article.title)) return -2000;
+  if (/CBMi[A-Za-z0-9_\-]{20,}/.test(article.title)) return -2000;
+  if (/news\.google\.com/i.test(article.title)) return -2000;
+  if (article.title.length < 15) return -1000;
+
   if (source.includes('wsj') || source.includes('ft')) score += 18;
   else if (source.includes('bloomberg') || source.includes('economist')) score += 15;
   else if (source.includes('nyt') || source.includes('reuters')) score += 12;
@@ -608,10 +628,10 @@ function v110_headlineScore(article, sectionType, intlTopics = []) {
   });
 
   // -- 2. Exclude non-business content --
-  const columnKeywords = ['칼럼', 'column', '[칼럼]', '오피니언', 'opinion', '[오피니언]', '기고', 'editorial', 'commentary', '데스크', '[데스크]', 'op-ed', '사설', '논평', '기자수첩', '취재수첩'];
+  const columnKeywords = ['칼럼', 'column', '[칼럼]', '오피니언', 'opinion', '[오피니언]', '기고', 'editorial', 'commentary', '데스크', '[데스크]', 'op-ed', '사설', '논평', '기자수첩', '취재수첩', '[특징주]', '[종목]', 'shows the perils', 'shows the risk', 'what it means', 'we must', 'we should', "it's time to", '베일 벗는다', '베일 벗길', 'morning bid'];
   for (const kw of columnKeywords) if (text.includes(kw) || title.includes(kw)) return -1000;
   
-  const excludeKeywords = ['sport', 'football', 'soccer', 'baseball', 'basketball', 'k-pop', 'kpop', 'celebrity', 'entertainment', 'hollywood', 'movie', 'actor', 'actress', 'netflix', 'grammy', 'oscar', '연예', '드라마', '영화', '가수', '배우'];
+  const excludeKeywords = ['sport', 'football', 'soccer', 'baseball', 'basketball', 'k-pop', 'kpop', 'celebrity', 'entertainment', 'hollywood', 'movie', 'actor', 'actress', 'netflix', 'grammy', 'oscar', '연예', '드라마', '영화', '가수', '배우', 'bts', '공연', 'concert', '숙박비', '바가지', '여행', 'tourism', '관광객', 'travel tips', 'playstation', 'xbox', 'nintendo', 'gaming', 'video game', 'death stranding', 'fortnite', 'esports', 'pc specs', '게임', 'epstein', 'museum', '박물관', '왕실', 'royal jewel', 'recipe', 'weather forecast', 'puppy', 'kitten', 'zodiac', '운세', 'horoscope', 'hockey player'];
   for (const kw of excludeKeywords) if (text.includes(kw)) return -1000;
 
   // -- 3. Filter trivial market/data entries --
@@ -632,6 +652,55 @@ function v110_headlineScore(article, sectionType, intlTopics = []) {
       if (hasMajorCount === 0) return -1000;
       score -= 10;
     }
+  }
+
+  // -- 3b. Filter PR/promotional/corporate announcements --
+  const prKeywords = ['선정', '수상', '출시', '론칭', '체결', '참가', '개최', '협약', '업무협약', 'mou', '파트너십', '연속 선정', 'top 100', '어워드', 'award', '인증 획득', '특허', '전시회', '박람회', '컨퍼런스', '돌파', '기증', '기부', '달성', '누적', 'launches', 'partnership', 'hunts for', 'looking for', '손잡고', '맞손', '개발', '양산', '수주', '납품', '도입', '적용', '공급', '공개', '박차', '본격화', '선점', '조달', '순항', '시동', '상용화', '재개', '프로젝트', '착공', '준공'];
+  let prCount = 0;
+  prKeywords.forEach(kw => { if (title.includes(kw)) prCount++; });
+  if (prCount >= 1) {
+    // PR articles often abuse vague words like '시장' (market), '산업' (industry), '투자' (investment).
+    // So we require strictly macro words to even consider reducing the penalty.
+    const strictMacroContext = ['정부', '규제', '정책', '법안', '수출', '수입', '무역', '경제', '금융', 'ipo', '상장', 'gdp', '금리', '한국은행', '조원', 'trillion', '조달러', '국회', '대통령'];
+    let hasMacro = false;
+    strictMacroContext.forEach(kw => { if (title.includes(kw)) hasMacro = true; });
+    
+    if (!hasMacro) {
+      if (prCount >= 2) return -1000;  // Multiple PR buzzwords = definitely just PR garbage
+      score -= 50;  // Single PR buzzword without macro context = heavy penalty
+    } else {
+      score -= 20;  // Even with macro context, PR-sounding titles are less preferred
+    }
+  }
+
+  // -- 3c. Filter routine/minor corporate news --
+  const routineKeywords = ['사외이사', '이사회', '인사', '취임', '재선임', '후보', 'board appointment', 'appoints', '본부장', '상무', '전무', '주주총회', '주총'];
+  let routineCount = 0;
+  routineKeywords.forEach(kw => { if (title.includes(kw)) routineCount++; });
+  if (routineCount >= 1) {
+    // Only keep if it's a CEO/chairman level or major company change
+    const majorExec = ['대표이사', '회장', 'ceo', 'chairman', '사장', '부회장', '삼성', 'samsung', '현대', 'hyundai', 'sk', 'lg', '롯데', '포스코'];
+    let isMajor = false;
+    majorExec.forEach(kw => { if (title.includes(kw)) isMajor = true; });
+    if (!isMajor) score -= 50;
+  }
+
+  // -- 3d. Filter local/regional government PR --
+  const localGovKeywords = ['부산시', '서울시', '경기도', '인천시', '대구시', '대전시', '광주시', '울산시', '세종시', '제주도', '충북', '충남', '전북', '전남', '경북', '경남', '강원'];
+  for (const kw of localGovKeywords) {
+    if (title.includes(kw)) {
+      // Keep if combined with major national/industry keywords
+      const nationalContext = ['정부', '대통령', '장관', '국회', '수출', '수입', '반도체', '배터리', '원전', '방산', '투자', '유치'];
+      let hasNational = false;
+      nationalContext.forEach(kw2 => { if (title.includes(kw2)) hasNational = true; });
+      if (!hasNational) { score -= 40; break; }
+    }
+  }
+
+  // -- 3e. Filter consumer/household content that masquerades as business --
+  const consumerKeywords = ['energy bills', 'electricity bills', 'household', 'consumer rights', 'car insurance', 'home insurance', 'broadband deal', 'mortgage deal', '전기요금', '가스요금', '아파트 분양', '청약'];
+  for (const kw of consumerKeywords) {
+    if (text.includes(kw)) { score -= 30; break; }
   }
 
   // -- 4. Section specific Scoring --
@@ -657,6 +726,24 @@ function v110_headlineScore(article, sectionType, intlTopics = []) {
   else if (hoursAgo < 8) score += 10;
   else if (hoursAgo < 16) score += 5;
 
+  // -- 5. Business relevance gate for general (non-business) feeds --
+  // Feeds like BBC Top Stories, Google News Top, Google News World bring ALL topics.
+  // Penalize articles from these feeds that have zero business relevance.
+  const feedName = (article.feedName || article.source || '').toLowerCase();
+  const isGeneralFeed = feedName.includes('top stor') || feedName.includes('kr top') || feedName.includes('- world') || feedName.includes('주요');
+  if (isGeneralFeed) {
+    const bizKeywords = ['economy', 'market', 'trade', 'tariff', 'stock', 'shares', 'invest', 'ceo', 'company', 'corporate', 'bank', 'fed', 'rate', 'inflation', 'export', 'import', 'deal', 'merger', 'acquisition', 'revenue', 'profit', 'earnings', 'regulation', 'policy', 'gdp', 'oil', 'energy', 'tech', 'ai ', 'chip', 'semiconductor', 'billion', 'million', 'trillion',
+      '경제', '시장', '무역', '관세', '주가', '투자', '기업', '은행', '금리', '수출', '수입', '합병', '인수', '매출', '영업익', '규제', '정책', '반도체', '배터리', '에너지', '석유', '환율', '코스피', '코스닥'];
+    let hasBizSignal = false;
+    for (const kw of bizKeywords) {
+      if (text.includes(kw)) { hasBizSignal = true; break; }
+    }
+    if (!hasBizSignal) {
+      score -= 35;
+      Logger.log(`      ▿ Non-biz from general feed: "${article.title.substring(0, 40)}..."`);
+    }
+  }
+
   return score;
 }
 
@@ -680,7 +767,17 @@ function v110_callPerplexity(prompt, maxTokens = 1000) {
     muteHttpExceptions: true
   };
   const response = UrlFetchApp.fetch(url, options);
-  const json = JSON.parse(response.getContentText());
+  const httpCode = response.getResponseCode();
+  const responseText = response.getContentText();
+  if (httpCode !== 200) {
+    Logger.log(`   ⚠️ Perplexity HTTP ${httpCode}: ${responseText.substring(0, 200)}`);
+    throw new Error(`Perplexity API returned HTTP ${httpCode}`);
+  }
+  if (responseText.trim().startsWith('<')) {
+    Logger.log(`   ⚠️ Perplexity returned HTML instead of JSON`);
+    throw new Error('Perplexity API returned HTML error page');
+  }
+  const json = JSON.parse(responseText);
   if (json.error) throw new Error(json.error.message);
   return json.choices[0].message.content.trim();
 }
@@ -727,8 +824,8 @@ function v110_callGPT(prompt, maxTokens = 4096, temperature = 0.3) {
 }
 
 function v110_perplexityAnalysis(articles, sectionType) {
-  if (!CONFIG.PERPLEXITY_API_KEY || articles.length === 0) {
-    Logger.log('   ⚠️ Skipping Perplexity');
+  if (!CONFIG.OPENAI_API_KEY || articles.length === 0) {
+    Logger.log('   ⚠️ Skipping Stage 2 (no API key)');
     return articles.slice(0, CONFIG.STAGE2_PERPLEXITY);
   }
   try {
@@ -736,23 +833,58 @@ function v110_perplexityAnalysis(articles, sectionType) {
       const desc = a.description ? ` - ${a.description.substring(0, 100)}` : '';
       return `${i}. [${a.source}] ${a.title}${desc}`;
     }).join('\n\n');
-    const prompt = `Analyze and select ${CONFIG.STAGE2_PERPLEXITY} most important HEADLINES. Avoid duplicates.\n\nHeadlines:\n${articleList}\n\nReturn JSON:\n{"selected": [{"index": 3, "reasoning": "...", "key_facts": "..."}]}`;
-    const response = v110_callPerplexity(prompt, 2000);
+
+    const sectionLabel = sectionType === 'intl' ? 'international business' : 'Korean business';
+    const prompt = `You are a ruthless News Desk Editor for a BUSINESS executive daily briefing. Your readers are CEOs and investors who only care about news that affects markets, companies, trade, and the economy.
+
+Evaluate the ${articles.length} candidates below. For EACH article, determine if it is strictly business-relevant.
+DO NOT try to fill a quota. If only 5 articles are truly business-relevant, only return those 5.
+
+**STRICT BUSINESS RELEVANCE RULE:**
+If it does not directly impact a company's stock price, revenue, corporate strategy, or macroeconomic policy, REJECT IT.
+
+**ALWAYS REJECT (score 0):**
+- Political theater/entertainment ("key moments from speech", "ejections", "shouting")
+- Celebrity gossip or personal scandals (affairs, Epstein, divorces)
+- Cultural events (museums, art exhibitions, royal jewelry)
+- Sports results or athlete news
+- Product reviews, gaming news, movie releases
+- Opinions, editorials, Morning Bids, daily column roundups
+- Routine daily market recaps ("futures bounce", "markets open higher", "KOSPI up")
+- PR announcements (awards, partnerships, milestones, executive appointments)
+
+**ALWAYS KEEP (score 100):**
+- Central bank decisions, interest rates, monetary policy
+- Trade policy (tariffs, sanctions, trade agreements)
+- Major corporate events (M&A, IPO, earnings surprises, major CEO changes)
+- Geopolitical events WITH DIRECT economic impact
+- Technology breakthroughs with massive industry impact (AI chips, semiconductor bans)
+
+Headlines:
+${articleList}
+
+Return JSON evaluating ALL articles, dropping any that get 0. 
+ONLY include articles that pass the strictly business test.
+{"passed": [{"index": 0, "reasoning": "Clear market impact of X", "key_facts": "Fact 1"}]}`;
+
+    Logger.log(`   → Stage 2 GPT Strict Filter evaluating ${articles.length} candidates...`);
+    const response = v110_callGPT(prompt, 3000, 0.1);
     let cleaned = response.replace(/```json/gi, '').replace(/```/g, '').trim();
     const match = cleaned.match(/\{[\s\S]*\}/);
     if (match) cleaned = match[0];
     const result = JSON.parse(cleaned);
-    if (!result.selected || !Array.isArray(result.selected)) throw new Error('Invalid');
-    const analyzed = result.selected.filter(item => item.index >= 0 && item.index < articles.length).map(item => ({
+    if (!result.passed || !Array.isArray(result.passed)) throw new Error('Invalid JSON structure');
+    let analyzed = result.passed.filter(item => item.index >= 0 && item.index < articles.length).map(item => ({
       ...articles[item.index],
       aiReasoning: item.reasoning,
       keyFacts: item.key_facts,
       aiScore: 100
     }));
-    Logger.log(`   ✓ Perplexity: ${analyzed.length}`);
+    
+    Logger.log(`   ✓ Stage 2 Strict Filter passed: ${analyzed.length} articles`);
     return analyzed;
   } catch (error) {
-    Logger.log(`   ❌ Perplexity: ${error.toString()}`);
+    Logger.log(`   ❌ Stage 2 GPT: ${error.toString()}`);
     return articles.slice(0, CONFIG.STAGE2_PERPLEXITY);
   }
 }
@@ -761,10 +893,22 @@ function v110_gptFinalCuration(articles, sectionType, requiredCount) {
   if (!CONFIG.OPENAI_API_KEY || articles.length === 0) return articles.slice(0, requiredCount);
   try {
     const articleList = articles.map((a, i) => {
-      const reasoning = a.aiReasoning ? `\n   ${a.aiReasoning}` : '';
+      const reasoning = (a.aiReasoning && a.aiReasoning !== 'Stage 1 Fallback') ? `\n   [Context: ${a.aiReasoning}]` : '';
       return `${i}. [${a.source}] ${a.title}${reasoning}`;
     }).join('\n\n');
-    const prompt = `Select ${requiredCount} most critical HEADLINES. Avoid duplicates.\n\nArticles:\n${articleList}\n\nReturn JSON array: [3, 7, 1, ...]`;
+    const prompt = `You are selecting the FINAL ${requiredCount} headlines for a Fortune 500 CEO's morning briefing.
+These candidates have already passed a strict business-relevance gate. Your job is to select the most EXTREMELY IMPORTANT ones.
+
+**Selection rules:**
+1. Choose headlines with the HIGHEST STRATEGIC IMPACT (macro shocks, major corporate moves, disruptive tech).
+2. Ensure TOPIC DIVERSITY (Do not pick 5 articles about the same topic, span across trade, central banks, tech, energy).
+3. Ensure SOURCE DIVERSITY.
+4. REJECT minor corporate news (project updates, routine financing, generic industry trends, local government actions). ONLY pick earth-shattering or top-tier national/global news.
+
+Articles:
+${articleList}
+
+Return ONLY a JSON array of selected indices: [3, 7, 1, ...]`;
     const response = v110_callGPT(prompt, 300);
     let cleaned = response.replace(/```json/gi, '').replace(/```/g, '');
     const match = cleaned.match(/\[[\d\s,]+\]/);
@@ -772,11 +916,7 @@ function v110_gptFinalCuration(articles, sectionType, requiredCount) {
     const indices = JSON.parse(match[0]);
     if (!Array.isArray(indices)) return articles.slice(0, requiredCount);
     const curated = indices.filter(i => i >= 0 && i < articles.length).map(i => articles[i]);
-    if (curated.length < requiredCount) {
-      const used = new Set(indices);
-      const remaining = articles.filter((_, i) => !used.has(i)).slice(0, requiredCount - curated.length);
-      return [...curated, ...remaining];
-    }
+    // NO PADDING. We only return what passed the final filter, up to requiredCount.
     return curated.slice(0, requiredCount);
   } catch (error) {
     Logger.log(`   ❌ GPT: ${error.toString()}`);
@@ -797,6 +937,7 @@ function v110_fetchAllNews() {
       articles.forEach(a => {
         a.section = source.section;
         a.sourceTier = source.tier;
+        a.feedName = source.name;
       });
       allArticles.push(...articles);
       Logger.log(`✓ ${source.name}: ${articles.length} items`);
@@ -834,6 +975,11 @@ function v110_fetchRSS(source) {
         }
         const title = v110_cleanTitle(v110_getText(item, 'title'));
         if (!title || title.length < 20) return;
+        // Skip if title contains a URL, encoded Google News ID, or garbage
+        if (/https?:\/\//i.test(title)) return;
+        if (/CBMi[A-Za-z0-9_\-]{20,}/.test(title)) return;
+        if (/^[A-Za-z0-9_\-]{50,}$/.test(title)) return;
+        if (/news\.google\.com/i.test(title)) return;
         articles.push({
           source: v110_extractSource(source.name, link),
           title: v110_deepClean(title),
@@ -856,7 +1002,7 @@ function v110_getText(element, childName) {
 }
 
 function v110_extractSource(feedName, link) {
-  if (feedName.includes('Google News') || feedName.includes('Breaking')) {
+  if (feedName.includes('Google News') || feedName.includes('Breaking') || feedName.includes('Top')) {
     if (link) {
       if (link.includes('wsj.com')) return 'WSJ';
       if (link.includes('ft.com')) return 'FT';
@@ -865,6 +1011,10 @@ function v110_extractSource(feedName, link) {
       if (link.includes('nytimes.com')) return 'NYT';
       if (link.includes('economist.com')) return 'Economist';
       if (link.includes('bbc.')) return 'BBC';
+      if (link.includes('apnews.com')) return 'AP';
+      if (link.includes('cnbc.com')) return 'CNBC';
+      if (link.includes('theguardian.com')) return 'Guardian';
+      if (link.includes('washingtonpost.com')) return 'WaPo';
       if (link.includes('hankyung.com')) return '한국경제';
       if (link.includes('chosun.com')) return '조선일보';
       if (link.includes('joongang.co.kr')) return '중앙일보';
@@ -881,7 +1031,23 @@ function v110_extractSource(feedName, link) {
 
 function v110_cleanTitle(title) {
   if (!title) return '';
-  return title.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').replace(/ - [\w\s\.\-&]+(\.com|\.net)$/gi, '').replace(/ \| .*$/, '').trim();
+  return title
+    .replace(/[\r\n]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    // Remove source suffixes: " - WSJ.com", " - Reuters.net", etc.
+    .replace(/ [-\u2013] [\w\s\.\-&]+\.(com|net|co\.kr|co\.jp|org)\/?$/gi, '')
+    .replace(/ \| .*$/, '')
+    // Remove "- Investor's Business Daily" and similar possessive patterns
+    .replace(/ [-\u2013] [A-Z][\w'\u2019]+(?:'s|\u2019s)? [A-Z][\w\s]+(Daily|Weekly|Monthly)$/gi, '')
+    // Remove Korean media source names at end
+    .replace(/ [-\u2013] (조선비즈|조선일보|중앙일보|동아일보|한국경제|매일경제|서울경제|머니투데이|전자신문|연합뉴스|이데일리|경향신문|한겨레|한국일보|IT조선|아시아경제|파이낸셜뉴스|뉴스1|뉴시스|SBS|KBS|MBC|YTN|Chosunbiz|ChosunBiz|지디넷코리아|연합인포맥스|인베스트조선|블로터|디지털데일리|디지털타임스|더벨|한경비즈니스|뉴스핀|리알튰뉴스).*$/gi, '')
+    // Remove English wire service / English Korean media suffixes
+    .replace(/ [-\u2013] (Reuters|Bloomberg|AP|AFP|Yonhap|The Associated Press|The Korea Herald|The Korea Times|Korea JoongAng Daily|The Korea Economic Daily[\w\s]*|Yahoo Finance|Yahoo News|CNBC|CNN|Fox Business|Nikkei Asia|Barron'?s|Engadget|The Verge|TechCrunch|Axios|Politico|NPR|Ars Technica|WIRED|Fortune|MarketWatch|Investing\.com)$/gi, '')
+    // Catch remaining " - Source Name" patterns with mixed case
+    .replace(/ [-\u2013] [A-Z][\w\s]{2,}(Edition|Daily|Times|Herald|Journal|Post|News|Wire|Press|Tribune|Monitor|Gazette|Global|Finance)$/gi, '')
+    // Aggressive catch-all: strip any trailing " - [capitalized 2-6 words]" if title is long enough
+    .replace(/^(.{20,})\s+[-\u2013]\s+[A-Z][\w'\u2019.,]+(?:\s+[A-Z\d][\w'\u2019.,]*){0,5}$/, '$1')
+    .trim();
 }
 
 function v110_cleanDesc(desc) {
@@ -895,7 +1061,18 @@ function v110_parseDate(dateStr) {
 
 function v110_deepClean(text) {
   if (!text) return '';
-  return text.replace(/[\r\n\u2028\u2029]+/g, ' ').replace(/%0[A-D]/gi, ' ').replace(/<br\s*\/?>/gi, ' ').replace(/\s+/g, ' ').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').trim();
+  return text
+    .replace(/[\r\n\u2028\u2029]+/g, ' ')
+    .replace(/%0[A-D]/gi, ' ')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<[^>]*>/g, '')  // Strip remaining HTML tags
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function v110_fetchMarketData() {
@@ -1003,7 +1180,7 @@ Identify the live trading price on global exchanges during this market crash.
 Return ONLY a valid JSON object. 
 Format: {"price": <numeric_value>, "change": <numeric_percentage_change>}
 (Example: {"price": 95000.5, "change": -2.4})`;
-    const response = v110_callPerplexity(prompt, 500);
+    const response = v110_callGPT(prompt, 500, 0.1);
     const json = v110_extractJSON_Market(response);
     if (json && json.price) {
       const p = parseFloat(String(json.price).replace(/[^0-9.]/g, ''));
@@ -1293,18 +1470,41 @@ function v110_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketD
   }
   if (intlArticles && intlArticles.length > 0) {
     blocks.push({type: 'header', text: {type: 'plain_text', text: '🌍 International Headlines', emoji: true}});
-    const intlText = intlArticles.map((a, i) => `${i + 1}. <${v110_truncate(a.link, 400)}|${v110_truncate(a.title, 250)}>`).join('\n');
-    blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(intlText, 2900)}});
+    const validIntl = intlArticles.filter(a => v110_isValidHeadline(a));
+    let currentIntlText = '';
+    validIntl.forEach((a, i) => {
+      // NEVER truncate the link URL itself. Google News URLs are very long; truncating them breaks Slack markdown.
+      const line = `${i + 1}. <${a.link}|${v110_sanitizeForSlack(v110_truncate(a.title, 250))}>\n`;
+      if (currentIntlText.length + line.length > 2900) {
+        blocks.push({type: 'section', text: {type: 'mrkdwn', text: currentIntlText.trim()}});
+        currentIntlText = line;
+      } else {
+        currentIntlText += line;
+      }
+    });
+    if (currentIntlText) blocks.push({type: 'section', text: {type: 'mrkdwn', text: currentIntlText.trim()}});
     blocks.push({type: 'divider'});
   }
   if (koreaArticles && koreaArticles.length > 0) {
     blocks.push({type: 'header', text: {type: 'plain_text', text: '🇰🇷 Korea Business Headlines', emoji: true}});
-    const koreaText = koreaArticles.map((a, i) => `${i + 1}. <${v110_truncate(a.link, 400)}|${v110_truncate(a.title, 250)}>`).join('\n');
-    blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(koreaText, 2900)}});
+    const validKorea = koreaArticles.filter(a => v110_isValidHeadline(a));
+    let currentKoreaText = '';
+    validKorea.forEach((a, i) => {
+      const line = `${i + 1}. <${a.link}|${v110_sanitizeForSlack(v110_truncate(a.title, 250))}>\n`;
+      if (currentKoreaText.length + line.length > 2900) {
+        blocks.push({type: 'section', text: {type: 'mrkdwn', text: currentKoreaText.trim()}});
+        currentKoreaText = line;
+      } else {
+        currentKoreaText += line;
+      }
+    });
+    if (currentKoreaText) blocks.push({type: 'section', text: {type: 'mrkdwn', text: currentKoreaText.trim()}});
     blocks.push({type: 'divider'});
   }
-  const total = (intlArticles?.length || 0) + (koreaArticles?.length || 0);
-  blocks.push({type: 'context', elements: [{type: 'mrkdwn', text: `Daily BIZ News Agent 🤖 v11.0 | ${total} curated articles`}]});
+  const validIntlCount = intlArticles ? intlArticles.filter(a => v110_isValidHeadline(a)).length : 0;
+  const validKoreaCount = koreaArticles ? koreaArticles.filter(a => v110_isValidHeadline(a)).length : 0;
+  const total = validIntlCount + validKoreaCount;
+  blocks.push({type: 'context', elements: [{type: 'mrkdwn', text: `Daily BIZ News Agent 🤖 v11.1 | ${total} curated articles`}]});
   return {blocks: blocks};
 }
 
@@ -1312,6 +1512,35 @@ function v110_truncate(text, maxLength) {
   if (!text) return '';
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength - 3) + '...';
+}
+
+// Sanitize text for use inside Slack mrkdwn link syntax <url|text>
+function v110_sanitizeForSlack(text) {
+  if (!text) return '';
+  return text
+    .replace(/[<>]/g, '')     // Remove chars that break Slack link syntax
+    .replace(/\|/g, '-')      // Replace pipe (link separator) with dash
+    .replace(/&amp;/g, '&')   // Decode HTML entities
+    .replace(/&lt;/g, '')
+    .replace(/&gt;/g, '')
+    .trim();
+}
+
+// Validate that an article has a proper headline (not a URL or garbled text)
+function v110_isValidHeadline(article) {
+  if (!article || !article.title) return false;
+  const title = article.title;
+  // Reject if title contains a URL anywhere
+  if (/https?:\/\//i.test(title)) return false;
+  // Reject Google News article IDs
+  if (/CBMi[A-Za-z0-9_\-]{20,}/.test(title)) return false;
+  // Reject if title is mostly encoded characters (base64-like)
+  if (/^[A-Za-z0-9_\-]{50,}$/.test(title)) return false;
+  // Reject very short titles
+  if (title.length < 10) return false;
+  // Reject if title contains news.google.com string
+  if (/news\.google\.com/i.test(title)) return false;
+  return true;
 }
 
 function v110_formatMarketData(marketData) {
