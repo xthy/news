@@ -830,9 +830,16 @@ def generate_pdf_for_link(driver, link_info, index, total):
         if site == "TheBell" and "key=" in url:
             key = url.split("key=")[1].split("&")[0]
             target_url = f"https://www.thebell.co.kr/front/NewsPrint.asp?key={key}"
-        elif site == "InvestChosun" and "contid=" in url:
-            contid = url.split("contid=")[1].split("&")[0]
-            target_url = f"https://www.investchosun.com/svc/news/article_print.html?contid={contid}"
+        elif site == "InvestChosun":
+            # Handle both old (contid=) and new (html_dir/.../ID.html) URL formats
+            if "contid=" in url:
+                contid = url.split("contid=")[1].split("&")[0]
+                target_url = f"https://www.investchosun.com/svc/news/article_print.html?contid={contid}"
+            elif "html_dir" in url:
+                # Extract article ID from URL like .../2026032080075.html
+                art_id_match = re.search(r'/(\d{13,})\.html', url)
+                if art_id_match:
+                    target_url = f"https://www.investchosun.com/svc/news/article_print.html?contid={art_id_match.group(1)}"
         elif site == "DealSitePlus" and "/articles/" in url:
             article_id = url.split("/articles/")[1].split("/")[0]
             target_url = f"https://dealsiteplus.co.kr/articles/print/{article_id}"
@@ -847,6 +854,21 @@ def generate_pdf_for_link(driver, link_info, index, total):
         # Block window.print() to prevent hang
         driver.execute_script("window.print = function() { console.log('print blocked'); };")
         time.sleep(3)
+        
+        # Remove unwanted DOM elements before Readability extraction (e.g. 많이본 뉴스, ads, sidebars)
+        driver.execute_script("""
+            var selectors = [
+                '.ranking', '.ad_article_bottom', '.ad_article_bottom1',
+                '.header_area_01', '.article_sns', '.article_font',
+                '.article_print', '.btn_move.icon_top', '.article_tag_area',
+                'header', 'footer', 'nav', '.sidebar', '.aside',
+                '.related_news', '.most_viewed', '.popular',
+                '[class*="banner"]', '[class*="ad_"]', '[class*="popup"]'
+            ];
+            selectors.forEach(function(sel) {
+                document.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+            });
+        """)
         
         # Inject Readability
         driver.execute_script(f"var s=document.createElement('script');s.src='{READABILITY_JS_URL}';document.head.appendChild(s);")
