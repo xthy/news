@@ -1,0 +1,127 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-03  8:55:50.95 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-03 08:55:52,150 - INFO - [__main__] - Target Date Range: 2026-03-02 ~ 2026-03-03
+2026-03-03 08:55:52,151 - INFO - [__main__] - ============================================================
+2026-03-03 08:55:52,151 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-03 08:55:52,151 - INFO - [__main__] - ============================================================
+2026-03-03 08:55:52,151 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-03 08:55:52,151 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-03 08:55:53,098 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-03 08:55:53,122 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-03 08:55:53,131 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-03 08:55:53,166 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-03-03 08:55:53,168 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-03 08:55:53,168 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-03 08:55:53,211 - INFO - [WDM] - Driver downloading response is 200
+2026-03-03 08:55:53,296 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-03 08:55:53,402 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-03-03 08:55:55,694 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-03 08:55:55,695 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-03 08:55:55,695 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-03 08:55:55,695 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-02...
+2026-03-03 08:55:55,695 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-03 08:56:01,737 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-03 08:56:01,737 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-03 08:56:03,795 - WARNING - [__main__] - [Hankyung] Alert detected on section page: 유료고객 전용입니다. 로그인 하시거나 유료회원으로 가입해주세요.
+2026-03-03 08:56:03,797 - INFO - [__main__] - [Hankyung] Alert dismissed
+2026-03-03 08:56:04,881 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-03 08:56:06,935 - WARNING - [__main__] - [Hankyung] Alert detected on section page: 유료고객 전용입니다. 로그인 하시거나 유료회원으로 가입해주세요.
+2026-03-03 08:56:06,937 - INFO - [__main__] - [Hankyung] Alert dismissed
+2026-03-03 08:56:08,011 - INFO - [__main__] - [Hankyung] Collection complete. Found 0 articles.
+2026-03-03 08:56:08,011 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-02 ~ 2026-03-03)...
+2026-03-03 08:56:08,011 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-03 08:56:14,093 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-03 08:56:14,093 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-03 08:56:14,093 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-03 08:56:15,876 - INFO - [__main__] - [TheBell] Found: 조현찬 거캐피탈 대표 "코엔텍은 시작"…한국 투자 확대 예고 (2026-03-03)
+2026-03-03 08:56:15,933 - INFO - [__main__] - [TheBell] Found: 포스코퓨처엠, 구원투수로 그룹 재무통 김성진 본부장 (2026-03-03)
+2026-03-03 08:56:15,988 - INFO - [__main__] - [TheBell] Found: 대경오앤티·SK 울산 AI 데이터센터 등 '빅딜'에 쏠리는 눈 (2026-03-03)
+2026-03-03 08:56:16,041 - INFO - [__main__] - [TheBell] Found: 대한송유관공사 인수전, 스틱·IMM·KB '3파전' (2026-03-03)
+2026-03-03 08:56:16,393 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-03 08:56:18,654 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-03 08:56:18,655 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-03 08:56:18,655 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-03 08:56:20,394 - INFO - [__main__] - [TheBell] Found: 조현찬 거캐피탈 대표 "코엔텍은 시작"…한국 투자 확대 예고 (2026-03-03)
+2026-03-03 08:56:20,447 - INFO - [__main__] - [TheBell] Found: '무혈입성 기회' 수출 분야, 넥스트지·이크럭스 재도전 (2026-03-03)
+2026-03-03 08:56:20,500 - INFO - [__main__] - [TheBell] Found: 경쟁 없는 IP분야, 코나벤처 'GP반납 이력' 극복할까 (2026-03-03)
+2026-03-03 08:56:20,553 - INFO - [__main__] - [TheBell] Found: '신설' 문화기술 분야, 케이유니콘인베 데뷔전 나서 (2026-03-03)
+2026-03-03 08:56:20,607 - INFO - [__main__] - [TheBell] Found: 대형사 쏠린 한국영화 메인투자, 돌아온 쏠레어파트너스 (2026-03-03)
+2026-03-03 08:56:20,662 - INFO - [__main__] - [TheBell] Found: '투자 난도 상향' 애니메이션전문, N수생 몰렸다 (2026-03-03)
+2026-03-03 08:56:20,713 - INFO - [__main__] - [TheBell] Found: 'IPO 재도전' 마키나락스, 3개월만에 예심통과 (2026-03-03)
+2026-03-03 08:56:20,768 - INFO - [__main__] - [TheBell] Found: AI 국가 경쟁력, '플랫폼'에 달렸다 (2026-03-03)
+2026-03-03 08:56:20,824 - INFO - [__main__] - [TheBell] Found: '추가 자금 조달' 콘텐츠테크놀로지스, 투자자 면면은 (2026-03-03)
+2026-03-03 08:56:20,876 - INFO - [__main__] - [TheBell] Found: 모태펀드 서류접수 마감…본격적 1차 심사 돌입 (2026-03-03)
+2026-03-03 08:56:20,933 - INFO - [__main__] - [TheBell] Found: 대한송유관공사 인수전, 스틱·IMM·KB '3파전' (2026-03-03)
+2026-03-03 08:56:21,127 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-03 08:56:23,222 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-03 08:56:23,222 - INFO - [__main__] - [TheBell] Collection complete. Found 15 articles.
+2026-03-03 08:56:23,222 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-02...
+2026-03-03 08:56:23,222 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-03 08:56:29,115 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-03 08:56:29,115 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-03 08:56:31,618 - INFO - [__main__] - [DealSite+] Found: 늘어지는 SK오션플랜트 매각…시간 끄는 강덕수 (2026-03-03)
+2026-03-03 08:56:31,636 - INFO - [__main__] - [DealSite+] Found: 괜히 1등 아니지…겹겹이 쌓인 아카이브의 힘 (2026-03-03)
+2026-03-03 08:56:31,653 - INFO - [__main__] - [DealSite+] Found: 루메나 샀다가 놀란 고든 조…졸리비 기대는 까닭 (2026-03-03)
+2026-03-03 08:56:31,671 - INFO - [__main__] - [DealSite+] Found: 재무·법무 전문가 김정섭 등판…경영권 사수 총력 (2026-03-03)
+2026-03-03 08:56:31,821 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-03 08:56:34,324 - INFO - [__main__] - [DealSite+] Found: 미리 시대 첫 대표는…90년대 학번 여성 정보라 (2026-03-03)
+2026-03-03 08:56:34,346 - INFO - [__main__] - [DealSite+] Found: 늘어지는 SK오션플랜트 매각…시간 끄는 강덕수 (2026-03-03)
+2026-03-03 08:56:34,364 - INFO - [__main__] - [DealSite+] Found: 차명 투자 들통난 패스트벤처스…중기부 조사 착수 (2026-03-03)
+2026-03-03 08:56:34,381 - INFO - [__main__] - [DealSite+] Found: 괜히 1등 아니지…겹겹이 쌓인 아카이브의 힘 (2026-03-03)
+2026-03-03 08:56:34,398 - INFO - [__main__] - [DealSite+] Found: 코로나 수혜 얻은 풀필먼트 파스토…IPO는 물음표 (2026-03-03)
+2026-03-03 08:56:34,415 - INFO - [__main__] - [DealSite+] Found: 루메나 샀다가 놀란 고든 조…졸리비 기대는 까닭 (2026-03-03)
+2026-03-03 08:56:34,433 - INFO - [__main__] - [DealSite+] Found: AC 철학 내려놓은 퓨처플레이…체질개선 진통 (2026-03-03)
+2026-03-03 08:56:34,451 - INFO - [__main__] - [DealSite+] Found: 재무·법무 전문가 김정섭 등판…경영권 사수 총력 (2026-03-03)
+2026-03-03 08:56:34,468 - INFO - [__main__] - [DealSite+] Found: 강소기업 투자 명가 SG PE…5000억 블라인드 도전 (2026-03-03)
+2026-03-03 08:56:34,572 - INFO - [__main__] - [DealSite+] Collection complete. Found 13 articles.
+2026-03-03 08:56:34,572 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-02...
+2026-03-03 08:56:34,572 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-03 08:56:40,360 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-03-03 08:56:40,360 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-03-03 08:56:42,504 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-03-03 08:56:43,144 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-03 08:56:43,146 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-03 08:56:44,562 - INFO - [__main__] - [History] Loaded 849 URLs and 849 titles from history.
+2026-03-03 08:56:44,562 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 22
+2026-03-03 08:56:44,562 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-03 08:56:44,562 - INFO - [__main__] - [PDF] [1/22] Processing: 조현찬 거캐피탈 대표 "코엔텍은 시작"…한국 투자 확대 예고 (TheBell)
+2026-03-03 08:56:51,440 - INFO - [__main__] - [PDF] [2/22] Processing: 포스코퓨처엠, 구원투수로 그룹 재무통 김성진 본부장 (TheBell)
+2026-03-03 08:56:58,142 - INFO - [__main__] - [PDF] [3/22] Processing: 대경오앤티·SK 울산 AI 데이터센터 등 '빅딜'에 쏠리는 눈 (TheBell)
+2026-03-03 08:57:04,660 - INFO - [__main__] - [PDF] [4/22] Processing: 대한송유관공사 인수전, 스틱·IMM·KB '3파전' (TheBell)
+2026-03-03 08:57:11,325 - INFO - [__main__] - [PDF] [5/22] Processing: '무혈입성 기회' 수출 분야, 넥스트지·이크럭스 재도전 (TheBell)
+2026-03-03 08:57:17,800 - INFO - [__main__] - [PDF] [6/22] Processing: 경쟁 없는 IP분야, 코나벤처 'GP반납 이력' 극복할까 (TheBell)
+2026-03-03 08:57:24,286 - INFO - [__main__] - [PDF] [7/22] Processing: '신설' 문화기술 분야, 케이유니콘인베 데뷔전 나서 (TheBell)
+2026-03-03 08:57:30,758 - INFO - [__main__] - [PDF] [8/22] Processing: 대형사 쏠린 한국영화 메인투자, 돌아온 쏠레어파트너스 (TheBell)
+2026-03-03 08:57:37,265 - INFO - [__main__] - [PDF] [9/22] Processing: '투자 난도 상향' 애니메이션전문, N수생 몰렸다 (TheBell)
+2026-03-03 08:57:43,831 - INFO - [__main__] - [PDF] [10/22] Processing: 'IPO 재도전' 마키나락스, 3개월만에 예심통과 (TheBell)
+2026-03-03 08:57:50,327 - INFO - [__main__] - [PDF] [11/22] Processing: AI 국가 경쟁력, '플랫폼'에 달렸다 (TheBell)
+2026-03-03 08:57:56,754 - INFO - [__main__] - [PDF] [12/22] Processing: '추가 자금 조달' 콘텐츠테크놀로지스, 투자자 면면은 (TheBell)
+2026-03-03 08:58:03,230 - INFO - [__main__] - [PDF] [13/22] Processing: 모태펀드 서류접수 마감…본격적 1차 심사 돌입 (TheBell)
+2026-03-03 08:58:09,663 - INFO - [__main__] - [PDF] [14/22] Processing: 늘어지는 SK오션플랜트 매각…시간 끄는 강덕수 (DealSitePlus)
+2026-03-03 08:58:16,552 - INFO - [__main__] - [PDF] [15/22] Processing: 괜히 1등 아니지…겹겹이 쌓인 아카이브의 힘 (DealSitePlus)
+2026-03-03 08:58:23,424 - INFO - [__main__] - [PDF] [16/22] Processing: 루메나 샀다가 놀란 고든 조…졸리비 기대는 까닭 (DealSitePlus)
+2026-03-03 08:58:30,297 - INFO - [__main__] - [PDF] [17/22] Processing: 재무·법무 전문가 김정섭 등판…경영권 사수 총력 (DealSitePlus)
+2026-03-03 08:58:37,098 - INFO - [__main__] - [PDF] [18/22] Processing: 미리 시대 첫 대표는…90년대 학번 여성 정보라 (DealSitePlus)
+2026-03-03 08:58:43,913 - INFO - [__main__] - [PDF] [19/22] Processing: 차명 투자 들통난 패스트벤처스…중기부 조사 착수 (DealSitePlus)
+2026-03-03 08:58:50,675 - INFO - [__main__] - [PDF] [20/22] Processing: 코로나 수혜 얻은 풀필먼트 파스토…IPO는 물음표 (DealSitePlus)
+2026-03-03 08:58:57,495 - INFO - [__main__] - [PDF] [21/22] Processing: AC 철학 내려놓은 퓨처플레이…체질개선 진통 (DealSitePlus)
+2026-03-03 08:59:04,429 - INFO - [__main__] - [PDF] [22/22] Processing: 강소기업 투자 명가 SG PE…5000억 블라인드 도전 (DealSitePlus)
+2026-03-03 08:59:11,195 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-03 08:59:14,287 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-03 08:59:17,753 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1Of3i7rUOrUSRuXEAJIr1SQGfoMCn2BVo/view?usp=drivesdk
+2026-03-03 08:59:19,923 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-03 08:59:30,050 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1feWsHvh3neNmso4lM3QwZ2e2b021fJRM/view?usp=drivesdk
+2026-03-03 08:59:30,780 - INFO - [__main__] - [History] Updated sheet with 22 new articles.
+2026-03-03 08:59:31,654 - INFO - [__main__] - Old history cleanup complete: 33 rows deleted.
+2026-03-03 08:59:35,222 - INFO - [__main__] - 
+============================================================
+2026-03-03 08:59:35,222 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-03 08:59:35,222 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-03  8:59:37.60 
+================================================== 
+ 

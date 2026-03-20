@@ -1,0 +1,159 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-07  8:55:50.85 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-07 08:55:52,093 - INFO - [__main__] - Target Date Range: 2026-03-06 ~ 2026-03-07
+2026-03-07 08:55:52,094 - INFO - [__main__] - ============================================================
+2026-03-07 08:55:52,094 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-07 08:55:52,094 - INFO - [__main__] - ============================================================
+2026-03-07 08:55:52,094 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-07 08:55:52,094 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-07 08:55:53,566 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-07 08:55:53,589 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-07 08:55:53,600 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-07 08:55:53,635 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-03-07 08:55:53,637 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-07 08:55:53,637 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-07 08:55:53,682 - INFO - [WDM] - Driver downloading response is 200
+2026-03-07 08:55:53,767 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-07 08:55:53,874 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-03-07 08:55:55,271 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-07 08:55:55,272 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-07 08:55:55,272 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-07 08:55:55,272 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-06...
+2026-03-07 08:55:55,272 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-07 08:56:01,262 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-07 08:56:01,263 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-07 08:56:03,490 - INFO - [__main__] - [Hankyung] Found: 국민연금 상근전문위원에 박영석·이연임·정희준 신규 위촉 (20260306)
+2026-03-07 08:56:03,502 - INFO - [__main__] - [Hankyung] Found: 웹툰엔터 프레지던트에 김용수 최고전략책임자 (20260306)
+2026-03-07 08:56:03,510 - INFO - [__main__] - [Hankyung] Found: 갤S26 사전판매 135만대…역대 최다 (20260306)
+2026-03-07 08:56:03,519 - INFO - [__main__] - [Hankyung] Found: 현대ADM바이오, 페니트리움 바이오사이언스로 사명 변경 (20260306)
+2026-03-07 08:56:03,527 - INFO - [__main__] - [Hankyung] Found: AFG, 호텔 미드시티 명동 ‘부킹닷컴’·‘아고다’ 어워드 동시 수상 (20260306)
+2026-03-07 08:56:03,574 - INFO - [__main__] - [Hankyung] Found: 한앤코, SK이터닉스 태그얼롱 행사…분할매각 전략 통했다 (20260306)
+2026-03-07 08:56:03,653 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-07 08:56:05,873 - INFO - [__main__] - [Hankyung] Found: SK이터닉스, KKR에 팔린다 (20260306)
+2026-03-07 08:56:05,881 - INFO - [__main__] - [Hankyung] Found: 한앤코, SK이터닉스 태그얼롱 행사…분할매각 전략 통했다 (20260306)
+2026-03-07 08:56:05,899 - INFO - [__main__] - [Hankyung] Found: [단독] PTA, 한국펀드파트너스 매각 시동…글로벌 투자자들 러브콜 (20260306)
+2026-03-07 08:56:06,026 - INFO - [__main__] - [Hankyung] Collection complete. Found 9 articles.
+2026-03-07 08:56:06,027 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-06 ~ 2026-03-07)...
+2026-03-07 08:56:06,027 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-07 08:56:12,076 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-07 08:56:12,076 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-07 08:56:12,076 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-07 08:56:13,853 - INFO - [__main__] - [TheBell] Found: 상장사 M&A 절차 바뀌나…법무부 가이드라인, 업계 반응은 (2026-03-06)
+2026-03-07 08:56:13,905 - INFO - [__main__] - [TheBell] Found: IMM 손잡는 시지바이오, 잔여지분 처리 방식에 '시선집중' (2026-03-06)
+2026-03-07 08:56:13,976 - INFO - [__main__] - [TheBell] Found: '1000억 펀딩' 미코파워, 투자유치 순항 배경은 (2026-03-06)
+2026-03-07 08:56:14,030 - INFO - [__main__] - [TheBell] Found: KKR, SK이터닉스 최대주주 지분 인수…신재생 JV 구축 '박차' (2026-03-06)
+2026-03-07 08:56:14,087 - INFO - [__main__] - [TheBell] Found: '청산 모드' VIG 3호 펀드, 남은 4곳 매각 속도 (2026-03-06)
+2026-03-07 08:56:14,161 - INFO - [__main__] - [TheBell] Found: 투자수요 몰린 미코파워, 펀딩 1000억으로 확대 (2026-03-06)
+2026-03-07 08:56:14,213 - INFO - [__main__] - [TheBell] Found: PTA에쿼티, 한국펀드파트너스 경영권 매각 추진 (2026-03-06)
+2026-03-07 08:56:14,265 - INFO - [__main__] - [TheBell] Found: 한앤코, SK이터닉스 투자 '마침표'…밸류업 스토리 '주목' (2026-03-06)
+2026-03-07 08:56:14,325 - INFO - [__main__] - [TheBell] Found: JS코퍼레이션 체제 편입, 캐파·시너지 기대 (2026-03-06)
+2026-03-07 08:56:14,374 - INFO - [__main__] - [TheBell] Found: ‘150억 투자 유치’ 로가, KB인베 FI로 확보 (2026-03-06)
+2026-03-07 08:56:14,422 - INFO - [__main__] - [TheBell] Found: 'SK이노 LNG 투자' 메리츠, 미국-이란 전쟁에 수익성 '주목' (2026-03-06)
+2026-03-07 08:56:14,622 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-07 08:56:17,443 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-07 08:56:17,443 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-07 08:56:17,443 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-07 08:56:19,132 - INFO - [__main__] - [TheBell] Found: SB인베, 자본잠식 경고에 '유상증자' 예고 (2026-03-06)
+2026-03-07 08:56:19,185 - INFO - [__main__] - [TheBell] Found: 상장사 M&A 절차 바뀌나…법무부 가이드라인, 업계 반응은 (2026-03-06)
+2026-03-07 08:56:19,237 - INFO - [__main__] - [TheBell] Found: SBI인베, '안재광 대표' 단독체제 이어간다 (2026-03-06)
+2026-03-07 08:56:19,285 - INFO - [__main__] - [TheBell] Found: '1000억 펀딩' 미코파워, 투자유치 순항 배경은 (2026-03-06)
+2026-03-07 08:56:19,337 - INFO - [__main__] - [TheBell] Found: 황만순 한투파 대표 연임 무게…글로벌 성과 부각 (2026-03-06)
+2026-03-07 08:56:19,387 - INFO - [__main__] - [TheBell] Found: 주간 VC 투자 브리핑(3.2~6) (2026-03-06)
+2026-03-07 08:56:19,436 - INFO - [__main__] - [TheBell] Found: '루키 졸업' 쿼드벤처스, 모태 창업초기·딥테크 투트랙 (2026-03-06)
+2026-03-07 08:56:19,486 - INFO - [__main__] - [TheBell] Found: KKR, SK이터닉스 최대주주 지분 인수…신재생 JV 구축 '박차' (2026-03-06)
+2026-03-07 08:56:19,540 - INFO - [__main__] - [TheBell] Found: '프리IPO 클로징' 클러쉬, 하반기 기평 추진 (2026-03-06)
+2026-03-07 08:56:19,589 - INFO - [__main__] - [TheBell] Found: '청산 모드' VIG 3호 펀드, 남은 4곳 매각 속도 (2026-03-06)
+2026-03-07 08:56:19,639 - INFO - [__main__] - [TheBell] Found: 투자수요 몰린 미코파워, 펀딩 1000억으로 확대 (2026-03-06)
+2026-03-07 08:56:19,692 - INFO - [__main__] - [TheBell] Found: 사내이사 줄고 주주 추천 사외이사 감사위 진입 (2026-03-06)
+2026-03-07 08:56:19,741 - INFO - [__main__] - [TheBell] Found: PTA에쿼티, 한국펀드파트너스 경영권 매각 추진 (2026-03-06)
+2026-03-07 08:56:19,801 - INFO - [__main__] - [TheBell] Found: 한앤코, SK이터닉스 투자 '마침표'…밸류업 스토리 '주목' (2026-03-06)
+2026-03-07 08:56:19,849 - INFO - [__main__] - [TheBell] Found: 3조 밸류 노리는 퓨리오사AI, 구주 가격도 오른다 (2026-03-06)
+2026-03-07 08:56:19,900 - INFO - [__main__] - [TheBell] Found: 김대현 키움인베 대표 "민간모펀드로 벤처생태계 파이 키운다" (2026-03-06)
+2026-03-07 08:56:19,950 - INFO - [__main__] - [TheBell] Found: 한국카본, VC 설립…롯데벤처 출신 임태희 대표 영입 (2026-03-06)
+2026-03-07 08:56:19,998 - INFO - [__main__] - [TheBell] Found: IPO 늦춘 하이리움산업, 임직원 달래기…올해 재도전 (2026-03-06)
+2026-03-07 08:56:20,047 - INFO - [__main__] - [TheBell] Found: ‘150억 투자 유치’ 로가, KB인베 FI로 확보 (2026-03-06)
+2026-03-07 08:56:20,097 - INFO - [__main__] - [TheBell] Found: 아이씨유코퍼레이션, 30억 시리즈A 투자유치 추진 (2026-03-06)
+2026-03-07 08:56:20,121 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-07 08:56:21,811 - INFO - [__main__] - [TheBell] Found: 'SK이노 LNG 투자' 메리츠, 미국-이란 전쟁에 수익성 '주목' (2026-03-06)
+2026-03-07 08:56:21,859 - INFO - [__main__] - [TheBell] Found: 웨이센, 연말 상장 추진…삼호그린인베 회수 가시권 (2026-03-06)
+2026-03-07 08:56:22,224 - INFO - [__main__] - [TheBell] Scanning Page 3: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=3
+2026-03-07 08:56:24,315 - INFO - [__main__] - [TheBell] Page 3 has only older articles. Stopping.
+2026-03-07 08:56:24,315 - INFO - [__main__] - [TheBell] Collection complete. Found 33 articles.
+2026-03-07 08:56:24,315 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-06...
+2026-03-07 08:56:24,315 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-07 08:56:30,223 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-07 08:56:30,223 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-07 08:56:32,743 - INFO - [__main__] - [DealSite+] Found: 4대 금융 떠나고…한국금융 우발부채에 장고 (2026-03-06)
+2026-03-07 08:56:32,917 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-07 08:56:35,434 - INFO - [__main__] - [DealSite+] Found: 성장금융, 방산기술혁신펀드에 520억 쏜다 (2026-03-06)
+2026-03-07 08:56:35,450 - INFO - [__main__] - [DealSite+] Found: 피지컬AI 드론 니어스랩 IPO…컴퍼니케이 방산주 탄력 (2026-03-06)
+2026-03-07 08:56:35,467 - INFO - [__main__] - [DealSite+] Found: 4대 금융 떠나고…한국금융 우발부채에 장고 (2026-03-06)
+2026-03-07 08:56:35,484 - INFO - [__main__] - [DealSite+] Found: 솔루스 국내 특허심판원 승소…美재판도 고지 선점 (2026-03-06)
+2026-03-07 08:56:35,632 - INFO - [__main__] - [DealSite+] Collection complete. Found 5 articles.
+2026-03-07 08:56:35,632 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-06...
+2026-03-07 08:56:35,632 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-07 08:56:41,433 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-03-07 08:56:41,433 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-03-07 08:56:43,591 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-03-07 08:56:44,057 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-07 08:56:44,059 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-07 08:56:45,367 - INFO - [__main__] - [History] Loaded 933 URLs and 933 titles from history.
+2026-03-07 08:56:45,367 - INFO - [__main__] - [History] Skipping Duplicate (URL): ‘150억 투자 유치’ 로가, KB인베 FI로 확보 [TheBell]
+2026-03-07 08:56:45,367 - INFO - [__main__] - [History] Skipping Duplicate (URL): 'SK이노 LNG 투자' 메리츠, 미국-이란 전쟁에 수익성 '주목' [TheBell]
+2026-03-07 08:56:45,367 - INFO - [__main__] - [History] Skipping Duplicate (URL): 김대현 키움인베 대표 "민간모펀드로 벤처생태계 파이 키운다" [TheBell]
+2026-03-07 08:56:45,367 - INFO - [__main__] - [History] Skipping Duplicate (URL): 한국카본, VC 설립…롯데벤처 출신 임태희 대표 영입 [TheBell]
+2026-03-07 08:56:45,368 - INFO - [__main__] - [History] Skipping Duplicate (URL): IPO 늦춘 하이리움산업, 임직원 달래기…올해 재도전 [TheBell]
+2026-03-07 08:56:45,368 - INFO - [__main__] - [History] Skipping Duplicate (URL): 아이씨유코퍼레이션, 30억 시리즈A 투자유치 추진 [TheBell]
+2026-03-07 08:56:45,368 - INFO - [__main__] - [History] Skipping Duplicate (URL): 웨이센, 연말 상장 추진…삼호그린인베 회수 가시권 [TheBell]
+2026-03-07 08:56:45,368 - INFO - [__main__] - [History] Skipping Duplicate (URL): 솔루스 국내 특허심판원 승소…美재판도 고지 선점 [DealSitePlus]
+2026-03-07 08:56:45,368 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 28
+2026-03-07 08:56:45,368 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-07 08:56:45,368 - INFO - [__main__] - [PDF] [1/28] Processing: 국민연금 상근전문위원에 박영석·이연임·정희준 신규 위촉 (Hankyung)
+2026-03-07 08:56:51,910 - INFO - [__main__] - [PDF] [2/28] Processing: 웹툰엔터 프레지던트에 김용수 최고전략책임자 (Hankyung)
+2026-03-07 08:56:58,313 - INFO - [__main__] - [PDF] [3/28] Processing: 갤S26 사전판매 135만대…역대 최다 (Hankyung)
+2026-03-07 08:57:04,758 - INFO - [__main__] - [PDF] [4/28] Processing: 현대ADM바이오, 페니트리움 바이오사이언스로 사명 변경 (Hankyung)
+2026-03-07 08:57:11,256 - INFO - [__main__] - [PDF] [5/28] Processing: AFG, 호텔 미드시티 명동 ‘부킹닷컴’·‘아고다’ 어워드 동시 수상 (Hankyung)
+2026-03-07 08:57:17,691 - INFO - [__main__] - [PDF] [6/28] Processing: 한앤코, SK이터닉스 태그얼롱 행사…분할매각 전략 통했다 (Hankyung)
+2026-03-07 08:57:24,379 - INFO - [__main__] - [PDF] [7/28] Processing: SK이터닉스, KKR에 팔린다 (Hankyung)
+2026-03-07 08:57:30,818 - INFO - [__main__] - [PDF] [8/28] Processing: [단독] PTA, 한국펀드파트너스 매각 시동…글로벌 투자자들 러브콜 (Hankyung)
+2026-03-07 08:57:37,289 - INFO - [__main__] - [PDF] [9/28] Processing: 상장사 M&A 절차 바뀌나…법무부 가이드라인, 업계 반응은 (TheBell)
+2026-03-07 08:57:43,851 - INFO - [__main__] - [PDF] [10/28] Processing: IMM 손잡는 시지바이오, 잔여지분 처리 방식에 '시선집중' (TheBell)
+2026-03-07 08:57:50,368 - INFO - [__main__] - [PDF] [11/28] Processing: '1000억 펀딩' 미코파워, 투자유치 순항 배경은 (TheBell)
+2026-03-07 08:57:56,808 - INFO - [__main__] - [PDF] [12/28] Processing: KKR, SK이터닉스 최대주주 지분 인수…신재생 JV 구축 '박차' (TheBell)
+2026-03-07 08:58:03,318 - INFO - [__main__] - [PDF] [13/28] Processing: '청산 모드' VIG 3호 펀드, 남은 4곳 매각 속도 (TheBell)
+2026-03-07 08:58:09,800 - INFO - [__main__] - [PDF] [14/28] Processing: 투자수요 몰린 미코파워, 펀딩 1000억으로 확대 (TheBell)
+2026-03-07 08:58:16,259 - INFO - [__main__] - [PDF] [15/28] Processing: PTA에쿼티, 한국펀드파트너스 경영권 매각 추진 (TheBell)
+2026-03-07 08:58:22,714 - INFO - [__main__] - [PDF] [16/28] Processing: 한앤코, SK이터닉스 투자 '마침표'…밸류업 스토리 '주목' (TheBell)
+2026-03-07 08:58:29,141 - INFO - [__main__] - [PDF] [17/28] Processing: JS코퍼레이션 체제 편입, 캐파·시너지 기대 (TheBell)
+2026-03-07 08:58:35,663 - INFO - [__main__] - [PDF] [18/28] Processing: SB인베, 자본잠식 경고에 '유상증자' 예고 (TheBell)
+2026-03-07 08:58:42,108 - INFO - [__main__] - [PDF] [19/28] Processing: SBI인베, '안재광 대표' 단독체제 이어간다 (TheBell)
+2026-03-07 08:58:48,573 - INFO - [__main__] - [PDF] [20/28] Processing: 황만순 한투파 대표 연임 무게…글로벌 성과 부각 (TheBell)
+2026-03-07 08:58:55,042 - INFO - [__main__] - [PDF] [21/28] Processing: 주간 VC 투자 브리핑(3.2~6) (TheBell)
+2026-03-07 08:59:01,511 - INFO - [__main__] - [PDF] [22/28] Processing: '루키 졸업' 쿼드벤처스, 모태 창업초기·딥테크 투트랙 (TheBell)
+2026-03-07 08:59:07,995 - INFO - [__main__] - [PDF] [23/28] Processing: '프리IPO 클로징' 클러쉬, 하반기 기평 추진 (TheBell)
+2026-03-07 08:59:14,458 - INFO - [__main__] - [PDF] [24/28] Processing: 사내이사 줄고 주주 추천 사외이사 감사위 진입 (TheBell)
+2026-03-07 08:59:20,991 - INFO - [__main__] - [PDF] [25/28] Processing: 3조 밸류 노리는 퓨리오사AI, 구주 가격도 오른다 (TheBell)
+2026-03-07 08:59:27,426 - INFO - [__main__] - [PDF] [26/28] Processing: 4대 금융 떠나고…한국금융 우발부채에 장고 (DealSitePlus)
+2026-03-07 08:59:34,352 - INFO - [__main__] - [PDF] [27/28] Processing: 성장금융, 방산기술혁신펀드에 520억 쏜다 (DealSitePlus)
+2026-03-07 08:59:41,051 - INFO - [__main__] - [PDF] [28/28] Processing: 피지컬AI 드론 니어스랩 IPO…컴퍼니케이 방산주 탄력 (DealSitePlus)
+2026-03-07 08:59:47,861 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-07 08:59:49,316 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-07 08:59:52,091 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1wCUTcB8NGYJKWVeCW5PgKpl8UvWgw6YM/view?usp=drivesdk
+2026-03-07 08:59:55,619 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-07 08:59:58,587 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/19VJ81rd7C_ZMae7rs7tT596T9d04UBNv/view?usp=drivesdk
+2026-03-07 08:59:59,198 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-07 09:00:02,333 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/14HNWUICNSNADJXYvqMKVJWYVFDG7Pyv1/view?usp=drivesdk
+2026-03-07 09:00:03,085 - INFO - [__main__] - [History] Updated sheet with 28 new articles.
+2026-03-07 09:00:04,061 - INFO - [__main__] - Old history cleanup complete: 42 rows deleted.
+2026-03-07 09:00:07,919 - INFO - [__main__] - 
+============================================================
+2026-03-07 09:00:07,919 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-07 09:00:07,919 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-07  9:00:10.27 
+================================================== 
+ 

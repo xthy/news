@@ -58,6 +58,7 @@ except:
     config_data = {}
 
 SLACK_WEBHOOK_URL = config_data.get("SLACK_WEBHOOK_URL", "")
+TEAMS_WEBHOOK_URL = config_data.get("TEAMS_WEBHOOK_URL", "")
 LOG_SLACK_WEBHOOK_URL = config_data.get("LOG_SLACK_WEBHOOK_URL", "")
 SPREADSHEET_ID = config_data.get("SPREADSHEET_ID", "18KrjCdEEcNJrmNRAV19nhwAoya9l65gzH3ypFYaRlHM")
 HISTORY_SHEET_NAME = "paywalled_pdf"
@@ -595,59 +596,114 @@ class InvestChosunCrawler(BaseCrawler):
         self.login("investchosun")
         
         target_links = []
-        # Strictly use CatID 12 (Deal) as requested
-        url = "https://www.investchosun.com/svc/news/tlist.html?catid=12"
+        # Strictly use CatID 114 (Deal / M&A) as requested
+        url = "https://www.investchosun.com/svc/news/list.html?catid=114"
         logger.info(f"[InvestChosun] Navigating to: {url}")
         try:
             self.driver.get(url)
         except TimeoutException:
             logger.warning(f"[InvestChosun] Timeout loading {url}, stopping and proceeding")
             self.driver.execute_script("window.stop();")
-        time.sleep(2)
         
-        articles = self.driver.find_elements(By.CSS_SELECTOR, "li")
-        logger.debug(f"[InvestChosun] Found {len(articles)} li elements")
+        # Handle any alerts after navigation
+        try:
+            alert = self.driver.switch_to.alert
+            alert_text = alert.text
+            logger.warning(f"[InvestChosun] Alert detected: {alert_text}")
+            alert.accept()
+            time.sleep(1)
+        except:
+            pass
         
-        for art in articles:
-            try:
-                # Find date span
-                # User said: <span>2026.01.18</span>
-                # date_el = art.find_element(By.CSS_SELECTOR, "dl dd.date span") 
-                # (From news_run.py logic, it might be nested)
-                try:
-                    date_el = art.find_element(By.CSS_SELECTOR, ".date span")
-                except:
-                    continue
-
-                date_text = date_el.text.strip()
-                # Normalize InvestChosun date (YYYY.MM.DD HH:MM -> YYYY-MM-DD or YYYY.MM.DD)
-                m = re.search(r'(\d{4})[.-](\d{2})[.-](\d{2})', date_text)
-                if not m: continue
-                
-                clean_date = f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
-                article_date = datetime.strptime(clean_date, "%Y-%m-%d").date()
-
-                if START_DATE.date() <= article_date <= TODAY.date():
-                    # Get link
+        # Wait for article list to fully load
+        time.sleep(3)
+        try:
+            WebDriverWait(self.driver, 15).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "ul.search-list li"))
+            )
+            logger.info("[InvestChosun] Article list loaded successfully")
+        except:
+            logger.warning("[InvestChosun] WebDriverWait for ul.search-list li timed out, trying fallback...")
+            time.sleep(5)  # Extra wait as fallback
+        
+        # Log current page state for debugging
+        current_url = self.driver.current_url
+        logger.info(f"[InvestChosun] Current URL: {current_url}")
+        
+        # Use JavaScript to extract articles directly - most reliable approach
+        try:
+            js_articles = self.driver.execute_script("""
+                var items = document.querySelectorAll('ul.search-list li');
+                if (items.length === 0) {
+                    // Fallback: find any li with date-like text
+                    var allLi = document.querySelectorAll('li');
+                    var result = [];
+                    for (var i = 0; i < allLi.length; i++) {
+                        var dateMatch = allLi[i].textContent.match(/\\d{4}\\.\\d{2}\\.\\d{2}/);
+                        if (dateMatch) {
+                            var linkEl = allLi[i].querySelector('dt a, a[href*="html_dir"]');
+                            if (linkEl) {
+                                result.push({
+                                    title: linkEl.textContent.trim().split('\\n')[0],
+                                    href: linkEl.href || linkEl.getAttribute('href'),
+                                    date: dateMatch[0]
+                                });
+                            }
+                        }
+                    }
+                    return result;
+                }
+                var result = [];
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    var dateEl = item.querySelector('dd.date em, .date em, .date span');
+                    var linkEl = item.querySelector('dt a');
+                    if (dateEl && linkEl) {
+                        var dateMatch = dateEl.textContent.match(/\\d{4}\\.\\d{2}\\.\\d{2}/);
+                        result.push({
+                            title: linkEl.textContent.trim().split('\\n')[0],
+                            href: linkEl.href || linkEl.getAttribute('href'),
+                            date: dateMatch ? dateMatch[0] : dateEl.textContent.trim()
+                        });
+                    }
+                }
+                return result;
+            """)
+            
+            logger.info(f"[InvestChosun] JavaScript extracted {len(js_articles) if js_articles else 0} articles from DOM")
+            
+            if js_articles:
+                for art_data in js_articles:
                     try:
-                        title_el = art.find_element(By.CSS_SELECTOR, "dl dt a, a")
-                        href = title_el.get_attribute("href")
-                        # Use first line of text as title
-                        title = title_el.text.strip().split('\n')[0].strip()
+                        date_text = art_data.get('date', '')
+                        m = re.search(r'(\d{4})[.-](\d{2})[.-](\d{2})', date_text)
+                        if not m:
+                            continue
                         
-                        if href and len(title) > 5:
-                            if not href.startswith("http"):
-                                href = "https://www.investchosun.com" + href
+                        clean_date = f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+                        article_date = datetime.strptime(clean_date, "%Y-%m-%d").date()
+                        
+                        if START_DATE.date() <= article_date <= TODAY.date():
+                            href = art_data.get('href', '')
+                            title = art_data.get('title', '').strip()
                             
-                            if not any(d['url'] == href for d in target_links):
-                                target_links.append({"site": "InvestChosun", "title": title, "url": href, "date": clean_date})
-                                logger.info(f"[InvestChosun] Found: {title} ({clean_date})")
-                    except: pass
-                else:
-                    logger.debug(f"[InvestChosun] Skipped date: {clean_date}")
-            except Exception as e:
-                logger.debug(f"[InvestChosun] Error processing article item: {e}")
-                continue
+                            if href and len(title) > 5:
+                                if not href.startswith("http"):
+                                    href = "https://www.investchosun.com" + href
+                                
+                                if not any(d['url'] == href for d in target_links):
+                                    target_links.append({"site": "InvestChosun", "title": title, "url": href, "date": clean_date})
+                                    logger.info(f"[InvestChosun] Found: {title} ({clean_date})")
+                        else:
+                            logger.debug(f"[InvestChosun] Skipped date: {clean_date}")
+                    except Exception as e:
+                        logger.debug(f"[InvestChosun] Error processing JS article: {e}")
+                        continue
+            else:
+                logger.warning("[InvestChosun] No articles extracted via JavaScript")
+                
+        except Exception as e:
+            logger.error(f"[InvestChosun] JavaScript extraction failed: {e}", exc_info=True)
         
         logger.info(f"[InvestChosun] Collection complete. Found {len(target_links)} articles.")
         return target_links
@@ -1171,6 +1227,59 @@ def send_slack_notification(webhook_url, site_pdfs, all_links, date_str):
     except Exception as e:
         logger.error(f"Slack notify error: {e}")
 
+def send_teams_notification(webhook_url, site_pdfs, all_links, date_str):
+    """Notification with per-site PDF links to Microsoft Teams."""
+    try:
+        import requests
+        if not webhook_url or "YOUR_TEAMS_WEBHOOK" in webhook_url: return False
+        
+        site_map = {
+            "Hankyung": "MarketInsight",
+            "TheBell": "TheBell",
+            "DealSitePlus": "DealSitePlus",
+            "InvestChosun": "InvestChosun"
+        }
+        
+        grouped = {site: [] for site in site_map.keys()}
+        for link in all_links:
+            site = link.get('site')
+            if site in grouped:
+                grouped[site].append(link.get('title'))
+
+        start_date_str = (TODAY - timedelta(days=1)).strftime("%m/%d")
+        end_date_str = TODAY.strftime("%m/%d")
+        header_text = f"Daily PE & M&A Paywalled News ({start_date_str} - {end_date_str})"
+
+        sections = []
+        for internal_site, display_name in site_map.items():
+            titles = grouped.get(internal_site, [])
+            pdf_link = site_pdfs.get(internal_site, "")
+            
+            pdf_text = f" - [PDF 보기 링크]({pdf_link})" if pdf_link else ""
+            
+            if not titles:
+                article_content = "> 기사 없음"
+            else:
+                article_content = "\n\n".join([f"• {t}" for t in titles])
+            
+            sections.append({
+                "activityTitle": f"**{display_name}**{pdf_text}",
+                "text": article_content
+            })
+
+        message = {
+            "@type": "MessageCard",
+            "@context": "http://schema.org/extensions",
+            "themeColor": "0076D7",
+            "summary": f"News Summary {date_str}",
+            "title": header_text,
+            "sections": sections
+        }
+        
+        requests.post(webhook_url, json=message, timeout=10)
+    except Exception as e:
+        logger.error(f"Teams notify error: {e}")
+
 def forward_logs_to_slack(webhook_url):
     """Sends current execution logs from the execution_log file to Slack in chunks."""
     if not webhook_url: return
@@ -1316,6 +1425,7 @@ def main():
         # 4. History Update & Slack Notification
         update_sheet_history(all_links, sheet_svc)
         send_slack_notification(SLACK_WEBHOOK_URL, site_links, all_links, YESTERDAY_STR)
+        send_teams_notification(TEAMS_WEBHOOK_URL, site_links, all_links, YESTERDAY_STR)
         
     except Exception as e:
         logger.error(f"CRITICAL ERROR in main process: {e}", exc_info=True)

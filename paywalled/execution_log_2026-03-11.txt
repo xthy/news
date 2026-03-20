@@ -1,0 +1,180 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-11  8:55:50.61 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-11 08:55:51,690 - INFO - [__main__] - Target Date Range: 2026-03-10 ~ 2026-03-11
+2026-03-11 08:55:51,691 - INFO - [__main__] - ============================================================
+2026-03-11 08:55:51,691 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-11 08:55:51,691 - INFO - [__main__] - ============================================================
+2026-03-11 08:55:51,691 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-11 08:55:51,691 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-11 08:55:52,856 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-11 08:55:52,884 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-11 08:55:52,893 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-11 08:55:52,929 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-03-11 08:55:52,930 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-11 08:55:52,930 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-11 08:55:52,975 - INFO - [WDM] - Driver downloading response is 200
+2026-03-11 08:55:53,060 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-11 08:55:53,168 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-03-11 08:55:54,826 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-11 08:55:54,827 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-11 08:55:54,827 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-11 08:55:54,827 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-10...
+2026-03-11 08:55:54,827 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-11 08:56:00,756 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-11 08:56:00,757 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-11 08:56:14,155 - INFO - [__main__] - [Hankyung] Found: 바이오니아, '전문경영인' 전면 배치… 사업화 중심 조직 재편 (20260310)
+2026-03-11 08:56:14,164 - INFO - [__main__] - [Hankyung] Found: 1600조 국민연금 굴리는데…자산별 부문장 신설론 '솔솔' (20260310)
+2026-03-11 08:56:14,180 - INFO - [__main__] - [Hankyung] Found: ISS, 고려아연 이사회 '균형' 강조…최윤범 이사 선임 반대 (20260310)
+2026-03-11 08:56:14,189 - INFO - [__main__] - [Hankyung] Found: 팰리서캐피탈, LG화학 주주들에 호소 "주주제안 찬성해달라" (20260310)
+2026-03-11 08:56:14,317 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-11 08:56:16,513 - INFO - [__main__] - [Hankyung] Found: 에코비트, 케이에코 볼트온 인수…신종자본증권으로 자금 조달 (20260310)
+2026-03-11 08:56:16,531 - INFO - [__main__] - [Hankyung] Found: 초록마을, 회생계획안 재차 연장…청산 위험 커지나 (20260310)
+2026-03-11 08:56:16,540 - INFO - [__main__] - [Hankyung] Found: ISS, 고려아연 이사회 '균형' 강조…최윤범 이사 선임 반대 (20260310)
+2026-03-11 08:56:16,667 - INFO - [__main__] - [Hankyung] Collection complete. Found 7 articles.
+2026-03-11 08:56:16,667 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-10 ~ 2026-03-11)...
+2026-03-11 08:56:16,667 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-11 08:56:23,394 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-11 08:56:23,394 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-11 08:56:23,394 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-11 08:56:25,144 - INFO - [__main__] - [TheBell] Found: 매물 나온 포도CC, 인수 하이라이트 '성장성·고마진율' (2026-03-11)
+2026-03-11 08:56:25,194 - INFO - [__main__] - [TheBell] Found: 코스닥 상장사 아이엘, 400억 전환사채 발행 추진 (2026-03-10)
+2026-03-11 08:56:25,245 - INFO - [__main__] - [TheBell] Found: 다옴, 경북 김천 27홀 골프장 '포도CC 매각' 추진 (2026-03-10)
+2026-03-11 08:56:25,295 - INFO - [__main__] - [TheBell] Found: K-푸드 타고 뜬 김 산업…만전식품 매각에 PE '북적' (2026-03-10)
+2026-03-11 08:56:25,346 - INFO - [__main__] - [TheBell] Found: 공무원연금, 해외 대체투자 관리 운용사 뽑는다 (2026-03-10)
+2026-03-11 08:56:25,397 - INFO - [__main__] - [TheBell] Found: IMM PE, 시지바이오 '전액 에쿼티'로 인수 검토 (2026-03-10)
+2026-03-11 08:56:25,460 - INFO - [__main__] - [TheBell] Found: '시지바이오에 진심' IMM PE, 2대주주 주식 확보 시나리오는 (2026-03-10)
+2026-03-11 08:56:25,513 - INFO - [__main__] - [TheBell] Found: IMM PE, 시지바이오에 '멀티플 25배' 초강수 베팅 (2026-03-10)
+2026-03-11 08:56:25,766 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-11 08:56:27,870 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-11 08:56:27,870 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-11 08:56:27,870 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-11 08:56:32,396 - INFO - [__main__] - [TheBell] Found: 티에스인베, 턴어라운드 펀드 청산 돌입 (2026-03-11)
+2026-03-11 08:56:32,447 - INFO - [__main__] - [TheBell] Found: '국민성장펀드' 금융위, K-팹리스 5곳 간담회 추진 (2026-03-11)
+2026-03-11 08:56:32,499 - INFO - [__main__] - [TheBell] Found: 케이링크파트너스, '투자 중심 모델'로 생태계 성장 동행 (2026-03-11)
+2026-03-11 08:56:32,566 - INFO - [__main__] - [TheBell] Found: 에이티넘인베, 고성장펀드 12년만에 청산 마무리 (2026-03-11)
+2026-03-11 08:56:32,614 - INFO - [__main__] - [TheBell] Found: 노앤파트너스, 리벨리온 프리IPO에 1000억 투자한다 (2026-03-10)
+2026-03-11 08:56:32,667 - INFO - [__main__] - [TheBell] Found: 레니게이드 양산 돌입…AI 추론 인프라 공략 (2026-03-10)
+2026-03-11 08:56:32,717 - INFO - [__main__] - [TheBell] Found: 새 리더 맞는 칼라일 한국사무소, 김종윤 대표 거취는 (2026-03-10)
+2026-03-11 08:56:32,767 - INFO - [__main__] - [TheBell] Found: 코스닥 상장사 아이엘, 400억 전환사채 발행 추진 (2026-03-10)
+2026-03-11 08:56:32,818 - INFO - [__main__] - [TheBell] Found: 본엔젤스, 고유계정 투자 1위…대형 하우스 상위권 포진 (2026-03-10)
+2026-03-11 08:56:32,867 - INFO - [__main__] - [TheBell] Found: '친정복귀' 서상준 전 EQT 대표, 앵커에쿼티 구원투수 될까 (2026-03-10)
+2026-03-11 08:56:32,915 - INFO - [__main__] - [TheBell] Found: 포털 '다음' 품는 업스테이지, 상장 밸류 최대 5조 제시 (2026-03-10)
+2026-03-11 08:56:32,965 - INFO - [__main__] - [TheBell] Found: 다옴, 경북 김천 27홀 골프장 '포도CC 매각' 추진 (2026-03-10)
+2026-03-11 08:56:33,021 - INFO - [__main__] - [TheBell] Found: 더웰스인베, 싱가포르 펀드 멀티클로징 임박 (2026-03-10)
+2026-03-11 08:56:33,087 - INFO - [__main__] - [TheBell] Found: 중기부, 일반법인에 벤처투자조합 Co-GP 허용 (2026-03-10)
+2026-03-11 08:56:33,136 - INFO - [__main__] - [TheBell] Found: K-푸드 타고 뜬 김 산업…만전식품 매각에 PE '북적' (2026-03-10)
+2026-03-11 08:56:33,187 - INFO - [__main__] - [TheBell] Found: 미시간벤처, '왕사남' 흥행 잭팟…천만영화 5편 발굴 (2026-03-10)
+2026-03-11 08:56:33,236 - INFO - [__main__] - [TheBell] Found: 왓챠, 공개매각 전환…SI 중심 인수전 예고 (2026-03-10)
+2026-03-11 08:56:33,286 - INFO - [__main__] - [TheBell] Found: IMM PE, 시지바이오 '전액 에쿼티'로 인수 검토 (2026-03-10)
+2026-03-11 08:56:33,338 - INFO - [__main__] - [TheBell] Found: 농금원, 미달 분야 내달 재공고 추진…추가 출자 병행 (2026-03-10)
+2026-03-11 08:56:33,389 - INFO - [__main__] - [TheBell] Found: 프렌드투자, 스케일업 팁스 운용사 따냈다 (2026-03-10)
+2026-03-11 08:56:33,414 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-11 08:56:35,149 - INFO - [__main__] - [TheBell] Found: KB인베·컴퍼니케이, 지니너스에 200억 후속 투자 배경은 (2026-03-10)
+2026-03-11 08:56:35,203 - INFO - [__main__] - [TheBell] Found: IMM PE, 시지바이오에 '멀티플 25배' 초강수 베팅 (2026-03-10)
+2026-03-11 08:56:35,574 - INFO - [__main__] - [TheBell] Scanning Page 3: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=3
+2026-03-11 08:56:37,789 - INFO - [__main__] - [TheBell] Page 3 has only older articles. Stopping.
+2026-03-11 08:56:37,789 - INFO - [__main__] - [TheBell] Collection complete. Found 30 articles.
+2026-03-11 08:56:37,789 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-10...
+2026-03-11 08:56:37,789 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-11 08:56:44,188 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-11 08:56:44,188 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-11 08:56:46,712 - INFO - [__main__] - [DealSite+] Found: KX이노베이션에 경영권 넘긴다…'거래재개' 시험대 (2026-03-10)
+2026-03-11 08:56:46,900 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-11 08:56:49,365 - INFO - [__main__] - [DealSite+] Found: 리벨리온이 삼성·SK 제쳤다…李 K엔비디아 마중물 (2026-03-11)
+2026-03-11 08:56:49,383 - INFO - [__main__] - [DealSite+] Found: 장관급 박진영의 영향력…JYP 정부자금 수탁 목전 (2026-03-10)
+2026-03-11 08:56:49,400 - INFO - [__main__] - [DealSite+] Found: 10조 출연했는데…들러리된 KB와 하나금융 (2026-03-10)
+2026-03-11 08:56:49,430 - INFO - [__main__] - [DealSite+] Found: 국민성장펀드 등에 업고 6000억 조달한다 (2026-03-10)
+2026-03-11 08:56:49,577 - INFO - [__main__] - [DealSite+] Collection complete. Found 5 articles.
+2026-03-11 08:56:49,577 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-10...
+2026-03-11 08:56:49,577 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-11 08:56:55,362 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-03-11 08:56:55,362 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-03-11 08:56:57,526 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-03-11 08:56:58,573 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-11 08:56:58,575 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-11 08:57:01,023 - INFO - [__main__] - [History] Loaded 834 URLs and 834 titles from history.
+2026-03-11 08:57:01,023 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 36
+2026-03-11 08:57:01,023 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-11 08:57:01,023 - INFO - [__main__] - [PDF] [1/36] Processing: 바이오니아, '전문경영인' 전면 배치… 사업화 중심 조직 재편 (Hankyung)
+2026-03-11 08:57:07,595 - INFO - [__main__] - [PDF] [2/36] Processing: 1600조 국민연금 굴리는데…자산별 부문장 신설론 '솔솔' (Hankyung)
+2026-03-11 08:57:14,155 - INFO - [__main__] - [PDF] [3/36] Processing: ISS, 고려아연 이사회 '균형' 강조…최윤범 이사 선임 반대 (Hankyung)
+2026-03-11 08:57:20,648 - INFO - [__main__] - [PDF] [4/36] Processing: 팰리서캐피탈, LG화학 주주들에 호소 "주주제안 찬성해달라" (Hankyung)
+2026-03-11 08:57:27,155 - INFO - [__main__] - [PDF] [5/36] Processing: 에코비트, 케이에코 볼트온 인수…신종자본증권으로 자금 조달 (Hankyung)
+2026-03-11 08:57:33,626 - INFO - [__main__] - [PDF] [6/36] Processing: 초록마을, 회생계획안 재차 연장…청산 위험 커지나 (Hankyung)
+2026-03-11 08:57:40,122 - INFO - [__main__] - [PDF] [7/36] Processing: 매물 나온 포도CC, 인수 하이라이트 '성장성·고마진율' (TheBell)
+2026-03-11 08:57:46,627 - INFO - [__main__] - [PDF] [8/36] Processing: 코스닥 상장사 아이엘, 400억 전환사채 발행 추진 (TheBell)
+2026-03-11 08:57:53,098 - INFO - [__main__] - [PDF] [9/36] Processing: 다옴, 경북 김천 27홀 골프장 '포도CC 매각' 추진 (TheBell)
+2026-03-11 08:57:59,542 - INFO - [__main__] - [PDF] [10/36] Processing: K-푸드 타고 뜬 김 산업…만전식품 매각에 PE '북적' (TheBell)
+2026-03-11 08:58:06,005 - INFO - [__main__] - [PDF] [11/36] Processing: 공무원연금, 해외 대체투자 관리 운용사 뽑는다 (TheBell)
+2026-03-11 08:58:12,442 - INFO - [__main__] - [PDF] [12/36] Processing: IMM PE, 시지바이오 '전액 에쿼티'로 인수 검토 (TheBell)
+2026-03-11 08:58:18,952 - INFO - [__main__] - [PDF] [13/36] Processing: '시지바이오에 진심' IMM PE, 2대주주 주식 확보 시나리오는 (TheBell)
+2026-03-11 08:58:25,416 - INFO - [__main__] - [PDF] [14/36] Processing: IMM PE, 시지바이오에 '멀티플 25배' 초강수 베팅 (TheBell)
+2026-03-11 08:58:31,895 - INFO - [__main__] - [PDF] [15/36] Processing: 티에스인베, 턴어라운드 펀드 청산 돌입 (TheBell)
+2026-03-11 08:58:38,320 - INFO - [__main__] - [PDF] [16/36] Processing: '국민성장펀드' 금융위, K-팹리스 5곳 간담회 추진 (TheBell)
+2026-03-11 08:58:44,802 - INFO - [__main__] - [PDF] [17/36] Processing: 케이링크파트너스, '투자 중심 모델'로 생태계 성장 동행 (TheBell)
+2026-03-11 08:58:51,435 - INFO - [__main__] - [PDF] [18/36] Processing: 에이티넘인베, 고성장펀드 12년만에 청산 마무리 (TheBell)
+2026-03-11 08:58:57,872 - INFO - [__main__] - [PDF] [19/36] Processing: 노앤파트너스, 리벨리온 프리IPO에 1000억 투자한다 (TheBell)
+2026-03-11 08:59:04,322 - INFO - [__main__] - [PDF] [20/36] Processing: 레니게이드 양산 돌입…AI 추론 인프라 공략 (TheBell)
+2026-03-11 08:59:10,862 - INFO - [__main__] - [PDF] [21/36] Processing: 새 리더 맞는 칼라일 한국사무소, 김종윤 대표 거취는 (TheBell)
+2026-03-11 08:59:17,373 - INFO - [__main__] - [PDF] [22/36] Processing: 본엔젤스, 고유계정 투자 1위…대형 하우스 상위권 포진 (TheBell)
+2026-03-11 08:59:23,802 - INFO - [__main__] - [PDF] [23/36] Processing: '친정복귀' 서상준 전 EQT 대표, 앵커에쿼티 구원투수 될까 (TheBell)
+2026-03-11 08:59:30,280 - INFO - [__main__] - [PDF] [24/36] Processing: 포털 '다음' 품는 업스테이지, 상장 밸류 최대 5조 제시 (TheBell)
+2026-03-11 08:59:36,757 - INFO - [__main__] - [PDF] [25/36] Processing: 더웰스인베, 싱가포르 펀드 멀티클로징 임박 (TheBell)
+2026-03-11 08:59:43,267 - INFO - [__main__] - [PDF] [26/36] Processing: 중기부, 일반법인에 벤처투자조합 Co-GP 허용 (TheBell)
+2026-03-11 08:59:49,699 - INFO - [__main__] - [PDF] [27/36] Processing: 미시간벤처, '왕사남' 흥행 잭팟…천만영화 5편 발굴 (TheBell)
+2026-03-11 08:59:56,845 - INFO - [__main__] - [PDF] [28/36] Processing: 왓챠, 공개매각 전환…SI 중심 인수전 예고 (TheBell)
+2026-03-11 09:00:03,319 - INFO - [__main__] - [PDF] [29/36] Processing: 농금원, 미달 분야 내달 재공고 추진…추가 출자 병행 (TheBell)
+2026-03-11 09:00:09,721 - INFO - [__main__] - [PDF] [30/36] Processing: 프렌드투자, 스케일업 팁스 운용사 따냈다 (TheBell)
+2026-03-11 09:00:16,157 - INFO - [__main__] - [PDF] [31/36] Processing: KB인베·컴퍼니케이, 지니너스에 200억 후속 투자 배경은 (TheBell)
+2026-03-11 09:00:16,171 - ERROR - [__main__] - [PDF] Failed for https://www.thebell.co.kr/front/newsview.asp?code=0303&key=202603100834300080106166: Alert Text: 중복로그인 되었습니다.
+다시 로그인 해주세요.
+Message: unexpected alert open: {Alert text : 중복로그인 되었습니다.
+다시 로그인 해주세요.}
+  (Session info: chrome=143.0.7499.169)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x1181213
+	0x1181254
+	0xf6e6dd
+	0xffe438
+	0xfdb2e6
+	0xfad321
+	0xfae1d4
+	0x13d5254
+	0x13d080b
+	0x13ed0ea
+	0x119b118
+	0x11a311d
+	0x1189518
+	0x11896d9
+	0x1173a68
+	0x764f5d49
+	0x7701d6db
+	0x7701d661
+
+2026-03-11 09:00:16,171 - INFO - [__main__] - [PDF] [32/36] Processing: KX이노베이션에 경영권 넘긴다…'거래재개' 시험대 (DealSitePlus)
+2026-03-11 09:00:23,490 - INFO - [__main__] - [PDF] [33/36] Processing: 리벨리온이 삼성·SK 제쳤다…李 K엔비디아 마중물 (DealSitePlus)
+2026-03-11 09:00:30,331 - INFO - [__main__] - [PDF] [34/36] Processing: 장관급 박진영의 영향력…JYP 정부자금 수탁 목전 (DealSitePlus)
+2026-03-11 09:00:37,168 - INFO - [__main__] - [PDF] [35/36] Processing: 10조 출연했는데…들러리된 KB와 하나금융 (DealSitePlus)
+2026-03-11 09:00:43,952 - INFO - [__main__] - [PDF] [36/36] Processing: 국민성장펀드 등에 업고 6000억 조달한다 (DealSitePlus)
+2026-03-11 09:00:50,723 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-11 09:00:52,338 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-11 09:00:58,741 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1JFlY5CggStsaGL-pHA4cHoGuH0M8RWQk/view?usp=drivesdk
+2026-03-11 09:01:04,013 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-11 09:01:10,114 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1iZcYhRHyDUeRsVhkPLnvoVGit4DnV2sj/view?usp=drivesdk
+2026-03-11 09:01:11,171 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-11 09:01:16,262 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1IvH-vFkJChFMVeAr4S24x3ft7ItrqfUO/view?usp=drivesdk
+2026-03-11 09:01:17,954 - INFO - [__main__] - [History] Updated sheet with 36 new articles.
+2026-03-11 09:01:19,128 - INFO - [__main__] - Old history cleanup complete: 1 rows deleted.
+2026-03-11 09:01:22,384 - INFO - [__main__] - 
+============================================================
+2026-03-11 09:01:22,384 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-11 09:01:22,384 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-11  9:01:24.83 
+================================================== 
+ 

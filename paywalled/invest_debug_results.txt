@@ -1,0 +1,32 @@
+1. Logging in...
+  Current URL after login: https://www.investchosun.com/main/
+2. Navigating to list.html?catid=114...
+  Current URL: https://www.investchosun.com/svc/news/list.html?catid=114
+  Page title: 인베스트조선
+
+3. JavaScript DOM analysis:
+ul.search-list li: 10
+Total ul elements: 7
+  ul[0] class="gnb" children=6
+  ul[1] class="" children=3
+  ul[2] class="" children=2
+  ul[3] class="search-list" children=10
+  ul[4] class="issue-list" children=3
+  ul[5] class="" children=5
+  ul[6] class="wrap" children=4
+Total li: 33
+  DATE-li[11]: date=2026.03.20 links=3
+    href=https://www.investchosun.com/site/data/html_dir/2026/03/20/2026032080075.html text=
+  DATE-li[12]: date=2026.03.19 links=3
+    href=https://www.investchosun.com/site/data/html_dir/2026/03/19/2026031980216.html text=
+  DATE-li[13]: date=2026.03.19 links=3
+    href=https://www.investchosun.com/site/data/html_dir/2026/03/19/2026031980108.html text=
+Li with dates: 10
+Body length: 35041
+Has search-list class: true
+Has html_dir: true
+dt a elements: 10
+  dt a[0]: href=https://www.investchosun.com/site/data/html_dir/2026/03/20/2026032080075.html text=마스턴운용, 2800억 밸류로 2대주주 유치…태그얼롱에도 회수 변수
+  dt a[1]: href=https://www.investchosun.com/site/data/html_dir/2026/03/19/2026031980216.html text=SK그룹 데이터센터 소수지분 매각, KKR-IMM인베 컨소 공동투자 추진
+  dt a[2]: href=https://www.investchosun.com/site/data/html_dir/2026/03/19/2026031980108.html text=고려아연 최윤범, 베인캐피탈 지분 확보 위해 금융사 접촉…주총 결과는 변
+Iframes: 0

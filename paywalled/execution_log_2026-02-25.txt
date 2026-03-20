@@ -1,0 +1,178 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-02-25  8:55:50.90 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-02-25 08:55:52,013 - INFO - [__main__] - Target Date Range: 2026-02-24 ~ 2026-02-25
+2026-02-25 08:55:52,014 - INFO - [__main__] - ============================================================
+2026-02-25 08:55:52,014 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-02-25 08:55:52,014 - INFO - [__main__] - ============================================================
+2026-02-25 08:55:52,015 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-02-25 08:55:52,015 - INFO - [WDM] - ====== WebDriver manager ======
+2026-02-25 08:55:53,227 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-25 08:55:53,254 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-25 08:55:53,263 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-25 08:55:53,299 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-02-25 08:55:53,301 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-25 08:55:53,301 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-25 08:55:53,345 - INFO - [WDM] - Driver downloading response is 200
+2026-02-25 08:55:53,427 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-25 08:55:53,535 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-02-25 08:55:55,168 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-02-25 08:55:55,168 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-02-25 08:55:55,168 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-02-25 08:55:55,168 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-02-24...
+2026-02-25 08:55:55,168 - INFO - [__main__] - [hankyung] Starting login process...
+2026-02-25 08:56:01,218 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-02-25 08:56:01,218 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-02-25 08:56:03,416 - INFO - [__main__] - [Hankyung] Found: 신동국, 한미 지분 30% 확보…'4자 연합' 흔들 (20260224)
+2026-02-25 08:56:03,426 - INFO - [__main__] - [Hankyung] Found: 신동국, 장남 임종윤 측 지분 6.45% 추가 매입…한미약품그룹 4자연합 '균열' 조짐 (20260224)
+2026-02-25 08:56:03,434 - INFO - [__main__] - [Hankyung] Found: 상한가 직행한 한미사이언스…대주주 신동국 한양정밀 회장 “지분 매입, 경영권 분쟁과 무관” (20260224)
+2026-02-25 08:56:03,575 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-02-25 08:56:05,772 - INFO - [__main__] - [Hankyung] Found: 임종윤의 지분 매각… DXVX 살리기 위한 고육지책 (20260224)
+2026-02-25 08:56:05,780 - INFO - [__main__] - [Hankyung] Found: 가격 낮추고 창업자 투입…JKL, 롯데손보 연내 매각 '배수의 진' (20260224)
+2026-02-25 08:56:05,791 - INFO - [__main__] - [Hankyung] Found: 신동국, 장남 임종윤 측 지분 6.45% 추가 매입…한미약품그룹 4자연합 '균열' 조짐 (20260224)
+2026-02-25 08:56:05,799 - INFO - [__main__] - [Hankyung] Found: 누빈, 英 슈로더운용 20조원에 인수…'운용자산 3636조' 운용사 탄생 (20260224)
+2026-02-25 08:56:05,931 - INFO - [__main__] - [Hankyung] Collection complete. Found 7 articles.
+2026-02-25 08:56:05,931 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-02-24 ~ 2026-02-25)...
+2026-02-25 08:56:05,931 - INFO - [__main__] - [thebell] Starting login process...
+2026-02-25 08:56:11,918 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-02-25 08:56:11,918 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-02-25 08:56:11,918 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-02-25 08:56:13,694 - INFO - [__main__] - [TheBell] Found: EQT, SK쉴더스 '사이버보안 사업부' 분리매각 추진 (2026-02-24)
+2026-02-25 08:56:13,751 - INFO - [__main__] - [TheBell] Found: 20년 '반도맨' 송한규 대표, SC엔지니어링 관리 방점 (2026-02-24)
+2026-02-25 08:56:13,807 - INFO - [__main__] - [TheBell] Found: NH·미래에셋, '1.1조' DN솔루션즈 리파이낸싱 주선한다 (2026-02-24)
+2026-02-25 08:56:13,859 - INFO - [__main__] - [TheBell] Found: 거버넌스 이슈 해결한 DKME, 공개매각 '본격화' (2026-02-24)
+2026-02-25 08:56:13,918 - INFO - [__main__] - [TheBell] Found: UCK파트너스, '김 제조사' 해농 2대 주주 오른다 (2026-02-24)
+2026-02-25 08:56:13,974 - INFO - [__main__] - [TheBell] Found: SG PE·bnw인베, IBK기업은행 상생도약펀드 최종 GP로 낙점 (2026-02-24)
+2026-02-25 08:56:14,032 - INFO - [__main__] - [TheBell] Found: 서진시스템 잔여 브릿지 물량 쟁탈전…SKS·신한·하나 3파전 (2026-02-24)
+2026-02-25 08:56:14,096 - INFO - [__main__] - [TheBell] Found: 강민균 JKL 대표, 롯데손보 이사회 합류한다 (2026-02-24)
+2026-02-25 08:56:14,152 - INFO - [__main__] - [TheBell] Found: 반도홀딩스, 'CB+구주' 현금 거래…굳건한 지배력 확보 (2026-02-24)
+2026-02-25 08:56:14,400 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-02-25 08:56:16,558 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-25 08:56:16,558 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-02-25 08:56:16,558 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-02-25 08:56:18,300 - INFO - [__main__] - [TheBell] Found: 카이뮨, 1100만달러 유치…다이이찌산쿄와도 맞손 (2026-02-25)
+2026-02-25 08:56:18,349 - INFO - [__main__] - [TheBell] Found: 디캠프, 글로벌 액셀러레이팅 강화…미·일 집중 (2026-02-25)
+2026-02-25 08:56:18,402 - INFO - [__main__] - [TheBell] Found: 아주IB, 석달새 2배 뛴 주가…스페이스X·실적·배당 삼박자 (2026-02-25)
+2026-02-25 08:56:18,453 - INFO - [__main__] - [TheBell] Found: 와이앤아처, 아일럼인베 품는다…PE 비히클 확보 (2026-02-25)
+2026-02-25 08:56:18,503 - INFO - [__main__] - [TheBell] Found: 에트리홀딩스, '기술 사업화' 팁스 성과 가시화 (2026-02-25)
+2026-02-25 08:56:18,556 - INFO - [__main__] - [TheBell] Found: EQT, SK쉴더스 '사이버보안 사업부' 분리매각 추진 (2026-02-24)
+2026-02-25 08:56:18,606 - INFO - [__main__] - [TheBell] Found: 신창에프에이 후속 펀딩 성공, 하랑기술-어드벤처캐피털 참여 (2026-02-24)
+2026-02-25 08:56:18,653 - INFO - [__main__] - [TheBell] Found: NH·미래에셋, '1.1조' DN솔루션즈 리파이낸싱 주선한다 (2026-02-24)
+2026-02-25 08:56:18,705 - INFO - [__main__] - [TheBell] Found: '김준년 호' EQT 인프라, 인력 보강으로 조직 재정비 (2026-02-24)
+2026-02-25 08:56:18,793 - INFO - [__main__] - [TheBell] Found: 기관 IR 돌입, '멀티파라미터·웰니스' 성장 로드맵 제시 (2026-02-24)
+2026-02-25 08:56:18,854 - INFO - [__main__] - [TheBell] Found: 스마일게이트인베, 차기 대표에 '백인수-박정인' 2파전 (2026-02-24)
+2026-02-25 08:56:18,921 - INFO - [__main__] - [TheBell] Found: SG PE·bnw인베, IBK기업은행 상생도약펀드 최종 GP로 낙점 (2026-02-24)
+2026-02-25 08:56:18,970 - INFO - [__main__] - [TheBell] Found: '경남 기반 AC' 비티비벤처스, VC 라이선스 확보 (2026-02-24)
+2026-02-25 08:56:19,037 - INFO - [__main__] - [TheBell] Found: 에버그린투자, 563억 AI 펀드 결성…AUM 2000억 눈앞 (2026-02-24)
+2026-02-25 08:56:19,088 - INFO - [__main__] - [TheBell] Found: '용퇴' 남기문 스마일게이트인베 대표, 하우스 남는다 (2026-02-24)
+2026-02-25 08:56:19,142 - INFO - [__main__] - [TheBell] Found: 행정공제회, '3년 연속' VC 출자 기조 이어가나 (2026-02-24)
+2026-02-25 08:56:19,194 - INFO - [__main__] - [TheBell] Found: 주주구성 바뀐 성장금융, 최대 실적 달성…배당 이어가나 (2026-02-24)
+2026-02-25 08:56:19,245 - INFO - [__main__] - [TheBell] Found: 선보엔젤파트너스, 에스와이유에 시드 투자 (2026-02-24)
+2026-02-25 08:56:19,298 - INFO - [__main__] - [TheBell] Found: '브릿지 도전' 브이에스팜텍, 기술이전 기대감 커진다 (2026-02-24)
+2026-02-25 08:56:19,348 - INFO - [__main__] - [TheBell] Found: 서진시스템 잔여 브릿지 물량 쟁탈전…SKS·신한·하나 3파전 (2026-02-24)
+2026-02-25 08:56:19,373 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-02-25 08:56:21,136 - INFO - [__main__] - [TheBell] Found: 한투파, 2850억 펀드 청산 돌입…최대 IRR 13% (2026-02-24)
+2026-02-25 08:56:21,185 - INFO - [__main__] - [TheBell] Found: 루센트블록, 재기 모색…변수는 공정위 조사 (2026-02-24)
+2026-02-25 08:56:21,235 - INFO - [__main__] - [TheBell] Found: ‘피지컬AI’ 로비고스, 시리즈A 투자유치 돌입 (2026-02-24)
+2026-02-25 08:56:21,286 - INFO - [__main__] - [TheBell] Found: 강민균 JKL 대표, 롯데손보 이사회 합류한다 (2026-02-24)
+2026-02-25 08:56:21,350 - INFO - [__main__] - [TheBell] Found: 달바글로벌, 상장 첫해 매출 5000억 돌파…1조 로드맵 가속 (2026-02-24)
+2026-02-25 08:56:21,403 - INFO - [__main__] - [TheBell] Found: '농업 IP 팔란티어' 로버스, AI로 품종시장 재편 (2026-02-24)
+2026-02-25 08:56:21,706 - INFO - [__main__] - [TheBell] Scanning Page 3: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=3
+2026-02-25 08:56:23,844 - INFO - [__main__] - [TheBell] Page 3 has only older articles. Stopping.
+2026-02-25 08:56:23,845 - INFO - [__main__] - [TheBell] Collection complete. Found 35 articles.
+2026-02-25 08:56:23,845 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-02-24...
+2026-02-25 08:56:23,845 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-02-25 08:56:29,742 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-02-25 08:56:29,742 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-02-25 08:56:32,208 - INFO - [__main__] - [DealSite+] Found: AI 텐베거 성호전자…ADS테크 인수금융도 완판 (2026-02-25)
+2026-02-25 08:56:32,226 - INFO - [__main__] - [DealSite+] Found: 'H2O 논란' 김진이 본부장 복귀…남매경영 본격화 (2026-02-25)
+2026-02-25 08:56:32,244 - INFO - [__main__] - [DealSite+] Found: 헤게모니 쥔 태광…225억 깎고 인수구조 변경 (2026-02-24)
+2026-02-25 08:56:32,261 - INFO - [__main__] - [DealSite+] Found: 청계초등학교, 그리고 장세주 회장의 자본재편 (2026-02-24)
+2026-02-25 08:56:32,285 - INFO - [__main__] - [DealSite+] Found: 2600억 한진 상속세 해결한…경기초등학교 삼총사 (2026-02-24)
+2026-02-25 08:56:32,423 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-02-25 08:56:34,871 - INFO - [__main__] - [DealSite+] Found: AI 텐베거 성호전자…ADS테크 인수금융도 완판 (2026-02-25)
+2026-02-25 08:56:34,888 - INFO - [__main__] - [DealSite+] Found: 'H2O 논란' 김진이 본부장 복귀…남매경영 본격화 (2026-02-25)
+2026-02-25 08:56:34,906 - INFO - [__main__] - [DealSite+] Found: 디즈니+ 대리인으로 급성장…스캔들로 급락 (2026-02-24)
+2026-02-25 08:56:34,923 - INFO - [__main__] - [DealSite+] Found: 500억 규모 기업은행 상생도약펀드 GP에 BNW·SG (2026-02-24)
+2026-02-25 08:56:34,941 - INFO - [__main__] - [DealSite+] Found: 매출 0원 회사가 따낸 디즈니 독점권…붉은색 꽌시 (2026-02-24)
+2026-02-25 08:56:34,960 - INFO - [__main__] - [DealSite+] Found: 헤게모니 쥔 태광…225억 깎고 인수구조 변경 (2026-02-24)
+2026-02-25 08:56:34,977 - INFO - [__main__] - [DealSite+] Found: 청계초등학교, 그리고 장세주 회장의 자본재편 (2026-02-24)
+2026-02-25 08:56:34,995 - INFO - [__main__] - [DealSite+] Found: 2600억 한진 상속세 해결한…경기초등학교 삼총사 (2026-02-24)
+2026-02-25 08:56:35,125 - INFO - [__main__] - [DealSite+] Collection complete. Found 13 articles.
+2026-02-25 08:56:35,125 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-02-24...
+2026-02-25 08:56:35,125 - INFO - [__main__] - [investchosun] Starting login process...
+2026-02-25 08:56:40,923 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-02-25 08:56:40,923 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-02-25 08:56:43,139 - INFO - [__main__] - [InvestChosun] Found: LG엔솔, 회사채 수요예측서 2조원 모아…아쉬운 '오버금리' (2026-02-24)
+2026-02-25 08:56:43,194 - INFO - [__main__] - [InvestChosun] Collection complete. Found 1 articles.
+2026-02-25 08:56:43,818 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-25 08:56:43,820 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-25 08:56:45,192 - INFO - [__main__] - [History] Loaded 775 URLs and 775 titles from history.
+2026-02-25 08:56:45,192 - INFO - [__main__] - [History] Skipping Duplicate (URL): 반도홀딩스, 'CB+구주' 현금 거래…굳건한 지배력 확보 [TheBell]
+2026-02-25 08:56:45,192 - INFO - [__main__] - [History] Skipping Duplicate (URL): 달바글로벌, 상장 첫해 매출 5000억 돌파…1조 로드맵 가속 [TheBell]
+2026-02-25 08:56:45,193 - INFO - [__main__] - [History] Skipping Duplicate (URL): '농업 IP 팔란티어' 로버스, AI로 품종시장 재편 [TheBell]
+2026-02-25 08:56:45,193 - INFO - [__main__] - [History] Skipping Duplicate (URL): 청계초등학교, 그리고 장세주 회장의 자본재편 [DealSitePlus]
+2026-02-25 08:56:45,193 - INFO - [__main__] - [History] Skipping Duplicate (URL): 2600억 한진 상속세 해결한…경기초등학교 삼총사 [DealSitePlus]
+2026-02-25 08:56:45,193 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 40
+2026-02-25 08:56:45,193 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-02-25 08:56:45,193 - INFO - [__main__] - [PDF] [1/40] Processing: 신동국, 한미 지분 30% 확보…'4자 연합' 흔들 (Hankyung)
+2026-02-25 08:56:51,772 - INFO - [__main__] - [PDF] [2/40] Processing: 신동국, 장남 임종윤 측 지분 6.45% 추가 매입…한미약품그룹 4자연합 '균열' 조짐 (Hankyung)
+2026-02-25 08:56:58,324 - INFO - [__main__] - [PDF] [3/40] Processing: 상한가 직행한 한미사이언스…대주주 신동국 한양정밀 회장 “지분 매입, 경영권 분쟁과 무관” (Hankyung)
+2026-02-25 08:57:04,830 - INFO - [__main__] - [PDF] [4/40] Processing: 임종윤의 지분 매각… DXVX 살리기 위한 고육지책 (Hankyung)
+2026-02-25 08:57:11,283 - INFO - [__main__] - [PDF] [5/40] Processing: 가격 낮추고 창업자 투입…JKL, 롯데손보 연내 매각 '배수의 진' (Hankyung)
+2026-02-25 08:57:17,800 - INFO - [__main__] - [PDF] [6/40] Processing: 누빈, 英 슈로더운용 20조원에 인수…'운용자산 3636조' 운용사 탄생 (Hankyung)
+2026-02-25 08:57:24,287 - INFO - [__main__] - [PDF] [7/40] Processing: EQT, SK쉴더스 '사이버보안 사업부' 분리매각 추진 (TheBell)
+2026-02-25 08:57:30,840 - INFO - [__main__] - [PDF] [8/40] Processing: 20년 '반도맨' 송한규 대표, SC엔지니어링 관리 방점 (TheBell)
+2026-02-25 08:57:37,469 - INFO - [__main__] - [PDF] [9/40] Processing: NH·미래에셋, '1.1조' DN솔루션즈 리파이낸싱 주선한다 (TheBell)
+2026-02-25 08:57:43,953 - INFO - [__main__] - [PDF] [10/40] Processing: 거버넌스 이슈 해결한 DKME, 공개매각 '본격화' (TheBell)
+2026-02-25 08:57:50,466 - INFO - [__main__] - [PDF] [11/40] Processing: UCK파트너스, '김 제조사' 해농 2대 주주 오른다 (TheBell)
+2026-02-25 08:57:56,925 - INFO - [__main__] - [PDF] [12/40] Processing: SG PE·bnw인베, IBK기업은행 상생도약펀드 최종 GP로 낙점 (TheBell)
+2026-02-25 08:58:03,355 - INFO - [__main__] - [PDF] [13/40] Processing: 서진시스템 잔여 브릿지 물량 쟁탈전…SKS·신한·하나 3파전 (TheBell)
+2026-02-25 08:58:09,993 - INFO - [__main__] - [PDF] [14/40] Processing: 강민균 JKL 대표, 롯데손보 이사회 합류한다 (TheBell)
+2026-02-25 08:58:16,420 - INFO - [__main__] - [PDF] [15/40] Processing: 카이뮨, 1100만달러 유치…다이이찌산쿄와도 맞손 (TheBell)
+2026-02-25 08:58:22,913 - INFO - [__main__] - [PDF] [16/40] Processing: 디캠프, 글로벌 액셀러레이팅 강화…미·일 집중 (TheBell)
+2026-02-25 08:58:29,386 - INFO - [__main__] - [PDF] [17/40] Processing: 아주IB, 석달새 2배 뛴 주가…스페이스X·실적·배당 삼박자 (TheBell)
+2026-02-25 08:58:35,989 - INFO - [__main__] - [PDF] [18/40] Processing: 와이앤아처, 아일럼인베 품는다…PE 비히클 확보 (TheBell)
+2026-02-25 08:58:42,452 - INFO - [__main__] - [PDF] [19/40] Processing: 에트리홀딩스, '기술 사업화' 팁스 성과 가시화 (TheBell)
+2026-02-25 08:58:48,873 - INFO - [__main__] - [PDF] [20/40] Processing: 신창에프에이 후속 펀딩 성공, 하랑기술-어드벤처캐피털 참여 (TheBell)
+2026-02-25 08:58:55,325 - INFO - [__main__] - [PDF] [21/40] Processing: '김준년 호' EQT 인프라, 인력 보강으로 조직 재정비 (TheBell)
+2026-02-25 08:59:01,781 - INFO - [__main__] - [PDF] [22/40] Processing: 기관 IR 돌입, '멀티파라미터·웰니스' 성장 로드맵 제시 (TheBell)
+2026-02-25 08:59:08,273 - INFO - [__main__] - [PDF] [23/40] Processing: 스마일게이트인베, 차기 대표에 '백인수-박정인' 2파전 (TheBell)
+2026-02-25 08:59:14,787 - INFO - [__main__] - [PDF] [24/40] Processing: '경남 기반 AC' 비티비벤처스, VC 라이선스 확보 (TheBell)
+2026-02-25 08:59:21,232 - INFO - [__main__] - [PDF] [25/40] Processing: 에버그린투자, 563억 AI 펀드 결성…AUM 2000억 눈앞 (TheBell)
+2026-02-25 08:59:27,667 - INFO - [__main__] - [PDF] [26/40] Processing: '용퇴' 남기문 스마일게이트인베 대표, 하우스 남는다 (TheBell)
+2026-02-25 08:59:34,167 - INFO - [__main__] - [PDF] [27/40] Processing: 행정공제회, '3년 연속' VC 출자 기조 이어가나 (TheBell)
+2026-02-25 08:59:40,689 - INFO - [__main__] - [PDF] [28/40] Processing: 주주구성 바뀐 성장금융, 최대 실적 달성…배당 이어가나 (TheBell)
+2026-02-25 08:59:47,122 - INFO - [__main__] - [PDF] [29/40] Processing: 선보엔젤파트너스, 에스와이유에 시드 투자 (TheBell)
+2026-02-25 08:59:53,602 - INFO - [__main__] - [PDF] [30/40] Processing: '브릿지 도전' 브이에스팜텍, 기술이전 기대감 커진다 (TheBell)
+2026-02-25 09:00:00,172 - INFO - [__main__] - [PDF] [31/40] Processing: 한투파, 2850억 펀드 청산 돌입…최대 IRR 13% (TheBell)
+2026-02-25 09:00:06,689 - INFO - [__main__] - [PDF] [32/40] Processing: 루센트블록, 재기 모색…변수는 공정위 조사 (TheBell)
+2026-02-25 09:00:13,156 - INFO - [__main__] - [PDF] [33/40] Processing: ‘피지컬AI’ 로비고스, 시리즈A 투자유치 돌입 (TheBell)
+2026-02-25 09:00:19,653 - INFO - [__main__] - [PDF] [34/40] Processing: AI 텐베거 성호전자…ADS테크 인수금융도 완판 (DealSitePlus)
+2026-02-25 09:00:26,603 - INFO - [__main__] - [PDF] [35/40] Processing: 'H2O 논란' 김진이 본부장 복귀…남매경영 본격화 (DealSitePlus)
+2026-02-25 09:00:33,373 - INFO - [__main__] - [PDF] [36/40] Processing: 헤게모니 쥔 태광…225억 깎고 인수구조 변경 (DealSitePlus)
+2026-02-25 09:00:40,163 - INFO - [__main__] - [PDF] [37/40] Processing: 디즈니+ 대리인으로 급성장…스캔들로 급락 (DealSitePlus)
+2026-02-25 09:00:47,042 - INFO - [__main__] - [PDF] [38/40] Processing: 500억 규모 기업은행 상생도약펀드 GP에 BNW·SG (DealSitePlus)
+2026-02-25 09:00:53,745 - INFO - [__main__] - [PDF] [39/40] Processing: 매출 0원 회사가 따낸 디즈니 독점권…붉은색 꽌시 (DealSitePlus)
+2026-02-25 09:01:00,794 - INFO - [__main__] - [PDF] [40/40] Processing: LG엔솔, 회사채 수요예측서 2조원 모아…아쉬운 '오버금리' (InvestChosun)
+2026-02-25 09:01:07,420 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-02-25 09:01:08,688 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-25 09:01:13,669 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1FwKj6bZAWUKO8avgbLNiAbA6JQe7E2Hr/view?usp=drivesdk
+2026-02-25 09:01:19,535 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-25 09:01:24,245 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1Qw5FTEOUogtuOmg-0VR1x8pUOaeobEbO/view?usp=drivesdk
+2026-02-25 09:01:25,700 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-25 09:01:30,175 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/17axfeT8lwj56dBPoH-EEPPa9yPu_KK9K/view?usp=drivesdk
+2026-02-25 09:01:30,396 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-25 09:01:33,314 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1t9RlmwMgYCWfLOPnj1fXMvUqU6ZOBoNE/view?usp=drivesdk
+2026-02-25 09:01:34,132 - INFO - [__main__] - [History] Updated sheet with 40 new articles.
+2026-02-25 09:01:38,811 - INFO - [__main__] - 
+============================================================
+2026-02-25 09:01:38,811 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-02-25 09:01:38,811 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-02-25  9:01:41.28 
+================================================== 
+ 

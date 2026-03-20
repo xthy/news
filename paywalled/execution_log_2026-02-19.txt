@@ -1,0 +1,105 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-02-19  8:55:50.87 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-02-19 08:55:51,848 - INFO - [__main__] - Target Date Range: 2026-02-18 ~ 2026-02-19
+2026-02-19 08:55:51,849 - INFO - [__main__] - ============================================================
+2026-02-19 08:55:51,849 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-02-19 08:55:51,849 - INFO - [__main__] - ============================================================
+2026-02-19 08:55:51,849 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-02-19 08:55:51,849 - INFO - [WDM] - ====== WebDriver manager ======
+2026-02-19 08:55:52,709 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-19 08:55:52,731 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-19 08:55:52,742 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-19 08:55:52,779 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-02-19 08:55:52,781 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-19 08:55:52,781 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-19 08:55:52,825 - INFO - [WDM] - Driver downloading response is 200
+2026-02-19 08:55:52,917 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-19 08:55:53,038 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-02-19 08:55:54,433 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-02-19 08:55:54,434 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-02-19 08:55:54,434 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-02-19 08:55:54,434 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-02-18...
+2026-02-19 08:55:54,434 - INFO - [__main__] - [hankyung] Starting login process...
+2026-02-19 08:56:00,671 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-02-19 08:56:00,671 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-02-19 08:56:02,918 - INFO - [__main__] - [Hankyung] Found: 홈플러스 회생이냐, 청산이냐…법원, 마지막 의견조회로 압박 (20260218)
+2026-02-19 08:56:03,074 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-02-19 08:56:05,250 - INFO - [__main__] - [Hankyung] Found: K푸드 확장하는 필리핀 졸리비…컴포즈 이어 샤브올데이 인수 (20260218)
+2026-02-19 08:56:05,259 - INFO - [__main__] - [Hankyung] Found: 매출 400억 패션유통기업 매물로 (20260218)
+2026-02-19 08:56:05,267 - INFO - [__main__] - [Hankyung] Found: 필리핀 식품업체 졸리비, 샤브올데이도 인수 (20260218)
+2026-02-19 08:56:05,413 - INFO - [__main__] - [Hankyung] Collection complete. Found 4 articles.
+2026-02-19 08:56:05,413 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-02-18 ~ 2026-02-19)...
+2026-02-19 08:56:05,413 - INFO - [__main__] - [thebell] Starting login process...
+2026-02-19 08:56:11,423 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-02-19 08:56:11,423 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-02-19 08:56:11,423 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-02-19 08:56:13,182 - INFO - [__main__] - [TheBell] Found: 인빅터스PEA, 신생 하우스의 반전 드라마 (2026-02-19)
+2026-02-19 08:56:13,258 - INFO - [__main__] - [TheBell] Found: 현대지에프홀딩스 홈쇼핑 흡수에 숨은 키맨은 윤영식 부사장 (2026-02-19)
+2026-02-19 08:56:13,315 - INFO - [__main__] - [TheBell] Found: '웨이비스 엑시트' SG PE, MOIC1.8배·IRR 16% 달성 (2026-02-19)
+2026-02-19 08:56:13,703 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-02-19 08:56:15,527 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-19 08:56:15,527 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-02-19 08:56:15,527 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-02-19 08:56:17,308 - INFO - [__main__] - [TheBell] Found: ‘전문가 매칭’ 커리어데이, 시리즈A 브릿지 추진 (2026-02-19)
+2026-02-19 08:56:17,360 - INFO - [__main__] - [TheBell] Found: 영풍·MBK, 고려아연 선임 이사 6인 제안 이유는 (2026-02-19)
+2026-02-19 08:56:17,428 - INFO - [__main__] - [TheBell] Found: '웨이비스 엑시트' SG PE, MOIC1.8배·IRR 16% 달성 (2026-02-19)
+2026-02-19 08:56:17,791 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-02-19 08:56:19,859 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-19 08:56:19,859 - INFO - [__main__] - [TheBell] Collection complete. Found 6 articles.
+2026-02-19 08:56:19,859 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-02-18...
+2026-02-19 08:56:19,859 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-02-19 08:56:25,778 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-02-19 08:56:25,778 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-02-19 08:56:28,272 - INFO - [__main__] - [DealSite+] Found: 결국 세제실 전관에 SOS…국세청과 전면전 맞불 (2026-02-19)
+2026-02-19 08:56:28,290 - INFO - [__main__] - [DealSite+] Found: 15개 계열사로 피한 공정법…결국 철퇴 맞았다 (2026-02-19)
+2026-02-19 08:56:28,307 - INFO - [__main__] - [DealSite+] Found: 자산 4%만 공익 사업에…복지재단으로 그룹지배 (2026-02-19)
+2026-02-19 08:56:28,324 - INFO - [__main__] - [DealSite+] Found: 가정을 지키려는 남편 vs 혼인파탄 주장하는 아내 (2026-02-18)
+2026-02-19 08:56:28,478 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-02-19 08:56:30,908 - INFO - [__main__] - [DealSite+] Found: 결국 세제실 전관에 SOS…국세청과 전면전 맞불 (2026-02-19)
+2026-02-19 08:56:30,926 - INFO - [__main__] - [DealSite+] Found: 15개 계열사로 피한 공정법…결국 철퇴 맞았다 (2026-02-19)
+2026-02-19 08:56:30,942 - INFO - [__main__] - [DealSite+] Found: 자산 4%만 공익 사업에…복지재단으로 그룹지배 (2026-02-19)
+2026-02-19 08:56:30,962 - INFO - [__main__] - [DealSite+] Found: 가정을 지키려는 남편 vs 혼인파탄 주장하는 아내 (2026-02-18)
+2026-02-19 08:56:31,132 - INFO - [__main__] - [DealSite+] Collection complete. Found 8 articles.
+2026-02-19 08:56:31,132 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-02-18...
+2026-02-19 08:56:31,132 - INFO - [__main__] - [investchosun] Starting login process...
+2026-02-19 08:56:36,916 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-02-19 08:56:36,916 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-02-19 08:56:39,154 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-02-19 08:56:39,826 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-19 08:56:39,828 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-19 08:56:41,165 - INFO - [__main__] - [History] Loaded 799 URLs and 799 titles from history.
+2026-02-19 08:56:41,166 - INFO - [__main__] - [History] Skipping Duplicate (URL): 가정을 지키려는 남편 vs 혼인파탄 주장하는 아내 [DealSitePlus]
+2026-02-19 08:56:41,166 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 12
+2026-02-19 08:56:41,166 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-02-19 08:56:41,166 - INFO - [__main__] - [PDF] [1/12] Processing: 홈플러스 회생이냐, 청산이냐…법원, 마지막 의견조회로 압박 (Hankyung)
+2026-02-19 08:56:47,737 - INFO - [__main__] - [PDF] [2/12] Processing: K푸드 확장하는 필리핀 졸리비…컴포즈 이어 샤브올데이 인수 (Hankyung)
+2026-02-19 08:56:54,272 - INFO - [__main__] - [PDF] [3/12] Processing: 매출 400억 패션유통기업 매물로 (Hankyung)
+2026-02-19 08:57:00,724 - INFO - [__main__] - [PDF] [4/12] Processing: 필리핀 식품업체 졸리비, 샤브올데이도 인수 (Hankyung)
+2026-02-19 08:57:07,257 - INFO - [__main__] - [PDF] [5/12] Processing: 인빅터스PEA, 신생 하우스의 반전 드라마 (TheBell)
+2026-02-19 08:57:13,802 - INFO - [__main__] - [PDF] [6/12] Processing: 현대지에프홀딩스 홈쇼핑 흡수에 숨은 키맨은 윤영식 부사장 (TheBell)
+2026-02-19 08:57:20,321 - INFO - [__main__] - [PDF] [7/12] Processing: '웨이비스 엑시트' SG PE, MOIC1.8배·IRR 16% 달성 (TheBell)
+2026-02-19 08:57:26,800 - INFO - [__main__] - [PDF] [8/12] Processing: ‘전문가 매칭’ 커리어데이, 시리즈A 브릿지 추진 (TheBell)
+2026-02-19 08:57:33,267 - INFO - [__main__] - [PDF] [9/12] Processing: 영풍·MBK, 고려아연 선임 이사 6인 제안 이유는 (TheBell)
+2026-02-19 08:57:39,736 - INFO - [__main__] - [PDF] [10/12] Processing: 결국 세제실 전관에 SOS…국세청과 전면전 맞불 (DealSitePlus)
+2026-02-19 08:57:46,622 - INFO - [__main__] - [PDF] [11/12] Processing: 15개 계열사로 피한 공정법…결국 철퇴 맞았다 (DealSitePlus)
+2026-02-19 08:57:53,363 - INFO - [__main__] - [PDF] [12/12] Processing: 자산 4%만 공익 사업에…복지재단으로 그룹지배 (DealSitePlus)
+2026-02-19 08:58:00,085 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-02-19 08:58:01,006 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-19 08:58:06,200 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1d6A6PA6DNFNMV1uwYdGL9zJ8qH5YzVQ-/view?usp=drivesdk
+2026-02-19 08:58:07,281 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-19 08:58:11,597 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1lox7Z20tBT4nuYeVIRTSVKk15vcGIRAk/view?usp=drivesdk
+2026-02-19 08:58:12,315 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-19 08:58:14,956 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1b6Zg00UDNp0xWfSDJIc1RFB9gPwMyr5G/view?usp=drivesdk
+2026-02-19 08:58:15,678 - INFO - [__main__] - [History] Updated sheet with 12 new articles.
+2026-02-19 08:58:19,261 - INFO - [__main__] - 
+============================================================
+2026-02-19 08:58:19,261 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-02-19 08:58:19,261 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-02-19  8:58:21.56 
+================================================== 
+ 

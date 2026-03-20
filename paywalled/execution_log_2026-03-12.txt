@@ -1,0 +1,190 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-12  8:55:50.48 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-12 08:55:51,702 - INFO - [__main__] - Target Date Range: 2026-03-11 ~ 2026-03-12
+2026-03-12 08:55:51,702 - INFO - [__main__] - ============================================================
+2026-03-12 08:55:51,703 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-12 08:55:51,703 - INFO - [__main__] - ============================================================
+2026-03-12 08:55:51,703 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-12 08:55:51,703 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-12 08:55:52,605 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-12 08:55:52,632 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-12 08:55:52,643 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-12 08:55:52,678 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-03-12 08:55:52,680 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-12 08:55:52,680 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-12 08:55:52,725 - INFO - [WDM] - Driver downloading response is 200
+2026-03-12 08:55:52,808 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-12 08:55:52,918 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-03-12 08:55:54,358 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-12 08:55:54,359 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-12 08:55:54,359 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-12 08:55:54,359 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-11...
+2026-03-12 08:55:54,359 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-12 08:56:00,772 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-12 08:56:00,772 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-12 08:56:02,974 - INFO - [__main__] - [Hankyung] Found: 부산EP, '몸값 8500억' 넥스플렉스 인수금융도 못 구해 '발동동' (20260311)
+2026-03-12 08:56:02,983 - INFO - [__main__] - [Hankyung] Found: '20조 잭팟' 현대차 또 일냈다…폭스바겐 제치고 '세계 2위' (20260311)
+2026-03-12 08:56:02,996 - INFO - [__main__] - [Hankyung] Found: HMM, 사외이사 2명 교체…본사 부산 이전 속도낸다 (20260311)
+2026-03-12 08:56:03,005 - INFO - [__main__] - [Hankyung] Found: 김창한 크래프톤 대표…美 AI 자회사 대표 겸임 (20260311)
+2026-03-12 08:56:03,014 - INFO - [__main__] - [Hankyung] Found: 농협중앙회장 선거, 조합원이 직접 뽑는다 (20260311)
+2026-03-12 08:56:03,062 - INFO - [__main__] - [Hankyung] Found: [단독] 국민연금 '공공성' 법제화 추진…복지부 "수익성 훼손 우려" 반대 (20260311)
+2026-03-12 08:56:03,070 - INFO - [__main__] - [Hankyung] Found: MBK "홈플러스 긴급운영자금 1000억원 집행 완료" (20260311)
+2026-03-12 08:56:03,080 - INFO - [__main__] - [Hankyung] Found: '클로브AI' 운영사 브이원씨, 하나금융 손잡고 금융 사각지대 없앤다 (20260311)
+2026-03-12 08:56:03,088 - INFO - [__main__] - [Hankyung] Found: 아크, 200억 원 규모 시리즈A 투자 유치 [VC 브리핑] (20260311)
+2026-03-12 08:56:03,139 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-12 08:56:05,326 - INFO - [__main__] - [Hankyung] Found: 부산EP, '몸값 8500억' 넥스플렉스 인수금융도 못 구해 '발동동' (20260311)
+2026-03-12 08:56:05,334 - INFO - [__main__] - [Hankyung] Found: MBK "홈플러스 긴급운영자금 1000억원 집행 완료" (20260311)
+2026-03-12 08:56:05,479 - INFO - [__main__] - [Hankyung] Collection complete. Found 11 articles.
+2026-03-12 08:56:05,479 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-11 ~ 2026-03-12)...
+2026-03-12 08:56:05,479 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-12 08:56:12,252 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-12 08:56:12,252 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-12 08:56:12,252 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-12 08:56:14,011 - INFO - [__main__] - [TheBell] Found: 매각 재추진 로얄링스, 인수 하이라이트 '희소성·접근성' (2026-03-12)
+2026-03-12 08:56:14,059 - INFO - [__main__] - [TheBell] Found: 한투PE 컨소, SK이노 CB 리파이낸싱 검토…LP 분배 확대 포석 (2026-03-12)
+2026-03-12 08:56:14,110 - INFO - [__main__] - [TheBell] Found: 어펄마캐피탈, JTC 콜옵션 행사 대금 전액 상환 완료 (2026-03-12)
+2026-03-12 08:56:14,178 - INFO - [__main__] - [TheBell] Found: 청호컴넷 거래 둘러싼 공방, 공시로 따라가보니 (2026-03-12)
+2026-03-12 08:56:14,228 - INFO - [__main__] - [TheBell] Found: 반도그룹, 경주시 주택 공급 시장 '재도전' (2026-03-12)
+2026-03-12 08:56:14,278 - INFO - [__main__] - [TheBell] Found: '시지바이오 인수' IMM PE, 조건부 매매계약 눈길 (2026-03-11)
+2026-03-12 08:56:14,328 - INFO - [__main__] - [TheBell] Found: 태안 38홀 대중제 골프장 로얄링스CC, 재매각 추진 (2026-03-11)
+2026-03-12 08:56:14,381 - INFO - [__main__] - [TheBell] Found: 11배 멀티플 노리는 '만전식품', EBITDA 두 배 성장했다 (2026-03-11)
+2026-03-12 08:56:14,431 - INFO - [__main__] - [TheBell] Found: 이상파트너스-IBK캐피탈, 1200억 블라인드펀드 결성 마무리 (2026-03-11)
+2026-03-12 08:56:14,481 - INFO - [__main__] - [TheBell] Found: '시지바이오 인수' IMM PE, 이유있는 1.1조 베팅 (2026-03-11)
+2026-03-12 08:56:14,546 - INFO - [__main__] - [TheBell] Found: 애큐온캐피탈 매각 흥행 조짐…저축은행 인수엔 '온도차' (2026-03-11)
+2026-03-12 08:56:14,594 - INFO - [__main__] - [TheBell] Found: 아이텍, CB 추가 발행 '넥스플렉스 인수' 힘 싣는다 (2026-03-11)
+2026-03-12 08:56:14,644 - INFO - [__main__] - [TheBell] Found: 매물 나온 포도CC, 인수 하이라이트 '성장성·고마진율' (2026-03-11)
+2026-03-12 08:56:14,808 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-12 08:56:16,933 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-12 08:56:16,933 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-12 08:56:16,933 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-12 08:56:18,677 - INFO - [__main__] - [TheBell] Found: 한투PE 컨소, SK이노 CB 리파이낸싱 검토…LP 분배 확대 포석 (2026-03-12)
+2026-03-12 08:56:18,727 - INFO - [__main__] - [TheBell] Found: '박현주의 힘' 미래에셋, 리벨리온 프리IPO 앵커 꿰찼다 (2026-03-12)
+2026-03-12 08:56:18,776 - INFO - [__main__] - [TheBell] Found: '출자비율 80%' 에너지신산업펀드, 운용사 6파전 (2026-03-12)
+2026-03-12 08:56:18,839 - INFO - [__main__] - [TheBell] Found: 청호컴넷 거래 둘러싼 공방, 공시로 따라가보니 (2026-03-12)
+2026-03-12 08:56:18,892 - INFO - [__main__] - [TheBell] Found: 3조 밸류 프리IPO 상반기 마무리…글로벌 자금 몰리나 (2026-03-12)
+2026-03-12 08:56:18,941 - INFO - [__main__] - [TheBell] Found: IMM인베, 엑시나 시리즈B 리드한다 (2026-03-12)
+2026-03-12 08:56:19,024 - INFO - [__main__] - [TheBell] Found: 농림부의 과도한 자신감 (2026-03-12)
+2026-03-12 08:56:19,068 - INFO - [__main__] - [TheBell] Found: 니어스랩, 주식·이사회 정비 막바지…예심청구 초읽기 (2026-03-11)
+2026-03-12 08:56:19,120 - INFO - [__main__] - [TheBell] Found: 11배 멀티플 노리는 '만전식품', EBITDA 두 배 성장했다 (2026-03-11)
+2026-03-12 08:56:19,171 - INFO - [__main__] - [TheBell] Found: 전환청구 앞둔 나우IB, 엘앤씨바이오 회수 기대 (2026-03-11)
+2026-03-12 08:56:19,220 - INFO - [__main__] - [TheBell] Found: 이상파트너스-IBK캐피탈, 1200억 블라인드펀드 결성 마무리 (2026-03-11)
+2026-03-12 08:56:19,269 - INFO - [__main__] - [TheBell] Found: '시지바이오 인수' IMM PE, 이유있는 1.1조 베팅 (2026-03-11)
+2026-03-12 08:56:19,321 - INFO - [__main__] - [TheBell] Found: 에이투지오토노머스, 405억 프리IPO 클로징 (2026-03-11)
+2026-03-12 08:56:19,372 - INFO - [__main__] - [TheBell] Found: 인력 공백 채우는 앵커에쿼티, 안상균 대표 조직 재건 '안간힘' (2026-03-11)
+2026-03-12 08:56:19,422 - INFO - [__main__] - [TheBell] Found: 애큐온캐피탈 매각 흥행 조짐…저축은행 인수엔 '온도차' (2026-03-11)
+2026-03-12 08:56:19,474 - INFO - [__main__] - [TheBell] Found: KB PE-SBI인베, 하이브 엑시트로 'IRR 46%·MOIC 1.6배' 달성 (2026-03-11)
+2026-03-12 08:56:19,524 - INFO - [__main__] - [TheBell] Found: 퍼스트게이트, AC 넘어 VC로…투자 확장 시동 (2026-03-11)
+2026-03-12 08:56:19,573 - INFO - [__main__] - [TheBell] Found: MYSC, 스케일업 팁스 운영사 따냈다 (2026-03-11)
+2026-03-12 08:56:19,623 - INFO - [__main__] - [TheBell] Found: 텔레픽스, 내달 예심청구…정관 개정·전자증권 전환 (2026-03-11)
+2026-03-12 08:56:19,678 - INFO - [__main__] - [TheBell] Found: ‘파운더 중심 투자’ 황호연 대표, 투자 영토 넓힌다 (2026-03-11)
+2026-03-12 08:56:19,706 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-12 08:56:21,441 - INFO - [__main__] - [TheBell] Found: 티에스인베, 턴어라운드 펀드 청산 돌입 (2026-03-11)
+2026-03-12 08:56:21,492 - INFO - [__main__] - [TheBell] Found: '국민성장펀드' 금융위, K-팹리스 5곳 간담회 추진 (2026-03-11)
+2026-03-12 08:56:21,545 - INFO - [__main__] - [TheBell] Found: 케이링크파트너스, '투자 중심 모델'로 생태계 성장 동행 (2026-03-11)
+2026-03-12 08:56:21,594 - INFO - [__main__] - [TheBell] Found: 에이티넘인베, 고성장펀드 12년만에 청산 마무리 (2026-03-11)
+2026-03-12 08:56:21,932 - INFO - [__main__] - [TheBell] Scanning Page 3: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=3
+2026-03-12 08:56:24,112 - INFO - [__main__] - [TheBell] Page 3 has only older articles. Stopping.
+2026-03-12 08:56:24,112 - INFO - [__main__] - [TheBell] Collection complete. Found 37 articles.
+2026-03-12 08:56:24,112 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-11...
+2026-03-12 08:56:24,112 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-12 08:56:30,478 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-12 08:56:30,478 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-12 08:56:32,976 - INFO - [__main__] - [DealSite+] Found: 한숨 돌린 한앤코…한온시스템 인수금융 2년 연장 (2026-03-12)
+2026-03-12 08:56:32,999 - INFO - [__main__] - [DealSite+] Found: 연 매출 2억 회사로 600억 대여…가족회사의 활약 (2026-03-12)
+2026-03-12 08:56:33,018 - INFO - [__main__] - [DealSite+] Found: 속타는 LG·간보는 GS…여수 NCC 동상이몽 (2026-03-12)
+2026-03-12 08:56:33,035 - INFO - [__main__] - [DealSite+] Found: 산업지원 1600억 따낸 신한…진옥동의 성과 (2026-03-11)
+2026-03-12 08:56:33,052 - INFO - [__main__] - [DealSite+] Found: '권고→요구'로 수위 높인 금융당국…매각 압박 커졌다 (2026-03-11)
+2026-03-12 08:56:33,070 - INFO - [__main__] - [DealSite+] Found: 90일 승부수 던진 李…LG·SK 해외투자유치 수혜 (2026-03-11)
+2026-03-12 08:56:33,089 - INFO - [__main__] - [DealSite+] Found: 코로나로 웨딩홀 씨 말랐다…UCK 유모멘트 재인수 (2026-03-11)
+2026-03-12 08:56:33,209 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-12 08:56:35,674 - INFO - [__main__] - [DealSite+] Found: 한숨 돌린 한앤코…한온시스템 인수금융 2년 연장 (2026-03-12)
+2026-03-12 08:56:35,692 - INFO - [__main__] - [DealSite+] Found: 산업지원 1600억 따낸 신한…진옥동의 성과 (2026-03-11)
+2026-03-12 08:56:35,709 - INFO - [__main__] - [DealSite+] Found: 고시생 李에 첫 월급 털어준 지란지교 (2026-03-11)
+2026-03-12 08:56:35,727 - INFO - [__main__] - [DealSite+] Found: 김동환 친정 후배와 경쟁…하나벤처 양재혁과 승부 (2026-03-11)
+2026-03-12 08:56:35,746 - INFO - [__main__] - [DealSite+] Found: 90일 승부수 던진 李…LG·SK 해외투자유치 수혜 (2026-03-11)
+2026-03-12 08:56:35,763 - INFO - [__main__] - [DealSite+] Found: 코로나로 웨딩홀 씨 말랐다…UCK 유모멘트 재인수 (2026-03-11)
+2026-03-12 08:56:35,781 - INFO - [__main__] - [DealSite+] Found: 리벨리온이 삼성·SK 제쳤다…李 K엔비디아 마중물 (2026-03-11)
+2026-03-12 08:56:35,901 - INFO - [__main__] - [DealSite+] Collection complete. Found 14 articles.
+2026-03-12 08:56:35,901 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-11...
+2026-03-12 08:56:35,901 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-12 08:56:41,707 - WARNING - [__main__] - [investchosun] Alert detected: 승인되지 않은 계정입니다. (기간만료)
+2026-03-12 08:56:41,712 - INFO - [__main__] - [investchosun] Alert accepted
+2026-03-12 08:56:42,715 - WARNING - [__main__] - [investchosun] Still on login-related URL: https://www.investchosun.com/svc/member/invest_login.html. Login might have failed.
+2026-03-12 08:56:42,715 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-03-12 08:56:44,813 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-03-12 08:56:45,852 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-12 08:56:45,854 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-12 08:56:48,434 - INFO - [__main__] - [History] Loaded 869 URLs and 869 titles from history.
+2026-03-12 08:56:48,435 - INFO - [__main__] - [History] Skipping Duplicate (URL): 매물 나온 포도CC, 인수 하이라이트 '성장성·고마진율' [TheBell]
+2026-03-12 08:56:48,435 - INFO - [__main__] - [History] Skipping Duplicate (URL): 티에스인베, 턴어라운드 펀드 청산 돌입 [TheBell]
+2026-03-12 08:56:48,435 - INFO - [__main__] - [History] Skipping Duplicate (URL): '국민성장펀드' 금융위, K-팹리스 5곳 간담회 추진 [TheBell]
+2026-03-12 08:56:48,435 - INFO - [__main__] - [History] Skipping Duplicate (URL): 케이링크파트너스, '투자 중심 모델'로 생태계 성장 동행 [TheBell]
+2026-03-12 08:56:48,435 - INFO - [__main__] - [History] Skipping Duplicate (URL): 에이티넘인베, 고성장펀드 12년만에 청산 마무리 [TheBell]
+2026-03-12 08:56:48,435 - INFO - [__main__] - [History] Skipping Duplicate (URL): 리벨리온이 삼성·SK 제쳤다…李 K엔비디아 마중물 [DealSitePlus]
+2026-03-12 08:56:48,435 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 44
+2026-03-12 08:56:48,435 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-12 08:56:48,435 - INFO - [__main__] - [PDF] [1/44] Processing: 부산EP, '몸값 8500억' 넥스플렉스 인수금융도 못 구해 '발동동' (Hankyung)
+2026-03-12 08:56:55,099 - INFO - [__main__] - [PDF] [2/44] Processing: '20조 잭팟' 현대차 또 일냈다…폭스바겐 제치고 '세계 2위' (Hankyung)
+2026-03-12 08:57:01,661 - INFO - [__main__] - [PDF] [3/44] Processing: HMM, 사외이사 2명 교체…본사 부산 이전 속도낸다 (Hankyung)
+2026-03-12 08:57:08,526 - INFO - [__main__] - [PDF] [4/44] Processing: 김창한 크래프톤 대표…美 AI 자회사 대표 겸임 (Hankyung)
+2026-03-12 08:57:15,357 - INFO - [__main__] - [PDF] [5/44] Processing: 농협중앙회장 선거, 조합원이 직접 뽑는다 (Hankyung)
+2026-03-12 08:57:21,863 - INFO - [__main__] - [PDF] [6/44] Processing: [단독] 국민연금 '공공성' 법제화 추진…복지부 "수익성 훼손 우려" 반대 (Hankyung)
+2026-03-12 08:57:28,427 - INFO - [__main__] - [PDF] [7/44] Processing: MBK "홈플러스 긴급운영자금 1000억원 집행 완료" (Hankyung)
+2026-03-12 08:57:34,858 - INFO - [__main__] - [PDF] [8/44] Processing: '클로브AI' 운영사 브이원씨, 하나금융 손잡고 금융 사각지대 없앤다 (Hankyung)
+2026-03-12 08:57:41,383 - INFO - [__main__] - [PDF] [9/44] Processing: 아크, 200억 원 규모 시리즈A 투자 유치 [VC 브리핑] (Hankyung)
+2026-03-12 08:57:48,079 - INFO - [__main__] - [PDF] [10/44] Processing: 매각 재추진 로얄링스, 인수 하이라이트 '희소성·접근성' (TheBell)
+2026-03-12 08:57:54,601 - INFO - [__main__] - [PDF] [11/44] Processing: 한투PE 컨소, SK이노 CB 리파이낸싱 검토…LP 분배 확대 포석 (TheBell)
+2026-03-12 08:58:01,043 - INFO - [__main__] - [PDF] [12/44] Processing: 어펄마캐피탈, JTC 콜옵션 행사 대금 전액 상환 완료 (TheBell)
+2026-03-12 08:58:07,526 - INFO - [__main__] - [PDF] [13/44] Processing: 청호컴넷 거래 둘러싼 공방, 공시로 따라가보니 (TheBell)
+2026-03-12 08:58:14,179 - INFO - [__main__] - [PDF] [14/44] Processing: 반도그룹, 경주시 주택 공급 시장 '재도전' (TheBell)
+2026-03-12 08:58:20,617 - INFO - [__main__] - [PDF] [15/44] Processing: '시지바이오 인수' IMM PE, 조건부 매매계약 눈길 (TheBell)
+2026-03-12 08:58:27,051 - INFO - [__main__] - [PDF] [16/44] Processing: 태안 38홀 대중제 골프장 로얄링스CC, 재매각 추진 (TheBell)
+2026-03-12 08:58:33,476 - INFO - [__main__] - [PDF] [17/44] Processing: 11배 멀티플 노리는 '만전식품', EBITDA 두 배 성장했다 (TheBell)
+2026-03-12 08:58:40,001 - INFO - [__main__] - [PDF] [18/44] Processing: 이상파트너스-IBK캐피탈, 1200억 블라인드펀드 결성 마무리 (TheBell)
+2026-03-12 08:58:46,458 - INFO - [__main__] - [PDF] [19/44] Processing: '시지바이오 인수' IMM PE, 이유있는 1.1조 베팅 (TheBell)
+2026-03-12 08:58:53,011 - INFO - [__main__] - [PDF] [20/44] Processing: 애큐온캐피탈 매각 흥행 조짐…저축은행 인수엔 '온도차' (TheBell)
+2026-03-12 08:58:59,476 - INFO - [__main__] - [PDF] [21/44] Processing: 아이텍, CB 추가 발행 '넥스플렉스 인수' 힘 싣는다 (TheBell)
+2026-03-12 08:59:05,977 - INFO - [__main__] - [PDF] [22/44] Processing: '박현주의 힘' 미래에셋, 리벨리온 프리IPO 앵커 꿰찼다 (TheBell)
+2026-03-12 08:59:12,813 - INFO - [__main__] - [PDF] [23/44] Processing: '출자비율 80%' 에너지신산업펀드, 운용사 6파전 (TheBell)
+2026-03-12 08:59:19,263 - INFO - [__main__] - [PDF] [24/44] Processing: 3조 밸류 프리IPO 상반기 마무리…글로벌 자금 몰리나 (TheBell)
+2026-03-12 08:59:25,876 - INFO - [__main__] - [PDF] [25/44] Processing: IMM인베, 엑시나 시리즈B 리드한다 (TheBell)
+2026-03-12 08:59:32,345 - INFO - [__main__] - [PDF] [26/44] Processing: 농림부의 과도한 자신감 (TheBell)
+2026-03-12 08:59:38,791 - INFO - [__main__] - [PDF] [27/44] Processing: 니어스랩, 주식·이사회 정비 막바지…예심청구 초읽기 (TheBell)
+2026-03-12 08:59:45,247 - INFO - [__main__] - [PDF] [28/44] Processing: 전환청구 앞둔 나우IB, 엘앤씨바이오 회수 기대 (TheBell)
+2026-03-12 08:59:51,746 - INFO - [__main__] - [PDF] [29/44] Processing: 에이투지오토노머스, 405억 프리IPO 클로징 (TheBell)
+2026-03-12 08:59:58,165 - INFO - [__main__] - [PDF] [30/44] Processing: 인력 공백 채우는 앵커에쿼티, 안상균 대표 조직 재건 '안간힘' (TheBell)
+2026-03-12 09:00:04,676 - INFO - [__main__] - [PDF] [31/44] Processing: KB PE-SBI인베, 하이브 엑시트로 'IRR 46%·MOIC 1.6배' 달성 (TheBell)
+2026-03-12 09:00:11,144 - INFO - [__main__] - [PDF] [32/44] Processing: 퍼스트게이트, AC 넘어 VC로…투자 확장 시동 (TheBell)
+2026-03-12 09:00:17,857 - INFO - [__main__] - [PDF] [33/44] Processing: MYSC, 스케일업 팁스 운영사 따냈다 (TheBell)
+2026-03-12 09:00:24,308 - INFO - [__main__] - [PDF] [34/44] Processing: 텔레픽스, 내달 예심청구…정관 개정·전자증권 전환 (TheBell)
+2026-03-12 09:00:30,782 - INFO - [__main__] - [PDF] [35/44] Processing: ‘파운더 중심 투자’ 황호연 대표, 투자 영토 넓힌다 (TheBell)
+2026-03-12 09:00:37,435 - INFO - [__main__] - [PDF] [36/44] Processing: 한숨 돌린 한앤코…한온시스템 인수금융 2년 연장 (DealSitePlus)
+2026-03-12 09:00:44,626 - INFO - [__main__] - [PDF] [37/44] Processing: 연 매출 2억 회사로 600억 대여…가족회사의 활약 (DealSitePlus)
+2026-03-12 09:00:51,436 - INFO - [__main__] - [PDF] [38/44] Processing: 속타는 LG·간보는 GS…여수 NCC 동상이몽 (DealSitePlus)
+2026-03-12 09:00:58,211 - INFO - [__main__] - [PDF] [39/44] Processing: 산업지원 1600억 따낸 신한…진옥동의 성과 (DealSitePlus)
+2026-03-12 09:01:05,042 - INFO - [__main__] - [PDF] [40/44] Processing: '권고→요구'로 수위 높인 금융당국…매각 압박 커졌다 (DealSitePlus)
+2026-03-12 09:01:11,842 - INFO - [__main__] - [PDF] [41/44] Processing: 90일 승부수 던진 李…LG·SK 해외투자유치 수혜 (DealSitePlus)
+2026-03-12 09:01:18,662 - INFO - [__main__] - [PDF] [42/44] Processing: 코로나로 웨딩홀 씨 말랐다…UCK 유모멘트 재인수 (DealSitePlus)
+2026-03-12 09:01:25,443 - INFO - [__main__] - [PDF] [43/44] Processing: 고시생 李에 첫 월급 털어준 지란지교 (DealSitePlus)
+2026-03-12 09:01:32,292 - INFO - [__main__] - [PDF] [44/44] Processing: 김동환 친정 후배와 경쟁…하나벤처 양재혁과 승부 (DealSitePlus)
+2026-03-12 09:01:39,147 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-12 09:01:41,382 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-12 09:01:46,572 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1fnPf4qmRbRPmqOBa7Kf0L8bUZmJvkIp3/view?usp=drivesdk
+2026-03-12 09:01:52,441 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-12 09:01:57,487 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/14WuVlvU0FkcIboHxOeuL-gchCn1iyWDC/view?usp=drivesdk
+2026-03-12 09:01:59,551 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-12 09:02:04,682 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1tO2aT_j7TmwJ7uNNAzjJ5bRcEVHllpnD/view?usp=drivesdk
+2026-03-12 09:02:07,062 - INFO - [__main__] - [History] Updated sheet with 44 new articles.
+2026-03-12 09:02:08,289 - INFO - [__main__] - Old history cleanup complete: 17 rows deleted.
+2026-03-12 09:02:12,312 - INFO - [__main__] - 
+============================================================
+2026-03-12 09:02:12,312 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-12 09:02:12,312 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-12  9:02:14.75 
+================================================== 
+ 

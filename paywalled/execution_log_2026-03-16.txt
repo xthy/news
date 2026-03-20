@@ -1,0 +1,96 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-16  8:55:50.51 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-16 08:55:51,511 - INFO - [__main__] - Target Date Range: 2026-03-15 ~ 2026-03-16
+2026-03-16 08:55:51,512 - INFO - [__main__] - ============================================================
+2026-03-16 08:55:51,512 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-16 08:55:51,512 - INFO - [__main__] - ============================================================
+2026-03-16 08:55:51,512 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-16 08:55:51,512 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-16 08:55:52,374 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-16 08:55:52,400 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-16 08:55:52,425 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-16 08:55:52,484 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-03-16 08:55:52,486 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-16 08:55:52,486 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-16 08:55:52,530 - INFO - [WDM] - Driver downloading response is 200
+2026-03-16 08:55:52,682 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-16 08:55:52,792 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-03-16 08:55:54,516 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-16 08:55:54,516 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-16 08:55:54,516 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-16 08:55:54,516 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-15...
+2026-03-16 08:55:54,516 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-16 08:56:00,518 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-16 08:56:00,518 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-16 08:56:02,921 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-16 08:56:05,087 - INFO - [__main__] - [Hankyung] Found: 씨씨지인베, '빅사이즈 여성복' 1위 공구우먼 경영권 인수 (20260315)
+2026-03-16 08:56:05,253 - INFO - [__main__] - [Hankyung] Collection complete. Found 1 articles.
+2026-03-16 08:56:05,254 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-15 ~ 2026-03-16)...
+2026-03-16 08:56:05,254 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-16 08:56:11,256 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-16 08:56:11,256 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-16 08:56:11,256 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-16 08:56:13,005 - INFO - [__main__] - [TheBell] Found: MBK파트너스 매각 추진 넥스플렉스 향방 관심 (2026-03-16)
+2026-03-16 08:56:13,095 - INFO - [__main__] - [TheBell] Found: 고려아연 '왕좌의 게임' (2026-03-16)
+2026-03-16 08:56:13,152 - INFO - [__main__] - [TheBell] Found: 대우건설·IS동서, 배터리 리사이클링 투자금 '상각' (2026-03-16)
+2026-03-16 08:56:13,576 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-16 08:56:15,668 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-16 08:56:15,668 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-16 08:56:15,668 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-16 08:56:17,389 - INFO - [__main__] - [TheBell] Found: 김남규 라데팡스 대표, 혼란 속 한미사이언스 이사회 합류 (2026-03-16)
+2026-03-16 08:56:17,443 - INFO - [__main__] - [TheBell] Found: MBK파트너스 매각 추진 넥스플렉스 향방 관심 (2026-03-16)
+2026-03-16 08:56:17,496 - INFO - [__main__] - [TheBell] Found: 고려아연 '왕좌의 게임' (2026-03-16)
+2026-03-16 08:56:17,548 - INFO - [__main__] - [TheBell] Found: 서울시 기후테크 펀드·농금원 수산계정 출자 본격화 (2026-03-16)
+2026-03-16 08:56:17,908 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-16 08:56:20,002 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-16 08:56:20,002 - INFO - [__main__] - [TheBell] Collection complete. Found 7 articles.
+2026-03-16 08:56:20,002 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-15...
+2026-03-16 08:56:20,002 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-16 08:56:25,897 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-16 08:56:25,897 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-16 08:56:28,412 - INFO - [__main__] - [DealSite+] Found: 농협 OB들 영입해 '농피아' 네트워크로 쾌속 성장 (2026-03-16)
+2026-03-16 08:56:28,431 - INFO - [__main__] - [DealSite+] Found: 한국알콜산업 울산 사택부지 매물로…신영 후계자 '눈독' (2026-03-16)
+2026-03-16 08:56:28,596 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-16 08:56:31,057 - INFO - [__main__] - [DealSite+] Found: 농협 OB들 영입해 '농피아' 네트워크로 쾌속 성장 (2026-03-16)
+2026-03-16 08:56:31,252 - INFO - [__main__] - [DealSite+] Collection complete. Found 3 articles.
+2026-03-16 08:56:31,252 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-15...
+2026-03-16 08:56:31,252 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-16 08:56:37,039 - WARNING - [__main__] - [investchosun] Alert detected: 승인되지 않은 계정입니다. (기간만료)
+2026-03-16 08:56:37,041 - INFO - [__main__] - [investchosun] Alert accepted
+2026-03-16 08:56:38,046 - WARNING - [__main__] - [investchosun] Still on login-related URL: https://www.investchosun.com/svc/member/invest_login.html. Login might have failed.
+2026-03-16 08:56:38,046 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-03-16 08:56:40,144 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-03-16 08:56:40,619 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-16 08:56:40,620 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-16 08:56:42,131 - INFO - [__main__] - [History] Loaded 878 URLs and 878 titles from history.
+2026-03-16 08:56:42,131 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 8
+2026-03-16 08:56:42,131 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-16 08:56:42,131 - INFO - [__main__] - [PDF] [1/8] Processing: 씨씨지인베, '빅사이즈 여성복' 1위 공구우먼 경영권 인수 (Hankyung)
+2026-03-16 08:56:48,699 - INFO - [__main__] - [PDF] [2/8] Processing: MBK파트너스 매각 추진 넥스플렉스 향방 관심 (TheBell)
+2026-03-16 08:56:55,233 - INFO - [__main__] - [PDF] [3/8] Processing: 고려아연 '왕좌의 게임' (TheBell)
+2026-03-16 08:57:01,708 - INFO - [__main__] - [PDF] [4/8] Processing: 대우건설·IS동서, 배터리 리사이클링 투자금 '상각' (TheBell)
+2026-03-16 08:57:08,172 - INFO - [__main__] - [PDF] [5/8] Processing: 김남규 라데팡스 대표, 혼란 속 한미사이언스 이사회 합류 (TheBell)
+2026-03-16 08:57:14,663 - INFO - [__main__] - [PDF] [6/8] Processing: 서울시 기후테크 펀드·농금원 수산계정 출자 본격화 (TheBell)
+2026-03-16 08:57:21,123 - INFO - [__main__] - [PDF] [7/8] Processing: 농협 OB들 영입해 '농피아' 네트워크로 쾌속 성장 (DealSitePlus)
+2026-03-16 08:57:28,065 - INFO - [__main__] - [PDF] [8/8] Processing: 한국알콜산업 울산 사택부지 매물로…신영 후계자 '눈독' (DealSitePlus)
+2026-03-16 08:57:34,792 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-16 08:57:34,997 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-16 08:57:37,970 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1ORBMWzMlfcXQl7pVTHatb_nx48jG9LiN/view?usp=drivesdk
+2026-03-16 08:57:39,014 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-16 08:57:42,901 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1qVz61G6kbZreZQF9uQsv5WMrUyK8QV0S/view?usp=drivesdk
+2026-03-16 08:57:43,330 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-16 08:57:46,010 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1-fEwbNjeWpxu2msqqkyCih7qpE_SAKIF/view?usp=drivesdk
+2026-03-16 08:57:46,810 - INFO - [__main__] - [History] Updated sheet with 8 new articles.
+2026-03-16 08:57:47,708 - INFO - [__main__] - Old history cleanup complete: 103 rows deleted.
+2026-03-16 08:57:50,812 - INFO - [__main__] - 
+============================================================
+2026-03-16 08:57:50,812 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-16 08:57:50,812 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-16  8:57:53.12 
+================================================== 
+ 

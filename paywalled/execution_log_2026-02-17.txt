@@ -1,0 +1,76 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-02-17  8:55:50.86 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-02-17 08:55:52,023 - INFO - [__main__] - Target Date Range: 2026-02-16 ~ 2026-02-17
+2026-02-17 08:55:52,024 - INFO - [__main__] - ============================================================
+2026-02-17 08:55:52,024 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-02-17 08:55:52,024 - INFO - [__main__] - ============================================================
+2026-02-17 08:55:52,024 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-02-17 08:55:52,025 - INFO - [WDM] - ====== WebDriver manager ======
+2026-02-17 08:55:52,993 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-17 08:55:53,012 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-17 08:55:53,021 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-17 08:55:53,056 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-02-17 08:55:53,058 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-17 08:55:53,058 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-17 08:55:53,101 - INFO - [WDM] - Driver downloading response is 200
+2026-02-17 08:55:53,184 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-17 08:55:53,291 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-02-17 08:55:54,880 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-02-17 08:55:54,880 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-02-17 08:55:54,880 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-02-17 08:55:54,880 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-02-16...
+2026-02-17 08:55:54,880 - INFO - [__main__] - [hankyung] Starting login process...
+2026-02-17 08:56:01,368 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-02-17 08:56:01,368 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-02-17 08:56:03,770 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-02-17 08:56:06,109 - INFO - [__main__] - [Hankyung] Collection complete. Found 0 articles.
+2026-02-17 08:56:06,109 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-02-16 ~ 2026-02-17)...
+2026-02-17 08:56:06,109 - INFO - [__main__] - [thebell] Starting login process...
+2026-02-17 08:56:12,139 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-02-17 08:56:12,139 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-02-17 08:56:12,139 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-02-17 08:56:14,284 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-02-17 08:56:16,337 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-17 08:56:16,337 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-02-17 08:56:16,337 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-02-17 08:56:18,426 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-02-17 08:56:20,608 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-17 08:56:20,609 - INFO - [__main__] - [TheBell] Collection complete. Found 0 articles.
+2026-02-17 08:56:20,609 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-02-16...
+2026-02-17 08:56:20,609 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-02-17 08:56:26,512 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-02-17 08:56:26,512 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-02-17 08:56:29,150 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-02-17 08:56:31,592 - INFO - [__main__] - [DealSite+] Found: 백인수 12년 만에 살려낸 마이리얼트립…IRR 6% (2026-02-17)
+2026-02-17 08:56:31,610 - INFO - [__main__] - [DealSite+] Found: 박현주 후광이 독됐다…미래에셋 1차서류 탈락 (2026-02-16)
+2026-02-17 08:56:31,627 - INFO - [__main__] - [DealSite+] Found: 방산 계열사 업은 한화운용…뉴딜펀드 노하우 동원 (2026-02-16)
+2026-02-17 08:56:31,784 - INFO - [__main__] - [DealSite+] Collection complete. Found 3 articles.
+2026-02-17 08:56:31,784 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-02-16...
+2026-02-17 08:56:31,784 - INFO - [__main__] - [investchosun] Starting login process...
+2026-02-17 08:56:37,552 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-02-17 08:56:37,553 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-02-17 08:56:40,072 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-02-17 08:56:40,657 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-17 08:56:40,659 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-17 08:56:42,029 - INFO - [__main__] - [History] Loaded 797 URLs and 797 titles from history.
+2026-02-17 08:56:42,029 - INFO - [__main__] - [History] Skipping Duplicate (URL): 박현주 후광이 독됐다…미래에셋 1차서류 탈락 [DealSitePlus]
+2026-02-17 08:56:42,030 - INFO - [__main__] - [History] Skipping Duplicate (URL): 방산 계열사 업은 한화운용…뉴딜펀드 노하우 동원 [DealSitePlus]
+2026-02-17 08:56:42,030 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 1
+2026-02-17 08:56:42,030 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-02-17 08:56:42,030 - INFO - [__main__] - [PDF] [1/1] Processing: 백인수 12년 만에 살려낸 마이리얼트립…IRR 6% (DealSitePlus)
+2026-02-17 08:56:48,982 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-02-17 08:56:49,195 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-17 08:56:51,746 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1m-QeGtbSMmtcKPJaPMfoPSNpZNW_TF_1/view?usp=drivesdk
+2026-02-17 08:56:52,382 - INFO - [__main__] - [History] Updated sheet with 1 new articles.
+2026-02-17 08:56:55,215 - INFO - [__main__] - 
+============================================================
+2026-02-17 08:56:55,215 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-02-17 08:56:55,215 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-02-17  8:56:57.50 
+================================================== 
+ 

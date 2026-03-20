@@ -1,0 +1,169 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-14  8:55:50.62 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-14 08:55:52,014 - INFO - [__main__] - Target Date Range: 2026-03-13 ~ 2026-03-14
+2026-03-14 08:55:52,015 - INFO - [__main__] - ============================================================
+2026-03-14 08:55:52,015 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-14 08:55:52,015 - INFO - [__main__] - ============================================================
+2026-03-14 08:55:52,016 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-14 08:55:52,016 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-14 08:55:53,017 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-14 08:55:53,045 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-14 08:55:53,055 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-14 08:55:53,093 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-03-14 08:55:53,095 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-14 08:55:53,095 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-14 08:55:53,140 - INFO - [WDM] - Driver downloading response is 200
+2026-03-14 08:55:53,226 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-14 08:55:53,331 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-03-14 08:55:55,454 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-14 08:55:55,455 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-14 08:55:55,455 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-14 08:55:55,455 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-13...
+2026-03-14 08:55:55,455 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-14 08:56:01,456 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-14 08:56:01,456 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-14 08:56:03,654 - INFO - [__main__] - [Hankyung] Found: "30조 코스닥 활성화 펀드 조성 추진" (20260313)
+2026-03-14 08:56:03,663 - INFO - [__main__] - [Hankyung] Found: 팰리서캐피탈 "LG화학 주주제안 부결되더라도 긍정적 변화 기대" (20260313)
+2026-03-14 08:56:03,672 - INFO - [__main__] - [Hankyung] Found: 삼성그룹도 노란봉투법 휘말렸다…삼성노조연대 "원청 나와라" (20260313)
+2026-03-14 08:56:03,680 - INFO - [__main__] - [Hankyung] Found: 국민연금, 알리안츠GI와 글로벌 투자 협력 강화 (20260313)
+2026-03-14 08:56:03,688 - INFO - [__main__] - [Hankyung] Found: 미래에셋·삼성·KB운용, ‘국민성장펀드’ 공모펀드 운용사로 선정 (20260313)
+2026-03-14 08:56:03,746 - INFO - [__main__] - [Hankyung] Found: 차파트너스, 삼영전자 주주제안…"자사주 300억 취득·감사 선임" (20260313)
+2026-03-14 08:56:03,759 - INFO - [__main__] - [Hankyung] Found: 삼성 계열사까지 번졌다…"성과급 반영해 퇴직금 올려달라" (20260313)
+2026-03-14 08:56:03,822 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-14 08:56:06,070 - INFO - [__main__] - [Hankyung] Found: JW홀딩스, 바이오전문투자사 품었다 (20260313)
+2026-03-14 08:56:06,097 - INFO - [__main__] - [Hankyung] Found: HJ중공업, HD현대 군산조선소 인수 (20260313)
+2026-03-14 08:56:06,107 - INFO - [__main__] - [Hankyung] Found: JW홀딩스, 바이오 전문 VC 인수…오픈 이노베이션 투자 확대 (20260313)
+2026-03-14 08:56:06,115 - INFO - [__main__] - [Hankyung] Found: [속보] HD현대중공업, 군산조선소 HJ중공업 측에 매각한다 (20260313)
+2026-03-14 08:56:06,124 - INFO - [__main__] - [Hankyung] Found: 매출 350억 규모 특수목적차량 제조사 M&A 매물로 (20260313)
+2026-03-14 08:56:06,243 - INFO - [__main__] - [Hankyung] Collection complete. Found 12 articles.
+2026-03-14 08:56:06,244 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-13 ~ 2026-03-14)...
+2026-03-14 08:56:06,244 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-14 08:56:12,338 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-14 08:56:12,338 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-14 08:56:12,338 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-14 08:56:14,465 - INFO - [__main__] - [TheBell] Found: '코스피 상장사' 엑시큐어하이트론, 경영권 매물로 나왔다 (2026-03-13)
+2026-03-14 08:56:14,514 - INFO - [__main__] - [TheBell] Found: '1조 주고 샀는데' 한앤코, 대한항공씨앤디 회수가 낮은 이유는 (2026-03-13)
+2026-03-14 08:56:14,566 - INFO - [__main__] - [TheBell] Found: 대체투자 핵심 LP인데 지방 이전?…공제회 노조가 뿔난 이유 (2026-03-13)
+2026-03-14 08:56:14,615 - INFO - [__main__] - [TheBell] Found: 밸류 눈높이 격차 여전, 동아지질 매각 1년째 표류 (2026-03-13)
+2026-03-14 08:56:14,676 - INFO - [__main__] - [TheBell] Found: 어펄마캐피탈, 7호펀드 결성 시동…국민성장펀드 '정조준' (2026-03-13)
+2026-03-14 08:56:14,726 - INFO - [__main__] - [TheBell] Found: 한투파PE의 첫 빅딜 도전, 엠앤씨솔루션 펀딩 '시험대' (2026-03-13)
+2026-03-14 08:56:14,774 - INFO - [__main__] - [TheBell] Found: 한앤코, '남양유업 사옥' 비싼 매각가 고집 이유는 (2026-03-13)
+2026-03-14 08:56:14,824 - INFO - [__main__] - [TheBell] Found: 한화리츠, 우협 선정 이마트타워 운용전략은 (2026-03-13)
+2026-03-14 08:56:15,080 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-14 08:56:17,180 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-14 08:56:17,180 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-14 08:56:17,180 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-14 08:56:18,913 - INFO - [__main__] - [TheBell] Found: 인터베스트, IPO 앞둔 텔레픽스에 150억 베팅 (2026-03-13)
+2026-03-14 08:56:18,964 - INFO - [__main__] - [TheBell] Found: 주간 VC 투자 브리핑(3.9~13) (2026-03-13)
+2026-03-14 08:56:19,017 - INFO - [__main__] - [TheBell] Found: 국민참여펀드 컨소시엄에 미래·삼성·KB…대형사 선전 (2026-03-13)
+2026-03-14 08:56:19,067 - INFO - [__main__] - [TheBell] Found: '태양광 투자' 에이치에너지-스틱, 금융기관서 500억 조달 성공 (2026-03-13)
+2026-03-14 08:56:19,123 - INFO - [__main__] - [TheBell] Found: ‘흐름을 읽는 베테랑’ 김준욱 부사장 "혁신에 집중" (2026-03-13)
+2026-03-14 08:56:19,172 - INFO - [__main__] - [TheBell] Found: '코스피 상장사' 엑시큐어하이트론, 경영권 매물로 나왔다 (2026-03-13)
+2026-03-14 08:56:19,235 - INFO - [__main__] - [TheBell] Found: 차바이오 VC 솔리더스인베, JW중외그룹에 안긴다 (2026-03-13)
+2026-03-14 08:56:19,288 - INFO - [__main__] - [TheBell] Found: 1주년 맞은 김학균 VC협회장 "코스닥 활성화에 집중" (2026-03-13)
+2026-03-14 08:56:19,339 - INFO - [__main__] - [TheBell] Found: 이녹스리튬, 1000억 규모 시리즈C 라운드 돌입 (2026-03-13)
+2026-03-14 08:56:19,390 - INFO - [__main__] - [TheBell] Found: '1조 주고 샀는데' 한앤코, 대한항공씨앤디 회수가 낮은 이유는 (2026-03-13)
+2026-03-14 08:56:19,443 - INFO - [__main__] - [TheBell] Found: 신협 투자금융본부 조직개편…허영규 본부장 체제 (2026-03-13)
+2026-03-14 08:56:19,494 - INFO - [__main__] - [TheBell] Found: 'STO 논란' 샌드박스 모순으로 비화…제도 문제 지적 (2026-03-13)
+2026-03-14 08:56:19,548 - INFO - [__main__] - [TheBell] Found: 배상승 뉴패러다임인베 대표 “스케일업 전문 AC 도약” (2026-03-13)
+2026-03-14 08:56:19,600 - INFO - [__main__] - [TheBell] Found: 어펄마캐피탈, 7호펀드 결성 시동…국민성장펀드 '정조준' (2026-03-13)
+2026-03-14 08:56:19,649 - INFO - [__main__] - [TheBell] Found: 스톤브릿지벤처, 리브스메드 218억 추가 회수 (2026-03-13)
+2026-03-14 08:56:19,698 - INFO - [__main__] - [TheBell] Found: '통합법인 출범' 대성파인텍, 기업구조 정비 본격화 (2026-03-13)
+2026-03-14 08:56:19,751 - INFO - [__main__] - [TheBell] Found: 한앤코, '남양유업 사옥' 비싼 매각가 고집 이유는 (2026-03-13)
+2026-03-14 08:56:19,807 - INFO - [__main__] - [TheBell] Found: 하창우 CFO “글로벌 NPU 리더 목표” (2026-03-13)
+2026-03-14 08:56:19,862 - INFO - [__main__] - [TheBell] Found: 상폐 리스크 털어낸 파두, 시가총액 3조 돌파 (2026-03-13)
+2026-03-14 08:56:19,907 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-14 08:56:21,947 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-14 08:56:21,948 - INFO - [__main__] - [TheBell] Collection complete. Found 27 articles.
+2026-03-14 08:56:21,948 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-13...
+2026-03-14 08:56:21,948 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-14 08:56:27,925 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-14 08:56:27,925 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-14 08:56:30,417 - INFO - [__main__] - [DealSite+] Found: 넥스플렉스 노리는 부산EP…금융권 외면에 딜 무산 위기 (2026-03-13)
+2026-03-14 08:56:30,434 - INFO - [__main__] - [DealSite+] Found: 2000억이면 팔리지만…채무변제에 4000억 들어 (2026-03-13)
+2026-03-14 08:56:30,451 - INFO - [__main__] - [DealSite+] Found: 매각 다시 안갯속…'자본 부담·감독 리스크'에 거래 불확실성↑ (2026-03-13)
+2026-03-14 08:56:30,606 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-14 08:56:33,060 - INFO - [__main__] - [DealSite+] Found: 지자체 1호 인천벤처투자 대표에…내부자 김상철 (2026-03-13)
+2026-03-14 08:56:33,078 - INFO - [__main__] - [DealSite+] Found: 중기부 대관력 김주식…'법무법인 현'업고 VC 출격 (2026-03-13)
+2026-03-14 08:56:33,095 - INFO - [__main__] - [DealSite+] Found: 12년 묵은 해외펀드 결실…아주IB 3.7배 회수 (2026-03-13)
+2026-03-14 08:56:33,114 - INFO - [__main__] - [DealSite+] Found: "벤처투자 40조 소화 못해…코스닥 체질개선 시급" (2026-03-13)
+2026-03-14 08:56:33,131 - INFO - [__main__] - [DealSite+] Found: 넥스플렉스 노리는 부산EP…금융권 외면에 딜 무산 위기 (2026-03-13)
+2026-03-14 08:56:33,148 - INFO - [__main__] - [DealSite+] Found: 2000억이면 팔리지만…채무변제에 4000억 들어 (2026-03-13)
+2026-03-14 08:56:33,165 - INFO - [__main__] - [DealSite+] Found: 여성기업으로 재도전…JYP파트너스 마수걸이 총력 (2026-03-13)
+2026-03-14 08:56:33,291 - INFO - [__main__] - [DealSite+] Collection complete. Found 10 articles.
+2026-03-14 08:56:33,291 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-13...
+2026-03-14 08:56:33,291 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-14 08:56:39,076 - WARNING - [__main__] - [investchosun] Alert detected: 승인되지 않은 계정입니다. (기간만료)
+2026-03-14 08:56:39,078 - INFO - [__main__] - [investchosun] Alert accepted
+2026-03-14 08:56:40,083 - WARNING - [__main__] - [investchosun] Still on login-related URL: https://www.investchosun.com/svc/member/invest_login.html. Login might have failed.
+2026-03-14 08:56:40,083 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-03-14 08:56:42,181 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-03-14 08:56:42,802 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-14 08:56:42,805 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-14 08:56:44,441 - INFO - [__main__] - [History] Loaded 887 URLs and 887 titles from history.
+2026-03-14 08:56:44,441 - INFO - [__main__] - [History] Skipping Duplicate (URL): 한투파PE의 첫 빅딜 도전, 엠앤씨솔루션 펀딩 '시험대' [TheBell]
+2026-03-14 08:56:44,441 - INFO - [__main__] - [History] Skipping Duplicate (URL): 한앤코, '남양유업 사옥' 비싼 매각가 고집 이유는 [TheBell]
+2026-03-14 08:56:44,441 - INFO - [__main__] - [History] Skipping Duplicate (URL): 한화리츠, 우협 선정 이마트타워 운용전략은 [TheBell]
+2026-03-14 08:56:44,441 - INFO - [__main__] - [History] Skipping Duplicate (URL): 스톤브릿지벤처, 리브스메드 218억 추가 회수 [TheBell]
+2026-03-14 08:56:44,441 - INFO - [__main__] - [History] Skipping Duplicate (URL): '통합법인 출범' 대성파인텍, 기업구조 정비 본격화 [TheBell]
+2026-03-14 08:56:44,441 - INFO - [__main__] - [History] Skipping Duplicate (URL): 하창우 CFO “글로벌 NPU 리더 목표” [TheBell]
+2026-03-14 08:56:44,442 - INFO - [__main__] - [History] Skipping Duplicate (URL): 상폐 리스크 털어낸 파두, 시가총액 3조 돌파 [TheBell]
+2026-03-14 08:56:44,442 - INFO - [__main__] - [History] Skipping Duplicate (URL): 매각 다시 안갯속…'자본 부담·감독 리스크'에 거래 불확실성↑ [DealSitePlus]
+2026-03-14 08:56:44,442 - INFO - [__main__] - [History] Skipping Duplicate (URL): 여성기업으로 재도전…JYP파트너스 마수걸이 총력 [DealSitePlus]
+2026-03-14 08:56:44,442 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 34
+2026-03-14 08:56:44,442 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-14 08:56:44,442 - INFO - [__main__] - [PDF] [1/34] Processing: "30조 코스닥 활성화 펀드 조성 추진" (Hankyung)
+2026-03-14 08:56:51,061 - INFO - [__main__] - [PDF] [2/34] Processing: 팰리서캐피탈 "LG화학 주주제안 부결되더라도 긍정적 변화 기대" (Hankyung)
+2026-03-14 08:56:57,751 - INFO - [__main__] - [PDF] [3/34] Processing: 삼성그룹도 노란봉투법 휘말렸다…삼성노조연대 "원청 나와라" (Hankyung)
+2026-03-14 08:57:04,313 - INFO - [__main__] - [PDF] [4/34] Processing: 국민연금, 알리안츠GI와 글로벌 투자 협력 강화 (Hankyung)
+2026-03-14 08:57:10,808 - INFO - [__main__] - [PDF] [5/34] Processing: 미래에셋·삼성·KB운용, ‘국민성장펀드’ 공모펀드 운용사로 선정 (Hankyung)
+2026-03-14 08:57:17,243 - INFO - [__main__] - [PDF] [6/34] Processing: 차파트너스, 삼영전자 주주제안…"자사주 300억 취득·감사 선임" (Hankyung)
+2026-03-14 08:57:23,738 - INFO - [__main__] - [PDF] [7/34] Processing: 삼성 계열사까지 번졌다…"성과급 반영해 퇴직금 올려달라" (Hankyung)
+2026-03-14 08:57:30,235 - INFO - [__main__] - [PDF] [8/34] Processing: JW홀딩스, 바이오전문투자사 품었다 (Hankyung)
+2026-03-14 08:57:36,695 - INFO - [__main__] - [PDF] [9/34] Processing: HJ중공업, HD현대 군산조선소 인수 (Hankyung)
+2026-03-14 08:57:43,113 - INFO - [__main__] - [PDF] [10/34] Processing: JW홀딩스, 바이오 전문 VC 인수…오픈 이노베이션 투자 확대 (Hankyung)
+2026-03-14 08:57:49,584 - INFO - [__main__] - [PDF] [11/34] Processing: [속보] HD현대중공업, 군산조선소 HJ중공업 측에 매각한다 (Hankyung)
+2026-03-14 08:57:56,074 - INFO - [__main__] - [PDF] [12/34] Processing: 매출 350억 규모 특수목적차량 제조사 M&A 매물로 (Hankyung)
+2026-03-14 08:58:02,590 - INFO - [__main__] - [PDF] [13/34] Processing: '코스피 상장사' 엑시큐어하이트론, 경영권 매물로 나왔다 (TheBell)
+2026-03-14 08:58:09,128 - INFO - [__main__] - [PDF] [14/34] Processing: '1조 주고 샀는데' 한앤코, 대한항공씨앤디 회수가 낮은 이유는 (TheBell)
+2026-03-14 08:58:15,625 - INFO - [__main__] - [PDF] [15/34] Processing: 대체투자 핵심 LP인데 지방 이전?…공제회 노조가 뿔난 이유 (TheBell)
+2026-03-14 08:58:22,178 - INFO - [__main__] - [PDF] [16/34] Processing: 밸류 눈높이 격차 여전, 동아지질 매각 1년째 표류 (TheBell)
+2026-03-14 08:58:28,709 - INFO - [__main__] - [PDF] [17/34] Processing: 어펄마캐피탈, 7호펀드 결성 시동…국민성장펀드 '정조준' (TheBell)
+2026-03-14 08:58:35,458 - INFO - [__main__] - [PDF] [18/34] Processing: 인터베스트, IPO 앞둔 텔레픽스에 150억 베팅 (TheBell)
+2026-03-14 08:58:41,946 - INFO - [__main__] - [PDF] [19/34] Processing: 주간 VC 투자 브리핑(3.9~13) (TheBell)
+2026-03-14 08:58:48,436 - INFO - [__main__] - [PDF] [20/34] Processing: 국민참여펀드 컨소시엄에 미래·삼성·KB…대형사 선전 (TheBell)
+2026-03-14 08:58:54,856 - INFO - [__main__] - [PDF] [21/34] Processing: '태양광 투자' 에이치에너지-스틱, 금융기관서 500억 조달 성공 (TheBell)
+2026-03-14 08:59:01,326 - INFO - [__main__] - [PDF] [22/34] Processing: ‘흐름을 읽는 베테랑’ 김준욱 부사장 "혁신에 집중" (TheBell)
+2026-03-14 08:59:08,012 - INFO - [__main__] - [PDF] [23/34] Processing: 차바이오 VC 솔리더스인베, JW중외그룹에 안긴다 (TheBell)
+2026-03-14 08:59:14,478 - INFO - [__main__] - [PDF] [24/34] Processing: 1주년 맞은 김학균 VC협회장 "코스닥 활성화에 집중" (TheBell)
+2026-03-14 08:59:20,940 - INFO - [__main__] - [PDF] [25/34] Processing: 이녹스리튬, 1000억 규모 시리즈C 라운드 돌입 (TheBell)
+2026-03-14 08:59:27,444 - INFO - [__main__] - [PDF] [26/34] Processing: 신협 투자금융본부 조직개편…허영규 본부장 체제 (TheBell)
+2026-03-14 08:59:33,953 - INFO - [__main__] - [PDF] [27/34] Processing: 'STO 논란' 샌드박스 모순으로 비화…제도 문제 지적 (TheBell)
+2026-03-14 08:59:40,520 - INFO - [__main__] - [PDF] [28/34] Processing: 배상승 뉴패러다임인베 대표 “스케일업 전문 AC 도약” (TheBell)
+2026-03-14 08:59:47,099 - INFO - [__main__] - [PDF] [29/34] Processing: 넥스플렉스 노리는 부산EP…금융권 외면에 딜 무산 위기 (DealSitePlus)
+2026-03-14 08:59:54,010 - INFO - [__main__] - [PDF] [30/34] Processing: 2000억이면 팔리지만…채무변제에 4000억 들어 (DealSitePlus)
+2026-03-14 09:00:00,847 - INFO - [__main__] - [PDF] [31/34] Processing: 지자체 1호 인천벤처투자 대표에…내부자 김상철 (DealSitePlus)
+2026-03-14 09:00:07,673 - INFO - [__main__] - [PDF] [32/34] Processing: 중기부 대관력 김주식…'법무법인 현'업고 VC 출격 (DealSitePlus)
+2026-03-14 09:00:14,501 - INFO - [__main__] - [PDF] [33/34] Processing: 12년 묵은 해외펀드 결실…아주IB 3.7배 회수 (DealSitePlus)
+2026-03-14 09:00:21,319 - INFO - [__main__] - [PDF] [34/34] Processing: "벤처투자 40조 소화 못해…코스닥 체질개선 시급" (DealSitePlus)
+2026-03-14 09:00:28,110 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-14 09:00:30,330 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-14 09:00:33,418 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1wbbHI-1STgtz6sHeATB2mLjxlrDhj7RS/view?usp=drivesdk
+2026-03-14 09:00:37,086 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-14 09:00:40,121 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1Ed1AF2LlvHjfyOalfcGQm-9P9kOqBJrp/view?usp=drivesdk
+2026-03-14 09:00:41,425 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-14 09:00:44,631 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1j_bq9icLPZWsh32YqTzfFBehJd-MeNUf/view?usp=drivesdk
+2026-03-14 09:00:45,608 - INFO - [__main__] - [History] Updated sheet with 34 new articles.
+2026-03-14 09:00:46,545 - INFO - [__main__] - Old history cleanup complete: 43 rows deleted.
+2026-03-14 09:00:49,524 - INFO - [__main__] - 
+============================================================
+2026-03-14 09:00:49,524 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-14 09:00:49,524 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-14  9:00:51.87 
+================================================== 
+ 

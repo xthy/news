@@ -1,0 +1,200 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-02-24  8:55:51.03 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-02-24 08:55:52,057 - INFO - [__main__] - Target Date Range: 2026-02-23 ~ 2026-02-24
+2026-02-24 08:55:52,058 - INFO - [__main__] - ============================================================
+2026-02-24 08:55:52,058 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-02-24 08:55:52,058 - INFO - [__main__] - ============================================================
+2026-02-24 08:55:52,059 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-02-24 08:55:52,059 - INFO - [WDM] - ====== WebDriver manager ======
+2026-02-24 08:55:53,241 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-24 08:55:53,263 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-24 08:55:53,273 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-24 08:55:53,312 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-02-24 08:55:53,314 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-24 08:55:53,314 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-24 08:55:53,358 - INFO - [WDM] - Driver downloading response is 200
+2026-02-24 08:55:53,447 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-24 08:55:53,552 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-02-24 08:55:54,994 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-02-24 08:55:54,994 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-02-24 08:55:54,994 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-02-24 08:55:54,994 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-02-23...
+2026-02-24 08:55:54,994 - INFO - [__main__] - [hankyung] Starting login process...
+2026-02-24 08:56:01,293 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-02-24 08:56:01,293 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-02-24 08:56:03,508 - INFO - [__main__] - [Hankyung] Found: 크래프톤, 게임 AI 강화…최고AI책임자에 이강욱 (20260223)
+2026-02-24 08:56:03,517 - INFO - [__main__] - [Hankyung] Found: 'K마스크팩' 인기에 최대 실적 올린 제닉 (20260223)
+2026-02-24 08:56:03,525 - INFO - [__main__] - [Hankyung] Found: 어펄마캐피탈, 나우코스 공개매수로 지분 95% 확보 (20260223)
+2026-02-24 08:56:03,534 - INFO - [__main__] - [Hankyung] Found: 현대해상, 작년 순이익 45% 급감 (20260223)
+2026-02-24 08:56:03,542 - INFO - [__main__] - [Hankyung] Found: SK스퀘어, AI 스타트업에 1000억원 쏜다 (20260223)
+2026-02-24 08:56:03,602 - INFO - [__main__] - [Hankyung] Found: 카카오모빌리티, 사우디 시장 진출 (20260223)
+2026-02-24 08:56:03,610 - INFO - [__main__] - [Hankyung] Found: 보스반도체 870억 투자 유치…차량용 시스템반도체 설계 (20260223)
+2026-02-24 08:56:03,619 - INFO - [__main__] - [Hankyung] Found: PSK홀딩스 차녀 박연경 사내이사 선임 (20260223)
+2026-02-24 08:56:03,635 - INFO - [__main__] - [Hankyung] Found: '롯데손보 키맨' 최원진 부대표, JKL파트너스 퇴사 (20260223)
+2026-02-24 08:56:03,653 - INFO - [__main__] - [Hankyung] Found: UTC인베스트먼트·포레스트벤처스, 통합법인 출범 (20260223)
+2026-02-24 08:56:03,670 - INFO - [__main__] - [Hankyung] Found: KIC, 2025년 수익률 13.91% "누적수익 176조원, 원금 웃돌았다" (20260223)
+2026-02-24 08:56:03,679 - INFO - [__main__] - [Hankyung] Found: 한국앤컴퍼니 주주연대 "조현범 사내이사 사임, 자발적 결단 아닌 위법 판결 결과" (20260223)
+2026-02-24 08:56:03,679 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-02-24 08:56:05,869 - INFO - [__main__] - [Hankyung] Found: 고려아연 다음달 24일 정기주총… 이사 선임 놓고 치열한 표대결 예상 (20260223)
+2026-02-24 08:56:05,879 - INFO - [__main__] - [Hankyung] Found: 코스맥스, 伊 ODM社 인수…유럽 공략 속도 (20260223)
+2026-02-24 08:56:05,887 - INFO - [__main__] - [Hankyung] Found: UTC인베스트먼트·포레스트벤처스, 통합법인 출범 (20260223)
+2026-02-24 08:56:06,026 - INFO - [__main__] - [Hankyung] Collection complete. Found 15 articles.
+2026-02-24 08:56:06,026 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-02-23 ~ 2026-02-24)...
+2026-02-24 08:56:06,026 - INFO - [__main__] - [thebell] Starting login process...
+2026-02-24 08:56:12,141 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-02-24 08:56:12,141 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-02-24 08:56:12,141 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-02-24 08:56:13,941 - INFO - [__main__] - [TheBell] Found: 반도홀딩스, 'CB+구주' 현금 거래…굳건한 지배력 확보 (2026-02-24)
+2026-02-24 08:56:13,997 - INFO - [__main__] - [TheBell] Found: 씨앤씨인터, 청주 신공장 착공 '규모의 경제 실현' 본격화 (2026-02-23)
+2026-02-24 08:56:14,054 - INFO - [__main__] - [TheBell] Found: 베올리아그룹, 폐기물 처리업체 '유니큰' 매각 추진 (2026-02-23)
+2026-02-24 08:56:14,106 - INFO - [__main__] - [TheBell] Found: '펀딩 9부능선' 부산에쿼티, 넥스플렉스 인수 속도 (2026-02-23)
+2026-02-24 08:56:14,175 - INFO - [__main__] - [TheBell] Found: 태광산업, 동성제약 ‘염모제 사업' 키운다 (2026-02-23)
+2026-02-24 08:56:14,230 - INFO - [__main__] - [TheBell] Found: 주택·공공 건설 강자, 산업 EPC로 다각화 (2026-02-23)
+2026-02-24 08:56:14,307 - INFO - [__main__] - [TheBell] Found: 국민성장펀드 '출자 쏠림' 우려…중소형 PE 펀딩 부담 커지나 (2026-02-23)
+2026-02-24 08:56:14,355 - INFO - [__main__] - [TheBell] Found: '펀드 만기 도래' SG PE, 윈큐브마케팅 매각 추진 (2026-02-23)
+2026-02-24 08:56:14,405 - INFO - [__main__] - [TheBell] Found: SC증권, 한국 M&A 본부장으로 송영훈 총괄 선임 (2026-02-23)
+2026-02-24 08:56:14,456 - INFO - [__main__] - [TheBell] Found: 힐하우스, 이지스운용 우협 기한 연장…내달 SPA 체결 목표 (2026-02-23)
+2026-02-24 08:56:14,505 - INFO - [__main__] - [TheBell] Found: 키움, 마스턴운용 밸류 협상 '3000억 vs 5000억' 공회전 (2026-02-23)
+2026-02-24 08:56:14,553 - INFO - [__main__] - [TheBell] Found: 앵커에쿼티, 버섯 재배 '닥터애그' 다시 매물로 내놨다 (2026-02-23)
+2026-02-24 08:56:14,628 - INFO - [__main__] - [TheBell] Found: 울산 AI 데이터센터·시지바이오 우협 결과에 '촉각' (2026-02-23)
+2026-02-24 08:56:14,708 - INFO - [__main__] - [TheBell] Found: 한앤컴퍼니의 나눗셈 (2026-02-23)
+2026-02-24 08:56:14,827 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-02-24 08:56:16,810 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-24 08:56:16,810 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-02-24 08:56:16,810 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-02-24 08:56:18,539 - INFO - [__main__] - [TheBell] Found: 달바글로벌, 상장 첫해 매출 5000억 돌파…1조 로드맵 가속 (2026-02-24)
+2026-02-24 08:56:18,593 - INFO - [__main__] - [TheBell] Found: '농업 IP 팔란티어' 로버스, AI로 품종시장 재편 (2026-02-24)
+2026-02-24 08:56:18,644 - INFO - [__main__] - [TheBell] Found: 씨앤씨인터, 청주 신공장 착공 '규모의 경제 실현' 본격화 (2026-02-23)
+2026-02-24 08:56:18,703 - INFO - [__main__] - [TheBell] Found: 베올리아그룹, 폐기물 처리업체 '유니큰' 매각 추진 (2026-02-23)
+2026-02-24 08:56:18,751 - INFO - [__main__] - [TheBell] Found: LB인베, 815억 펀드 연장…IRR 20% 중후반 전망 (2026-02-23)
+2026-02-24 08:56:18,802 - INFO - [__main__] - [TheBell] Found: 태광산업, 동성제약 ‘염모제 사업' 키운다 (2026-02-23)
+2026-02-24 08:56:18,855 - INFO - [__main__] - [TheBell] Found: '여성 의류' 베니토, M&A 매물로 (2026-02-23)
+2026-02-24 08:56:18,904 - INFO - [__main__] - [TheBell] Found: 국민성장펀드 '출자 쏠림' 우려…중소형 PE 펀딩 부담 커지나 (2026-02-23)
+2026-02-24 08:56:18,955 - INFO - [__main__] - [TheBell] Found: 노타, 올해 매출 255억 기대…피지컬 AI 확장 원년 (2026-02-23)
+2026-02-24 08:56:19,020 - INFO - [__main__] - [TheBell] Found: '펀드 만기 도래' SG PE, 윈큐브마케팅 매각 추진 (2026-02-23)
+2026-02-24 08:56:19,068 - INFO - [__main__] - [TheBell] Found: SC증권, 한국 M&A 본부장으로 송영훈 총괄 선임 (2026-02-23)
+2026-02-24 08:56:19,117 - INFO - [__main__] - [TheBell] Found: 키움인베스트먼트, 민간벤처모펀드 만든다 (2026-02-23)
+2026-02-24 08:56:19,166 - INFO - [__main__] - [TheBell] Found: ‘모태 첫 입성’ 그래비티벤처스, 지역기반 외연확대 가속 (2026-02-23)
+2026-02-24 08:56:19,215 - INFO - [__main__] - [TheBell] Found: 힐하우스, 이지스운용 우협 기한 연장…내달 SPA 체결 목표 (2026-02-23)
+2026-02-24 08:56:19,263 - INFO - [__main__] - [TheBell] Found: UTC인베-포레스트벤처스 합병 마무리 (2026-02-23)
+2026-02-24 08:56:19,312 - INFO - [__main__] - [TheBell] Found: '설립 4년차' 삼천리인베, 운용자산 1000억 돌파 (2026-02-23)
+2026-02-24 08:56:19,364 - INFO - [__main__] - [TheBell] Found: 대전투자금융, 첫 출자사업 '숏리스트' 6개사 압축 (2026-02-23)
+2026-02-24 08:56:19,437 - INFO - [__main__] - [TheBell] Found: ‘속도보다 방향’ 읽는 딜 설계자, 허창민 상무 (2026-02-23)
+2026-02-24 08:56:19,490 - INFO - [__main__] - [TheBell] Found: 미스터아빠, 매출 1000억 돌파…기술 역량 키운다 (2026-02-23)
+2026-02-24 08:56:19,555 - INFO - [__main__] - [TheBell] Found: 우리벤처, 엔알비 회수 속도…원금 이상 확보 (2026-02-23)
+2026-02-24 08:56:19,581 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-02-24 08:56:21,321 - INFO - [__main__] - [TheBell] Found: 모태펀드·농금원 1차 정시 출자 서류 접수 막바지 (2026-02-23)
+2026-02-24 08:56:21,399 - INFO - [__main__] - [TheBell] Found: 한앤컴퍼니의 나눗셈 (2026-02-23)
+2026-02-24 08:56:21,749 - INFO - [__main__] - [TheBell] Scanning Page 3: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=3
+2026-02-24 08:56:23,857 - INFO - [__main__] - [TheBell] Page 3 has only older articles. Stopping.
+2026-02-24 08:56:23,857 - INFO - [__main__] - [TheBell] Collection complete. Found 36 articles.
+2026-02-24 08:56:23,857 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-02-23...
+2026-02-24 08:56:23,857 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-02-24 08:56:29,919 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-02-24 08:56:29,919 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-02-24 08:56:32,416 - INFO - [__main__] - [DealSite+] Found: 청계초등학교, 그리고 장세주 회장의 자본재편 (2026-02-24)
+2026-02-24 08:56:32,435 - INFO - [__main__] - [DealSite+] Found: 2600억 한진 상속세 해결한…경기초등학교 삼총사 (2026-02-24)
+2026-02-24 08:56:32,454 - INFO - [__main__] - [DealSite+] Found: NH 내부통제 논란 딛고…2.2조 공개매수 수임 (2026-02-23)
+2026-02-24 08:56:32,471 - INFO - [__main__] - [DealSite+] Found: SK넥실리스 3000억 유치난항…국민성장펀드 외면 (2026-02-23)
+2026-02-24 08:56:32,620 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-02-24 08:56:35,093 - INFO - [__main__] - [DealSite+] Found: 청계초등학교, 그리고 장세주 회장의 자본재편 (2026-02-24)
+2026-02-24 08:56:35,111 - INFO - [__main__] - [DealSite+] Found: 2600억 한진 상속세 해결한…경기초등학교 삼총사 (2026-02-24)
+2026-02-24 08:56:35,130 - INFO - [__main__] - [DealSite+] Found: 유일기술투자, 조익재 신임 부사장 선임 (2026-02-23)
+2026-02-24 08:56:35,147 - INFO - [__main__] - [DealSite+] Found: 큐픽스 디지털트윈 1호 IPO 도전…누적유치 700억 (2026-02-23)
+2026-02-24 08:56:35,174 - INFO - [__main__] - [DealSite+] Found: SK넥실리스 3000억 유치난항…국민성장펀드 외면 (2026-02-23)
+2026-02-24 08:56:35,192 - INFO - [__main__] - [DealSite+] Found: 권토중래 중국통 김진하…한중관계 개선에 기대 (2026-02-23)
+2026-02-24 08:56:35,209 - INFO - [__main__] - [DealSite+] Found: 카리나의 SM엔터…벤처캐피탈 700억 펀드 만든다 (2026-02-23)
+2026-02-24 08:56:35,227 - INFO - [__main__] - [DealSite+] Found: 인도 대부업 어피닛…3000억 코스닥 IPO 도전 (2026-02-23)
+2026-02-24 08:56:35,245 - INFO - [__main__] - [DealSite+] Found: 법원도 인정한 특수관계…5600억 베팅한 최윤범 (2026-02-23)
+2026-02-24 08:56:35,263 - INFO - [__main__] - [DealSite+] Found: 재계 2-3세들의 교두보…사교계의 풍운아 (2026-02-23)
+2026-02-24 08:56:35,373 - INFO - [__main__] - [DealSite+] Collection complete. Found 14 articles.
+2026-02-24 08:56:35,373 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-02-23...
+2026-02-24 08:56:35,373 - INFO - [__main__] - [investchosun] Starting login process...
+2026-02-24 08:56:41,144 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-02-24 08:56:41,144 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-02-24 08:56:43,345 - INFO - [__main__] - [InvestChosun] Found: 케이뱅크 IPO 청약, 은행주 강세 타고 10兆 몰렸다...주가 향방 관심 (2026-02-23)
+2026-02-24 08:56:43,359 - INFO - [__main__] - [InvestChosun] Found: EQT파트너스, 더존비즈온 공개매수 돌입…2조1791억원 규모 (2026-02-23)
+2026-02-24 08:56:43,406 - INFO - [__main__] - [InvestChosun] Collection complete. Found 2 articles.
+2026-02-24 08:56:44,025 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-24 08:56:44,027 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Loaded 759 URLs and 759 titles from history.
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Skipping Duplicate (URL): 울산 AI 데이터센터·시지바이오 우협 결과에 '촉각' [TheBell]
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Skipping Duplicate (URL): 한앤컴퍼니의 나눗셈 [TheBell]
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Skipping Duplicate (URL): 우리벤처, 엔알비 회수 속도…원금 이상 확보 [TheBell]
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Skipping Duplicate (URL): 모태펀드·농금원 1차 정시 출자 서류 접수 막바지 [TheBell]
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Skipping Duplicate (URL): SK넥실리스 3000억 유치난항…국민성장펀드 외면 [DealSitePlus]
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Skipping Duplicate (URL): 권토중래 중국통 김진하…한중관계 개선에 기대 [DealSitePlus]
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Skipping Duplicate (URL): 카리나의 SM엔터…벤처캐피탈 700억 펀드 만든다 [DealSitePlus]
+2026-02-24 08:56:45,534 - INFO - [__main__] - [History] Skipping Duplicate (URL): 인도 대부업 어피닛…3000억 코스닥 IPO 도전 [DealSitePlus]
+2026-02-24 08:56:45,535 - INFO - [__main__] - [History] Skipping Duplicate (URL): 법원도 인정한 특수관계…5600억 베팅한 최윤범 [DealSitePlus]
+2026-02-24 08:56:45,535 - INFO - [__main__] - [History] Skipping Duplicate (URL): 재계 2-3세들의 교두보…사교계의 풍운아 [DealSitePlus]
+2026-02-24 08:56:45,535 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 45
+2026-02-24 08:56:45,535 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-02-24 08:56:45,535 - INFO - [__main__] - [PDF] [1/45] Processing: 크래프톤, 게임 AI 강화…최고AI책임자에 이강욱 (Hankyung)
+2026-02-24 08:56:52,189 - INFO - [__main__] - [PDF] [2/45] Processing: 'K마스크팩' 인기에 최대 실적 올린 제닉 (Hankyung)
+2026-02-24 08:56:58,638 - INFO - [__main__] - [PDF] [3/45] Processing: 어펄마캐피탈, 나우코스 공개매수로 지분 95% 확보 (Hankyung)
+2026-02-24 08:57:05,125 - INFO - [__main__] - [PDF] [4/45] Processing: 현대해상, 작년 순이익 45% 급감 (Hankyung)
+2026-02-24 08:57:11,503 - INFO - [__main__] - [PDF] [5/45] Processing: SK스퀘어, AI 스타트업에 1000억원 쏜다 (Hankyung)
+2026-02-24 08:57:18,035 - INFO - [__main__] - [PDF] [6/45] Processing: 카카오모빌리티, 사우디 시장 진출 (Hankyung)
+2026-02-24 08:57:24,475 - INFO - [__main__] - [PDF] [7/45] Processing: 보스반도체 870억 투자 유치…차량용 시스템반도체 설계 (Hankyung)
+2026-02-24 08:57:30,871 - INFO - [__main__] - [PDF] [8/45] Processing: PSK홀딩스 차녀 박연경 사내이사 선임 (Hankyung)
+2026-02-24 08:57:37,372 - INFO - [__main__] - [PDF] [9/45] Processing: '롯데손보 키맨' 최원진 부대표, JKL파트너스 퇴사 (Hankyung)
+2026-02-24 08:57:43,858 - INFO - [__main__] - [PDF] [10/45] Processing: UTC인베스트먼트·포레스트벤처스, 통합법인 출범 (Hankyung)
+2026-02-24 08:57:50,360 - INFO - [__main__] - [PDF] [11/45] Processing: KIC, 2025년 수익률 13.91% "누적수익 176조원, 원금 웃돌았다" (Hankyung)
+2026-02-24 08:57:56,828 - INFO - [__main__] - [PDF] [12/45] Processing: 한국앤컴퍼니 주주연대 "조현범 사내이사 사임, 자발적 결단 아닌 위법 판결 결과" (Hankyung)
+2026-02-24 08:58:03,309 - INFO - [__main__] - [PDF] [13/45] Processing: 고려아연 다음달 24일 정기주총… 이사 선임 놓고 치열한 표대결 예상 (Hankyung)
+2026-02-24 08:58:09,806 - INFO - [__main__] - [PDF] [14/45] Processing: 코스맥스, 伊 ODM社 인수…유럽 공략 속도 (Hankyung)
+2026-02-24 08:58:16,300 - INFO - [__main__] - [PDF] [15/45] Processing: 반도홀딩스, 'CB+구주' 현금 거래…굳건한 지배력 확보 (TheBell)
+2026-02-24 08:58:22,967 - INFO - [__main__] - [PDF] [16/45] Processing: 씨앤씨인터, 청주 신공장 착공 '규모의 경제 실현' 본격화 (TheBell)
+2026-02-24 08:58:29,414 - INFO - [__main__] - [PDF] [17/45] Processing: 베올리아그룹, 폐기물 처리업체 '유니큰' 매각 추진 (TheBell)
+2026-02-24 08:58:35,863 - INFO - [__main__] - [PDF] [18/45] Processing: '펀딩 9부능선' 부산에쿼티, 넥스플렉스 인수 속도 (TheBell)
+2026-02-24 08:58:42,318 - INFO - [__main__] - [PDF] [19/45] Processing: 태광산업, 동성제약 ‘염모제 사업' 키운다 (TheBell)
+2026-02-24 08:58:48,816 - INFO - [__main__] - [PDF] [20/45] Processing: 주택·공공 건설 강자, 산업 EPC로 다각화 (TheBell)
+2026-02-24 08:58:55,326 - INFO - [__main__] - [PDF] [21/45] Processing: 국민성장펀드 '출자 쏠림' 우려…중소형 PE 펀딩 부담 커지나 (TheBell)
+2026-02-24 08:59:01,756 - INFO - [__main__] - [PDF] [22/45] Processing: '펀드 만기 도래' SG PE, 윈큐브마케팅 매각 추진 (TheBell)
+2026-02-24 08:59:08,194 - INFO - [__main__] - [PDF] [23/45] Processing: SC증권, 한국 M&A 본부장으로 송영훈 총괄 선임 (TheBell)
+2026-02-24 08:59:14,671 - INFO - [__main__] - [PDF] [24/45] Processing: 힐하우스, 이지스운용 우협 기한 연장…내달 SPA 체결 목표 (TheBell)
+2026-02-24 08:59:21,107 - INFO - [__main__] - [PDF] [25/45] Processing: 키움, 마스턴운용 밸류 협상 '3000억 vs 5000억' 공회전 (TheBell)
+2026-02-24 08:59:27,625 - INFO - [__main__] - [PDF] [26/45] Processing: 앵커에쿼티, 버섯 재배 '닥터애그' 다시 매물로 내놨다 (TheBell)
+2026-02-24 08:59:34,087 - INFO - [__main__] - [PDF] [27/45] Processing: 달바글로벌, 상장 첫해 매출 5000억 돌파…1조 로드맵 가속 (TheBell)
+2026-02-24 08:59:40,524 - INFO - [__main__] - [PDF] [28/45] Processing: '농업 IP 팔란티어' 로버스, AI로 품종시장 재편 (TheBell)
+2026-02-24 08:59:47,178 - INFO - [__main__] - [PDF] [29/45] Processing: LB인베, 815억 펀드 연장…IRR 20% 중후반 전망 (TheBell)
+2026-02-24 08:59:53,633 - INFO - [__main__] - [PDF] [30/45] Processing: '여성 의류' 베니토, M&A 매물로 (TheBell)
+2026-02-24 09:00:00,065 - INFO - [__main__] - [PDF] [31/45] Processing: 노타, 올해 매출 255억 기대…피지컬 AI 확장 원년 (TheBell)
+2026-02-24 09:00:06,535 - INFO - [__main__] - [PDF] [32/45] Processing: 키움인베스트먼트, 민간벤처모펀드 만든다 (TheBell)
+2026-02-24 09:00:13,026 - INFO - [__main__] - [PDF] [33/45] Processing: ‘모태 첫 입성’ 그래비티벤처스, 지역기반 외연확대 가속 (TheBell)
+2026-02-24 09:00:19,781 - INFO - [__main__] - [PDF] [34/45] Processing: UTC인베-포레스트벤처스 합병 마무리 (TheBell)
+2026-02-24 09:00:26,188 - INFO - [__main__] - [PDF] [35/45] Processing: '설립 4년차' 삼천리인베, 운용자산 1000억 돌파 (TheBell)
+2026-02-24 09:00:32,639 - INFO - [__main__] - [PDF] [36/45] Processing: 대전투자금융, 첫 출자사업 '숏리스트' 6개사 압축 (TheBell)
+2026-02-24 09:00:39,155 - INFO - [__main__] - [PDF] [37/45] Processing: ‘속도보다 방향’ 읽는 딜 설계자, 허창민 상무 (TheBell)
+2026-02-24 09:00:45,759 - INFO - [__main__] - [PDF] [38/45] Processing: 미스터아빠, 매출 1000억 돌파…기술 역량 키운다 (TheBell)
+2026-02-24 09:00:52,227 - INFO - [__main__] - [PDF] [39/45] Processing: 청계초등학교, 그리고 장세주 회장의 자본재편 (DealSitePlus)
+2026-02-24 09:00:59,687 - INFO - [__main__] - [PDF] [40/45] Processing: 2600억 한진 상속세 해결한…경기초등학교 삼총사 (DealSitePlus)
+2026-02-24 09:01:06,622 - INFO - [__main__] - [PDF] [41/45] Processing: NH 내부통제 논란 딛고…2.2조 공개매수 수임 (DealSitePlus)
+2026-02-24 09:01:13,358 - INFO - [__main__] - [PDF] [42/45] Processing: 유일기술투자, 조익재 신임 부사장 선임 (DealSitePlus)
+2026-02-24 09:01:20,038 - INFO - [__main__] - [PDF] [43/45] Processing: 큐픽스 디지털트윈 1호 IPO 도전…누적유치 700억 (DealSitePlus)
+2026-02-24 09:01:26,834 - INFO - [__main__] - [PDF] [44/45] Processing: 케이뱅크 IPO 청약, 은행주 강세 타고 10兆 몰렸다...주가 향방 관심 (InvestChosun)
+2026-02-24 09:01:33,401 - INFO - [__main__] - [PDF] [45/45] Processing: EQT파트너스, 더존비즈온 공개매수 돌입…2조1791억원 규모 (InvestChosun)
+2026-02-24 09:01:39,793 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-02-24 09:01:42,455 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-24 09:01:47,982 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1BEQy8TraCZ8T3d9tXFcLLOrY7lyEJzmE/view?usp=drivesdk
+2026-02-24 09:01:53,273 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-24 09:01:56,619 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1MOsvt62Tsk7cm0QsUzC_W18qru1ycyYf/view?usp=drivesdk
+2026-02-24 09:01:57,796 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-24 09:02:02,201 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1IW6Lh6_k0b-zIuXOror0eOT4OKiNcIjH/view?usp=drivesdk
+2026-02-24 09:02:02,592 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-24 09:02:06,933 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1k6GDejgUSUHuJK76w_jzbnXIuF6y5pPd/view?usp=drivesdk
+2026-02-24 09:02:08,204 - INFO - [__main__] - [History] Updated sheet with 45 new articles.
+2026-02-24 09:02:09,530 - INFO - [__main__] - Old history cleanup complete: 29 rows deleted.
+2026-02-24 09:02:13,165 - INFO - [__main__] - 
+============================================================
+2026-02-24 09:02:13,165 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-02-24 09:02:13,165 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-02-24  9:02:15.51 
+================================================== 
+ 

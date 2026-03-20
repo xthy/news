@@ -1,0 +1,27 @@
+Total items: 10
+=== FIRST LI outerHTML ===
+<li>
+							<div class="list_detail">
+								<div class="thumb">
+									<a href="https://www.investchosun.com/site/data/html_dir/2026/03/20/2026032080075.html" title="마스턴운용, 2800억 밸류로 2대주주 유치…태그얼롱에도 회수 변수"><img src="https://img.investchosun.com/site/data/thumb_dir/2026/03/20/2026032080070_0_thumb.jpg" data-src="https://img.investchosun.com/site/data/thumb_dir/2026/03/20/2026032080070_0_thumb.jpg" alt="마스턴운용, 2800억 밸류로 2대주주 유치…태그얼롱에도 회수 변수" class="aa" onerror="this.style.display='none';"></a>
+								</div>
+								<dl>
+									<dt><a href="https://www.investchosun.com/site/data/html_dir/2026/03/20/2026032080075.html" title="마스턴운용, 2800억 밸류로 2대주주 유치…태그얼롱에도 회수 변수">마스턴운용, 2800억 밸류로 2대주주 유치…태그얼롱에도 회수 변수</a></dt>
+									<dd class="summary"><a href="https://www.investchosun.com/site/data/html_dir/2026/03/20/2026032080075.html">마스턴투자운용이 전략적 2대주주 유치에 나서며 투자 구조를 구체화하고 있다. 경영권 매각 대신 소수지분 투자 유치를 통해 외부 자본을 끌어들이고, 중장기 성장 기반을 확보하겠다는 구상으로 풀이된다.투자은행(IB)업계에 따르면 마스턴투자운용은 최근 잠재 투자자를 대상으로 20%대 중반 수준의 지분 투자 기회를..</a></dd>
+									<dd class="date"><em>2026.03.20</em><span>한설희 기자</span></dd>
+								</dl>
+							</div>
+						</li>
+=== SECOND LI outerHTML ===
+<li>
+							<div class="list_detail">
+								<div class="thumb">
+									<a href="https://www.investchosun.com/site/data/html_dir/2026/03/19/2026031980216.html" title="SK그룹 데이터센터 소수지분 매각, KKR-IMM인베 컨소 공동투자 추진"><img src="https://img.investchosun.com/site/data/thumb_dir/2026/03/19/2026031980206_0_thumb.jpg" data-src="https://img.investchosun.com/site/data/thumb_dir/2026/03/19/2026031980206_0_thumb.jpg" alt="SK그룹 데이터센터 소수지분 매각, KKR-IMM인베 컨소 공동투자 추진" class="aa" onerror="this.style.display='none';"></a>
+								</div>
+								<dl>
+									<dt><a href="https://www.investchosun.com/site/data/html_dir/2026/03/19/2026031980216.html" title="SK그룹 데이터센터 소수지분 매각, KKR-IMM인베 컨소 공동투자 추진">SK그룹 데이터센터 소수지분 매각, KKR-IMM인베 컨소 공동투자 추진</a></dt>
+									<dd class="summary"><a href="https://www.investchosun.com/site/data/html_dir/2026/03/19/2026031980216.html">SK그룹의 인공지능(AI) 데이터센터 소수지분을 KKR과 IMM인베스트먼트-스톤브릿지캐피탈 컨소시엄(이하 IMM 컨소시엄)이 공동 인수하는 안이 추진되고 있다.19일 M&amp;A 업계에 따르면 SK그룹은 최근 AI 데이터센터 소수지분을 KKR과 IMM 컨소시엄에 나눠 팔기로 방침을 정했다. 데이터센터 지분 49%를 KKR과 IMM 컨소시엄이 절반씩..</a></dd>
+									<dd class="date"><em>2026.03.19</em><span>위상호 기자</span></dd>
+								</dl>
+							</div>
+						</li>

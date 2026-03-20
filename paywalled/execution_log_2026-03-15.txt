@@ -1,0 +1,68 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-15  8:55:50.50 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-15 08:55:51,282 - INFO - [__main__] - Target Date Range: 2026-03-14 ~ 2026-03-15
+2026-03-15 08:55:51,283 - INFO - [__main__] - ============================================================
+2026-03-15 08:55:51,283 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-15 08:55:51,283 - INFO - [__main__] - ============================================================
+2026-03-15 08:55:51,284 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-15 08:55:51,284 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-15 08:55:52,133 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-15 08:55:52,155 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-15 08:55:52,165 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-15 08:55:52,201 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-03-15 08:55:52,203 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-15 08:55:52,203 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-03-15 08:55:52,247 - INFO - [WDM] - Driver downloading response is 200
+2026-03-15 08:55:52,333 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-15 08:55:52,439 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-03-15 08:55:53,719 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-15 08:55:53,719 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-15 08:55:53,719 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-15 08:55:53,719 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-14...
+2026-03-15 08:55:53,719 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-15 08:55:59,713 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-15 08:55:59,713 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-15 08:56:02,085 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-15 08:56:04,494 - INFO - [__main__] - [Hankyung] Collection complete. Found 0 articles.
+2026-03-15 08:56:04,494 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-14 ~ 2026-03-15)...
+2026-03-15 08:56:04,494 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-15 08:56:10,483 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-15 08:56:10,483 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-15 08:56:10,483 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-15 08:56:12,639 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-15 08:56:14,741 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-15 08:56:14,741 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-15 08:56:14,741 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-15 08:56:16,864 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-15 08:56:18,948 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-15 08:56:18,948 - INFO - [__main__] - [TheBell] Collection complete. Found 0 articles.
+2026-03-15 08:56:18,948 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-14...
+2026-03-15 08:56:18,948 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-15 08:56:24,850 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-15 08:56:24,850 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-15 08:56:27,680 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-15 08:56:30,301 - INFO - [__main__] - [DealSite+] Collection complete. Found 0 articles.
+2026-03-15 08:56:30,301 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-14...
+2026-03-15 08:56:30,301 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-15 08:56:36,117 - WARNING - [__main__] - [investchosun] Alert detected: 승인되지 않은 계정입니다. (기간만료)
+2026-03-15 08:56:36,119 - INFO - [__main__] - [investchosun] Alert accepted
+2026-03-15 08:56:37,123 - WARNING - [__main__] - [investchosun] Still on login-related URL: https://www.investchosun.com/svc/member/invest_login.html. Login might have failed.
+2026-03-15 08:56:37,123 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-03-15 08:56:39,220 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-03-15 08:56:39,691 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-15 08:56:39,693 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-15 08:56:41,142 - INFO - [__main__] - [History] Loaded 878 URLs and 878 titles from history.
+2026-03-15 08:56:41,142 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 0
+2026-03-15 08:56:41,142 - INFO - [__main__] - No new unique articles found.
+2026-03-15 08:56:43,635 - INFO - [__main__] - 
+============================================================
+2026-03-15 08:56:43,635 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-15 08:56:43,635 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-15  8:56:45.94 
+================================================== 
+ 

@@ -1,0 +1,46 @@
+1. Logging in...
+  Current URL after login: https://www.investchosun.com/main/
+
+2. Navigating to list.html?catid=114...
+  Current URL: https://www.investchosun.com/svc/news/list.html?catid=114
+  Page title: 인베스트조선
+  SUCCESS: ul.search-list li found via WebDriverWait
+  Selector 'ul.search-list li': 10 elements
+  Selector 'ul.search-list': 1 elements
+  Selector 'li': 33 elements
+  Selector 'dl': 10 elements
+  Selector 'dt a': 10 elements
+  Selector '.date': 13 elements
+  Selector '.date em': 10 elements
+  Selector '.date span': 10 elements
+  Selector 'dd.date em': 10 elements
+  Selector 'div.list-wrap': 0 elements
+  Selector 'div.news-list': 0 elements
+  Selector 'div.search-list': 0 elements
+
+  Dates found in page source: ['2026.03.20', '2026.03.19', '2026.03.19', '2026.03.18', '2026.03.13', '2026.03.13', '2026.03.12', '2026.03.12', '2026.03.12', '2026.03.11']
+  Article URLs found: 38
+  First few: ['html_dir/2026/03/20/2026032080075.html', 'html_dir/2026/03/20/2026032080075.html', 'html_dir/2026/03/20/2026032080075.html']
+
+  'search-list' class FOUND in HTML
+  Context: ...
+				<div class="search-section">
+					<ul class="search-list">
+						<li>
+							<div class="list_detail">
+								<div class="thumb">
+									<a href="https://www.investchosun.com/site/data/html_dir/2026/03/20/2026032080075.html" title="마스턴운용, 280...
+
+  Saved full HTML to invest_debug_full.html
+
+3. Trying JavaScript queries...
+ul.search-list li: 10
+all ul: 7
+  ul[0] class="gnb" children=6
+  ul[1] class="" children=3
+  ul[2] class="" children=2
+  ul[3] class="search-list" children=10
+  ul[4] class="issue-list" children=3
+  ul[5] class="" children=5
+  ul[6] class="wrap" children=4
+iframes: 0

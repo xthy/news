@@ -1,0 +1,194 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-02-20  8:55:50.86 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-02-20 08:55:52,153 - INFO - [__main__] - Target Date Range: 2026-02-19 ~ 2026-02-20
+2026-02-20 08:55:52,154 - INFO - [__main__] - ============================================================
+2026-02-20 08:55:52,155 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-02-20 08:55:52,155 - INFO - [__main__] - ============================================================
+2026-02-20 08:55:52,155 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-02-20 08:55:52,155 - INFO - [WDM] - ====== WebDriver manager ======
+2026-02-20 08:55:53,016 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-20 08:55:53,039 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-20 08:55:53,048 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-20 08:55:53,084 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-02-20 08:55:53,086 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-20 08:55:53,086 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-20 08:55:53,129 - INFO - [WDM] - Driver downloading response is 200
+2026-02-20 08:55:53,212 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-20 08:55:53,319 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-02-20 08:55:55,049 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-02-20 08:55:55,050 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-02-20 08:55:55,050 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-02-20 08:55:55,050 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-02-19...
+2026-02-20 08:55:55,050 - INFO - [__main__] - [hankyung] Starting login process...
+2026-02-20 08:56:01,435 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-02-20 08:56:01,435 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-02-20 08:56:03,624 - INFO - [__main__] - [Hankyung] Found: [단독] "에이피알에도 없다"…'K미용기기' 정조준한 아모레, 1위 탈환 시동 (20260219)
+2026-02-20 08:56:03,633 - INFO - [__main__] - [Hankyung] Found: “IB 역할은 그룹 자금 '공급 엔진'…경쟁력은 선제적 딜 소싱” [자본시장을 움직이는 사람들] (20260219)
+2026-02-20 08:56:03,641 - INFO - [__main__] - [Hankyung] Found: 경동제약, 지난해 영업이익 77억원 달성…전년比 192%↑ (20260219)
+2026-02-20 08:56:03,782 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-02-20 08:56:05,962 - INFO - [__main__] - [Hankyung] Found: 태광그룹, 애경산업 인수가 225억원 깎았다 (20260219)
+2026-02-20 08:56:05,970 - INFO - [__main__] - [Hankyung] Found: 삼성SDI, 디스플레이 지분 팔아 배터리 투자 (20260219)
+2026-02-20 08:56:05,979 - INFO - [__main__] - [Hankyung] Found: 삼성SDI, '알짜' 삼성디스플레이 지분 매각한다 (20260219)
+2026-02-20 08:56:05,987 - INFO - [__main__] - [Hankyung] Found: 태광산업 덕에 넉달 시간 벌었던 티투PE… 결국 태광에 손벌리나 (20260219)
+2026-02-20 08:56:05,995 - INFO - [__main__] - [Hankyung] Found: "올해 M&A 시장 화두는?"…삼일PwC, 내달 세미나 개최 (20260219)
+2026-02-20 08:56:06,113 - INFO - [__main__] - [Hankyung] Collection complete. Found 8 articles.
+2026-02-20 08:56:06,113 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-02-19 ~ 2026-02-20)...
+2026-02-20 08:56:06,113 - INFO - [__main__] - [thebell] Starting login process...
+2026-02-20 08:56:12,094 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-02-20 08:56:12,094 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-02-20 08:56:12,094 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-02-20 08:56:13,860 - INFO - [__main__] - [TheBell] Found: 경영권 파는 아이큐어, '유동성 압박·거래정지' 이중고 풀까 (2026-02-20)
+2026-02-20 08:56:13,931 - INFO - [__main__] - [TheBell] Found: SK에코엔지, 그룹 친환경 에너지 부진…방향 바꾸나 (2026-02-20)
+2026-02-20 08:56:14,007 - INFO - [__main__] - [TheBell] Found: 태광·애경, 리콜 리스크 넘은 '막판 빅딜' 성사 막전막후 (2026-02-19)
+2026-02-20 08:56:14,063 - INFO - [__main__] - [TheBell] Found: 치약 리콜 변수 속 몸값 5% 조정 '결단'…인수 마침표 (2026-02-19)
+2026-02-20 08:56:14,116 - INFO - [__main__] - [TheBell] Found: 캠코, 동성제약 인수에 150억 보탠다 (2026-02-19)
+2026-02-20 08:56:14,168 - INFO - [__main__] - [TheBell] Found: '뚝심 통한' 한앤코, 남양유업 5년 적자 탈출 비결은 (2026-02-19)
+2026-02-20 08:56:14,233 - INFO - [__main__] - [TheBell] Found: '코스닥 상장사' 아이큐어, 경영권 매각 추진 (2026-02-19)
+2026-02-20 08:56:14,281 - INFO - [__main__] - [TheBell] Found: 태광산업, 동성제약 FI 지분 콜옵션 확보…조건은 (2026-02-19)
+2026-02-20 08:56:14,329 - INFO - [__main__] - [TheBell] Found: SK 신재생 1.8조 패키지 딜, KKR식 노하우 이식될까 (2026-02-19)
+2026-02-20 08:56:14,381 - INFO - [__main__] - [TheBell] Found: 슈퍼마켓 매각 눈앞인데…회생안 인가에 속타는 홈플러스 (2026-02-19)
+2026-02-20 08:56:14,449 - INFO - [__main__] - [TheBell] Found: 인빅터스PEA, 신생 하우스의 반전 드라마 (2026-02-19)
+2026-02-20 08:56:14,501 - INFO - [__main__] - [TheBell] Found: 현대지에프홀딩스 홈쇼핑 흡수…윤영식 부사장 주목 (2026-02-19)
+2026-02-20 08:56:14,550 - INFO - [__main__] - [TheBell] Found: '웨이비스 엑시트' SG PE, MOIC1.8배·IRR 16% 달성 (2026-02-19)
+2026-02-20 08:56:14,710 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-02-20 08:56:16,649 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-20 08:56:16,649 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-02-20 08:56:16,649 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-02-20 08:56:18,437 - INFO - [__main__] - [TheBell] Found: MYSC, KTOA 벤처리움 운영사 따냈다 (2026-02-20)
+2026-02-20 08:56:18,486 - INFO - [__main__] - [TheBell] Found: '2차전지 전문' JR에너지솔루션, 250억 투자 유치 추진 (2026-02-20)
+2026-02-20 08:56:18,538 - INFO - [__main__] - [TheBell] Found: 김동철 대표, 스틱 인수 크린토피아 합류한 배경 (2026-02-20)
+2026-02-20 08:56:18,587 - INFO - [__main__] - [TheBell] Found: 경영권 파는 아이큐어, '유동성 압박·거래정지' 이중고 풀까 (2026-02-20)
+2026-02-20 08:56:18,638 - INFO - [__main__] - [TheBell] Found: 김동환의 넥시드벤처스, 하나벤처스 3인방 모였다 (2026-02-20)
+2026-02-20 08:56:18,687 - INFO - [__main__] - [TheBell] Found: 플럭스벤처, 신한증권과 손잡고 충남펀드 결성 돌입 (2026-02-20)
+2026-02-20 08:56:18,744 - INFO - [__main__] - [TheBell] Found: 박민준 뤼튼AX 대표 “구축 아닌 실행, 매출로 연결” (2026-02-20)
+2026-02-20 08:56:18,792 - INFO - [__main__] - [TheBell] Found: '7년째 협력' 케이앤투자-하나증권, 모태 GP 따냈다 (2026-02-20)
+2026-02-20 08:56:18,867 - INFO - [__main__] - [TheBell] Found: 펀무원의 예고된 반란 (2026-02-20)
+2026-02-20 08:56:18,892 - INFO - [__main__] - [TheBell] Found: 스틱, 환경 원자재 거래 플랫폼 '씨너지' 리딩 투자사로 등판 (2026-02-19)
+2026-02-20 08:56:18,956 - INFO - [__main__] - [TheBell] Found: 캠코, 동성제약 인수에 150억 보탠다 (2026-02-19)
+2026-02-20 08:56:19,009 - INFO - [__main__] - [TheBell] Found: '뚝심 통한' 한앤코, 남양유업 5년 적자 탈출 비결은 (2026-02-19)
+2026-02-20 08:56:19,066 - INFO - [__main__] - [TheBell] Found: '코스닥 상장사' 아이큐어, 경영권 매각 추진 (2026-02-19)
+2026-02-20 08:56:19,113 - INFO - [__main__] - [TheBell] Found: 베어스톤·그루투자파트너스, JR에너지솔루션에 150억 투자 (2026-02-19)
+2026-02-20 08:56:19,160 - INFO - [__main__] - [TheBell] Found: 강훈모 전 하나벤처스 CIO, 신규 VC 설립 (2026-02-19)
+2026-02-20 08:56:19,211 - INFO - [__main__] - [TheBell] Found: 쏠레어파트너스, IPTV펀드 첫 투자는 영화 '복수귀' (2026-02-19)
+2026-02-20 08:56:19,262 - INFO - [__main__] - [TheBell] Found: 누적 투자 1300억…IPO 시계 돌린다 (2026-02-19)
+2026-02-20 08:56:19,310 - INFO - [__main__] - [TheBell] Found: 태광산업, 동성제약 FI 지분 콜옵션 확보…조건은 (2026-02-19)
+2026-02-20 08:56:19,358 - INFO - [__main__] - [TheBell] Found: SK 신재생 1.8조 패키지 딜, KKR식 노하우 이식될까 (2026-02-19)
+2026-02-20 08:56:19,412 - INFO - [__main__] - [TheBell] Found: 슈퍼마켓 매각 눈앞인데…회생안 인가에 속타는 홈플러스 (2026-02-19)
+2026-02-20 08:56:19,436 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-02-20 08:56:21,189 - INFO - [__main__] - [TheBell] Found: 진통 끝 한국사무소 여는 ICG, 전우석 대표가 이끈다 (2026-02-19)
+2026-02-20 08:56:21,244 - INFO - [__main__] - [TheBell] Found: '흑자 전환' 효성벤처스, 선순환구조 진입 (2026-02-19)
+2026-02-20 08:56:21,292 - INFO - [__main__] - [TheBell] Found: '상장 1년' 심플랫폼, 수주 확대 가능성 입증 (2026-02-19)
+2026-02-20 08:56:21,344 - INFO - [__main__] - [TheBell] Found: 지분법 급증 DSC인베, 상장사 투자 빛 봤다 (2026-02-19)
+2026-02-20 08:56:21,398 - INFO - [__main__] - [TheBell] Found: 대성창투, 영업익 92% 감소…성과보수 부재·기저효과 (2026-02-19)
+2026-02-20 08:56:21,446 - INFO - [__main__] - [TheBell] Found: 넥스트플레이어, 하반기 상장 레이스 돌입 (2026-02-19)
+2026-02-20 08:56:21,494 - INFO - [__main__] - [TheBell] Found: ‘전문가 매칭’ 커리어데이, 시리즈A 브릿지 추진 (2026-02-19)
+2026-02-20 08:56:21,546 - INFO - [__main__] - [TheBell] Found: 영풍·MBK, 고려아연 선임 이사 6인 제안 이유는 (2026-02-19)
+2026-02-20 08:56:21,595 - INFO - [__main__] - [TheBell] Found: '웨이비스 엑시트' SG PE, MOIC1.8배·IRR 16% 달성 (2026-02-19)
+2026-02-20 08:56:21,829 - INFO - [__main__] - [TheBell] Scanning Page 3: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=3
+2026-02-20 08:56:23,830 - INFO - [__main__] - [TheBell] Page 3 has only older articles. Stopping.
+2026-02-20 08:56:23,830 - INFO - [__main__] - [TheBell] Collection complete. Found 42 articles.
+2026-02-20 08:56:23,830 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-02-19...
+2026-02-20 08:56:23,830 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-02-20 08:56:29,714 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-02-20 08:56:29,714 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-02-20 08:56:32,204 - INFO - [__main__] - [DealSite+] Found: 1600억 주고 샀는데…JKL 창업주 리스크 비화 (2026-02-19)
+2026-02-20 08:56:32,221 - INFO - [__main__] - [DealSite+] Found: 감성 브랜딩 성공의 그림자…직원을 오브제 취급 (2026-02-19)
+2026-02-20 08:56:32,242 - INFO - [__main__] - [DealSite+] Found: 어피니티, 골드만삭스에 7500억 버거킹재팬 매각 (2026-02-19)
+2026-02-20 08:56:32,259 - INFO - [__main__] - [DealSite+] Found: 결국 세제실 전관에 SOS…국세청과 전면전 맞불 (2026-02-19)
+2026-02-20 08:56:32,277 - INFO - [__main__] - [DealSite+] Found: 15개 계열사로 피한 공정법…결국 철퇴 맞았다 (2026-02-19)
+2026-02-20 08:56:32,294 - INFO - [__main__] - [DealSite+] Found: 자산 4%만 공익 사업에…복지재단으로 그룹지배 (2026-02-19)
+2026-02-20 08:56:32,428 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-02-20 08:56:34,861 - INFO - [__main__] - [DealSite+] Found: 1600억 주고 샀는데…JKL 창업주 리스크 비화 (2026-02-19)
+2026-02-20 08:56:34,905 - INFO - [__main__] - [DealSite+] Found: 감성 브랜딩 성공의 그림자…직원을 오브제 취급 (2026-02-19)
+2026-02-20 08:56:34,929 - INFO - [__main__] - [DealSite+] Found: 어피니티, 골드만삭스에 7500억 버거킹재팬 매각 (2026-02-19)
+2026-02-20 08:56:34,951 - INFO - [__main__] - [DealSite+] Found: 결국 세제실 전관에 SOS…국세청과 전면전 맞불 (2026-02-19)
+2026-02-20 08:56:34,968 - INFO - [__main__] - [DealSite+] Found: 15개 계열사로 피한 공정법…결국 철퇴 맞았다 (2026-02-19)
+2026-02-20 08:56:34,985 - INFO - [__main__] - [DealSite+] Found: 자산 4%만 공익 사업에…복지재단으로 그룹지배 (2026-02-19)
+2026-02-20 08:56:35,111 - INFO - [__main__] - [DealSite+] Collection complete. Found 12 articles.
+2026-02-20 08:56:35,111 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-02-19...
+2026-02-20 08:56:35,111 - INFO - [__main__] - [investchosun] Starting login process...
+2026-02-20 08:56:40,879 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-02-20 08:56:40,879 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-02-20 08:56:43,042 - INFO - [__main__] - [InvestChosun] Found: 미래에셋그룹 코빗 인수, '코인거래소 지분율 제한' 변수 부상 (2026-02-19)
+2026-02-20 08:56:43,057 - INFO - [__main__] - [InvestChosun] Found: 힐하우스의 이지스운용 인수 실사 마무리 국면…변수는 흥국생명 (2026-02-19)
+2026-02-20 08:56:43,071 - INFO - [__main__] - [InvestChosun] Found: 어피너티, 골드만삭스에 '버거킹재팬' 매각 완료 (2026-02-19)
+2026-02-20 08:56:43,117 - INFO - [__main__] - [InvestChosun] Collection complete. Found 3 articles.
+2026-02-20 08:56:43,693 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-20 08:56:43,695 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-20 08:56:45,061 - INFO - [__main__] - [History] Loaded 811 URLs and 811 titles from history.
+2026-02-20 08:56:45,061 - INFO - [__main__] - [History] Skipping Duplicate (URL): 인빅터스PEA, 신생 하우스의 반전 드라마 [TheBell]
+2026-02-20 08:56:45,061 - INFO - [__main__] - [History] Skipping Duplicate (URL): 현대지에프홀딩스 홈쇼핑 흡수…윤영식 부사장 주목 [TheBell]
+2026-02-20 08:56:45,061 - INFO - [__main__] - [History] Skipping Duplicate (URL): '웨이비스 엑시트' SG PE, MOIC1.8배·IRR 16% 달성 [TheBell]
+2026-02-20 08:56:45,062 - INFO - [__main__] - [History] Skipping Duplicate (URL): ‘전문가 매칭’ 커리어데이, 시리즈A 브릿지 추진 [TheBell]
+2026-02-20 08:56:45,062 - INFO - [__main__] - [History] Skipping Duplicate (URL): 영풍·MBK, 고려아연 선임 이사 6인 제안 이유는 [TheBell]
+2026-02-20 08:56:45,062 - INFO - [__main__] - [History] Skipping Duplicate (URL): 결국 세제실 전관에 SOS…국세청과 전면전 맞불 [DealSitePlus]
+2026-02-20 08:56:45,062 - INFO - [__main__] - [History] Skipping Duplicate (URL): 15개 계열사로 피한 공정법…결국 철퇴 맞았다 [DealSitePlus]
+2026-02-20 08:56:45,062 - INFO - [__main__] - [History] Skipping Duplicate (URL): 자산 4%만 공익 사업에…복지재단으로 그룹지배 [DealSitePlus]
+2026-02-20 08:56:45,062 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 43
+2026-02-20 08:56:45,062 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-02-20 08:56:45,062 - INFO - [__main__] - [PDF] [1/43] Processing: [단독] "에이피알에도 없다"…'K미용기기' 정조준한 아모레, 1위 탈환 시동 (Hankyung)
+2026-02-20 08:56:51,673 - INFO - [__main__] - [PDF] [2/43] Processing: “IB 역할은 그룹 자금 '공급 엔진'…경쟁력은 선제적 딜 소싱” [자본시장을 움직이는 사람들] (Hankyung)
+2026-02-20 08:56:58,283 - INFO - [__main__] - [PDF] [3/43] Processing: 경동제약, 지난해 영업이익 77억원 달성…전년比 192%↑ (Hankyung)
+2026-02-20 08:57:04,794 - INFO - [__main__] - [PDF] [4/43] Processing: 태광그룹, 애경산업 인수가 225억원 깎았다 (Hankyung)
+2026-02-20 08:57:11,246 - INFO - [__main__] - [PDF] [5/43] Processing: 삼성SDI, 디스플레이 지분 팔아 배터리 투자 (Hankyung)
+2026-02-20 08:57:17,743 - INFO - [__main__] - [PDF] [6/43] Processing: 삼성SDI, '알짜' 삼성디스플레이 지분 매각한다 (Hankyung)
+2026-02-20 08:57:24,265 - INFO - [__main__] - [PDF] [7/43] Processing: 태광산업 덕에 넉달 시간 벌었던 티투PE… 결국 태광에 손벌리나 (Hankyung)
+2026-02-20 08:57:30,826 - INFO - [__main__] - [PDF] [8/43] Processing: "올해 M&A 시장 화두는?"…삼일PwC, 내달 세미나 개최 (Hankyung)
+2026-02-20 08:57:37,331 - INFO - [__main__] - [PDF] [9/43] Processing: 경영권 파는 아이큐어, '유동성 압박·거래정지' 이중고 풀까 (TheBell)
+2026-02-20 08:57:43,899 - INFO - [__main__] - [PDF] [10/43] Processing: SK에코엔지, 그룹 친환경 에너지 부진…방향 바꾸나 (TheBell)
+2026-02-20 08:57:50,974 - INFO - [__main__] - [PDF] [11/43] Processing: 태광·애경, 리콜 리스크 넘은 '막판 빅딜' 성사 막전막후 (TheBell)
+2026-02-20 08:57:57,475 - INFO - [__main__] - [PDF] [12/43] Processing: 치약 리콜 변수 속 몸값 5% 조정 '결단'…인수 마침표 (TheBell)
+2026-02-20 08:58:03,926 - INFO - [__main__] - [PDF] [13/43] Processing: 캠코, 동성제약 인수에 150억 보탠다 (TheBell)
+2026-02-20 08:58:10,351 - INFO - [__main__] - [PDF] [14/43] Processing: '뚝심 통한' 한앤코, 남양유업 5년 적자 탈출 비결은 (TheBell)
+2026-02-20 08:58:16,881 - INFO - [__main__] - [PDF] [15/43] Processing: '코스닥 상장사' 아이큐어, 경영권 매각 추진 (TheBell)
+2026-02-20 08:58:23,381 - INFO - [__main__] - [PDF] [16/43] Processing: 태광산업, 동성제약 FI 지분 콜옵션 확보…조건은 (TheBell)
+2026-02-20 08:58:29,815 - INFO - [__main__] - [PDF] [17/43] Processing: SK 신재생 1.8조 패키지 딜, KKR식 노하우 이식될까 (TheBell)
+2026-02-20 08:58:36,322 - INFO - [__main__] - [PDF] [18/43] Processing: 슈퍼마켓 매각 눈앞인데…회생안 인가에 속타는 홈플러스 (TheBell)
+2026-02-20 08:58:42,786 - INFO - [__main__] - [PDF] [19/43] Processing: MYSC, KTOA 벤처리움 운영사 따냈다 (TheBell)
+2026-02-20 08:58:49,242 - INFO - [__main__] - [PDF] [20/43] Processing: '2차전지 전문' JR에너지솔루션, 250억 투자 유치 추진 (TheBell)
+2026-02-20 08:58:56,146 - INFO - [__main__] - [PDF] [21/43] Processing: 김동철 대표, 스틱 인수 크린토피아 합류한 배경 (TheBell)
+2026-02-20 08:59:02,643 - INFO - [__main__] - [PDF] [22/43] Processing: 김동환의 넥시드벤처스, 하나벤처스 3인방 모였다 (TheBell)
+2026-02-20 08:59:09,095 - INFO - [__main__] - [PDF] [23/43] Processing: 플럭스벤처, 신한증권과 손잡고 충남펀드 결성 돌입 (TheBell)
+2026-02-20 08:59:15,531 - INFO - [__main__] - [PDF] [24/43] Processing: 박민준 뤼튼AX 대표 “구축 아닌 실행, 매출로 연결” (TheBell)
+2026-02-20 08:59:22,367 - INFO - [__main__] - [PDF] [25/43] Processing: '7년째 협력' 케이앤투자-하나증권, 모태 GP 따냈다 (TheBell)
+2026-02-20 08:59:28,819 - INFO - [__main__] - [PDF] [26/43] Processing: 펀무원의 예고된 반란 (TheBell)
+2026-02-20 08:59:35,337 - INFO - [__main__] - [PDF] [27/43] Processing: 스틱, 환경 원자재 거래 플랫폼 '씨너지' 리딩 투자사로 등판 (TheBell)
+2026-02-20 08:59:41,814 - INFO - [__main__] - [PDF] [28/43] Processing: 베어스톤·그루투자파트너스, JR에너지솔루션에 150억 투자 (TheBell)
+2026-02-20 08:59:48,319 - INFO - [__main__] - [PDF] [29/43] Processing: 강훈모 전 하나벤처스 CIO, 신규 VC 설립 (TheBell)
+2026-02-20 08:59:54,785 - INFO - [__main__] - [PDF] [30/43] Processing: 쏠레어파트너스, IPTV펀드 첫 투자는 영화 '복수귀' (TheBell)
+2026-02-20 09:00:01,284 - INFO - [__main__] - [PDF] [31/43] Processing: 누적 투자 1300억…IPO 시계 돌린다 (TheBell)
+2026-02-20 09:00:07,914 - INFO - [__main__] - [PDF] [32/43] Processing: 진통 끝 한국사무소 여는 ICG, 전우석 대표가 이끈다 (TheBell)
+2026-02-20 09:00:14,420 - INFO - [__main__] - [PDF] [33/43] Processing: '흑자 전환' 효성벤처스, 선순환구조 진입 (TheBell)
+2026-02-20 09:00:20,874 - INFO - [__main__] - [PDF] [34/43] Processing: '상장 1년' 심플랫폼, 수주 확대 가능성 입증 (TheBell)
+2026-02-20 09:00:27,324 - INFO - [__main__] - [PDF] [35/43] Processing: 지분법 급증 DSC인베, 상장사 투자 빛 봤다 (TheBell)
+2026-02-20 09:00:33,773 - INFO - [__main__] - [PDF] [36/43] Processing: 대성창투, 영업익 92% 감소…성과보수 부재·기저효과 (TheBell)
+2026-02-20 09:00:40,245 - INFO - [__main__] - [PDF] [37/43] Processing: 넥스트플레이어, 하반기 상장 레이스 돌입 (TheBell)
+2026-02-20 09:00:46,787 - INFO - [__main__] - [PDF] [38/43] Processing: 1600억 주고 샀는데…JKL 창업주 리스크 비화 (DealSitePlus)
+2026-02-20 09:00:53,734 - INFO - [__main__] - [PDF] [39/43] Processing: 감성 브랜딩 성공의 그림자…직원을 오브제 취급 (DealSitePlus)
+2026-02-20 09:01:00,522 - INFO - [__main__] - [PDF] [40/43] Processing: 어피니티, 골드만삭스에 7500억 버거킹재팬 매각 (DealSitePlus)
+2026-02-20 09:01:07,254 - INFO - [__main__] - [PDF] [41/43] Processing: 미래에셋그룹 코빗 인수, '코인거래소 지분율 제한' 변수 부상 (InvestChosun)
+2026-02-20 09:01:13,845 - INFO - [__main__] - [PDF] [42/43] Processing: 힐하우스의 이지스운용 인수 실사 마무리 국면…변수는 흥국생명 (InvestChosun)
+2026-02-20 09:01:20,332 - INFO - [__main__] - [PDF] [43/43] Processing: 어피너티, 골드만삭스에 '버거킹재팬' 매각 완료 (InvestChosun)
+2026-02-20 09:01:26,766 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-02-20 09:01:28,402 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-20 09:01:31,680 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/14ew-LvS90ZlJpF7rnoCIue2F9-Ox2NhE/view?usp=drivesdk
+2026-02-20 09:01:38,117 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-20 09:01:41,432 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1arsyFFa6B6k1KZkHV5ZGSmgO8E8kgB3o/view?usp=drivesdk
+2026-02-20 09:01:42,064 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-20 09:01:44,885 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1np891TDkUt3_W7aT4hKWj1e_L2h2qW0B/view?usp=drivesdk
+2026-02-20 09:01:45,621 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-20 09:01:49,551 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1IjG0D_vW1x7h0EpfwJ5CGJo_jmJuV67M/view?usp=drivesdk
+2026-02-20 09:01:50,620 - INFO - [__main__] - [History] Updated sheet with 43 new articles.
+2026-02-20 09:01:51,413 - INFO - [__main__] - Old history cleanup complete: 50 rows deleted.
+2026-02-20 09:01:55,992 - INFO - [__main__] - 
+============================================================
+2026-02-20 09:01:55,993 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-02-20 09:01:55,993 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-02-20  9:01:58.55 
+================================================== 
+ 

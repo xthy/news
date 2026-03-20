@@ -1,0 +1,100 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-02-23  8:55:50.91 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-02-23 08:55:51,910 - INFO - [__main__] - Target Date Range: 2026-02-22 ~ 2026-02-23
+2026-02-23 08:55:51,911 - INFO - [__main__] - ============================================================
+2026-02-23 08:55:51,911 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-02-23 08:55:51,911 - INFO - [__main__] - ============================================================
+2026-02-23 08:55:51,912 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-02-23 08:55:51,912 - INFO - [WDM] - ====== WebDriver manager ======
+2026-02-23 08:55:52,773 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-23 08:55:52,796 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-23 08:55:52,806 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-23 08:55:52,844 - INFO - [WDM] - WebDriver version 143.0.7499.192 selected
+2026-02-23 08:55:52,846 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-23 08:55:52,846 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/143.0.7499.192/win32/chromedriver-win32.zip
+2026-02-23 08:55:52,889 - INFO - [WDM] - Driver downloading response is 200
+2026-02-23 08:55:52,975 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-02-23 08:55:53,081 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\143.0.7499.192]
+2026-02-23 08:55:55,005 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-02-23 08:55:55,005 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-02-23 08:55:55,005 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-02-23 08:55:55,005 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-02-22...
+2026-02-23 08:55:55,005 - INFO - [__main__] - [hankyung] Starting login process...
+2026-02-23 08:56:01,047 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-02-23 08:56:01,047 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-02-23 08:56:03,286 - INFO - [__main__] - [Hankyung] Found: 中라이벌 위협에 위기였는데…'러닝 붐' 덕에 2900억 '잭팟' (20260222)
+2026-02-23 08:56:03,483 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-02-23 08:56:05,666 - INFO - [__main__] - [Hankyung] Found: 中라이벌 위협에 위기였는데…'러닝 붐' 덕에 2900억 '잭팟' (20260222)
+2026-02-23 08:56:05,840 - INFO - [__main__] - [Hankyung] Collection complete. Found 2 articles.
+2026-02-23 08:56:05,840 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-02-22 ~ 2026-02-23)...
+2026-02-23 08:56:05,840 - INFO - [__main__] - [thebell] Starting login process...
+2026-02-23 08:56:11,931 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-02-23 08:56:11,931 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-02-23 08:56:11,931 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-02-23 08:56:15,047 - INFO - [__main__] - [TheBell] Found: 울산 AI 데이터센터·시지바이오 우협 결과에 '촉각' (2026-02-23)
+2026-02-23 08:56:15,127 - INFO - [__main__] - [TheBell] Found: 한앤컴퍼니의 나눗셈 (2026-02-23)
+2026-02-23 08:56:15,513 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-02-23 08:56:17,230 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-23 08:56:17,230 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-02-23 08:56:17,230 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-02-23 08:56:18,977 - INFO - [__main__] - [TheBell] Found: 우리벤처, 엔알비 회수 속도…원금 이상 확보 (2026-02-23)
+2026-02-23 08:56:19,030 - INFO - [__main__] - [TheBell] Found: 모태펀드·농금원 1차 정시 출자 서류 접수 막바지 (2026-02-23)
+2026-02-23 08:56:19,105 - INFO - [__main__] - [TheBell] Found: 한앤컴퍼니의 나눗셈 (2026-02-23)
+2026-02-23 08:56:19,442 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-02-23 08:56:21,544 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-02-23 08:56:21,545 - INFO - [__main__] - [TheBell] Collection complete. Found 5 articles.
+2026-02-23 08:56:21,545 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-02-22...
+2026-02-23 08:56:21,545 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-02-23 08:56:27,573 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-02-23 08:56:27,573 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-02-23 08:56:30,053 - INFO - [__main__] - [DealSite+] Found: SK넥실리스 3000억 유치난항…국민성장펀드 외면 (2026-02-23)
+2026-02-23 08:56:30,233 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-02-23 08:56:32,665 - INFO - [__main__] - [DealSite+] Found: SK넥실리스 3000억 유치난항…국민성장펀드 외면 (2026-02-23)
+2026-02-23 08:56:32,683 - INFO - [__main__] - [DealSite+] Found: 권토중래 중국통 김진하…한중관계 개선에 기대 (2026-02-23)
+2026-02-23 08:56:32,701 - INFO - [__main__] - [DealSite+] Found: 카리나의 SM엔터…벤처캐피탈 700억 펀드 만든다 (2026-02-23)
+2026-02-23 08:56:32,720 - INFO - [__main__] - [DealSite+] Found: 인도 대부업 어피닛…3000억 코스닥 IPO 도전 (2026-02-23)
+2026-02-23 08:56:32,737 - INFO - [__main__] - [DealSite+] Found: 법원도 인정한 특수관계…5600억 베팅한 최윤범 (2026-02-23)
+2026-02-23 08:56:32,754 - INFO - [__main__] - [DealSite+] Found: 재계 2-3세들의 교두보…사교계의 풍운아 (2026-02-23)
+2026-02-23 08:56:32,905 - INFO - [__main__] - [DealSite+] Collection complete. Found 7 articles.
+2026-02-23 08:56:32,905 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-02-22...
+2026-02-23 08:56:32,905 - INFO - [__main__] - [investchosun] Starting login process...
+2026-02-23 08:56:38,674 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-02-23 08:56:38,675 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/tlist.html?catid=12
+2026-02-23 08:56:40,945 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-02-23 08:56:41,563 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-23 08:56:41,565 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-23 08:56:43,025 - INFO - [__main__] - [History] Loaded 811 URLs and 811 titles from history.
+2026-02-23 08:56:43,026 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 11
+2026-02-23 08:56:43,026 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-02-23 08:56:43,026 - INFO - [__main__] - [PDF] [1/11] Processing: 中라이벌 위협에 위기였는데…'러닝 붐' 덕에 2900억 '잭팟' (Hankyung)
+2026-02-23 08:56:49,695 - INFO - [__main__] - [PDF] [2/11] Processing: 울산 AI 데이터센터·시지바이오 우협 결과에 '촉각' (TheBell)
+2026-02-23 08:56:56,251 - INFO - [__main__] - [PDF] [3/11] Processing: 한앤컴퍼니의 나눗셈 (TheBell)
+2026-02-23 08:57:02,727 - INFO - [__main__] - [PDF] [4/11] Processing: 우리벤처, 엔알비 회수 속도…원금 이상 확보 (TheBell)
+2026-02-23 08:57:09,122 - INFO - [__main__] - [PDF] [5/11] Processing: 모태펀드·농금원 1차 정시 출자 서류 접수 막바지 (TheBell)
+2026-02-23 08:57:15,582 - INFO - [__main__] - [PDF] [6/11] Processing: SK넥실리스 3000억 유치난항…국민성장펀드 외면 (DealSitePlus)
+2026-02-23 08:57:22,495 - INFO - [__main__] - [PDF] [7/11] Processing: 권토중래 중국통 김진하…한중관계 개선에 기대 (DealSitePlus)
+2026-02-23 08:57:29,301 - INFO - [__main__] - [PDF] [8/11] Processing: 카리나의 SM엔터…벤처캐피탈 700억 펀드 만든다 (DealSitePlus)
+2026-02-23 08:57:36,051 - INFO - [__main__] - [PDF] [9/11] Processing: 인도 대부업 어피닛…3000억 코스닥 IPO 도전 (DealSitePlus)
+2026-02-23 08:57:42,858 - INFO - [__main__] - [PDF] [10/11] Processing: 법원도 인정한 특수관계…5600억 베팅한 최윤범 (DealSitePlus)
+2026-02-23 08:57:49,796 - INFO - [__main__] - [PDF] [11/11] Processing: 재계 2-3세들의 교두보…사교계의 풍운아 (DealSitePlus)
+2026-02-23 08:57:56,680 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-02-23 08:57:56,916 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-23 08:57:59,397 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1SCJprnfTbO6ZkmA1PI77SNy-gN-gh07q/view?usp=drivesdk
+2026-02-23 08:58:00,224 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-23 08:58:02,815 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/17MSaVDUAxFJB5N3laVs8GVUV15peG4PL/view?usp=drivesdk
+2026-02-23 08:58:04,220 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-02-23 08:58:07,340 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1ylP6UMiN9uGSjZIuJ7l5pipTJfON6P2E/view?usp=drivesdk
+2026-02-23 08:58:08,104 - INFO - [__main__] - [History] Updated sheet with 11 new articles.
+2026-02-23 08:58:08,884 - INFO - [__main__] - Old history cleanup complete: 63 rows deleted.
+2026-02-23 08:58:12,181 - INFO - [__main__] - 
+============================================================
+2026-02-23 08:58:12,182 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-02-23 08:58:12,182 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-02-23  8:58:14.53 
+================================================== 
+ 
