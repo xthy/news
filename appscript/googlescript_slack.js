@@ -11,6 +11,10 @@ var SLACK_WEBHOOK_URL = typeof SECRETS !== 'undefined' ? SECRETS.SLACK_WEBHOOK_U
 var SEND_SLACK = true;
 var SLACK_CHANNEL = '#news-run';
 
+// ===== 다수 이메일 수신자 설정 =====
+var EMAIL_RECIPIENT = "michaelkim@affinityequity.com, samuelkim@affinityequity.com, hyeonchoi@affinityequity.com, dhkim@affinityequity.com, cindychoi@affinityequity.com, davidkim@affinityequity.com, dhchoi@affinityequity.com, yhlee@affinityequity.com, jennyhwang@affinityequity.com, mschoi@affinityequity.com, seanlee@affinityequity.com, thyang@affinityequity.com";
+var SEND_EMAIL = true;
+
 // ===== 히스토리 설정 (외부 스프레드시트) =====
 var HISTORY_SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/18KrjCdEEcNJrmNRAV19nhwAoya9l65gzH3ypFYaRlHM/edit?usp=sharing';
 var HISTORY_SHEET_NAME = '뉴스 히스토리';
@@ -34,8 +38,8 @@ var KEYWORD_GROUPING = {
   '유베이스': 'UBase',
   '서브원': 'Serveone',
   '락앤락': 'Lock&Lock',
-  '잡코리아': 'JOBKOREA', '알바몬': 'JOBKOREA', '사람인': 'JOBKOREA', '원티드': 'JOBKOREA',
-  '토스알바': 'JOBKOREA', '당근알바': 'JOBKOREA', '리멤버컴퍼니': 'JOBKOREA',
+  '잡코리아': 'Worxphere', '알바몬': 'Worxphere', '사람인': 'Worxphere', '원티드': 'Worxphere',
+  '토스알바': 'Worxphere', '당근알바': 'Worxphere', '리멤버컴퍼니': 'Worxphere',
   '요기요': 'YGY', '쿠팡이츠': 'YGY', '배달의민족': 'YGY', '배민': 'YGY', '땡겨요': 'YGY',
   'SK렌터카': 'SKR and LTR', '롯데렌탈': 'SKR and LTR', '롯데렌터카': 'SKR and LTR',
   '어피니티': 'Market', '어피너티': 'Market', 'mbk': 'Market', 'kkr': 'Market', 'cvc': 'Market',
@@ -1260,7 +1264,7 @@ function sendSlackNewsReport(articles) {
 
   var grouped = groupArticlesByDisplayGroup(articles);
   var dateStr = Utilities.formatDate(new Date(), 'GMT+9', 'MM월 dd일');
-  var groupOrder = ['BKR', 'HCI', 'UBase', 'Serveone', 'Lock&Lock', 'JOBKOREA', 'YGY', 'SKR and LTR', 'Market'];
+  var groupOrder = ['BKR', 'HCI', 'UBase', 'Serveone', 'Lock&Lock', 'Worxphere', 'YGY', 'SKR and LTR', 'Market'];
 
   var blocks = [{
     type: "section",
@@ -1346,9 +1350,13 @@ function fetchAndWrite() {
     ' → ' + globalDeduplicated.length + ' → ' + finalArticles.length + ' (히스토리 필터링 후)');
   Logger.log('⏱️ 소요: ' + Math.round(duration) + '초');
 
-  if (finalArticles.length > 0) sendSlackNewsReport(finalArticles);
+  if (finalArticles.length > 0) {
+    sendSlackNewsReport(finalArticles);
+    sendEmailNewsReport(finalArticles);
+  }
 }
 
+// 기존에는 slack만 보내는 함수였으나, 이제 메일도 함께 보냅니다. 함수명은 호환성을 위해 유지합니다.
 function sendSlackOnly() {
   var allRaw = fetchAllNewsFromBothSources();
   var unique = removeDuplicatesFromAllArticles(allRaw);
@@ -1364,7 +1372,55 @@ function sendSlackOnly() {
   // ⭐ 히스토리에 저장
   saveToHistory(finalArticles);
 
-  if (finalArticles.length > 0) sendSlackNewsReport(finalArticles);
+  if (finalArticles.length > 0) {
+    sendSlackNewsReport(finalArticles);
+    sendEmailNewsReport(finalArticles);
+  }
+}
+
+function sendEmailNewsReport(articles) {
+  if (!SEND_EMAIL || !articles.length) return false;
+
+  var grouped = groupArticlesByDisplayGroup(articles);
+  var dateStr = Utilities.formatDate(new Date(), 'GMT+9', 'MM월 dd일');
+  var groupOrder = ['BKR', 'HCI', 'UBase', 'Serveone', 'Lock&Lock', 'Worxphere', 'YGY', 'SKR and LTR', 'Market'];
+
+  var subject = 'Daily News Run - ' + dateStr;
+
+  var htmlBody = '<strong>Daily News Run - ' + dateStr + '</strong><br/>';
+  htmlBody += 'Total ' + articles.length + ' Articles<br/><br/>';
+
+  for (var i = 0; i < groupOrder.length; i++) {
+    var group = groupOrder[i];
+    var arts = grouped[group];
+    if (!arts || arts.length === 0) continue;
+
+    htmlBody += '<strong>' + group + '</strong><br/>';
+    var sorted = arts.sort(function (a, b) {
+      var ap = calculateKeywordPriority(a);
+      var bp = calculateKeywordPriority(b);
+      if (bp !== ap) return bp - ap;
+      if (b.importanceScore !== a.importanceScore) return b.importanceScore - a.importanceScore;
+      return b.pubDate - a.pubDate;
+    }).slice(0, 10);
+
+    for (var j = 0; j < sorted.length; j++) {
+      htmlBody += '<a href="' + sorted[j].link + '">' + sorted[j].title + '</a><br/>';
+    }
+    htmlBody += '<br/>';
+  }
+
+  try {
+    GmailApp.sendEmail(EMAIL_RECIPIENT, subject, '', {
+      name: 'News Bot',
+      htmlBody: htmlBody
+    });
+    Logger.log('✅ 이메일 전송 성공! (수신처: 여러 명)');
+    return true;
+  } catch (e) {
+    Logger.log('❌ 이메일 전송 에러: ' + e.toString());
+    return false;
+  }
 }
 
 // ===== API 키 설정 함수 (한 번만 실행) =====
