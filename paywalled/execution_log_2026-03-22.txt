@@ -1,0 +1,78 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-22  8:55:51.10 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-22 08:55:51,775 - INFO - [__main__] - Target Date Range: 2026-03-21 ~ 2026-03-22
+2026-03-22 08:55:51,776 - INFO - [__main__] - ============================================================
+2026-03-22 08:55:51,776 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-22 08:55:51,776 - INFO - [__main__] - ============================================================
+2026-03-22 08:55:51,777 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-22 08:55:51,777 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-22 08:55:52,847 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-22 08:55:52,871 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-22 08:55:52,880 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-22 08:55:52,918 - INFO - [WDM] - WebDriver version 146.0.7680.153 selected
+2026-03-22 08:55:52,920 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/146.0.7680.153/win32/chromedriver-win32.zip
+2026-03-22 08:55:52,920 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/146.0.7680.153/win32/chromedriver-win32.zip
+2026-03-22 08:55:52,964 - INFO - [WDM] - Driver downloading response is 200
+2026-03-22 08:55:53,050 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-22 08:55:53,153 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\146.0.7680.153]
+2026-03-22 08:55:54,447 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-22 08:55:54,447 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-22 08:55:54,447 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-22 08:55:54,447 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-21...
+2026-03-22 08:55:54,447 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-22 08:56:00,557 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-22 08:56:00,557 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-22 08:56:02,998 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-22 08:56:05,409 - INFO - [__main__] - [Hankyung] Collection complete. Found 0 articles.
+2026-03-22 08:56:05,410 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-21 ~ 2026-03-22)...
+2026-03-22 08:56:05,410 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-22 08:56:11,481 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-22 08:56:11,481 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-22 08:56:11,481 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-22 08:56:13,590 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-22 08:56:15,633 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-22 08:56:15,633 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-22 08:56:15,633 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-22 08:56:17,703 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-22 08:56:19,885 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-22 08:56:19,885 - INFO - [__main__] - [TheBell] Collection complete. Found 0 articles.
+2026-03-22 08:56:19,885 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-21...
+2026-03-22 08:56:19,885 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-22 08:56:25,856 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-22 08:56:25,856 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-22 08:56:28,434 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-22 08:56:30,903 - INFO - [__main__] - [DealSite+] Found: 군인공제회, 기존 GP와 공동투자…2000억 PE출자 (2026-03-21)
+2026-03-22 08:56:31,081 - INFO - [__main__] - [DealSite+] Collection complete. Found 1 articles.
+2026-03-22 08:56:31,081 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-21...
+2026-03-22 08:56:31,081 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-22 08:56:36,921 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-03-22 08:56:36,921 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-22 08:56:40,065 - INFO - [__main__] - [InvestChosun] Article list loaded successfully
+2026-03-22 08:56:40,068 - INFO - [__main__] - [InvestChosun] Current URL: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-22 08:56:40,071 - INFO - [__main__] - [InvestChosun] JavaScript extracted 10 articles from DOM
+2026-03-22 08:56:40,072 - INFO - [__main__] - [InvestChosun] Found: "물류센터 다음은 데이터센터" 시장 호황에 브로커 활개...'옥석가리기' 과제로 (2026-03-22)
+2026-03-22 08:56:40,072 - INFO - [__main__] - [InvestChosun] Collection complete. Found 1 articles.
+2026-03-22 08:56:40,523 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-22 08:56:40,525 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-22 08:56:41,791 - INFO - [__main__] - [History] Loaded 932 URLs and 932 titles from history.
+2026-03-22 08:56:41,791 - INFO - [__main__] - [History] Skipping Duplicate (URL): 군인공제회, 기존 GP와 공동투자…2000억 PE출자 [DealSitePlus]
+2026-03-22 08:56:41,791 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 1
+2026-03-22 08:56:41,791 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-22 08:56:41,791 - INFO - [__main__] - [PDF] [1/1] Processing: "물류센터 다음은 데이터센터" 시장 호황에 브로커 활개...'옥석가리기' 과제로 (InvestChosun)
+2026-03-22 08:56:48,308 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-22 08:56:48,522 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-22 08:56:51,078 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1OfEUILBtyXYvWaQ6gvN8DLP-nMpi8g54/view?usp=drivesdk
+2026-03-22 08:56:51,718 - INFO - [__main__] - [History] Updated sheet with 1 new articles.
+2026-03-22 08:56:52,501 - INFO - [__main__] - Old history cleanup complete: 12 rows deleted.
+2026-03-22 08:56:55,178 - INFO - [__main__] - 
+============================================================
+2026-03-22 08:56:55,178 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-22 08:56:55,178 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-22  8:56:57.43 
+================================================== 
+ 

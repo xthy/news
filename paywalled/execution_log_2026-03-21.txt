@@ -1,0 +1,147 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-21  8:55:50.97 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-21 08:55:52,033 - INFO - [__main__] - Target Date Range: 2026-03-20 ~ 2026-03-21
+2026-03-21 08:55:52,034 - INFO - [__main__] - ============================================================
+2026-03-21 08:55:52,034 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-21 08:55:52,035 - INFO - [__main__] - ============================================================
+2026-03-21 08:55:52,035 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-21 08:55:52,035 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-21 08:55:52,823 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-21 08:55:52,843 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-21 08:55:52,853 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-21 08:55:52,889 - INFO - [WDM] - WebDriver version 146.0.7680.153 selected
+2026-03-21 08:55:52,890 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/146.0.7680.153/win32/chromedriver-win32.zip
+2026-03-21 08:55:52,890 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/146.0.7680.153/win32/chromedriver-win32.zip
+2026-03-21 08:55:52,937 - INFO - [WDM] - Driver downloading response is 200
+2026-03-21 08:55:53,023 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-21 08:55:53,126 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\146.0.7680.153]
+2026-03-21 08:55:54,426 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-21 08:55:54,426 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-21 08:55:54,426 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-21 08:55:54,426 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-20...
+2026-03-21 08:55:54,426 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-21 08:56:00,513 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-21 08:56:00,513 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-21 08:56:02,754 - INFO - [__main__] - [Hankyung] Found: 새마을금고, 작년에도 '조 단위' 적자 (20260320)
+2026-03-21 08:56:02,762 - INFO - [__main__] - [Hankyung] Found: 정태순 회장 "세계 1위 MSC와 협력 위해 장금마리타임 지분 판다" (20260320)
+2026-03-21 08:56:02,770 - INFO - [__main__] - [Hankyung] Found: 신한은행, 신임 사외이사에 윤준 변호사·채은미 교수 추천 (20260320)
+2026-03-21 08:56:02,786 - INFO - [__main__] - [Hankyung] Found: 고려아연 주총 '안갯속' …최윤범, 집중투표제로 자리 지킬 듯 (20260320)
+2026-03-21 08:56:02,850 - INFO - [__main__] - [Hankyung] Found: 주주가치 앞세운 국민연금…주총장서 '실력 행사' (20260320)
+2026-03-21 08:56:02,858 - INFO - [__main__] - [Hankyung] Found: 존 림 삼성바이오로직스 사장 3연임 성공…"공격적으로 글로벌 확장" [주총] (20260320)
+2026-03-21 08:56:02,865 - INFO - [__main__] - [Hankyung] Found: '독립 4개월차' 삼성에피스홀딩스, 바이오시밀러 넘어 신약개발 노린다 [주총] (20260320)
+2026-03-21 08:56:02,919 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-21 08:56:05,202 - INFO - [__main__] - [Hankyung] Found: 정태순 회장 "세계 1위 MSC와 협력 위해 장금마리타임 지분 판다" (20260320)
+2026-03-21 08:56:05,210 - INFO - [__main__] - [Hankyung] Found: 삼성생명·화재, 삼성전자 지분 1.4조 매각…할인율 2.75% (20260320)
+2026-03-21 08:56:05,226 - INFO - [__main__] - [Hankyung] Found: MBK 긴급자금 1000억 수혈에...홈플러스 체불 임금 전액 상환 (20260320)
+2026-03-21 08:56:05,364 - INFO - [__main__] - [Hankyung] Collection complete. Found 10 articles.
+2026-03-21 08:56:05,364 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-20 ~ 2026-03-21)...
+2026-03-21 08:56:05,364 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-21 08:56:11,559 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-21 08:56:11,559 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-21 08:56:11,559 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-21 08:56:13,309 - INFO - [__main__] - [TheBell] Found: '3자 공동인수' SK AI 데이터센터, 복잡해진 지배구조 셈법 (2026-03-20)
+2026-03-21 08:56:13,359 - INFO - [__main__] - [TheBell] Found: '적대적 M&A' 카드 꺼낸 정부, 한국형 규율은 어디로 (2026-03-20)
+2026-03-21 08:56:13,406 - INFO - [__main__] - [TheBell] Found: 어펄마의 화성코스메틱, K-뷰티 호황에 몸값 '기대' (2026-03-20)
+2026-03-21 08:56:13,453 - INFO - [__main__] - [TheBell] Found: 부산EP, 넥스플렉스 '나스닥·SGX' 동시 상장 검토 (2026-03-20)
+2026-03-21 08:56:13,502 - INFO - [__main__] - [TheBell] Found: 사모펀드의 마법, 크린토피아 (2026-03-20)
+2026-03-21 08:56:13,551 - INFO - [__main__] - [TheBell] Found: HJ중공업, 동부엔지니어링 수장 새 건설부문 대표로 (2026-03-20)
+2026-03-21 08:56:13,605 - INFO - [__main__] - [TheBell] Found: 분리막 제조 전문 WCP, 300억 CB 발행 추진 (2026-03-20)
+2026-03-21 08:56:13,859 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-21 08:56:15,881 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-21 08:56:15,881 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-21 08:56:15,881 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-21 08:56:17,593 - INFO - [__main__] - [TheBell] Found: KCGI벤처스, 설립 한달 만에 VC 라이선스 취득 (2026-03-20)
+2026-03-21 08:56:17,642 - INFO - [__main__] - [TheBell] Found: 아주IB, 매출 감소에도 영업익 증가…바이오 회복세 (2026-03-20)
+2026-03-21 08:56:17,688 - INFO - [__main__] - [TheBell] Found: 주간 VC 투자 브리핑(3.16~20) (2026-03-20)
+2026-03-21 08:56:17,741 - INFO - [__main__] - [TheBell] Found: "분산된 벤처 생태계…'종합 컨트롤타워' 필요" (2026-03-20)
+2026-03-21 08:56:17,791 - INFO - [__main__] - [TheBell] Found: 글로벌몰 26배 성장…미·중·일 국가별 맞춤 전략 (2026-03-20)
+2026-03-21 08:56:17,837 - INFO - [__main__] - [TheBell] Found: 어펄마의 화성코스메틱, K-뷰티 호황에 몸값 '기대' (2026-03-20)
+2026-03-21 08:56:17,884 - INFO - [__main__] - [TheBell] Found: 부산EP, 넥스플렉스 '나스닥·SGX' 동시 상장 검토 (2026-03-20)
+2026-03-21 08:56:17,932 - INFO - [__main__] - [TheBell] Found: BNK벤처-스페이스타임인베, '유비씨' 15억 베팅 (2026-03-20)
+2026-03-21 08:56:17,978 - INFO - [__main__] - [TheBell] Found: 스톤브릿지벤처, 이사진 임기 연장…경영 안정성 강화 (2026-03-20)
+2026-03-21 08:56:18,024 - INFO - [__main__] - [TheBell] Found: SL인베스트, 엔알비 50억 회수…멀티플 2배 이상 청신호 (2026-03-20)
+2026-03-21 08:56:18,074 - INFO - [__main__] - [TheBell] Found: 브릿지웍스, 오프라인 데이터 플랫폼 도약 (2026-03-20)
+2026-03-21 08:56:18,120 - INFO - [__main__] - [TheBell] Found: 캡스톤파트너스, '장정훈 상무' 사내이사로 올린다 (2026-03-20)
+2026-03-21 08:56:18,170 - INFO - [__main__] - [TheBell] Found: 사모펀드의 마법, 크린토피아 (2026-03-20)
+2026-03-21 08:56:18,224 - INFO - [__main__] - [TheBell] Found: 임재원 고피자 대표 "인도 집중…자본 효율 극대화" (2026-03-20)
+2026-03-21 08:56:18,272 - INFO - [__main__] - [TheBell] Found: 교직원공제회, 1년 만에 VC 출자 중단…업계 기대 꺾여 (2026-03-20)
+2026-03-21 08:56:18,319 - INFO - [__main__] - [TheBell] Found: 메가존, 메가존클라우드 지분 사들인다 (2026-03-20)
+2026-03-21 08:56:18,368 - INFO - [__main__] - [TheBell] Found: JW홀딩스, 'CVC 60% 출자룰' 해소 방안 찾는다 (2026-03-20)
+2026-03-21 08:56:18,427 - INFO - [__main__] - [TheBell] Found: 하나벤처스, 6년만에 적자전환…포트폴리오 감액 영향 (2026-03-20)
+2026-03-21 08:56:18,476 - INFO - [__main__] - [TheBell] Found: 올해 2000억 목표…연말 상장 전략 구체화 (2026-03-20)
+2026-03-21 08:56:18,517 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-21 08:56:20,624 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-21 08:56:20,624 - INFO - [__main__] - [TheBell] Collection complete. Found 26 articles.
+2026-03-21 08:56:20,624 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-20...
+2026-03-21 08:56:20,624 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-21 08:56:26,567 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-21 08:56:26,567 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-21 08:56:28,986 - INFO - [__main__] - [DealSite+] Found: 한 코스닥 기업의 주주환원 진정성 (2026-03-20)
+2026-03-21 08:56:29,286 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-21 08:56:31,858 - INFO - [__main__] - [DealSite+] Found: 군인공제회, 기존 GP와 공동투자…2000억 PE출자 (2026-03-21)
+2026-03-21 08:56:32,023 - INFO - [__main__] - [DealSite+] Collection complete. Found 2 articles.
+2026-03-21 08:56:32,023 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-20...
+2026-03-21 08:56:32,023 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-21 08:56:37,877 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-03-21 08:56:37,877 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-21 08:56:41,024 - INFO - [__main__] - [InvestChosun] Article list loaded successfully
+2026-03-21 08:56:41,026 - INFO - [__main__] - [InvestChosun] Current URL: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-21 08:56:41,029 - INFO - [__main__] - [InvestChosun] JavaScript extracted 10 articles from DOM
+2026-03-21 08:56:41,029 - INFO - [__main__] - [InvestChosun] Found: 마스턴운용, 2800억 밸류로 2대주주 유치…태그얼롱에도 회수 변수 (2026-03-20)
+2026-03-21 08:56:41,029 - INFO - [__main__] - [InvestChosun] Collection complete. Found 1 articles.
+2026-03-21 08:56:41,473 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-21 08:56:41,475 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-21 08:56:42,764 - INFO - [__main__] - [History] Loaded 932 URLs and 932 titles from history.
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 새마을금고, 작년에도 '조 단위' 적자 [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 정태순 회장 "세계 1위 MSC와 협력 위해 장금마리타임 지분 판다" [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 신한은행, 신임 사외이사에 윤준 변호사·채은미 교수 추천 [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 고려아연 주총 '안갯속' …최윤범, 집중투표제로 자리 지킬 듯 [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 주주가치 앞세운 국민연금…주총장서 '실력 행사' [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 존 림 삼성바이오로직스 사장 3연임 성공…"공격적으로 글로벌 확장" [주총] [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): '독립 4개월차' 삼성에피스홀딩스, 바이오시밀러 넘어 신약개발 노린다 [주총] [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 삼성생명·화재, 삼성전자 지분 1.4조 매각…할인율 2.75% [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): MBK 긴급자금 1000억 수혈에...홈플러스 체불 임금 전액 상환 [Hankyung]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): '3자 공동인수' SK AI 데이터센터, 복잡해진 지배구조 셈법 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): '적대적 M&A' 카드 꺼낸 정부, 한국형 규율은 어디로 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 어펄마의 화성코스메틱, K-뷰티 호황에 몸값 '기대' [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 부산EP, 넥스플렉스 '나스닥·SGX' 동시 상장 검토 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 사모펀드의 마법, 크린토피아 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): HJ중공업, 동부엔지니어링 수장 새 건설부문 대표로 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 분리막 제조 전문 WCP, 300억 CB 발행 추진 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): KCGI벤처스, 설립 한달 만에 VC 라이선스 취득 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 아주IB, 매출 감소에도 영업익 증가…바이오 회복세 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 주간 VC 투자 브리핑(3.16~20) [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): "분산된 벤처 생태계…'종합 컨트롤타워' 필요" [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 글로벌몰 26배 성장…미·중·일 국가별 맞춤 전략 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): BNK벤처-스페이스타임인베, '유비씨' 15억 베팅 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 스톤브릿지벤처, 이사진 임기 연장…경영 안정성 강화 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): SL인베스트, 엔알비 50억 회수…멀티플 2배 이상 청신호 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 브릿지웍스, 오프라인 데이터 플랫폼 도약 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 캡스톤파트너스, '장정훈 상무' 사내이사로 올린다 [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 임재원 고피자 대표 "인도 집중…자본 효율 극대화" [TheBell]
+2026-03-21 08:56:42,765 - INFO - [__main__] - [History] Skipping Duplicate (URL): 교직원공제회, 1년 만에 VC 출자 중단…업계 기대 꺾여 [TheBell]
+2026-03-21 08:56:42,766 - INFO - [__main__] - [History] Skipping Duplicate (URL): 메가존, 메가존클라우드 지분 사들인다 [TheBell]
+2026-03-21 08:56:42,766 - INFO - [__main__] - [History] Skipping Duplicate (URL): JW홀딩스, 'CVC 60% 출자룰' 해소 방안 찾는다 [TheBell]
+2026-03-21 08:56:42,766 - INFO - [__main__] - [History] Skipping Duplicate (URL): 하나벤처스, 6년만에 적자전환…포트폴리오 감액 영향 [TheBell]
+2026-03-21 08:56:42,766 - INFO - [__main__] - [History] Skipping Duplicate (URL): 올해 2000억 목표…연말 상장 전략 구체화 [TheBell]
+2026-03-21 08:56:42,766 - INFO - [__main__] - [History] Skipping Duplicate (URL): 한 코스닥 기업의 주주환원 진정성 [DealSitePlus]
+2026-03-21 08:56:42,766 - INFO - [__main__] - [History] Skipping Duplicate (URL): 마스턴운용, 2800억 밸류로 2대주주 유치…태그얼롱에도 회수 변수 [InvestChosun]
+2026-03-21 08:56:42,766 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 1
+2026-03-21 08:56:42,766 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-21 08:56:42,766 - INFO - [__main__] - [PDF] [1/1] Processing: 군인공제회, 기존 GP와 공동투자…2000억 PE출자 (DealSitePlus)
+2026-03-21 08:56:48,280 - WARNING - [__main__] - [PDF] Readability failed for https://dealsiteplus.co.kr/articles/158862/016069
+2026-03-21 08:56:48,280 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-21 08:56:48,939 - INFO - [__main__] - [History] Updated sheet with 1 new articles.
+2026-03-21 08:56:49,778 - INFO - [__main__] - Old history cleanup complete: 1 rows deleted.
+2026-03-21 08:56:53,685 - INFO - [__main__] - 
+============================================================
+2026-03-21 08:56:53,685 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-21 08:56:53,685 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-21  8:56:55.96 
+================================================== 
+ 

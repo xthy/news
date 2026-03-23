@@ -65,6 +65,10 @@ HISTORY_SHEET_NAME = "paywalled_pdf"
 HISTORY_DAYS = 30
 AB_TEST_MODE = False
 
+# Gmail Configuration
+EMAIL_RECIPIENT = config_data.get("EMAIL_RECIPIENT", "krusers@affinityequity.com")
+EMAIL_SENDER = config_data.get("EMAIL_SENDER", "")  # Will be auto-detected from Gmail API if empty
+
 def normalize(t):
     if not t: return ""
     # Remove all whitespace, special chars, and lower case
@@ -840,9 +844,9 @@ def generate_pdf_for_link(driver, link_info, index, total):
                 art_id_match = re.search(r'/(\d{13,})\.html', url)
                 if art_id_match:
                     target_url = f"https://www.investchosun.com/svc/news/article_print.html?contid={art_id_match.group(1)}"
-        elif site == "DealSitePlus" and "/articles/" in url:
-            article_id = url.split("/articles/")[1].split("/")[0]
-            target_url = f"https://dealsiteplus.co.kr/articles/print/{article_id}"
+        elif site == "DealSitePlus":
+            # Print URL (/articles/print/{ID}) returns 404; use normal article URL with login session
+            target_url = url
         elif site == "Hankyung" and "/article/" in url:
             target_url = url.replace("/article/", "/print/")
 
@@ -869,6 +873,39 @@ def generate_pdf_for_link(driver, link_info, index, total):
                 document.querySelectorAll(sel).forEach(function(el) { el.remove(); });
             });
         """)
+        
+        # DealSitePlus-specific: remove paywall overlay, login form, sidebar, popular news
+        if site == "DealSitePlus":
+            driver.execute_script("""
+                // Remove paywall/login overlay and form
+                var paywallSelectors = [
+                    '.article-paywall', '.paywall', '.login-overlay',
+                    '[class*="paywall"]', '[class*="login-form"]',
+                    '.article-locked', '.premium-wall',
+                    // Right sidebar with popular news
+                    '.aside-right', '.right-sidebar', '[class*="sidebar"]',
+                    '.most-read', '[class*="popular"]', '[class*="ranking"]',
+                    // Social share buttons
+                    '.share-buttons', '.social-share', '[class*="share"]',
+                    // Tags and related
+                    '.tag-area', '.related', '[class*="related"]'
+                ];
+                paywallSelectors.forEach(function(sel) {
+                    document.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+                });
+                
+                // Also try to reveal hidden article content
+                var articleBody = document.querySelector('.article-body, .article-content, .news-content, .view-content');
+                if (articleBody) {
+                    articleBody.style.maxHeight = 'none';
+                    articleBody.style.overflow = 'visible';
+                }
+                
+                // Remove any overlay/modal that blocks reading
+                document.querySelectorAll('[style*="position: fixed"], [style*="position:fixed"]').forEach(function(el) {
+                    if (el.tagName !== 'HEADER' && el.tagName !== 'NAV') el.remove();
+                });
+            """)
         
         # Inject Readability
         driver.execute_script(f"var s=document.createElement('script');s.src='{READABILITY_JS_URL}';document.head.appendChild(s);")
@@ -1016,7 +1053,8 @@ def upload_to_google_drive(pdf_path):
         return None
 
 def get_google_services():
-    """Returns (drive_service, sheets_service) using the same credentials."""
+    """Returns (drive_service, sheets_service) using the same credentials.
+    Also includes Gmail send scope for email functionality."""
     try:
         from google.oauth2.credentials import Credentials
         from google_auth_oauthlib.flow import InstalledAppFlow
@@ -1026,12 +1064,22 @@ def get_google_services():
         
         SCOPES = [
             'https://www.googleapis.com/auth/drive.file',
-            'https://www.googleapis.com/auth/spreadsheets'
+            'https://www.googleapis.com/auth/spreadsheets',
+            'https://www.googleapis.com/auth/gmail.send'
         ]
         creds = None
         if os.path.exists('token.pickle'):
             with open('token.pickle', 'rb') as token:
                 creds = pickle.load(token)
+        
+        # Check if existing token has all required scopes
+        if creds and creds.valid:
+            existing_scopes = set(creds.scopes or [])
+            required_scopes = set(SCOPES)
+            if not required_scopes.issubset(existing_scopes):
+                logger.info("Token missing required scopes (gmail.send). Re-authenticating...")
+                creds = None
+        
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
@@ -1220,7 +1268,7 @@ def send_slack_notification(webhook_url, site_pdfs, all_links, date_str):
         # Construct dynamic date range for header: (Yesterday - Today)
         start_date_str = (TODAY - timedelta(days=1)).strftime("%m/%d")
         end_date_str = TODAY.strftime("%m/%d")
-        header_text = f"Daily PE & M&A Paywalled News ({start_date_str} - {end_date_str})"
+        header_text = f"PE & M&A Paywalled News ({start_date_str} - {end_date_str})"
 
         blocks = [{
             "type": "header",
@@ -1270,7 +1318,7 @@ def send_teams_notification(webhook_url, site_pdfs, all_links, date_str):
 
         start_date_str = (TODAY - timedelta(days=1)).strftime("%m/%d")
         end_date_str = TODAY.strftime("%m/%d")
-        header_text = f"Daily PE & M&A Paywalled News ({start_date_str} - {end_date_str})"
+        header_text = f"PE & M&A Paywalled News ({start_date_str} - {end_date_str})"
 
         sections = []
         for internal_site, display_name in site_map.items():
@@ -1338,6 +1386,203 @@ def forward_logs_to_slack(webhook_url):
                 requests.post(webhook_url, json=payload, timeout=10)
     except:
         pass
+
+def send_gmail_with_attachments(site_pdf_paths, all_links, date_str):
+    """
+    Send email via Gmail API with per-site PDF attachments.
+    Files are named as 언론사이름_날짜.pdf format.
+    If total attachment size exceeds 20MB, splits into multiple emails.
+    
+    Args:
+        site_pdf_paths: dict of {site_name: local_pdf_path}
+        all_links: list of all collected article link dicts
+        date_str: date string for subject line
+    """
+    if not EMAIL_RECIPIENT:
+        logger.warning("[Gmail] No EMAIL_RECIPIENT configured. Skipping email.")
+        return
+    
+    try:
+        from google.oauth2.credentials import Credentials
+        from google_auth_oauthlib.flow import InstalledAppFlow
+        from google.auth.transport.requests import Request
+        from googleapiclient.discovery import build
+        import pickle
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+        from email.mime.base import MIMEBase
+        from email import encoders
+        
+        # Re-use existing credentials
+        SCOPES = [
+            'https://www.googleapis.com/auth/drive.file',
+            'https://www.googleapis.com/auth/spreadsheets',
+            'https://www.googleapis.com/auth/gmail.send'
+        ]
+        creds = None
+        if os.path.exists('token.pickle'):
+            with open('token.pickle', 'rb') as token:
+                creds = pickle.load(token)
+        
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                logger.error("[Gmail] No valid credentials for Gmail API.")
+                return
+        
+        gmail_service = build('gmail', 'v1', credentials=creds)
+        
+        # Detect sender email from config (or let Gmail API auto-infer)
+        sender_email = EMAIL_SENDER
+        if not sender_email:
+            sender_email = "me"
+        
+        # Site display name mapping
+        site_display = {
+            "Hankyung": "MarketInsight",
+            "TheBell": "TheBell",
+            "DealSitePlus": "DealSitePlus",
+            "InvestChosun": "InvestChosun"
+        }
+        
+        # Group articles by site for email body
+        grouped = {}
+        for link in all_links:
+            site = link.get('site', '')
+            if site not in grouped:
+                grouped[site] = []
+            grouped[site].append(link.get('title', ''))
+        
+        # Prepare attachments with proper naming: 언론사이름_날짜.pdf
+        # Check file sizes and group for splitting if needed
+        MAX_EMAIL_SIZE = 20 * 1024 * 1024  # 20MB limit (safe margin under Gmail's 25MB)
+        
+        attachment_list = []  # [(display_name, file_path, file_size)]
+        for site_name, pdf_path in site_pdf_paths.items():
+            if pdf_path and os.path.exists(pdf_path):
+                file_size = os.path.getsize(pdf_path)
+                display_name = site_display.get(site_name, site_name)
+                attachment_list.append((display_name, site_name, pdf_path, file_size))
+                logger.info(f"[Gmail] Attachment: {display_name}_{date_str}.pdf ({file_size / 1024 / 1024:.1f}MB)")
+        
+        if not attachment_list:
+            logger.warning("[Gmail] No PDF attachments to send. Skipping email.")
+            return
+        
+        # Split attachments into batches that fit within email size limit
+        batches = []
+        current_batch = []
+        current_size = 0
+        
+        for item in attachment_list:
+            display_name, site_name, pdf_path, file_size = item
+            # Base64 encoding increases size by ~33%
+            encoded_size = file_size * 1.37
+            
+            if current_batch and (current_size + encoded_size) > MAX_EMAIL_SIZE:
+                batches.append(current_batch)
+                current_batch = [item]
+                current_size = encoded_size
+            else:
+                current_batch.append(item)
+                current_size += encoded_size
+        
+        if current_batch:
+            batches.append(current_batch)
+        
+        logger.info(f"[Gmail] Sending {len(batches)} email(s) with {len(attachment_list)} total attachments")
+        
+        # Construct date range for subject
+        start_date_str = (TODAY - timedelta(days=1)).strftime("%m/%d")
+        end_date_str = TODAY.strftime("%m/%d")
+        
+        for batch_idx, batch in enumerate(batches):
+            # Subject line
+            if len(batches) == 1:
+                subject = f"PE & M&A Paywalled News ({start_date_str} - {end_date_str})"
+            else:
+                subject = f"PE & M&A Paywalled News ({start_date_str} - {end_date_str}) [{batch_idx + 1}/{len(batches)}]"
+            
+            # Build email body (HTML matching Slack format)
+            body_parts = []
+            body_parts.append(f"<h2 style='margin-bottom: 5px;'>PE & M&A Paywalled News ({start_date_str} - {end_date_str})</h2>")
+            
+            if len(batches) > 1:
+                batch_sites = ', '.join([item[0] for item in batch])
+                body_parts.append(f"<p style='color: #666; margin-top: 0;'><em>이메일 {batch_idx + 1}/{len(batches)} - 첨부: {batch_sites}</em></p>")
+            
+            body_parts.append("<br>")
+            
+            for internal_site in ["Hankyung", "TheBell", "DealSitePlus", "InvestChosun"]:
+                display = site_display.get(internal_site, internal_site)
+                titles = grouped.get(internal_site, [])
+                
+                # Header resembling Slack e.g. *<MarketInsight>*
+                body_parts.append(f"<div style='margin-bottom: 20px;'>")
+                body_parts.append(f"  <div style='font-size: 16px; font-weight: bold; margin-bottom: 8px;'>&lt;{display}&gt;</div>")
+                
+                body_parts.append(f"  <div style='line-height: 1.6;'>")
+                if titles:
+                    for t in titles:
+                        body_parts.append(f"    <div>• {t}</div>")
+                else:
+                    # Blockquote styling resembling Slack e.g. > 기사 없음
+                    body_parts.append(f"    <div style='color: #888; border-left: 3px solid #ccc; padding-left: 8px;'>기사 없음</div>")
+                
+                body_parts.append(f"  </div>")
+                body_parts.append(f"</div>")
+            
+            html_body = "\n".join(body_parts)
+            
+            # Create MIME message
+            msg = MIMEMultipart()
+            msg['bcc'] = EMAIL_RECIPIENT
+            
+            from email.utils import formataddr
+            if sender_email and "@" in sender_email:
+                msg['from'] = formataddr(("AEP News Bot", sender_email))
+            else:
+                # If EMAIL_SENDER is not properly set in config, it falls back to 'me'
+                msg['from'] = sender_email
+                
+            msg['subject'] = subject
+            msg.attach(MIMEText(html_body, 'html', 'utf-8'))
+            
+            # Attach PDFs
+            for display_name, site_name, pdf_path, file_size in batch:
+                # File name format: 언론사이름_날짜.pdf (e.g., TheBell_20260322.pdf)
+                attachment_filename = f"{display_name}_{YESTERDAY_STR_NODASH}.pdf"
+                
+                with open(pdf_path, 'rb') as f:
+                    part = MIMEBase('application', 'pdf')
+                    part.set_payload(f.read())
+                    encoders.encode_base64(part)
+                    part.add_header(
+                        'Content-Disposition',
+                        f'attachment; filename="{attachment_filename}"'
+                    )
+                    msg.attach(part)
+                    logger.info(f"[Gmail] Attached: {attachment_filename} ({file_size / 1024 / 1024:.1f}MB)")
+            
+            # Send via Gmail API
+            raw_message = base64.urlsafe_b64encode(msg.as_bytes()).decode('utf-8')
+            gmail_service.users().messages().send(
+                userId='me',
+                body={'raw': raw_message}
+            ).execute()
+            
+            logger.info(f"[Gmail] Email {batch_idx + 1}/{len(batches)} sent successfully to {EMAIL_RECIPIENT}")
+            
+            if batch_idx < len(batches) - 1:
+                time.sleep(2)  # Brief pause between emails
+        
+        logger.info(f"[Gmail] All emails sent successfully!")
+        
+    except ImportError as e:
+        logger.error(f"[Gmail] Missing library: {e}. Required libraries should already be installed for Google Drive.")
+    except Exception as e:
+        logger.error(f"[Gmail] Failed to send email: {e}", exc_info=True)
 
 
 
@@ -1414,8 +1659,12 @@ def main():
                 seen_normalized_urls.add(u)
                 seen_site_titles.add(site_title_key)
         
-        all_links = filter_by_sheet_history(unique_links, sheet_svc)
-        logger.info(f"PHASE 1.5: GSheets Deduplication complete. Articles to process: {len(all_links)}")
+        if AB_TEST_MODE:
+            all_links = unique_links
+            logger.info("PHASE 1.5: AB_TEST_MODE enabled. Bypassing GSheets Deduplication.")
+        else:
+            all_links = filter_by_sheet_history(unique_links, sheet_svc)
+            logger.info(f"PHASE 1.5: GSheets Deduplication complete. Articles to process: {len(all_links)}")
 
         site_links = {}
         if all_links:
@@ -1431,6 +1680,7 @@ def main():
             
             # 3. Merge and Upload by Site
             logger.info("PHASE 3: Uploading Site PDFs")
+            site_pdf_local_paths = {}  # site -> local merged PDF path (for Gmail attachment)
             for site, pdfs in site_generated_pdfs.items():
                 # Create shared merger function or just manual write for the site
                 merger = PdfMerger()
@@ -1438,23 +1688,30 @@ def main():
                 out_name = f"{site}_{YESTERDAY_STR_NODASH}.pdf"
                 merger.write(out_name)
                 merger.close()
+                site_pdf_local_paths[site] = out_name
                 
                 drive_link = upload_to_google_drive(out_name)
                 if drive_link: site_links[site] = drive_link
         else:
+            site_pdf_local_paths = {}
             logger.info("No new unique articles found.")
 
-        # 4. History Update & Slack Notification
-        update_sheet_history(all_links, sheet_svc)
-        send_slack_notification(SLACK_WEBHOOK_URL, site_links, all_links, YESTERDAY_STR)
-        send_teams_notification(TEAMS_WEBHOOK_URL, site_links, all_links, YESTERDAY_STR)
+        # 4. History Update & Slack Notification (Slack/Teams commented out)
+        if not AB_TEST_MODE:
+            update_sheet_history(all_links, sheet_svc)
+        # send_slack_notification(SLACK_WEBHOOK_URL, site_links, all_links, YESTERDAY_STR)
+        # send_teams_notification(TEAMS_WEBHOOK_URL, site_links, all_links, YESTERDAY_STR)
+        
+        # 5. Gmail Notification with PDF attachments
+        logger.info("PHASE 5: Sending Gmail with PDF attachments")
+        send_gmail_with_attachments(site_pdf_local_paths, all_links, YESTERDAY_STR)
         
     except Exception as e:
         logger.error(f"CRITICAL ERROR in main process: {e}", exc_info=True)
         
     finally:
-        # 5. Log Forwarding (Always try to send logs)
-        forward_logs_to_slack(LOG_SLACK_WEBHOOK_URL)
+        # 6. Log Forwarding (Always try to send logs) - Commented out for now
+        # forward_logs_to_slack(LOG_SLACK_WEBHOOK_URL)
         
         logger.info("\n" + "="*60)
         logger.info("Paywalled PDF Generator Complete")

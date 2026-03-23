@@ -1,0 +1,270 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-23  8:55:50.44 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-23 08:55:51,347 - INFO - [__main__] - Target Date Range: 2026-03-22 ~ 2026-03-23
+2026-03-23 08:55:51,348 - INFO - [__main__] - ============================================================
+2026-03-23 08:55:51,348 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-23 08:55:51,348 - INFO - [__main__] - ============================================================
+2026-03-23 08:55:51,348 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-23 08:55:51,348 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-23 08:55:52,177 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-23 08:55:52,200 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-23 08:55:52,210 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-23 08:55:52,245 - INFO - [WDM] - WebDriver version 146.0.7680.153 selected
+2026-03-23 08:55:52,247 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/146.0.7680.153/win32/chromedriver-win32.zip
+2026-03-23 08:55:52,247 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/146.0.7680.153/win32/chromedriver-win32.zip
+2026-03-23 08:55:52,293 - INFO - [WDM] - Driver downloading response is 200
+2026-03-23 08:55:52,379 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-23 08:55:52,488 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\146.0.7680.153]
+2026-03-23 08:55:54,206 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-23 08:55:54,206 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-23 08:55:54,206 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-23 08:55:54,206 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-22...
+2026-03-23 08:55:54,206 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-23 08:56:00,254 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-23 08:56:00,255 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-23 08:56:02,473 - INFO - [__main__] - [Hankyung] Found: 김익래 다움키움그룹 전 회장, 사람인 공개매수 (20260322)
+2026-03-23 08:56:02,481 - INFO - [__main__] - [Hankyung] Found: 김익래 전 다우키움 회장, 사람인 90만주 공개매수 (20260322)
+2026-03-23 08:56:02,640 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-23 08:56:05,027 - INFO - [__main__] - [Hankyung] Collection complete. Found 2 articles.
+2026-03-23 08:56:05,027 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-22 ~ 2026-03-23)...
+2026-03-23 08:56:05,027 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-23 08:56:11,263 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-23 08:56:11,263 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-23 08:56:11,263 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-23 08:56:13,018 - INFO - [__main__] - [TheBell] Found: 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' (2026-03-23)
+2026-03-23 08:56:13,070 - INFO - [__main__] - [TheBell] Found: 민병철 어피니티 한국총괄대표, 회사 떠난다 (2026-03-23)
+2026-03-23 08:56:13,126 - INFO - [__main__] - [TheBell] Found: 국민성장펀드 GP 모집 임박…AI 데이터센터·넥스플렉스 딜 분주 (2026-03-23)
+2026-03-23 08:56:13,490 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-23 08:56:15,597 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-23 08:56:15,597 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-23 08:56:15,597 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-23 08:56:17,331 - INFO - [__main__] - [TheBell] Found: '나스닥 상장사' 해리슨글로벌홀딩스, 이크럭스벤처 품었다 (2026-03-23)
+2026-03-23 08:56:17,385 - INFO - [__main__] - [TheBell] Found: 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' (2026-03-23)
+2026-03-23 08:56:17,433 - INFO - [__main__] - [TheBell] Found: 민병철 어피니티 한국총괄대표, 회사 떠난다 (2026-03-23)
+2026-03-23 08:56:17,483 - INFO - [__main__] - [TheBell] Found: 디티앤인베, PE 라이선스 확보…VC·PE 투자 연속성 확보 (2026-03-23)
+2026-03-23 08:56:17,534 - INFO - [__main__] - [TheBell] Found: 티오더, 테이블오더 넘어 '소상공인 AI'로 전환 속도 (2026-03-23)
+2026-03-23 08:56:17,595 - INFO - [__main__] - [TheBell] Found: 스톤브릿지벤처, 성과보수 반등…회수 빅사이클 진입 (2026-03-23)
+2026-03-23 08:56:17,649 - INFO - [__main__] - [TheBell] Found: 모태 정시 서류결과 임박…성장금융·농금원도 속도 (2026-03-23)
+2026-03-23 08:56:17,916 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-23 08:56:20,018 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-23 08:56:20,018 - INFO - [__main__] - [TheBell] Collection complete. Found 10 articles.
+2026-03-23 08:56:20,018 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-22...
+2026-03-23 08:56:20,019 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-23 08:56:25,928 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-23 08:56:25,928 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-23 08:56:28,430 - INFO - [__main__] - [DealSite+] Found: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (2026-03-23)
+2026-03-23 08:56:28,447 - INFO - [__main__] - [DealSite+] Found: 결국 MBK 홍콩으로 떠난다…부재훈부터 엑시트 (2026-03-23)
+2026-03-23 08:56:28,620 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-23 08:56:31,067 - INFO - [__main__] - [DealSite+] Found: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (2026-03-23)
+2026-03-23 08:56:31,084 - INFO - [__main__] - [DealSite+] Found: 키움 600억 바이오 펀드…해태 출신 강민수 간판 (2026-03-23)
+2026-03-23 08:56:31,102 - INFO - [__main__] - [DealSite+] Found: 사이드카 타려는 SV인베스트먼트…강민구 찬스 (2026-03-23)
+2026-03-23 08:56:31,119 - INFO - [__main__] - [DealSite+] Found: 에이티넘 30년 원클럽맨 박은수 짐싼 이유 (2026-03-23)
+2026-03-23 08:56:31,137 - INFO - [__main__] - [DealSite+] Found: 결국 MBK 홍콩으로 떠난다…부재훈부터 엑시트 (2026-03-23)
+2026-03-23 08:56:31,277 - INFO - [__main__] - [DealSite+] Collection complete. Found 7 articles.
+2026-03-23 08:56:31,277 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-22...
+2026-03-23 08:56:31,277 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-23 08:56:37,112 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-03-23 08:56:37,112 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-23 08:56:40,607 - INFO - [__main__] - [InvestChosun] Article list loaded successfully
+2026-03-23 08:56:40,609 - INFO - [__main__] - [InvestChosun] Current URL: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-23 08:56:40,612 - INFO - [__main__] - [InvestChosun] JavaScript extracted 10 articles from DOM
+2026-03-23 08:56:40,612 - INFO - [__main__] - [InvestChosun] Found: "물류센터 다음은 데이터센터" 시장 호황에 브로커 활개...'옥석가리기' 과제로 (2026-03-22)
+2026-03-23 08:56:40,612 - INFO - [__main__] - [InvestChosun] Collection complete. Found 1 articles.
+2026-03-23 08:56:41,078 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 08:56:41,079 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 08:56:42,511 - INFO - [__main__] - [History] Loaded 921 URLs and 921 titles from history.
+2026-03-23 08:56:42,511 - INFO - [__main__] - [History] Skipping Duplicate (URL): "물류센터 다음은 데이터센터" 시장 호황에 브로커 활개...'옥석가리기' 과제로 [InvestChosun]
+2026-03-23 08:56:42,511 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 15
+2026-03-23 08:56:42,511 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-23 08:56:42,512 - INFO - [__main__] - [PDF] [1/15] Processing: 김익래 다움키움그룹 전 회장, 사람인 공개매수 (Hankyung)
+2026-03-23 08:56:49,060 - INFO - [__main__] - [PDF] [2/15] Processing: 김익래 전 다우키움 회장, 사람인 90만주 공개매수 (Hankyung)
+2026-03-23 08:56:55,473 - INFO - [__main__] - [PDF] [3/15] Processing: 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' (TheBell)
+2026-03-23 08:57:02,002 - INFO - [__main__] - [PDF] [4/15] Processing: 민병철 어피니티 한국총괄대표, 회사 떠난다 (TheBell)
+2026-03-23 08:57:08,470 - INFO - [__main__] - [PDF] [5/15] Processing: 국민성장펀드 GP 모집 임박…AI 데이터센터·넥스플렉스 딜 분주 (TheBell)
+2026-03-23 08:57:08,494 - ERROR - [__main__] - [PDF] Failed for https://www.thebell.co.kr/front/newsview.asp?code=0103&key=202603201516373080107066: Alert Text: 중복로그인 되었습니다.
+다시 로그인 해주세요.
+Message: unexpected alert open: {Alert text : 중복로그인 되었습니다.
+다시 로그인 해주세요.}
+  (Session info: chrome=146.0.7680.81)
+Stacktrace:
+	chromedriver!GetHandleVerifier [0xfe7c13+10dd3]
+	chromedriver!GetHandleVerifier [0xfe7d44+10f04]
+	chromedriver!(No symbol) [0xdc1f50]
+	chromedriver!(No symbol) [0xe4b037]
+	chromedriver!(No symbol) [0xe2d6a6]
+	chromedriver!(No symbol) [0xe00029]
+	chromedriver!(No symbol) [0xe00de4]
+	chromedriver!GetHandleVerifier [0x1244509+26d6c9]
+	chromedriver!GetHandleVerifier [0x123fb43+268d03]
+	chromedriver!GetHandleVerifier [0x125d85b+286a1b]
+	chromedriver!GetHandleVerifier [0x1001668+2a828]
+	chromedriver!GetHandleVerifier [0x10097fd+329bd]
+	chromedriver!GetHandleVerifier [0xff0588+19748]
+	chromedriver!GetHandleVerifier [0xff0752+19912]
+	chromedriver!GetHandleVerifier [0xfd99da+2b9a]
+	KERNEL32!BaseThreadInitThunk [0x76dc5d49+19]
+	ntdll!RtlInitializeExceptionChain [0x7755d6db+6b]
+	ntdll!RtlGetAppContainerNamedObjectPath [0x7755d661+231]
+
+2026-03-23 08:57:08,494 - INFO - [__main__] - [PDF] [6/15] Processing: '나스닥 상장사' 해리슨글로벌홀딩스, 이크럭스벤처 품었다 (TheBell)
+2026-03-23 08:57:15,074 - INFO - [__main__] - [PDF] [7/15] Processing: 디티앤인베, PE 라이선스 확보…VC·PE 투자 연속성 확보 (TheBell)
+2026-03-23 08:57:22,582 - INFO - [__main__] - [PDF] [8/15] Processing: 티오더, 테이블오더 넘어 '소상공인 AI'로 전환 속도 (TheBell)
+2026-03-23 08:57:29,157 - INFO - [__main__] - [PDF] [9/15] Processing: 스톤브릿지벤처, 성과보수 반등…회수 빅사이클 진입 (TheBell)
+2026-03-23 08:57:35,599 - INFO - [__main__] - [PDF] [10/15] Processing: 모태 정시 서류결과 임박…성장금융·농금원도 속도 (TheBell)
+2026-03-23 08:57:42,053 - INFO - [__main__] - [PDF] [11/15] Processing: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (DealSitePlus)
+2026-03-23 08:57:47,554 - WARNING - [__main__] - [PDF] Readability failed for https://dealsiteplus.co.kr/articles/158872/002062
+2026-03-23 08:57:47,554 - INFO - [__main__] - [PDF] [12/15] Processing: 결국 MBK 홍콩으로 떠난다…부재훈부터 엑시트 (DealSitePlus)
+2026-03-23 08:57:52,916 - WARNING - [__main__] - [PDF] Readability failed for https://dealsiteplus.co.kr/articles/158830/002062
+2026-03-23 08:57:52,916 - INFO - [__main__] - [PDF] [13/15] Processing: 키움 600억 바이오 펀드…해태 출신 강민수 간판 (DealSitePlus)
+2026-03-23 08:57:58,263 - WARNING - [__main__] - [PDF] Readability failed for https://dealsiteplus.co.kr/articles/158613/016069
+2026-03-23 08:57:58,263 - INFO - [__main__] - [PDF] [14/15] Processing: 사이드카 타려는 SV인베스트먼트…강민구 찬스 (DealSitePlus)
+2026-03-23 08:58:03,607 - WARNING - [__main__] - [PDF] Readability failed for https://dealsiteplus.co.kr/articles/158818/016069
+2026-03-23 08:58:03,607 - INFO - [__main__] - [PDF] [15/15] Processing: 에이티넘 30년 원클럽맨 박은수 짐싼 이유 (DealSitePlus)
+2026-03-23 08:58:08,968 - WARNING - [__main__] - [PDF] Readability failed for https://dealsiteplus.co.kr/articles/158824/016069
+2026-03-23 08:58:08,968 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-23 08:58:09,307 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 08:58:13,210 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1tlMEOau9iCaVxUNGfkvMno_ud9rAWzhs/view?usp=drivesdk
+2026-03-23 08:58:14,745 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 08:58:17,412 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1EfKJOfO1YOIVFdUKfXrB0xxmYFMeLuxM/view?usp=drivesdk
+2026-03-23 08:58:18,177 - INFO - [__main__] - [History] Updated sheet with 15 new articles.
+2026-03-23 08:58:19,098 - INFO - [__main__] - Old history cleanup complete: 43 rows deleted.
+2026-03-23 08:58:22,699 - INFO - [__main__] - 
+============================================================
+2026-03-23 08:58:22,700 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-23 08:58:22,700 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-23  8:58:25.07 
+================================================== 
+ 
+================================================== 
+[Paywall Agent] Start Time: 2026-03-23 11:08:41.03 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-23 11:08:41,813 - INFO - [__main__] - Target Date Range: 2026-03-22 ~ 2026-03-23
+2026-03-23 11:08:41,814 - INFO - [__main__] - ============================================================
+2026-03-23 11:08:41,814 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-23 11:08:41,814 - INFO - [__main__] - ============================================================
+2026-03-23 11:08:41,814 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-23 11:08:41,814 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-23 11:08:42,673 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-23 11:08:42,690 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-23 11:08:42,699 - INFO - [WDM] - Driver [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\146.0.7680.153\chromedriver-win32/chromedriver.exe] found in cache
+2026-03-23 11:08:43,790 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-23 11:08:43,790 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-23 11:08:43,790 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-23 11:08:43,790 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-22...
+2026-03-23 11:08:43,790 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-23 11:08:50,000 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-23 11:08:50,000 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-23 11:08:52,267 - INFO - [__main__] - [Hankyung] Found: KIC, 국내 신약 글로벌 진출에 1.5억달러 베팅…국부펀드 첫 ‘국내 지원 투자’ (20260323)
+2026-03-23 11:08:52,277 - INFO - [__main__] - [Hankyung] Found: 요즘 삼성 임원들 '영어 열공' 모드…번호표 뽑고 대기 (20260322)
+2026-03-23 11:08:52,287 - INFO - [__main__] - [Hankyung] Found: 김익래 다움키움그룹 전 회장, 사람인 공개매수 (20260322)
+2026-03-23 11:08:52,295 - INFO - [__main__] - [Hankyung] Found: 혁신벤처 키울 'K-BDC', 美사모대출과는 태생부터 달라 (20260322)
+2026-03-23 11:08:52,306 - INFO - [__main__] - [Hankyung] Found: 추격자 위협…'30년 아성' 도전 받는 삼성 보험형제 (20260322)
+2026-03-23 11:08:52,366 - INFO - [__main__] - [Hankyung] Found: 국민연금 ESG 수익률, 기금처럼 '자동 계산' (20260322)
+2026-03-23 11:08:52,375 - INFO - [__main__] - [Hankyung] Found: 삼성생명·화재 '30년 아성' 경고음 (20260322)
+2026-03-23 11:08:52,449 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-23 11:08:54,868 - INFO - [__main__] - [Hankyung] Collection complete. Found 7 articles.
+2026-03-23 11:08:54,868 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-22 ~ 2026-03-23)...
+2026-03-23 11:08:54,868 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-23 11:09:00,985 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-23 11:09:00,986 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-23 11:09:00,986 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-23 11:09:04,557 - INFO - [__main__] - [TheBell] Found: 미래에셋증권 PE팀, GP 이어 LP 역할도 맡는다 (2026-03-23)
+2026-03-23 11:09:04,607 - INFO - [__main__] - [TheBell] Found: '볼트온 중단' EQT, 삼성리사이클링 인수 차질 빚나 (2026-03-23)
+2026-03-23 11:09:04,655 - INFO - [__main__] - [TheBell] Found: 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' (2026-03-23)
+2026-03-23 11:09:04,703 - INFO - [__main__] - [TheBell] Found: 민병철 어피니티 한국총괄대표, 회사 떠난다 (2026-03-23)
+2026-03-23 11:09:04,770 - INFO - [__main__] - [TheBell] Found: 국민성장펀드 GP 모집 임박…AI 데이터센터·넥스플렉스 딜 분주 (2026-03-23)
+2026-03-23 11:09:05,136 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-23 11:09:07,181 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-23 11:09:07,181 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-23 11:09:07,181 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-23 11:09:08,868 - INFO - [__main__] - [TheBell] Found: '대표 교체' 모건스탠리PE, 포트폴리오 리뉴얼 시동 (2026-03-23)
+2026-03-23 11:09:08,937 - INFO - [__main__] - [TheBell] Found: 미국 경쟁사 제치고 해외 수주…탑다운 전략 통했다 (2026-03-23)
+2026-03-23 11:09:08,988 - INFO - [__main__] - [TheBell] Found: 미래에셋증권 PE팀, GP 이어 LP 역할도 맡는다 (2026-03-23)
+2026-03-23 11:09:09,037 - INFO - [__main__] - [TheBell] Found: '신동운호' IBK벤처, 콘텐츠로 투자영토 확장 시동 (2026-03-23)
+2026-03-23 11:09:09,086 - INFO - [__main__] - [TheBell] Found: 해리슨글로벌홀딩스, '이크럭스벤처파트너스' 품었다 (2026-03-23)
+2026-03-23 11:09:09,136 - INFO - [__main__] - [TheBell] Found: 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' (2026-03-23)
+2026-03-23 11:09:09,193 - INFO - [__main__] - [TheBell] Found: 민병철 어피니티 한국총괄대표, 회사 떠난다 (2026-03-23)
+2026-03-23 11:09:09,257 - INFO - [__main__] - [TheBell] Found: 디티앤인베, PE 라이선스 확보…VC·PE 투자 연속성 확보 (2026-03-23)
+2026-03-23 11:09:09,312 - INFO - [__main__] - [TheBell] Found: 티오더, 테이블오더 넘어 '소상공인 AI'로 전환 속도 (2026-03-23)
+2026-03-23 11:09:09,363 - INFO - [__main__] - [TheBell] Found: 스톤브릿지벤처, 성과보수 반등…회수 빅사이클 진입 (2026-03-23)
+2026-03-23 11:09:09,414 - INFO - [__main__] - [TheBell] Found: 모태 정시 서류결과 임박…성장금융·농금원도 속도 (2026-03-23)
+2026-03-23 11:09:09,614 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-23 11:09:11,726 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-23 11:09:11,726 - INFO - [__main__] - [TheBell] Collection complete. Found 16 articles.
+2026-03-23 11:09:11,726 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-22...
+2026-03-23 11:09:11,726 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-23 11:09:17,643 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-23 11:09:17,643 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-23 11:09:20,155 - INFO - [__main__] - [DealSite+] Found: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (2026-03-23)
+2026-03-23 11:09:20,172 - INFO - [__main__] - [DealSite+] Found: 결국 MBK 홍콩으로 떠난다…부재훈부터 엑시트 (2026-03-23)
+2026-03-23 11:09:20,356 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-23 11:09:22,856 - INFO - [__main__] - [DealSite+] Found: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (2026-03-23)
+2026-03-23 11:09:22,873 - INFO - [__main__] - [DealSite+] Found: 키움 600억 바이오 펀드…해태 출신 강민수 간판 (2026-03-23)
+2026-03-23 11:09:22,890 - INFO - [__main__] - [DealSite+] Found: 사이드카 타려는 SV인베스트먼트…강민구 찬스 (2026-03-23)
+2026-03-23 11:09:22,908 - INFO - [__main__] - [DealSite+] Found: 에이티넘 30년 원클럽맨 박은수 짐싼 이유 (2026-03-23)
+2026-03-23 11:09:22,926 - INFO - [__main__] - [DealSite+] Found: 결국 MBK 홍콩으로 떠난다…부재훈부터 엑시트 (2026-03-23)
+2026-03-23 11:09:23,085 - INFO - [__main__] - [DealSite+] Collection complete. Found 7 articles.
+2026-03-23 11:09:23,086 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-22...
+2026-03-23 11:09:23,086 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-23 11:09:28,953 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-03-23 11:09:28,954 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-23 11:09:32,354 - INFO - [__main__] - [InvestChosun] Article list loaded successfully
+2026-03-23 11:09:32,356 - INFO - [__main__] - [InvestChosun] Current URL: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-23 11:09:32,358 - INFO - [__main__] - [InvestChosun] JavaScript extracted 10 articles from DOM
+2026-03-23 11:09:32,358 - INFO - [__main__] - [InvestChosun] Found: "물류센터 다음은 데이터센터" 시장 호황에 브로커 활개...'옥석가리기' 과제로 (2026-03-22)
+2026-03-23 11:09:32,359 - INFO - [__main__] - [InvestChosun] Collection complete. Found 1 articles.
+2026-03-23 11:09:32,829 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 11:09:32,830 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 11:09:34,397 - INFO - [__main__] - [History] Loaded 888 URLs and 888 titles from history.
+2026-03-23 11:09:34,397 - INFO - [__main__] - [History] Skipping Duplicate (URL): 김익래 다움키움그룹 전 회장, 사람인 공개매수 [Hankyung]
+2026-03-23 11:09:34,397 - INFO - [__main__] - [History] Skipping Duplicate (URL): 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' [TheBell]
+2026-03-23 11:09:34,397 - INFO - [__main__] - [History] Skipping Duplicate (URL): 민병철 어피니티 한국총괄대표, 회사 떠난다 [TheBell]
+2026-03-23 11:09:34,397 - INFO - [__main__] - [History] Skipping Duplicate (URL): 국민성장펀드 GP 모집 임박…AI 데이터센터·넥스플렉스 딜 분주 [TheBell]
+2026-03-23 11:09:34,397 - INFO - [__main__] - [History] Skipping Duplicate (URL): 해리슨글로벌홀딩스, '이크럭스벤처파트너스' 품었다 [TheBell]
+2026-03-23 11:09:34,397 - INFO - [__main__] - [History] Skipping Duplicate (URL): 디티앤인베, PE 라이선스 확보…VC·PE 투자 연속성 확보 [TheBell]
+2026-03-23 11:09:34,397 - INFO - [__main__] - [History] Skipping Duplicate (URL): 티오더, 테이블오더 넘어 '소상공인 AI'로 전환 속도 [TheBell]
+2026-03-23 11:09:34,398 - INFO - [__main__] - [History] Skipping Duplicate (URL): 스톤브릿지벤처, 성과보수 반등…회수 빅사이클 진입 [TheBell]
+2026-03-23 11:09:34,398 - INFO - [__main__] - [History] Skipping Duplicate (URL): 모태 정시 서류결과 임박…성장금융·농금원도 속도 [TheBell]
+2026-03-23 11:09:34,398 - INFO - [__main__] - [History] Skipping Duplicate (URL): "물류센터 다음은 데이터센터" 시장 호황에 브로커 활개...'옥석가리기' 과제로 [InvestChosun]
+2026-03-23 11:09:34,398 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 16
+2026-03-23 11:09:34,398 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-23 11:09:34,398 - INFO - [__main__] - [PDF] [1/16] Processing: KIC, 국내 신약 글로벌 진출에 1.5억달러 베팅…국부펀드 첫 ‘국내 지원 투자’ (Hankyung)
+2026-03-23 11:09:41,118 - INFO - [__main__] - [PDF] [2/16] Processing: 요즘 삼성 임원들 '영어 열공' 모드…번호표 뽑고 대기 (Hankyung)
+2026-03-23 11:09:47,627 - INFO - [__main__] - [PDF] [3/16] Processing: 혁신벤처 키울 'K-BDC', 美사모대출과는 태생부터 달라 (Hankyung)
+2026-03-23 11:09:54,139 - INFO - [__main__] - [PDF] [4/16] Processing: 추격자 위협…'30년 아성' 도전 받는 삼성 보험형제 (Hankyung)
+2026-03-23 11:10:00,716 - INFO - [__main__] - [PDF] [5/16] Processing: 국민연금 ESG 수익률, 기금처럼 '자동 계산' (Hankyung)
+2026-03-23 11:10:07,195 - INFO - [__main__] - [PDF] [6/16] Processing: 삼성생명·화재 '30년 아성' 경고음 (Hankyung)
+2026-03-23 11:10:13,729 - INFO - [__main__] - [PDF] [7/16] Processing: 미래에셋증권 PE팀, GP 이어 LP 역할도 맡는다 (TheBell)
+2026-03-23 11:10:20,267 - INFO - [__main__] - [PDF] [8/16] Processing: '볼트온 중단' EQT, 삼성리사이클링 인수 차질 빚나 (TheBell)
+2026-03-23 11:10:26,695 - INFO - [__main__] - [PDF] [9/16] Processing: '대표 교체' 모건스탠리PE, 포트폴리오 리뉴얼 시동 (TheBell)
+2026-03-23 11:10:33,241 - INFO - [__main__] - [PDF] [10/16] Processing: 미국 경쟁사 제치고 해외 수주…탑다운 전략 통했다 (TheBell)
+2026-03-23 11:10:39,829 - INFO - [__main__] - [PDF] [11/16] Processing: '신동운호' IBK벤처, 콘텐츠로 투자영토 확장 시동 (TheBell)
+2026-03-23 11:10:46,242 - INFO - [__main__] - [PDF] [12/16] Processing: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (DealSitePlus)
+2026-03-23 11:10:53,386 - INFO - [__main__] - [PDF] [13/16] Processing: 결국 MBK 홍콩으로 떠난다…부재훈부터 엑시트 (DealSitePlus)
+2026-03-23 11:11:00,346 - INFO - [__main__] - [PDF] [14/16] Processing: 키움 600억 바이오 펀드…해태 출신 강민수 간판 (DealSitePlus)
+2026-03-23 11:11:07,412 - INFO - [__main__] - [PDF] [15/16] Processing: 사이드카 타려는 SV인베스트먼트…강민구 찬스 (DealSitePlus)
+2026-03-23 11:11:14,324 - INFO - [__main__] - [PDF] [16/16] Processing: 에이티넘 30년 원클럽맨 박은수 짐싼 이유 (DealSitePlus)
+2026-03-23 11:11:21,282 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-23 11:11:22,534 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 11:11:26,659 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1k-kZacHmuBerlmy1SXnzwdBa62Hry567/view?usp=drivesdk
+2026-03-23 11:11:27,887 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 11:11:31,956 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1Q8IIjkVY_XI8zzGpLNXezp-sNXAfJPU7/view?usp=drivesdk
+2026-03-23 11:11:33,120 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-23 11:11:37,283 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1BzJrnAAkmSCUuZMDhL1v9ayUS1NVw-S_/view?usp=drivesdk
+2026-03-23 11:11:38,305 - INFO - [__main__] - [History] Updated sheet with 16 new articles.
+2026-03-23 11:11:41,559 - INFO - [__main__] - 
+============================================================
+2026-03-23 11:11:41,560 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-23 11:11:41,560 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-23 11:11:43.93 
+================================================== 
+ 
