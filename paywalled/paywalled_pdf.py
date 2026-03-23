@@ -1537,7 +1537,7 @@ def send_gmail_with_attachments(site_pdf_paths, all_links, date_str):
             
             # Create MIME message
             msg = MIMEMultipart()
-            msg['bcc'] = EMAIL_RECIPIENT
+            msg['to'] = EMAIL_RECIPIENT
             
             from email.utils import formataddr
             if sender_email and "@" in sender_email:
