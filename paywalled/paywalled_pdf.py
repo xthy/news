@@ -66,7 +66,7 @@ HISTORY_DAYS = 30
 AB_TEST_MODE = False
 
 # Gmail Configuration
-EMAIL_RECIPIENT = config_data.get("EMAIL_RECIPIENT", "krusers@affinityequity.com")
+EMAIL_RECIPIENT = config_data.get("EMAIL_RECIPIENT", "thyang@affinityequity.com")
 EMAIL_SENDER = config_data.get("EMAIL_SENDER", "")  # Will be auto-detected from Gmail API if empty
 
 def normalize(t):
