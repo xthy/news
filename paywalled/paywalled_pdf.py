@@ -1172,9 +1172,26 @@ def filter_by_sheet_history(all_links, sheets_service):
 
         # Read history
         range_name = f"'{HISTORY_SHEET_NAME}'!B:E"
-        result = sheets_service.spreadsheets().values().get(
-            spreadsheetId=SPREADSHEET_ID, range=range_name
-        ).execute()
+        
+        max_retries = 3
+        result = None
+        for attempt in range(max_retries):
+            try:
+                import socket
+                socket.setdefaulttimeout(60)
+                result = sheets_service.spreadsheets().values().get(
+                    spreadsheetId=SPREADSHEET_ID, range=range_name
+                ).execute()
+                break
+            except Exception as e:
+                if attempt == max_retries - 1:
+                    raise
+                logger.warning(f"[History] GSheets read failed (attempt {attempt+1}/{max_retries}): {e}. Retrying in 5s...")
+                time.sleep(5)
+                
+        if result is None:
+            return all_links
+
         rows = result.get('values', [])
         
         history_urls = set()
@@ -1541,7 +1558,7 @@ def send_gmail_with_attachments(site_pdf_paths, all_links, date_str):
             
             from email.utils import formataddr
             if sender_email and "@" in sender_email:
-                msg['from'] = formataddr(("AEP News Bot", sender_email))
+                msg['from'] = formataddr(("News Bot", sender_email))
             else:
                 # If EMAIL_SENDER is not properly set in config, it falls back to 'me'
                 msg['from'] = sender_email

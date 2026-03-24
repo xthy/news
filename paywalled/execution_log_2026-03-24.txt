@@ -1,0 +1,243 @@
+================================================== 
+[Paywall Agent] Start Time: 2026-03-24  8:55:50.30 
+[Paywall Agent] Current Dir: C:\Users\Bloomberg\Downloads\news\paywalled 
+================================================== 
+[Running] py paywalled_pdf.py ... 
+2026-03-24 08:55:51,072 - INFO - [__main__] - Target Date Range: 2026-03-23 ~ 2026-03-24
+2026-03-24 08:55:51,073 - INFO - [__main__] - ============================================================
+2026-03-24 08:55:51,073 - INFO - [__main__] - Starting Paywalled PDF Generator
+2026-03-24 08:55:51,073 - INFO - [__main__] - ============================================================
+2026-03-24 08:55:51,074 - INFO - [__main__] - Using Chrome binary at: C:/Program Files/Google/Chrome/Application/chrome.exe
+2026-03-24 08:55:51,074 - INFO - [WDM] - ====== WebDriver manager ======
+2026-03-24 08:55:51,940 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-24 08:55:51,965 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-24 08:55:51,974 - INFO - [WDM] - There is no [win64] chromedriver "146.0.7680.165" for browser google-chrome "146.0.7680" in cache
+2026-03-24 08:55:51,974 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-24 08:55:52,010 - INFO - [WDM] - WebDriver version 146.0.7680.165 selected
+2026-03-24 08:55:52,013 - INFO - [WDM] - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/146.0.7680.165/win32/chromedriver-win32.zip
+2026-03-24 08:55:52,013 - INFO - [WDM] - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/146.0.7680.165/win32/chromedriver-win32.zip
+2026-03-24 08:55:52,055 - INFO - [WDM] - Driver downloading response is 200
+2026-03-24 08:55:52,141 - INFO - [WDM] - Get LATEST chromedriver version for google-chrome
+2026-03-24 08:55:52,276 - INFO - [WDM] - Driver has been saved in cache [C:\Users\Bloomberg\.wdm\drivers\chromedriver\win64\146.0.7680.165]
+2026-03-24 08:55:54,471 - INFO - [__main__] - 
+────────────────────────────────────────────────────────────
+2026-03-24 08:55:54,472 - INFO - [__main__] - PHASE 1: Collecting Links from All Sites
+2026-03-24 08:55:54,472 - INFO - [__main__] - ────────────────────────────────────────────────────────────
+2026-03-24 08:55:54,472 - INFO - [__main__] - [Hankyung] Starting link collection for 2026-03-23...
+2026-03-24 08:55:54,472 - INFO - [__main__] - [hankyung] Starting login process...
+2026-03-24 08:56:00,597 - INFO - [__main__] - [hankyung] Login completed successfully (URL changed)
+2026-03-24 08:56:00,597 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/investor/
+2026-03-24 08:56:02,856 - INFO - [__main__] - [Hankyung] Found: "과감한 M&A로 시너지…NASA도 러브콜" (20260323)
+2026-03-24 08:56:02,865 - INFO - [__main__] - [Hankyung] Found: LG그룹, 全계열사 사외이사 의장 체제로 (20260323)
+2026-03-24 08:56:02,872 - INFO - [__main__] - [Hankyung] Found: 연임 확정한 임종룡 회장…"비은행 계열사 시너지 확대" (20260323)
+2026-03-24 08:56:02,881 - INFO - [__main__] - [Hankyung] Found: 신원근 카카오페이 대표 3연임 (20260323)
+2026-03-24 08:56:02,889 - INFO - [__main__] - [Hankyung] Found: 국민연금, 블랙록과 전자산 전략적 제휴…전주에 협력 거점 마련 (20260323)
+2026-03-24 08:56:02,950 - INFO - [__main__] - [Hankyung] Found: 차파트너스, 삼영전자 최대주주 日 NCC에 공개서한…"주주제안 찬성해야" (20260323)
+2026-03-24 08:56:02,959 - INFO - [__main__] - [Hankyung] Found: 340조 굴리는 KIC, 첫 전략적 투자처로 ‘K-바이오’ 찍었다 (20260323)
+2026-03-24 08:56:02,967 - INFO - [__main__] - [Hankyung] Found: 與, 스튜어드십코드 '성적표' 국민연금의 운용사 선정에 반영한다 (20260323)
+2026-03-24 08:56:02,975 - INFO - [__main__] - [Hankyung] Found: KIC, 국내 신약 글로벌 진출에 1.5억달러 베팅…국부펀드 첫 ‘국내 지원 투자’ (20260323)
+2026-03-24 08:56:03,023 - INFO - [__main__] - [Hankyung] Scanning Section: https://marketinsight.hankyung.com/mna
+2026-03-24 08:56:05,251 - INFO - [__main__] - [Hankyung] Found: 국내 기업들, 해외 SMR 기업 보유지분 잇단 매각 (20260323)
+2026-03-24 08:56:05,260 - INFO - [__main__] - [Hankyung] Found: 차파트너스, 삼영전자 최대주주 日 NCC에 공개서한…"주주제안 찬성해야" (20260323)
+2026-03-24 08:56:05,270 - INFO - [__main__] - [Hankyung] Found: [단독] 크레센도, AI 사이버보안 스타트업 스텔스몰 인수 (20260323)
+2026-03-24 08:56:05,407 - INFO - [__main__] - [Hankyung] Collection complete. Found 12 articles.
+2026-03-24 08:56:05,407 - INFO - [__main__] - [TheBell] Starting link collection (Range: 2026-03-23 ~ 2026-03-24)...
+2026-03-24 08:56:05,407 - INFO - [__main__] - [thebell] Starting login process...
+2026-03-24 08:56:11,424 - INFO - [__main__] - [thebell] Login completed successfully (URL changed)
+2026-03-24 08:56:11,424 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0103
+2026-03-24 08:56:11,424 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=1
+2026-03-24 08:56:13,197 - INFO - [__main__] - [TheBell] Found: 소시어스·웰투시의 완벽한 동행 (2026-03-24)
+2026-03-24 08:56:13,250 - INFO - [__main__] - [TheBell] Found: 굿즈 전문 코팬글로벌, 콘서트 제작사 '본부엔터' 품었다 (2026-03-23)
+2026-03-24 08:56:13,303 - INFO - [__main__] - [TheBell] Found: 굿리치, 선수익 쌓고 현금 불렸다…JC파트너스 장기보유 명분 커져 (2026-03-23)
+2026-03-24 08:56:13,356 - INFO - [__main__] - [TheBell] Found: PTA의 한국펀드파트너스, 수탁고 확대로 실적 성장…매각 탄력 (2026-03-23)
+2026-03-24 08:56:13,408 - INFO - [__main__] - [TheBell] Found: 미래에셋증권 PE팀, GP 이어 LP 역할도 맡는다 (2026-03-23)
+2026-03-24 08:56:13,456 - INFO - [__main__] - [TheBell] Found: '볼트온 중단' EQT, 삼성리사이클링 인수 차질 빚나 (2026-03-23)
+2026-03-24 08:56:13,516 - INFO - [__main__] - [TheBell] Found: 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' (2026-03-23)
+2026-03-24 08:56:13,569 - INFO - [__main__] - [TheBell] Found: 민병철 어피니티 한국총괄대표, 회사 떠난다 (2026-03-23)
+2026-03-24 08:56:13,621 - INFO - [__main__] - [TheBell] Found: 국민성장펀드 GP 모집 임박…AI 데이터센터·넥스플렉스 딜 분주 (2026-03-23)
+2026-03-24 08:56:13,856 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0103&page=2
+2026-03-24 08:56:15,967 - INFO - [__main__] - [TheBell] Page 2 has only older articles. Stopping.
+2026-03-24 08:56:15,967 - INFO - [__main__] - [TheBell] Scanning Section: https://www.thebell.co.kr/front/newslist.asp?code=0303
+2026-03-24 08:56:15,967 - INFO - [__main__] - [TheBell] Scanning Page 1: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=1
+2026-03-24 08:56:17,724 - INFO - [__main__] - [TheBell] Found: 솔리더스인베 M&A, 사람이 값이다 (2026-03-24)
+2026-03-24 08:56:17,778 - INFO - [__main__] - [TheBell] Found: 소시어스·웰투시의 완벽한 동행 (2026-03-24)
+2026-03-24 08:56:17,826 - INFO - [__main__] - [TheBell] Found: 굿즈 전문 코팬글로벌, 콘서트 제작사 '본부엔터' 품었다 (2026-03-23)
+2026-03-24 08:56:17,881 - INFO - [__main__] - [TheBell] Found: 도경백 대표 “휴머노이드 시대, 웰니스 산업 재정의” (2026-03-23)
+2026-03-24 08:56:17,936 - INFO - [__main__] - [TheBell] Found: 나우IB, 윤춘성 LX인터 대표 사외이사 선임 (2026-03-23)
+2026-03-24 08:56:17,987 - INFO - [__main__] - [TheBell] Found: 아이디벤처, 넥스트유니콘펀드 415억 클로징 (2026-03-23)
+2026-03-24 08:56:18,035 - INFO - [__main__] - [TheBell] Found: 로피바이오, 대만 에덴바이오에 경영권 넘겼다 (2026-03-23)
+2026-03-24 08:56:18,084 - INFO - [__main__] - [TheBell] Found: 산업은행, 미코파워에 후속 투자…1163억 라운드 마무리 (2026-03-23)
+2026-03-24 08:56:18,132 - INFO - [__main__] - [TheBell] Found: 케이런벤처스, 리브스메드 회수 4배 성과 (2026-03-23)
+2026-03-24 08:56:18,184 - INFO - [__main__] - [TheBell] Found: 굿리치, 선수익 쌓고 현금 불렸다…JC파트너스 장기보유 명분 커져 (2026-03-23)
+2026-03-24 08:56:18,265 - INFO - [__main__] - [TheBell] Found: PTA의 한국펀드파트너스, 수탁고 확대로 실적 성장…매각 탄력 (2026-03-23)
+2026-03-24 08:56:18,314 - INFO - [__main__] - [TheBell] Found: '대표 교체' 모건스탠리PE, 포트폴리오 리뉴얼 시동 (2026-03-23)
+2026-03-24 08:56:18,366 - INFO - [__main__] - [TheBell] Found: 미국 경쟁사 제치고 해외 수주…탑다운 전략 통했다 (2026-03-23)
+2026-03-24 08:56:18,417 - INFO - [__main__] - [TheBell] Found: 미래에셋증권 PE팀, GP 이어 LP 역할도 맡는다 (2026-03-23)
+2026-03-24 08:56:18,464 - INFO - [__main__] - [TheBell] Found: '신동운호' IBK벤처, 콘텐츠로 투자영토 확장 시동 (2026-03-23)
+2026-03-24 08:56:18,513 - INFO - [__main__] - [TheBell] Found: 해리슨글로벌홀딩스, '이크럭스벤처파트너스' 품었다 (2026-03-23)
+2026-03-24 08:56:18,565 - INFO - [__main__] - [TheBell] Found: 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' (2026-03-23)
+2026-03-24 08:56:18,614 - INFO - [__main__] - [TheBell] Found: 민병철 어피니티 한국총괄대표, 회사 떠난다 (2026-03-23)
+2026-03-24 08:56:18,663 - INFO - [__main__] - [TheBell] Found: 디티앤인베, PE 라이선스 확보…VC·PE 투자 연속성 확보 (2026-03-23)
+2026-03-24 08:56:18,715 - INFO - [__main__] - [TheBell] Found: 티오더, 테이블오더 넘어 '소상공인 AI'로 전환 속도 (2026-03-23)
+2026-03-24 08:56:18,739 - INFO - [__main__] - [TheBell] Scanning Page 2: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=2
+2026-03-24 08:56:20,482 - INFO - [__main__] - [TheBell] Found: 스톤브릿지벤처, 성과보수 반등…회수 빅사이클 진입 (2026-03-23)
+2026-03-24 08:56:20,534 - INFO - [__main__] - [TheBell] Found: 모태 정시 서류결과 임박…성장금융·농금원도 속도 (2026-03-23)
+2026-03-24 08:56:20,920 - INFO - [__main__] - [TheBell] Scanning Page 3: https://www.thebell.co.kr/front/newslist.asp?code=0303&page=3
+2026-03-24 08:56:23,065 - INFO - [__main__] - [TheBell] Page 3 has only older articles. Stopping.
+2026-03-24 08:56:23,065 - INFO - [__main__] - [TheBell] Collection complete. Found 31 articles.
+2026-03-24 08:56:23,065 - INFO - [__main__] - [DealSite+] Starting link collection for 2026-03-23...
+2026-03-24 08:56:23,065 - INFO - [__main__] - [dealsiteplus] Starting login process...
+2026-03-24 08:56:28,985 - INFO - [__main__] - [dealsiteplus] Login completed successfully (URL changed)
+2026-03-24 08:56:28,985 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/002062
+2026-03-24 08:56:31,475 - INFO - [__main__] - [DealSite+] Found: 믿었던 국민연금 이탈에…딜레마 빠진 최윤범 회장 (2026-03-23)
+2026-03-24 08:56:31,493 - INFO - [__main__] - [DealSite+] Found: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (2026-03-23)
+2026-03-24 08:56:31,664 - INFO - [__main__] - [DealSite+] Scanning: https://dealsiteplus.co.kr/categories/016069
+2026-03-24 08:56:34,133 - INFO - [__main__] - [DealSite+] Found: 믿었던 국민연금 이탈에…딜레마 빠진 최윤범 회장 (2026-03-23)
+2026-03-24 08:56:34,152 - INFO - [__main__] - [DealSite+] Found: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (2026-03-23)
+2026-03-24 08:56:34,169 - INFO - [__main__] - [DealSite+] Found: 키움 600억 바이오 펀드…해태 출신 강민수 간판 (2026-03-23)
+2026-03-24 08:56:34,185 - INFO - [__main__] - [DealSite+] Found: 사이드카 타려는 SV인베스트먼트…강민구 찬스 (2026-03-23)
+2026-03-24 08:56:34,202 - INFO - [__main__] - [DealSite+] Found: 에이티넘 30년 원클럽맨 박은수 짐싼 이유 (2026-03-23)
+2026-03-24 08:56:34,360 - INFO - [__main__] - [DealSite+] Collection complete. Found 7 articles.
+2026-03-24 08:56:34,360 - INFO - [__main__] - [InvestChosun] Starting link collection for 2026-03-23...
+2026-03-24 08:56:34,360 - INFO - [__main__] - [investchosun] Starting login process...
+2026-03-24 08:56:40,210 - INFO - [__main__] - [investchosun] Login completed successfully (URL changed)
+2026-03-24 08:56:40,210 - INFO - [__main__] - [InvestChosun] Navigating to: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-24 08:56:43,360 - INFO - [__main__] - [InvestChosun] Article list loaded successfully
+2026-03-24 08:56:43,362 - INFO - [__main__] - [InvestChosun] Current URL: https://www.investchosun.com/svc/news/list.html?catid=114
+2026-03-24 08:56:43,366 - INFO - [__main__] - [InvestChosun] JavaScript extracted 10 articles from DOM
+2026-03-24 08:56:43,366 - INFO - [__main__] - [InvestChosun] Collection complete. Found 0 articles.
+2026-03-24 08:56:43,827 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-24 08:56:43,829 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-24 08:57:44,832 - ERROR - [__main__] - GSheets History check failed: The read operation timed out
+Traceback (most recent call last):
+  File "C:\Users\Bloomberg\Downloads\news\paywalled\paywalled_pdf.py", line 1177, in filter_by_sheet_history
+    ).execute()
+      ~~~~~~~^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\googleapiclient\_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\googleapiclient\http.py", line 923, in execute
+    resp, content = _retry_request(
+                    ~~~~~~~~~~~~~~^
+        http,
+        ^^^^^
+    ...<7 lines>...
+        headers=self.headers,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\googleapiclient\http.py", line 222, in _retry_request
+    raise exception
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\googleapiclient\http.py", line 191, in _retry_request
+    resp, content = http.request(uri, method, *args, **kwargs)
+                    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\google_auth_httplib2.py", line 216, in request
+    response, content = self.http.request(
+                        ~~~~~~~~~~~~~~~~~^
+        uri,
+        ^^^^
+    ...<5 lines>...
+        **kwargs
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\httplib2\__init__.py", line 1727, in request
+    (response, content) = self._request(
+                          ~~~~~~~~~~~~~^
+        conn, authority, uri, request_uri, method, body, headers, redirections, cachekey,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\httplib2\__init__.py", line 1447, in _request
+    (response, content) = self._conn_request(conn, request_uri, method, body, headers)
+                          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\site-packages\httplib2\__init__.py", line 1399, in _conn_request
+    response = conn.getresponse()
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 719, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1304, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Bloomberg\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1138, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+2026-03-24 08:57:44,837 - INFO - [__main__] - PHASE 1.5: GSheets Deduplication complete. Articles to process: 40
+2026-03-24 08:57:44,837 - INFO - [__main__] - PHASE 2: Generating PDFs
+2026-03-24 08:57:44,837 - INFO - [__main__] - [PDF] [1/40] Processing: "과감한 M&A로 시너지…NASA도 러브콜" (Hankyung)
+2026-03-24 08:57:52,081 - INFO - [__main__] - [PDF] [2/40] Processing: LG그룹, 全계열사 사외이사 의장 체제로 (Hankyung)
+2026-03-24 08:57:58,617 - INFO - [__main__] - [PDF] [3/40] Processing: 연임 확정한 임종룡 회장…"비은행 계열사 시너지 확대" (Hankyung)
+2026-03-24 08:58:05,107 - INFO - [__main__] - [PDF] [4/40] Processing: 신원근 카카오페이 대표 3연임 (Hankyung)
+2026-03-24 08:58:11,484 - INFO - [__main__] - [PDF] [5/40] Processing: 국민연금, 블랙록과 전자산 전략적 제휴…전주에 협력 거점 마련 (Hankyung)
+2026-03-24 08:58:18,002 - INFO - [__main__] - [PDF] [6/40] Processing: 차파트너스, 삼영전자 최대주주 日 NCC에 공개서한…"주주제안 찬성해야" (Hankyung)
+2026-03-24 08:58:24,523 - INFO - [__main__] - [PDF] [7/40] Processing: 340조 굴리는 KIC, 첫 전략적 투자처로 ‘K-바이오’ 찍었다 (Hankyung)
+2026-03-24 08:58:33,686 - INFO - [__main__] - [PDF] [8/40] Processing: 與, 스튜어드십코드 '성적표' 국민연금의 운용사 선정에 반영한다 (Hankyung)
+2026-03-24 08:58:40,201 - INFO - [__main__] - [PDF] [9/40] Processing: KIC, 국내 신약 글로벌 진출에 1.5억달러 베팅…국부펀드 첫 ‘국내 지원 투자’ (Hankyung)
+2026-03-24 08:58:46,966 - INFO - [__main__] - [PDF] [10/40] Processing: 국내 기업들, 해외 SMR 기업 보유지분 잇단 매각 (Hankyung)
+2026-03-24 08:58:53,412 - INFO - [__main__] - [PDF] [11/40] Processing: [단독] 크레센도, AI 사이버보안 스타트업 스텔스몰 인수 (Hankyung)
+2026-03-24 08:58:59,961 - INFO - [__main__] - [PDF] [12/40] Processing: 소시어스·웰투시의 완벽한 동행 (TheBell)
+2026-03-24 08:59:06,516 - INFO - [__main__] - [PDF] [13/40] Processing: 굿즈 전문 코팬글로벌, 콘서트 제작사 '본부엔터' 품었다 (TheBell)
+2026-03-24 08:59:12,961 - INFO - [__main__] - [PDF] [14/40] Processing: 굿리치, 선수익 쌓고 현금 불렸다…JC파트너스 장기보유 명분 커져 (TheBell)
+2026-03-24 08:59:19,491 - INFO - [__main__] - [PDF] [15/40] Processing: PTA의 한국펀드파트너스, 수탁고 확대로 실적 성장…매각 탄력 (TheBell)
+2026-03-24 08:59:25,909 - INFO - [__main__] - [PDF] [16/40] Processing: 미래에셋증권 PE팀, GP 이어 LP 역할도 맡는다 (TheBell)
+2026-03-24 08:59:32,376 - INFO - [__main__] - [PDF] [17/40] Processing: '볼트온 중단' EQT, 삼성리사이클링 인수 차질 빚나 (TheBell)
+2026-03-24 08:59:38,823 - INFO - [__main__] - [PDF] [18/40] Processing: 어피니티 한국 헤드 공백, 롯데렌탈 인수 '시계제로' (TheBell)
+2026-03-24 08:59:45,294 - INFO - [__main__] - [PDF] [19/40] Processing: 민병철 어피니티 한국총괄대표, 회사 떠난다 (TheBell)
+2026-03-24 08:59:51,791 - INFO - [__main__] - [PDF] [20/40] Processing: 국민성장펀드 GP 모집 임박…AI 데이터센터·넥스플렉스 딜 분주 (TheBell)
+2026-03-24 08:59:58,285 - INFO - [__main__] - [PDF] [21/40] Processing: 솔리더스인베 M&A, 사람이 값이다 (TheBell)
+2026-03-24 09:00:04,780 - INFO - [__main__] - [PDF] [22/40] Processing: 도경백 대표 “휴머노이드 시대, 웰니스 산업 재정의” (TheBell)
+2026-03-24 09:00:11,485 - INFO - [__main__] - [PDF] [23/40] Processing: 나우IB, 윤춘성 LX인터 대표 사외이사 선임 (TheBell)
+2026-03-24 09:00:17,940 - INFO - [__main__] - [PDF] [24/40] Processing: 아이디벤처, 넥스트유니콘펀드 415억 클로징 (TheBell)
+2026-03-24 09:00:24,398 - INFO - [__main__] - [PDF] [25/40] Processing: 로피바이오, 대만 에덴바이오에 경영권 넘겼다 (TheBell)
+2026-03-24 09:00:30,861 - INFO - [__main__] - [PDF] [26/40] Processing: 산업은행, 미코파워에 후속 투자…1163억 라운드 마무리 (TheBell)
+2026-03-24 09:00:37,339 - INFO - [__main__] - [PDF] [27/40] Processing: 케이런벤처스, 리브스메드 회수 4배 성과 (TheBell)
+2026-03-24 09:00:43,812 - INFO - [__main__] - [PDF] [28/40] Processing: '대표 교체' 모건스탠리PE, 포트폴리오 리뉴얼 시동 (TheBell)
+2026-03-24 09:00:50,361 - INFO - [__main__] - [PDF] [29/40] Processing: 미국 경쟁사 제치고 해외 수주…탑다운 전략 통했다 (TheBell)
+2026-03-24 09:00:56,956 - INFO - [__main__] - [PDF] [30/40] Processing: '신동운호' IBK벤처, 콘텐츠로 투자영토 확장 시동 (TheBell)
+2026-03-24 09:01:03,698 - INFO - [__main__] - [PDF] [31/40] Processing: 해리슨글로벌홀딩스, '이크럭스벤처파트너스' 품었다 (TheBell)
+2026-03-24 09:01:10,176 - INFO - [__main__] - [PDF] [32/40] Processing: 디티앤인베, PE 라이선스 확보…VC·PE 투자 연속성 확보 (TheBell)
+2026-03-24 09:01:16,639 - INFO - [__main__] - [PDF] [33/40] Processing: 티오더, 테이블오더 넘어 '소상공인 AI'로 전환 속도 (TheBell)
+2026-03-24 09:01:23,194 - INFO - [__main__] - [PDF] [34/40] Processing: 스톤브릿지벤처, 성과보수 반등…회수 빅사이클 진입 (TheBell)
+2026-03-24 09:01:29,646 - INFO - [__main__] - [PDF] [35/40] Processing: 모태 정시 서류결과 임박…성장금융·농금원도 속도 (TheBell)
+2026-03-24 09:01:36,116 - INFO - [__main__] - [PDF] [36/40] Processing: 믿었던 국민연금 이탈에…딜레마 빠진 최윤범 회장 (DealSitePlus)
+2026-03-24 09:01:43,406 - INFO - [__main__] - [PDF] [37/40] Processing: 신규이사 5명 vs 6명…감사위원 선출 수싸움 (DealSitePlus)
+2026-03-24 09:01:50,424 - INFO - [__main__] - [PDF] [38/40] Processing: 키움 600억 바이오 펀드…해태 출신 강민수 간판 (DealSitePlus)
+2026-03-24 09:01:57,476 - INFO - [__main__] - [PDF] [39/40] Processing: 사이드카 타려는 SV인베스트먼트…강민구 찬스 (DealSitePlus)
+2026-03-24 09:02:04,418 - INFO - [__main__] - [PDF] [40/40] Processing: 에이티넘 30년 원클럽맨 박은수 짐싼 이유 (DealSitePlus)
+2026-03-24 09:02:11,404 - INFO - [__main__] - PHASE 3: Uploading Site PDFs
+2026-03-24 09:02:13,580 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-24 09:02:18,308 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1ZcDkl_DAYoIh1P7B051D8fNOkbM8pNDc/view?usp=drivesdk
+2026-03-24 09:02:23,757 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-24 09:02:27,258 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1sCbl0g3q0Ap6Oud1tVE0P58YwphrZpTe/view?usp=drivesdk
+2026-03-24 09:02:28,333 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-24 09:02:31,646 - INFO - [__main__] - Uploaded to Google Drive: https://drive.google.com/file/d/1WaXzSG0x8dlT8rSHS8qv-mc-5gkedATV/view?usp=drivesdk
+2026-03-24 09:02:33,298 - INFO - [__main__] - [History] Updated sheet with 40 new articles.
+2026-03-24 09:02:34,338 - INFO - [__main__] - Old history cleanup complete: 23 rows deleted.
+2026-03-24 09:02:34,339 - INFO - [__main__] - PHASE 5: Sending Gmail with PDF attachments
+2026-03-24 09:02:34,340 - INFO - [googleapiclient.discovery_cache] - file_cache is only supported with oauth2client<4.0.0
+2026-03-24 09:02:34,341 - INFO - [__main__] - [Gmail] Attachment: MarketInsight_2026-03-23.pdf (2.8MB)
+2026-03-24 09:02:34,341 - INFO - [__main__] - [Gmail] Attachment: TheBell_2026-03-23.pdf (5.7MB)
+2026-03-24 09:02:34,341 - INFO - [__main__] - [Gmail] Attachment: DealSitePlus_2026-03-23.pdf (2.5MB)
+2026-03-24 09:02:34,341 - INFO - [__main__] - [Gmail] Sending 1 email(s) with 3 total attachments
+2026-03-24 09:02:34,374 - INFO - [__main__] - [Gmail] Attached: MarketInsight_20260323.pdf (2.8MB)
+2026-03-24 09:02:34,439 - INFO - [__main__] - [Gmail] Attached: TheBell_20260323.pdf (5.7MB)
+2026-03-24 09:02:34,471 - INFO - [__main__] - [Gmail] Attached: DealSitePlus_20260323.pdf (2.5MB)
+2026-03-24 09:02:39,447 - INFO - [__main__] - [Gmail] Email 1/1 sent successfully to michaelkim@affinityequity.com, samuelkim@affinityequity.com, hyeonchoi@affinityequity.com, dhkim@affinityequity.com, cindychoi@affinityequity.com, davidkim@affinityequity.com, dhchoi@affinityequity.com, yhlee@affinityequity.com, jennyhwang@affinityequity.com, mschoi@affinityequity.com, seanlee@affinityequity.com, thyang@affinityequity.com
+2026-03-24 09:02:39,447 - INFO - [__main__] - [Gmail] All emails sent successfully!
+2026-03-24 09:02:39,448 - INFO - [__main__] - 
+============================================================
+2026-03-24 09:02:39,448 - INFO - [__main__] - Paywalled PDF Generator Complete
+2026-03-24 09:02:39,448 - INFO - [__main__] - ============================================================
+[SUCCESS] paywalled_pdf.py completed successfully. 
+[End Time] 2026-03-24  9:02:41.89 
+================================================== 
+ 
