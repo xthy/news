@@ -8,10 +8,12 @@
 
 var Config = {
   OPENAI_API_KEY: typeof SECRETS !== 'undefined' ? SECRETS.OPENAI_API_KEY : 'sk-your-openai-api-key-here',
-  PERPLEXITY_API_KEY: typeof SECRETS !== 'undefined' ? SECRETS.PERPLEXITY_API_KEY : 'pplx-your-perplexity-api-key-here',
   SLACK_WEBHOOK_URL: typeof SECRETS !== 'undefined' ? SECRETS.SLACK_WEBHOOK_URL_NEWS : 'https://hooks.slack.com/services/YOUR/WEBHOOK/URL',
-  GPT_MODEL: 'gpt-4-turbo-preview',
-  PERPLEXITY_MODEL: 'sonar-pro',
+  GPT_MODEL: 'gpt-4o-mini',
+
+  // Email settings
+  EMAIL_RECIPIENT: 'michaelkim@affinityequity.com, samuelkim@affinityequity.com, hyeonchoi@affinityequity.com, dhkim@affinityequity.com, cindychoi@affinityequity.com, davidkim@affinityequity.com, dhchoi@affinityequity.com, yhlee@affinityequity.com, jennyhwang@affinityequity.com, mschoi@affinityequity.com, seanlee@affinityequity.com, thyang@affinityequity.com',
+  SEND_EMAIL: true,
 
   DAYS_BACK: 7,
 
@@ -161,7 +163,14 @@ function runWeeklyPEBrief() {
     var us = processRegionWithGuarantee(regionData.us, Config.US_ARTICLES, 'us');
     var europe = processRegionWithGuarantee(regionData.europe, Config.EUROPE_ARTICLES, 'europe');
 
-    Logger.log('\n✅ Final article counts (GUARANTEED):');
+    // 3.5 Cross-region deduplication
+    var deduped = crossRegionDedup(korea, asiaMena, us, europe);
+    korea = deduped.korea;
+    asiaMena = deduped.asiaMena;
+    us = deduped.us;
+    europe = deduped.europe;
+
+    Logger.log('\n✅ Final article counts (after cross-region dedup):');
     Logger.log('   Korea: ' + korea.length + '/' + Config.KOREA_ARTICLES);
     Logger.log('   Asia/MENA: ' + asiaMena.length + '/' + Config.ASIA_MENA_ARTICLES);
     Logger.log('   US: ' + us.length + '/' + Config.US_ARTICLES);
@@ -173,6 +182,9 @@ function runWeeklyPEBrief() {
     // 5. Send to Slack
     var message = formatSlackMessage(highlights, korea, asiaMena, us, europe);
     sendToSlack(message);
+
+    // 6. Send Email
+    sendEmailReport(highlights, korea, asiaMena, us, europe);
 
     Logger.log('\n✅ PE Weekly Roundup v4.0 sent successfully!');
 
@@ -200,7 +212,8 @@ function processRegionWithGuarantee(articles, targetCount, regionName) {
 
   // B. Initial Deduplication
   var initialUnique = enhancedDedup(articles, regionName);
-  var filtered = initialUnique.filter(function (a) { return a.score > -150; });
+  var titleDeduped = titleSimilarityDedup(initialUnique, regionName);
+  var filtered = titleDeduped.filter(function (a) { return a.score > -150; });
 
   if (filtered.length === 0) {
     Logger.log('   ⚠️ All articles filtered out for ' + regionName);
@@ -538,7 +551,14 @@ function extractAllCompanies(text) {
 
     // Other notable
     'sapporo', 'steadfast', 'arctos', 'quarterra', 'lennar',
-    'gds holdings', 'kunlunxin', 'torrent pharma', 'minimax'
+    'gds holdings', 'kunlunxin', 'torrent pharma', 'minimax',
+
+    // Korean deals
+    'k car', 'rebellions', 'upstage', 'solasto', 'kg group', 'kg steel',
+    // Global deals
+    'coolit', 'whoop', 'olaplex', 'mistral', 'coforge', 'ags health',
+    'bovis', 'brickability', 'blacklane', 'apellis', 'atlantic aviation',
+    'inflexion', 'mai capital'
   ];
 
   var found = [];
@@ -687,6 +707,9 @@ function scoreArticle(article, region) {
   if (region === 'korea') {
     if (text.indexOf('mbk') !== -1 || text.indexOf('hahn') !== -1 || text.indexOf('korea zinc') !== -1) score += 50;
 
+    var krPolicy = ['상법', '세법', '세금', '거버넌스', 'corporate governance', '행동주의', 'activism', '경영권', 'pef', '사모펀드', '국세청', '금감원', 'fss', '자본시장법', 'capital markets act', '규제', 'regulation', '공정위', 'ftc', '법인세', 'corporate tax', '밸류업', 'value-up'];
+    krPolicy.forEach(function (kw) { if (text.indexOf(kw) !== -1) score += 40; });
+
     // Penalty for "Homeplus" if it's just repeating same "troubled" or "sells" trope without a new $ amount
     if (text.indexOf('homeplus') !== -1) {
       if (!extractAmount(text)) score -= 60;
@@ -749,7 +772,8 @@ function gptAggressiveDedup(articles, region, targetCount) {
       '3. NO GENERAL NEWS: Government budgets, bts/kpop rumors, philanthropic donations. REJECT.\n' +
       '4. FOCUS ON: Real Buyouts, Minority Investments ($50M+), Fund Closures, IPOs, GP-led Secondaries.\n' +
       '5. DEDUPLICATION: If multiple sources report the same deal, pick the most "business-like" title.\n\n' +
-      'Return exactly ' + targetCount + ' unique indices in order of strategic importance.\n' +
+      'IMPORTANT: If multiple articles cover the SAME deal/event (e.g. same acquisition reported by different sources), keep ONLY ONE - the most informative version.\n' +
+      'Return EXACTLY ' + targetCount + ' unique indices in order of strategic importance. If you find duplicates, skip them and select different articles to reach exactly ' + targetCount + '.\n' +
       'JSON FORMAT: {"keep": [0,3,5...]}';
 
     var response = callGPT(prompt, 1000);
@@ -799,6 +823,124 @@ function enforceDiversity(articles, region) {
       Logger.log('  [' + region + '] Diversity limit - removed: "' + article.title.substring(0, 50) + '..."');
     }
   });
+
+  return result;
+}
+
+// ==================== TITLE SIMILARITY DEDUP ====================
+
+function titleSimilarityDedup(articles, region) {
+  if (articles.length < 2) return articles;
+
+  Logger.log('  [' + region + '] Title similarity dedup: ' + articles.length + ' articles');
+
+  var kept = [];
+
+  for (var i = 0; i < articles.length; i++) {
+    var isDuplicate = false;
+
+    for (var j = 0; j < kept.length; j++) {
+      var sim = calculateTitleOverlap(articles[i].title, kept[j].title);
+      if (sim >= 0.45) {
+        isDuplicate = true;
+        Logger.log('    ✗ Similar (' + (sim * 100).toFixed(0) + '%): "' + articles[i].title.substring(0, 60) + '"');
+        Logger.log('      ≈ "' + kept[j].title.substring(0, 60) + '"');
+        // Keep the higher-scored one
+        if ((articles[i].score || 0) > (kept[j].score || 0)) {
+          kept[j] = articles[i];
+        }
+        break;
+      }
+    }
+
+    if (!isDuplicate) {
+      kept.push(articles[i]);
+    }
+  }
+
+  Logger.log('  [' + region + '] Title dedup: ' + articles.length + ' → ' + kept.length);
+  return kept;
+}
+
+function calculateTitleOverlap(title1, title2) {
+  var stopwords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'its', 'has', 'have', 'had', 'this', 'that', 'after', 'into', 'new', 'says', 'said'];
+
+  var extract = function (title) {
+    var words = title.toLowerCase().replace(/[^a-z0-9가-힣\s]/g, ' ').split(/\s+/).filter(function (w) {
+      return w.length > 1 && stopwords.indexOf(w) === -1;
+    });
+    return words;
+  };
+
+  var words1 = extract(title1);
+  var words2 = extract(title2);
+
+  if (words1.length === 0 || words2.length === 0) return 0;
+
+  var set2 = {};
+  words2.forEach(function (w) { set2[w] = true; });
+
+  var common = 0;
+  words1.forEach(function (w) {
+    if (set2[w]) common++;
+  });
+
+  // Jaccard similarity
+  var uniqueWords = {};
+  words1.forEach(function (w) { uniqueWords[w] = true; });
+  words2.forEach(function (w) { uniqueWords[w] = true; });
+  var unionSize = Object.keys(uniqueWords).length;
+
+  return common / unionSize;
+}
+
+// ==================== CROSS-REGION DEDUP ====================
+
+function crossRegionDedup(korea, asiaMena, us, europe) {
+  Logger.log('\n🔄 Cross-region deduplication...');
+
+  var all = [];
+  korea.forEach(function (a) { all.push({ article: a, region: 'korea' }); });
+  asiaMena.forEach(function (a) { all.push({ article: a, region: 'asiaMena' }); });
+  us.forEach(function (a) { all.push({ article: a, region: 'us' }); });
+  europe.forEach(function (a) { all.push({ article: a, region: 'europe' }); });
+
+  var toRemove = {};
+
+  for (var i = 0; i < all.length; i++) {
+    if (toRemove[i]) continue;
+    for (var j = i + 1; j < all.length; j++) {
+      if (toRemove[j]) continue;
+      if (all[i].region === all[j].region) continue;
+
+      var sim = calculateTitleOverlap(all[i].article.title, all[j].article.title);
+      if (sim >= 0.35) {
+        var scoreI = all[i].article.score || 0;
+        var scoreJ = all[j].article.score || 0;
+
+        if (scoreJ > scoreI) {
+          toRemove[i] = true;
+          Logger.log('  ✗ Cross-dup (' + all[i].region + '): "' + all[i].article.title.substring(0, 60) + '..."');
+        } else {
+          toRemove[j] = true;
+          Logger.log('  ✗ Cross-dup (' + all[j].region + '): "' + all[j].article.title.substring(0, 60) + '..."');
+        }
+      }
+    }
+  }
+
+  var result = { korea: [], asiaMena: [], us: [], europe: [] };
+  for (var i = 0; i < all.length; i++) {
+    if (toRemove[i]) continue;
+    result[all[i].region].push(all[i].article);
+  }
+
+  var removedCount = Object.keys(toRemove).length;
+  if (removedCount > 0) {
+    Logger.log('  🔄 Cross-region dedup removed: ' + removedCount + ' articles');
+  } else {
+    Logger.log('  ✓ No cross-region duplicates found');
+  }
 
   return result;
 }
@@ -888,7 +1030,7 @@ function callGPT(prompt, maxTokens) {
       { role: 'user', content: prompt }
     ],
     temperature: 0.1,
-    max_tokens: maxTokens
+    max_completion_tokens: maxTokens
   };
 
   var options = {
@@ -1059,6 +1201,69 @@ function sendErrorToSlack(error) {
       }]
     });
   } catch (e) { }
+}
+
+// ==================== EMAIL ====================
+
+function sendEmailReport(highlights, korea, asiaMena, us, europe) {
+  if (!Config.SEND_EMAIL || !Config.EMAIL_RECIPIENT) {
+    Logger.log('⚠ Email not configured');
+    return;
+  }
+
+  var dateRange = getDateRange();
+  var total = korea.length + asiaMena.length + us.length + europe.length;
+  var subject = 'PE Weekly Roundup | Week of ' + dateRange;
+
+  var html = '<div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; color: #333;">';
+
+  // Header
+  html += '<h2 style="color: #1a1a2e; border-bottom: 2px solid #e94560; padding-bottom: 8px;">PE Weekly Roundup | Week of ' + dateRange + '</h2>';
+  html += '<p style="color: #666;">' + total + ' articles curated</p>';
+
+  // Highlights
+  html += '<h3 style="color: #e94560;">Weekly Highlights</h3>';
+  html += '<ul style="line-height: 1.8;">';
+  highlights.forEach(function (h) {
+    html += '<li>' + h + '</li>';
+  });
+  html += '</ul>';
+
+  // Sections
+  var sections = [
+    { title: 'Korea', articles: korea },
+    { title: 'Asia-Pacific & MENA', articles: asiaMena },
+    { title: 'United States', articles: us },
+    { title: 'Europe', articles: europe }
+  ];
+
+  sections.forEach(function (section) {
+    html += '<h3 style="color: #1a1a2e; border-bottom: 1px solid #ddd; padding-bottom: 4px;">' + section.title + '</h3>';
+    if (section.articles.length > 0) {
+      html += '<ol style="line-height: 1.8;">';
+      section.articles.forEach(function (a) {
+        html += '<li><a href="' + a.link + '" style="color: #0066cc; text-decoration: none;">' + a.title + '</a></li>';
+      });
+      html += '</ol>';
+    } else {
+      html += '<p style="color: #999;"><em>No articles this week</em></p>';
+    }
+  });
+
+  // Footer
+  html += '<hr style="border: none; border-top: 1px solid #ddd; margin-top: 20px;">';
+  html += '<p style="color: #999; font-size: 12px;">Weekly PE News Curation Agent | ' + total + ' articles | v4.2</p>';
+  html += '</div>';
+
+  try {
+    GmailApp.sendEmail(Config.EMAIL_RECIPIENT, subject, '', {
+      name: 'News Bot',
+      htmlBody: html
+    });
+    Logger.log('✅ Email sent to ' + Config.EMAIL_RECIPIENT);
+  } catch (e) {
+    Logger.log('❌ Email error: ' + e.toString());
+  }
 }
 
 // ==================== TEST ====================

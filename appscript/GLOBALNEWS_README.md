@@ -163,7 +163,7 @@ const peKeywords = [
 ### GPT 모델 변경
 
 ```javascript
-GPT_MODEL: 'gpt-4-turbo-preview',  // 또는 'gpt-3.5-turbo'
+GPT_MODEL: 'gpt-4o-mini',  // 현재 사용 중인 모델
 ```
 
 ### 기사 수 조정

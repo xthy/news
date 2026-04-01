@@ -7,11 +7,7 @@
 
 const CONFIG = {
   OPENAI_API_KEY: typeof SECRETS !== 'undefined' ? SECRETS.OPENAI_API_KEY : 'sk-your-openai-api-key-here',
-  PERPLEXITY_API_KEY: typeof SECRETS !== 'undefined' ? SECRETS.PERPLEXITY_API_KEY : 'pplx-your-perplexity-api-key-here',
-  SLACK_WEBHOOK_URL: typeof SECRETS !== 'undefined' ? SECRETS.SLACK_WEBHOOK_URL_NEWS : 'https://hooks.slack.com/services/YOUR/WEBHOOK/URL',
-
-  GPT_MODEL: 'gpt-4-turbo-preview',
-  PERPLEXITY_MODEL: 'sonar-pro',
+  GPT_MODEL: 'gpt-4o-mini',
   
   NEWS_HOURS_BACK: 24,
   MAX_ARTICLES_PER_SOURCE: 15,
@@ -21,11 +17,11 @@ const CONFIG = {
   REQUIRED_MIN_INSIGHTS: 5,
   REQUIRED_MAX_INSIGHTS: 7,
   
-  STAGE1_CANDIDATES: 60,
-  STAGE2_PERPLEXITY: 25,
-  STAGE3_FINAL: 10,
+  STAGE1_CANDIDATES: 50,
+  STAGE2_GPT_EVAL: 25,
+  STAGE3_FINAL: 7,
   
-  SIMILARITY_THRESHOLD: 0.45,
+  SIMILARITY_THRESHOLD: 0.35,
   INSIGHT_SIMILARITY_THRESHOLD: 0.35,
   MIN_SOURCE_DIVERSITY: 6,
   
@@ -34,7 +30,11 @@ const CONFIG = {
     KOREA_STOCKS: ['^KS11', '^KQ11'],
     COMMODITIES: ['GC=F', 'SI=F', 'CL=F', 'BTC-USD'],
     FX_RATES: ['KRW=X', 'EURKRW=X', 'JPYKRW=X']
-  }
+  },
+
+  // Email settings
+  EMAIL_RECIPIENT: 'michaelkim@affinityequity.com, samuelkim@affinityequity.com, hyeonchoi@affinityequity.com, dhkim@affinityequity.com, cindychoi@affinityequity.com, davidkim@affinityequity.com, dhchoi@affinityequity.com, yhlee@affinityequity.com, jennyhwang@affinityequity.com, mschoi@affinityequity.com, seanlee@affinityequity.com, thyang@affinityequity.com',
+  SEND_EMAIL: true
 };
 
 // ==================== NEWS SOURCES (Same as v10.8) ====================
@@ -129,6 +129,9 @@ function v110_sendDailyNewsSummary() {
     const message = v110_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketData);
     v110_sendToSlack(message);
 
+    // Send Email
+    v110_sendEmailReport(aiSummary, intlArticles, koreaArticles, marketData);
+
     Logger.log('\n✅ SUCCESS! Diverse & Robust insights.');
 
   } catch (error) {
@@ -140,7 +143,7 @@ function v110_sendDailyNewsSummary() {
 // ==================== ALL HELPER FUNCTIONS (Same as v10.8) ====================
 // [Copy all from v10.8: extractTopics, validate24HourWindow, logSourceDistribution, 
 //  removeDuplicatesAggressive, calculateEnhancedSimilarity, ensureSourceDiversity,
-//  processWithGuarantee, headlineScore, callPerplexity, callGPT, perplexityAnalysis,
+//  processWithGuarantee, headlineScore, callGPT, gptStrictFilter,
 //  gptFinalCuration, fetchAllNews, fetchRSS, getText, extractSource, cleanTitle,
 //  cleanDesc, parseDate, deepClean, fetchMarketData, etc.]
 
@@ -577,11 +580,12 @@ function v110_processWithQuality(articles, requiredCount, sectionType, intlTopic
   articles.forEach(a => a.score = v110_headlineScore(a, sectionType, intlTopics));
   articles.sort((a, b) => b.score - a.score);
   let filtered = v110_removeDuplicatesAggressive(articles);
+  filtered = v110_titleSimilarityDedup(filtered, sectionType);
   filtered = filtered.filter(a => a.score > 0);
   Logger.log(`   → After rule-based filter: ${filtered.length} articles`);
   
   const candidates = filtered.slice(0, CONFIG.STAGE1_CANDIDATES);
-  const analyzed = v110_perplexityAnalysis(candidates, sectionType);
+  const analyzed = v110_gptStrictFilter(candidates, sectionType);
   
   if (analyzed.length === 0) {
     Logger.log(`   ⚠️ Stage 2 rejected all articles.`);
@@ -591,10 +595,10 @@ function v110_processWithQuality(articles, requiredCount, sectionType, intlTopic
   // Send the strictly filtered ones to Stage 3 for final selection/ranking
   let final = v110_gptFinalCuration(analyzed, sectionType, Math.min(analyzed.length, requiredCount));
   
-  // Ensure source diversity but do NOT pad if we fall short
+  // Ensure source diversity
   final = v110_ensureSourceDiversity(final, requiredCount);
-  
-  Logger.log(`   → Final count: ${final.length} (Strictly Evaluated)`);
+
+  Logger.log(`   → Final count: ${final.length}/${requiredCount}`);
   return final;
 }
 
@@ -719,6 +723,9 @@ function v110_headlineScore(article, sectionType, intlTopics = []) {
 
     const majorKeywords = ['kospi', 'kosdaq', '사상 최고', '기준금리', '정책', '규제', '법안', '금융위', '공정위', '기재부', '삼성', 'samsung', '수출', '무역', 'gdp', '성장률', '인수합병', 'm&a', '구조조정', '상장'];
     majorKeywords.forEach(kw => { if (text.includes(kw)) score += 10; });
+
+    const policyKeywords = ['상법', '세법', '세금', '거버넌스', '기업 지배구조', '행동주의', '경영권', 'pef', '사모펀드', '국세청', '금감원', '노동조합', '최저임금', '법인세', '자본시장법', '밸류업'];
+    policyKeywords.forEach(kw => { if (title.includes(kw) || text.includes(kw)) score += 25; });
   }
 
   const hoursAgo = (Date.now() - new Date(article.publishedAt)) / (1000 * 60 * 60);
@@ -747,41 +754,6 @@ function v110_headlineScore(article, sectionType, intlTopics = []) {
   return score;
 }
 
-function v110_callPerplexity(prompt, maxTokens = 1000) {
-  const url = 'https://api.perplexity.ai/chat/completions';
-  const payload = {
-    model: CONFIG.PERPLEXITY_MODEL,
-    messages: [
-      {role: 'system', content: 'Business analyst with web search. Return valid JSON.'},
-      {role: 'user', content: prompt}
-    ],
-    max_tokens: maxTokens,
-    temperature: 0.2,
-    search_domain_filter: ['bloomberg.com', 'reuters.com', 'ft.com', 'wsj.com']
-  };
-  const options = {
-    method: 'post',
-    contentType: 'application/json',
-    headers: {'Authorization': `Bearer ${CONFIG.PERPLEXITY_API_KEY}`},
-    payload: JSON.stringify(payload),
-    muteHttpExceptions: true
-  };
-  const response = UrlFetchApp.fetch(url, options);
-  const httpCode = response.getResponseCode();
-  const responseText = response.getContentText();
-  if (httpCode !== 200) {
-    Logger.log(`   ⚠️ Perplexity HTTP ${httpCode}: ${responseText.substring(0, 200)}`);
-    throw new Error(`Perplexity API returned HTTP ${httpCode}`);
-  }
-  if (responseText.trim().startsWith('<')) {
-    Logger.log(`   ⚠️ Perplexity returned HTML instead of JSON`);
-    throw new Error('Perplexity API returned HTML error page');
-  }
-  const json = JSON.parse(responseText);
-  if (json.error) throw new Error(json.error.message);
-  return json.choices[0].message.content.trim();
-}
-
 function v110_callGPT(prompt, maxTokens = 4096, temperature = 0.3) {
   const url = 'https://api.openai.com/v1/chat/completions';
   const payload = {
@@ -791,7 +763,7 @@ function v110_callGPT(prompt, maxTokens = 4096, temperature = 0.3) {
       {role: 'user', content: prompt}
     ],
     temperature: temperature,
-    max_tokens: maxTokens
+    max_completion_tokens: maxTokens
   };
   const options = {
     method: 'post',
@@ -823,10 +795,10 @@ function v110_callGPT(prompt, maxTokens = 4096, temperature = 0.3) {
   throw new Error(`GPT failed after 3 attempts. Last error: ${lastError}`);
 }
 
-function v110_perplexityAnalysis(articles, sectionType) {
+function v110_gptStrictFilter(articles, sectionType) {
   if (!CONFIG.OPENAI_API_KEY || articles.length === 0) {
     Logger.log('   ⚠️ Skipping Stage 2 (no API key)');
-    return articles.slice(0, CONFIG.STAGE2_PERPLEXITY);
+    return articles.slice(0, CONFIG.STAGE2_GPT_EVAL);
   }
   try {
     const articleList = articles.map((a, i) => {
@@ -837,47 +809,33 @@ function v110_perplexityAnalysis(articles, sectionType) {
     const sectionLabel = sectionType === 'intl' ? 'international business' : 'Korean business';
     const prompt = `You are a ruthless News Desk Editor for a BUSINESS executive daily briefing. Your readers are CEOs and investors who only care about news that affects markets, companies, trade, and the economy.
 
-Evaluate the ${articles.length} candidates below. For EACH article, determine if it is strictly business-relevant.
-DO NOT try to fill a quota. If only 5 articles are truly business-relevant, only return those 5.
+Evaluate the ${articles.length} candidates below. For EACH article, determine if it is business-relevant enough for a corporate executive briefing.
 
-**STRICT BUSINESS RELEVANCE RULE:**
-If it does not directly impact a company's stock price, revenue, corporate strategy, or macroeconomic policy, REJECT IT.
+**BUSINESS RELEVANCE RULE:**
+Keep any article that impacts markets, companies, trade, technology, policy, regulatory, or the economy. 
 
-**ALWAYS REJECT (score 0):**
-- Political theater/entertainment ("key moments from speech", "ejections", "shouting")
-- Celebrity gossip or personal scandals (affairs, Epstein, divorces)
-- Cultural events (museums, art exhibitions, royal jewelry)
-- Sports results or athlete news
-- Product reviews, gaming news, movie releases
-- Opinions, editorials, Morning Bids, daily column roundups
-- Routine daily market recaps ("futures bounce", "markets open higher", "KOSPI up")
-- PR announcements (awards, partnerships, milestones, executive appointments)
-
-**ALWAYS KEEP (score 100):**
-- Central bank decisions, interest rates, monetary policy
-- Trade policy (tariffs, sanctions, trade agreements)
-- Major corporate events (M&A, IPO, earnings surprises, major CEO changes)
-- Geopolitical events WITH DIRECT economic impact
-- Technology breakthroughs with massive industry impact (AI chips, semiconductor bans)
+**REJECT THESE NOISE ITEMS:**
+- Political theater/entertainment ("key moments from speech", "ejections", "shouting", "celebrity gossip")
+- Sports results, crime reports, or everyday consumer advice
+- Routine daily market recaps ("futures bounce", "KOSPI up")
 
 Headlines:
 ${articleList}
 
-Return JSON evaluating ALL articles, dropping any that get 0. 
-ONLY include articles that pass the strictly business test.
-{"passed": [{"index": 0, "reasoning": "Clear market impact of X", "key_facts": "Fact 1"}]}`;
+Return ONLY a JSON array of indices that PASS the business test. We need a rich selection, so be inclusive of general business/economy news.
+Example format: [0, 2, 4, 7, 10, ...]`;
 
     Logger.log(`   → Stage 2 GPT Strict Filter evaluating ${articles.length} candidates...`);
-    const response = v110_callGPT(prompt, 3000, 0.1);
+    const response = v110_callGPT(prompt, 1500, 0.1);
     let cleaned = response.replace(/```json/gi, '').replace(/```/g, '').trim();
-    const match = cleaned.match(/\{[\s\S]*\}/);
+    const match = cleaned.match(/\[[\s\S]*\]/);
     if (match) cleaned = match[0];
     const result = JSON.parse(cleaned);
-    if (!result.passed || !Array.isArray(result.passed)) throw new Error('Invalid JSON structure');
-    let analyzed = result.passed.filter(item => item.index >= 0 && item.index < articles.length).map(item => ({
-      ...articles[item.index],
-      aiReasoning: item.reasoning,
-      keyFacts: item.key_facts,
+    
+    if (!Array.isArray(result)) throw new Error('Invalid JSON structure');
+    
+    let analyzed = result.filter(idx => idx >= 0 && idx < articles.length).map(idx => ({
+      ...articles[idx],
       aiScore: 100
     }));
     
@@ -885,7 +843,7 @@ ONLY include articles that pass the strictly business test.
     return analyzed;
   } catch (error) {
     Logger.log(`   ❌ Stage 2 GPT: ${error.toString()}`);
-    return articles.slice(0, CONFIG.STAGE2_PERPLEXITY);
+    return articles.slice(0, CONFIG.STAGE2_GPT_EVAL);
   }
 }
 
@@ -900,15 +858,18 @@ function v110_gptFinalCuration(articles, sectionType, requiredCount) {
 These candidates have already passed a strict business-relevance gate. Your job is to select the most EXTREMELY IMPORTANT ones.
 
 **Selection rules:**
-1. Choose headlines with the HIGHEST STRATEGIC IMPACT (macro shocks, major corporate moves, disruptive tech).
-2. Ensure TOPIC DIVERSITY (Do not pick 5 articles about the same topic, span across trade, central banks, tech, energy).
-3. Ensure SOURCE DIVERSITY.
-4. REJECT minor corporate news (project updates, routine financing, generic industry trends, local government actions). ONLY pick earth-shattering or top-tier national/global news.
+1. ZERO DUPLICATE RULE: NEVER select two articles about the SAME core event (e.g. OpenAI funding, Samsung Biologics acquisition, US/Iran geopolitics, Export numbers). If multiple sources/languages report it, select ONLY ONE - the best version. Beware of acronyms (BoE = Bank of England) and translations (Samsung Biologics = 삼성바이오).
+2. You should aim to select EXACTLY ${requiredCount} completely unique, distinct stories. 
+3. HOWEVER, IF there are fewer than ${requiredCount} truly unique events in the list, DO NOT DUPLICATE. It is better to return a shorter list (e.g. 7 or 8 indices) than to violate the ZERO DUPLICATE RULE. Uniqueness is far more important than hitting the quota.
+4. Prioritize headlines with the HIGHEST STRATEGIC IMPACT (macro shocks, major corporate moves, disruptive tech).
+4. Maximize TOPIC DIVERSITY (Span across trade, central banks, tech, energy, etc.).
+5. Maximize SOURCE DIVERSITY.
+6. REJECT minor corporate news. ONLY pick earth-shattering or top-tier national/global news.
 
 Articles:
 ${articleList}
 
-Return ONLY a JSON array of selected indices: [3, 7, 1, ...]`;
+Return ONLY a JSON array of exactly ${requiredCount} selected indices: [3, 7, 1, ...]`;
     const response = v110_callGPT(prompt, 300);
     let cleaned = response.replace(/```json/gi, '').replace(/```/g, '');
     const match = cleaned.match(/\[[\d\s,]+\]/);
@@ -922,6 +883,74 @@ Return ONLY a JSON array of selected indices: [3, 7, 1, ...]`;
     Logger.log(`   ❌ GPT: ${error.toString()}`);
     return articles.slice(0, requiredCount);
   }
+}
+
+// ==================== TITLE SIMILARITY DEDUP ====================
+
+function v110_titleSimilarityDedup(articles, sectionType) {
+  if (articles.length < 2) return articles;
+
+  Logger.log(`  [${sectionType}] Title similarity dedup: ${articles.length} articles`);
+
+  const kept = [];
+
+  for (let i = 0; i < articles.length; i++) {
+    let isDuplicate = false;
+
+    for (let j = 0; j < kept.length; j++) {
+      const sim = v110_calculateTitleOverlap(articles[i].title, kept[j].title);
+      if (sim >= 0.4) {
+        isDuplicate = true;
+        Logger.log(`    \u2717 Similar (${(sim * 100).toFixed(0)}%): "${articles[i].title.substring(0, 60)}"`);
+        Logger.log(`      \u2248 "${kept[j].title.substring(0, 60)}"`);
+        // Keep the higher-scored one
+        if ((articles[i].score || 0) > (kept[j].score || 0)) {
+          kept[j] = articles[i];
+        }
+        break;
+      }
+    }
+
+    if (!isDuplicate) {
+      kept.push(articles[i]);
+    }
+  }
+
+  Logger.log(`  [${sectionType}] Title dedup: ${articles.length} \u2192 ${kept.length}`);
+  return kept;
+}
+
+function v110_calculateTitleOverlap(title1, title2) {
+  const stopwordsEn = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'its', 'has', 'have', 'had', 'this', 'that', 'after', 'into', 'new', 'says', 'said', 'will', 'could', 'may'];
+  const stopwordsKo = ['\uB4F1', '\uBC0F', '\uC704\uD55C', '\uD1B5\uD574', '\uB300\uD574', '\uB530\uB978', '\uC704\uD574', '\uC788\uB294', '\uC788\uB2E4', '\uD55C\uB2E4', '\uC774\uBC88', '\uC62C\uD574', '\uCD5C\uADFC'];
+  const stopwords = stopwordsEn.concat(stopwordsKo);
+
+  const extract = (title) => {
+    return title.toLowerCase().replace(/[^a-z0-9\uAC00-\uD7A3\s]/g, ' ').split(/\s+/).filter(w => {
+      return w.length > 1 && stopwords.indexOf(w) === -1;
+    });
+  };
+
+  const words1 = extract(title1);
+  const words2 = extract(title2);
+
+  if (words1.length === 0 || words2.length === 0) return 0;
+
+  const set2 = {};
+  words2.forEach(w => { set2[w] = true; });
+
+  let common = 0;
+  words1.forEach(w => {
+    if (set2[w]) common++;
+  });
+
+  // Jaccard similarity
+  const uniqueWords = {};
+  words1.forEach(w => { uniqueWords[w] = true; });
+  words2.forEach(w => { uniqueWords[w] = true; });
+  const unionSize = Object.keys(uniqueWords).length;
+
+  return common / unionSize;
 }
 
 // ==================== RSS & MARKET (Same as v10.8, rename) ====================
@@ -1457,7 +1486,7 @@ function v110_formatSlackMessage(aiSummary, intlArticles, koreaArticles, marketD
   const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
   const dd = String(dateObj.getDate()).padStart(2, '0');
   
-  blocks.push({type: 'header', text: {type: 'plain_text', text: `Global Business Brief (${mm}/${dd})`, emoji: true}});
+  blocks.push({type: 'header', text: {type: 'plain_text', text: `Global Business News Brief (${mm}/${dd})`, emoji: true}});
   blocks.push({type: 'divider'});
   blocks.push({type: 'header', text: {type: 'plain_text', text: '📊 Market Snapshot', emoji: true}});
   blocks.push({type: 'section', text: {type: 'mrkdwn', text: v110_truncate(v110_formatMarketData(marketData), 2900)}});
@@ -1550,8 +1579,8 @@ function v110_formatMarketData(marketData) {
     text += '*US Markets*\n';
     marketData.usStocks.forEach(s => {
       if (!s) return;
-      const emoji = s.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${s.name}: ${Number(s.price).toLocaleString(undefined, {minimumFractionDigits: 2})} (${s.dayChange >= 0 ? '+' : ''}${Number(s.dayChange).toFixed(2)}%)\n`;
+      const indicator = s.dayChange >= 0 ? '▲' : '▼';
+      text += `${indicator} ${s.name}: ${Number(s.price).toLocaleString(undefined, {minimumFractionDigits: 2})} (${s.dayChange >= 0 ? '+' : ''}${Number(s.dayChange).toFixed(2)}%)\n`;
     });
   }
 
@@ -1559,8 +1588,8 @@ function v110_formatMarketData(marketData) {
     text += '\n*Korea Markets*\n';
     marketData.koreaStocks.forEach(s => {
       if (!s) return;
-      const emoji = s.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${s.name}: ${Number(s.price).toLocaleString(undefined, {minimumFractionDigits: 2})} (${s.dayChange >= 0 ? '+' : ''}${Number(s.dayChange).toFixed(2)}%)\n`;
+      const indicator = s.dayChange >= 0 ? '▲' : '▼';
+      text += `${indicator} ${s.name}: ${Number(s.price).toLocaleString(undefined, {minimumFractionDigits: 2})} (${s.dayChange >= 0 ? '+' : ''}${Number(s.dayChange).toFixed(2)}%)\n`;
     });
   }
 
@@ -1568,8 +1597,8 @@ function v110_formatMarketData(marketData) {
     text += '\n*FX Rates*\n';
     marketData.fxRates.forEach(fx => {
       if (!fx) return;
-      const emoji = fx.dayChange >= 0 ? '📈' : '📉';
-      text += `${emoji} ${fx.name}: ${Number(fx.price).toFixed(2)} (${fx.dayChange >= 0 ? '+' : ''}${Number(fx.dayChange).toFixed(2)}%)\n`;
+      const indicator = fx.dayChange >= 0 ? '▲' : '▼';
+      text += `${indicator} ${fx.name}: ${Number(fx.price).toLocaleString(undefined, {minimumFractionDigits: 2})} (${fx.dayChange >= 0 ? '+' : ''}${Number(fx.dayChange).toFixed(2)}%)\n`;
     });
   }
 
@@ -1577,9 +1606,9 @@ function v110_formatMarketData(marketData) {
     text += '\n*Commodities & Crypto*\n';
     marketData.commodities.forEach(c => {
       if (!c) return;
-      const emoji = c.dayChange >= 0 ? '📈' : '📉';
+      const indicator = c.dayChange >= 0 ? '▲' : '▼';
       const priceStr = c.name === 'Bitcoin' ? `$${Number(c.price).toLocaleString()}` : `$${Number(c.price).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-      text += `${emoji} ${c.name}: ${priceStr} (${c.dayChange >= 0 ? '+' : ''}${Number(c.dayChange).toFixed(2)}%)\n`;
+      text += `${indicator} ${c.name}: ${priceStr} (${c.dayChange >= 0 ? '+' : ''}${Number(c.dayChange).toFixed(2)}%)\n`;
     });
   }
   
@@ -1665,6 +1694,115 @@ function v110_sendErrorToSlack(error) {
     ]
   };
   try { v110_sendToSlack(message); } catch (e) {}
+}
+
+// ==================== EMAIL ====================
+
+function v110_sendEmailReport(aiSummary, intlArticles, koreaArticles, marketData) {
+  if (!CONFIG.SEND_EMAIL || !CONFIG.EMAIL_RECIPIENT) {
+    Logger.log('Email not configured');
+    return;
+  }
+
+  const dateObj = new Date();
+  const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const dd = String(dateObj.getDate()).padStart(2, '0');
+  const dateStr = `${mm}/${dd}`;
+
+  const subject = `Global Business News Brief (${dateStr})`;
+
+  let html = '<div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; color: #333;">';
+
+  // Header
+  html += `<h2 style="color: #1a1a2e; border-bottom: 2px solid #e94560; padding-bottom: 8px;">Global Business News Brief (${dateStr})</h2>`;
+
+  // Market Snapshot
+  html += '<h3 style="color: #e94560;">Market Snapshot</h3>';
+  html += v110_formatMarketDataHTML(marketData);
+
+  // Executive Insights
+  if (aiSummary.insights && aiSummary.insights.length > 0) {
+    html += '<h3 style="color: #e94560;">Executive Insights</h3>';
+    html += '<ol style="line-height: 1.8;">';
+    aiSummary.insights.forEach(function (insight) {
+      html += '<li>' + insight + '</li>';
+    });
+    html += '</ol>';
+  }
+
+  // International Headlines
+  if (intlArticles && intlArticles.length > 0) {
+    const validIntl = intlArticles.filter(a => v110_isValidHeadline(a));
+    html += '<h3 style="color: #1a1a2e; border-bottom: 1px solid #ddd; padding-bottom: 4px;">International Headlines</h3>';
+    html += '<ol style="line-height: 1.8;">';
+    validIntl.forEach(function (a) {
+      html += '<li><a href="' + a.link + '" style="color: #0066cc; text-decoration: none;">' + a.title + '</a></li>';
+    });
+    html += '</ol>';
+  }
+
+  // Korea Headlines
+  if (koreaArticles && koreaArticles.length > 0) {
+    const validKorea = koreaArticles.filter(a => v110_isValidHeadline(a));
+    html += '<h3 style="color: #1a1a2e; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Korea Business Headlines</h3>';
+    html += '<ol style="line-height: 1.8;">';
+    validKorea.forEach(function (a) {
+      html += '<li><a href="' + a.link + '" style="color: #0066cc; text-decoration: none;">' + a.title + '</a></li>';
+    });
+    html += '</ol>';
+  }
+
+  // Footer
+  const validIntlCount = intlArticles ? intlArticles.filter(a => v110_isValidHeadline(a)).length : 0;
+  const validKoreaCount = koreaArticles ? koreaArticles.filter(a => v110_isValidHeadline(a)).length : 0;
+  const total = validIntlCount + validKoreaCount;
+  html += '<hr style="border: none; border-top: 1px solid #ddd; margin-top: 20px;">';
+  html += `<p style="color: #999; font-size: 12px;">Daily BIZ News Agent v11.1 | ${total} curated articles</p>`;
+  html += '</div>';
+
+  try {
+    GmailApp.sendEmail(CONFIG.EMAIL_RECIPIENT, subject, '', {
+      name: 'News Bot',
+      htmlBody: html
+    });
+    Logger.log('Email sent to ' + CONFIG.EMAIL_RECIPIENT);
+  } catch (e) {
+    Logger.log('Email error: ' + e.toString());
+  }
+}
+
+function v110_formatMarketDataHTML(marketData) {
+  let html = '<table style="border-collapse: collapse; width: 100%; font-size: 13px; margin-bottom: 16px;">';
+
+  function addSection(title, items, formatPrice) {
+    if (!items || items.length === 0) return;
+    html += `<tr><td colspan="3" style="font-weight: bold; padding: 8px 4px 4px; border-bottom: 1px solid #eee;">${title}</td></tr>`;
+    items.forEach(item => {
+      if (!item) return;
+      const isUp = item.dayChange >= 0;
+      const color = isUp ? '#16a34a' : '#dc2626';
+      const arrow = isUp ? '&#9650;' : '&#9660;';
+      const sign = isUp ? '+' : '';
+      const priceStr = formatPrice ? formatPrice(item) : Number(item.price).toLocaleString(undefined, {minimumFractionDigits: 2});
+      html += `<tr>`;
+      html += `<td style="padding: 3px 4px;">${item.name}</td>`;
+      html += `<td style="padding: 3px 4px; text-align: right;">${priceStr}</td>`;
+      html += `<td style="padding: 3px 4px; text-align: right; color: ${color};"><span style="color: ${color};">${arrow}</span> ${sign}${Number(item.dayChange).toFixed(2)}%</td>`;
+      html += `</tr>`;
+    });
+  }
+
+  addSection('US Markets', marketData.usStocks);
+  addSection('Korea Markets', marketData.koreaStocks);
+  addSection('FX Rates', marketData.fxRates, function(item) {
+    return Number(item.price).toLocaleString(undefined, {minimumFractionDigits: 2});
+  });
+  addSection('Commodities & Crypto', marketData.commodities, function(item) {
+    return item.name === 'Bitcoin' ? '$' + Number(item.price).toLocaleString() : '$' + Number(item.price).toLocaleString(undefined, {minimumFractionDigits: 2});
+  });
+
+  html += '</table>';
+  return html;
 }
 
 // ==================== TRIGGERS ====================
