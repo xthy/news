@@ -1131,15 +1131,27 @@ function v110_fetchMarketData() {
     else fxRates.push(usdKrwFromNaver);
   }
 
-  // 6. Map Korea Stocks from Naver
-  const koreaStocks = [
-    naverData.find(d => d.symbol === 'KOSPI'),
-    naverData.find(d => d.symbol === 'KOSDAQ')
-  ].filter(Boolean);
+  // 6. Map Korea Stocks from Naver (Primary) and Yahoo (Fallback)
+  const naverKOSPI = naverData.find(d => d.symbol === 'KOSPI');
+  const naverKOSDAQ = naverData.find(d => d.symbol === 'KOSDAQ');
+  
+  let koreaStocks = [];
+  if (naverKOSPI && naverKOSPI.dayChange !== 0) koreaStocks.push(naverKOSPI);
+  if (naverKOSDAQ && naverKOSDAQ.dayChange !== 0) koreaStocks.push(naverKOSDAQ);
+  
+  // If Naver fails or shows 0.0% (even with history check), use Yahoo as secondary source
+  if (koreaStocks.length < 2) {
+    const yahooKorea = v110_fetchStockData(CONFIG.MARKET_SYMBOLS.KOREA_STOCKS);
+    yahooKorea.forEach(ys => {
+      if (!koreaStocks.find(ks => ks.name === ys.name.replace('^KS11', 'KOSPI').replace('^KQ11', 'KOSDAQ'))) {
+        koreaStocks.push(ys);
+      }
+    });
+  }
 
   return {
     usStocks: usStocks,
-    koreaStocks: koreaStocks.length > 0 ? koreaStocks : v110_fetchStockData(CONFIG.MARKET_SYMBOLS.KOREA_STOCKS),
+    koreaStocks: koreaStocks,
     commodities: commodities,
     fxRates: fxRates
   };
@@ -1245,12 +1257,33 @@ function v110_fetchNaverFinance() {
          const resp = UrlFetchApp.fetch(url, {muteHttpExceptions:true});
          if (resp.getResponseCode() === 200) {
            const json = JSON.parse(resp.getContentText());
-           const price = Number(json.closePrice.replace(/,/g, ''));
+           let price = Number(json.closePrice.replace(/,/g, ''));
+           let dayChange = Number(json.fluctuationsRatio);
+           
+           // ⭐ If result is 0.0 and it's morning, try Naver's historical API to get yesterday's performance
+           if (dayChange === 0 && new Date().getHours() < 10) {
+             try {
+               const histUrl = `https://m.stock.naver.com/api/index/${c.code}/price?pageSize=10&page=1`;
+               const histResp = UrlFetchApp.fetch(histUrl, {muteHttpExceptions:true});
+               if (histResp.getResponseCode() === 200) {
+                 const histJson = JSON.parse(histResp.getContentText());
+                 const items = histJson.result || [];
+                 if (items.length > 0) {
+                   price = Number(items[0].closePrice.replace(/,/g, ''));
+                   dayChange = Number(items[0].fluctuationsRatio);
+                   Logger.log(`   [Naver History] ${c.code} fallback: ${price} (${dayChange}%)`);
+                 }
+               }
+             } catch (he) {
+               Logger.log(`   ⚠️ Naver history fallback failed for ${c.code}`);
+             }
+           }
+           
            data.push({
              symbol: c.code,
              name: c.code,
              price: price,
-             dayChange: Number(json.fluctuationsRatio),
+             dayChange: dayChange,
              source: 'Naver'
            });
          }
