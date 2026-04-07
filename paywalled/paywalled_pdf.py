@@ -20,7 +20,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, UnexpectedAlertPresentException
 
 # ────────────────────────────────────────────────
 # Configuration
@@ -60,6 +60,8 @@ except:
 SLACK_WEBHOOK_URL = config_data.get("SLACK_WEBHOOK_URL", "")
 TEAMS_WEBHOOK_URL = config_data.get("TEAMS_WEBHOOK_URL", "")
 LOG_SLACK_WEBHOOK_URL = config_data.get("LOG_SLACK_WEBHOOK_URL", "")
+TELEGRAM_BOT_TOKEN = config_data.get("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT_ID = config_data.get("TELEGRAM_CHAT_ID", "")
 SPREADSHEET_ID = config_data.get("SPREADSHEET_ID", "18KrjCdEEcNJrmNRAV19nhwAoya9l65gzH3ypFYaRlHM")
 HISTORY_SHEET_NAME = "paywalled_pdf"
 HISTORY_DAYS = 30
@@ -251,6 +253,12 @@ class BaseCrawler:
             wait = WebDriverWait(self.driver, 15)
             
             if site_key == "thebell":
+                # Ensure we are on login page and handle any initial alerts
+                try:
+                    alert = self.driver.switch_to.alert
+                    alert.accept()
+                except: pass
+                
                 # TheBell often has duplicate 'id' elements for mobile/desktop. 
                 # Find all and pick the visible one.
                 try:
@@ -267,12 +275,14 @@ class BaseCrawler:
                         
                         if target:
                             target.clear()
+                            # Use both methods for reliability
                             target.send_keys(creds["ids"][0] if field_id == "id" else creds["pws"][0])
+                            self.driver.execute_script(f"document.getElementById('{field_id}').value='{creds['ids'][0] if field_id == 'id' else creds['pws'][0]}';")
                         else:
                             # Direct fallback
                             self.driver.execute_script(f"document.getElementById('{field_id}').value='{creds['ids'][0] if field_id == 'id' else creds['pws'][0]}';")
 
-                    time.sleep(0.5)
+                    time.sleep(1)
                     # Find visible login button
                     btn_selectors = [creds["btn_selector"], "#btn1", "a#btn1", ".btnLogin", "input[type='submit']"]
                     login_btn = None
@@ -290,6 +300,13 @@ class BaseCrawler:
                         self.driver.execute_script("arguments[0].click();", login_btn)
                     else:
                         self.driver.execute_script("document.getElementById('btn1').click();")
+                    
+                    time.sleep(3)
+                    # Handle post-login alert
+                    try:
+                        alert = self.driver.switch_to.alert
+                        alert.accept()
+                    except: pass
                 except Exception as e:
                     logger.warning(f"[{site_key}] Advanced login attempt failed: {e}")
                     # Ultimate fallback
@@ -462,7 +479,7 @@ class TheBellCrawler(BaseCrawler):
                                  href = "https://www.thebell.co.kr" + (href if href.startswith("/") else "/front/" + href)
                                  
                             if not any(d['url'] == href for d in target_links):
-                                target_links.append({"site": "TheBell", "title": title, "url": href, "date": clean_date})
+                                target_links.append({"site": "TheBell", "title": title, "url": href, "date": clean_date, "reporter": ""})
                                 logger.info(f"[TheBell] Found: {title} ({clean_date})")
                                 found_target_on_page = True
                         elif article_date < START_DATE.date():
@@ -560,7 +577,7 @@ class HankyungCrawler(BaseCrawler):
                             
                             # Format date nicely
                             fmt_date = f"{date_part[:4]}-{date_part[4:6]}-{date_part[6:]}"
-                            target_links.append({"site": "Hankyung", "title": title, "url": href, "date": fmt_date})
+                            target_links.append({"site": "Hankyung", "title": title, "url": href, "date": fmt_date, "reporter": ""})
                             logger.info(f"[Hankyung] Found: {title} ({date_part})")
                         elif int(date_part) < int(START_DATE.strftime("%Y%m%d")):
                             logger.debug(f"[Hankyung] Article date {date_part} is older than window")
@@ -581,7 +598,7 @@ class HankyungCrawler(BaseCrawler):
                                     break
                             
                             if is_in_range:
-                                target_links.append({"site": "Hankyung", "title": title, "url": href})
+                                target_links.append({"site": "Hankyung", "title": title, "url": href, "reporter": ""})
                                 logger.info(f"[Hankyung] Found (by text): {title}")
                         except Exception as date_e:
                             logger.debug(f"[Hankyung] Could not find visual date element: {date_e}")
@@ -647,10 +664,14 @@ class InvestChosunCrawler(BaseCrawler):
                         if (dateMatch) {
                             var linkEl = allLi[i].querySelector('dt a, a[href*="html_dir"]');
                             if (linkEl) {
+                                // Try to extract reporter name from dd.date span
+                                var reporterEl = allLi[i].querySelector('dd.date span');
+                                var reporter = reporterEl ? reporterEl.textContent.trim() : '';
                                 result.push({
                                     title: linkEl.textContent.trim().split('\\n')[0],
                                     href: linkEl.href || linkEl.getAttribute('href'),
-                                    date: dateMatch[0]
+                                    date: dateMatch[0],
+                                    reporter: reporter
                                 });
                             }
                         }
@@ -660,14 +681,18 @@ class InvestChosunCrawler(BaseCrawler):
                 var result = [];
                 for (var i = 0; i < items.length; i++) {
                     var item = items[i];
-                    var dateEl = item.querySelector('dd.date em, .date em, .date span');
+                    var dateEl = item.querySelector('dd.date em, .date em');
                     var linkEl = item.querySelector('dt a');
+                    // Extract reporter name from dd.date span (separate from date em)
+                    var reporterEl = item.querySelector('dd.date span');
+                    var reporter = reporterEl ? reporterEl.textContent.trim() : '';
                     if (dateEl && linkEl) {
                         var dateMatch = dateEl.textContent.match(/\\d{4}\\.\\d{2}\\.\\d{2}/);
                         result.push({
                             title: linkEl.textContent.trim().split('\\n')[0],
                             href: linkEl.href || linkEl.getAttribute('href'),
-                            date: dateMatch ? dateMatch[0] : dateEl.textContent.trim()
+                            date: dateMatch ? dateMatch[0] : dateEl.textContent.trim(),
+                            reporter: reporter
                         });
                     }
                 }
@@ -690,14 +715,16 @@ class InvestChosunCrawler(BaseCrawler):
                         if START_DATE.date() <= article_date <= TODAY.date():
                             href = art_data.get('href', '')
                             title = art_data.get('title', '').strip()
+                            raw_reporter = art_data.get('reporter', '').strip()
+                            reporter = clean_reporter_name(raw_reporter)
                             
                             if href and len(title) > 5:
                                 if not href.startswith("http"):
                                     href = "https://www.investchosun.com" + href
                                 
                                 if not any(d['url'] == href for d in target_links):
-                                    target_links.append({"site": "InvestChosun", "title": title, "url": href, "date": clean_date})
-                                    logger.info(f"[InvestChosun] Found: {title} ({clean_date})")
+                                    target_links.append({"site": "InvestChosun", "title": title, "url": href, "date": clean_date, "reporter": reporter})
+                                    logger.info(f"[InvestChosun] Found: {title} ({clean_date}) - Reporter: {reporter}")
                         else:
                             logger.debug(f"[InvestChosun] Skipped date: {clean_date}")
                     except Exception as e:
@@ -793,7 +820,8 @@ class DealSitePlusCrawler(BaseCrawler):
                                         "site": "DealSitePlus", 
                                         "title": title, 
                                         "url": href, 
-                                        "date": date_text
+                                        "date": date_text,
+                                        "reporter": ""
                                     })
                                     processed_urls.add(href)
                                     logger.info(f"[DealSite+] Found: {title} ({date_text})")
@@ -810,6 +838,156 @@ class DealSitePlusCrawler(BaseCrawler):
         logger.info(f"[DealSite+] Collection complete. Found {len(target_links)} articles.")
         return target_links
 
+
+# ────────────────────────────────────────────────
+# Reporter Name Extraction
+# ────────────────────────────────────────────────
+
+def clean_reporter_name(raw_name):
+    """Clean reporter name - remove titles like 기자, 차장, etc. and email addresses.
+    e.g. '한설희 기자' -> '한설희', '위상호 차장' -> '위상호'"""
+    if not raw_name:
+        return ""
+    # Remove email addresses
+    name = re.sub(r'\S+@\S+\.\S+', '', raw_name).strip()
+    # Remove titles/positions (기자, 차장, 부장, etc.)
+    name = re.sub(r'\s*(기자|차장|부장|수석기자|선임기자|특파원|데스크|편집자|에디터|팀장|국장|본부장|대기자|논설위원|객원기자|편집위원|기록원|선임)\s*$', '', name).strip()
+    # Remove any remaining whitespace artifacts
+    name = name.strip()
+    return name
+
+def extract_reporter_from_text(text):
+    """Try to find reporter name from article text using regex patterns.
+    Looks for Korean name followed by a reporter title, typically at the end of articles."""
+    if not text:
+        return ""
+    # Look at the last 500 characters where reporter byline typically appears
+    tail = text[-500:] if len(text) > 500 else text
+    # Korean pattern: 2-4 Korean chars followed by title
+    pattern = r'([가-힣]{2,4})\s*(기자|차장|부장|수석기자|선임기자|특파원)'
+    matches = re.findall(pattern, tail)
+    if matches:
+        # Return the last match (most likely the actual byline)
+        return matches[-1][0]
+    return ""
+
+def extract_reporter_name(driver, site, link_info):
+    """Extract reporter/journalist name from the current article page via JavaScript.
+    For TheBell and DealSitePlus/Hankyung, scrapes the page DOM before Readability runs.
+    Returns just the name (without title like 기자/차장)."""
+    # If reporter was already extracted during link collection (e.g. InvestChosun), skip
+    if link_info.get('reporter'):
+        return link_info['reporter']
+    
+    try:
+        reporter_raw = ""
+        
+        if site == "TheBell":
+            # TheBell: reporter is in a link with part=REPORTER in the article detail page
+            # Also available in dd.userBox area
+            reporter_raw = driver.execute_script("""
+                // Method 1: Search for reporter link (most reliable)
+                var reporterLink = document.querySelector('a[href*="part=REPORTER"]');
+                if (reporterLink) return reporterLink.textContent.trim();
+                
+                // Method 2: dd.userBox or similar byline element
+                var userBox = document.querySelector('dd.userBox, .articleWriter, .article_writer, .writer, .byline');
+                if (userBox) {
+                    var text = userBox.textContent.trim();
+                    // Extract name before email or date
+                    var nameMatch = text.match(/([가-힣]{2,4})\\s*(기자|차장|부장|수석기자|선임기자|특파원)/);
+                    if (nameMatch) return nameMatch[1] + ' ' + nameMatch[2];
+                    return text.split(/[\\s|·]/)[0];
+                }
+                
+                // Method 3: meta tag
+                var metaAuthor = document.querySelector('meta[name="author"]');
+                if (metaAuthor && metaAuthor.content) return metaAuthor.content.trim();
+                
+                return '';
+            """)
+            
+        elif site == "DealSitePlus":
+            # DealSitePlus: reporter name in .nis-reporter-name element at top of article
+            reporter_raw = driver.execute_script("""
+                // Method 1: DealSitePlus specific selector (confirmed via DOM inspection)
+                var nisReporter = document.querySelector('.nis-reporter-name');
+                if (nisReporter) {
+                    var text = nisReporter.textContent.trim();
+                    // Remove site prefix like '딜사이트' and extract name + title
+                    var nameMatch = text.match(/([가-힣]{2,4})\\s*(기자|차장|부장|수석기자|선임기자|특파원)/);
+                    if (nameMatch) return nameMatch[0];
+                    return text;
+                }
+                
+                // Method 2: Fallback byline selectors
+                var bylineSelectors = ['.article-reporter', '.reporter-name', '.byline',
+                    '.article-info .name', '.writer-name', '.view-reporter',
+                    '.article-writer', '.news-reporter'];
+                for (var i = 0; i < bylineSelectors.length; i++) {
+                    var el = document.querySelector(bylineSelectors[i]);
+                    if (el && el.textContent.trim()) return el.textContent.trim();
+                }
+                
+                // Method 3: Search body text for reporter pattern at end
+                var body = document.body ? document.body.innerText : '';
+                var lines = body.split('\\n').filter(function(l) { return l.trim().length > 0; });
+                var lastLines = lines.slice(-10);
+                for (var j = lastLines.length - 1; j >= 0; j--) {
+                    var match = lastLines[j].match(/([가-힣]{2,4})\\s*(기자|차장|부장|수석기자|선임기자|특파원)/);
+                    if (match) return match[0];
+                }
+                
+                // Method 4: meta tag
+                var metaAuthor = document.querySelector('meta[name="author"]');
+                if (metaAuthor && metaAuthor.content) return metaAuthor.content.trim();
+                
+                return '';
+            """)
+            
+        elif site == "Hankyung":
+            # Hankyung: reporter name in article/print page
+            reporter_raw = driver.execute_script("""
+                // Method 1: Specific byline selectors for MarketInsight/Hankyung
+                var bylineSelectors = ['.article_byline', '.byline .name', '.reporter',
+                    '.article-header .name', '.writer', '.author',
+                    '.article_info .reporter', '.view_journalist',
+                    'p.article_info', '.info-group .name'];
+                for (var i = 0; i < bylineSelectors.length; i++) {
+                    var el = document.querySelector(bylineSelectors[i]);
+                    if (el && el.textContent.trim()) {
+                        var text = el.textContent.trim();
+                        var nameMatch = text.match(/([가-힣]{2,4})\\s*(기자|차장|부장|수석기자|선임기자|특파원)/);
+                        if (nameMatch) return nameMatch[0];
+                    }
+                }
+                
+                // Method 2: Search body text for reporter pattern at end
+                var body = document.body ? document.body.innerText : '';
+                var lines = body.split('\\n').filter(function(l) { return l.trim().length > 0; });
+                var lastLines = lines.slice(-10);
+                for (var j = lastLines.length - 1; j >= 0; j--) {
+                    var match = lastLines[j].match(/([가-힣]{2,4})\\s*(기자|차장|부장|수석기자|선임기자|특파원)/);
+                    if (match) return match[0];
+                }
+                
+                // Method 3: meta tag
+                var metaAuthor = document.querySelector('meta[name="author"]');
+                if (metaAuthor && metaAuthor.content) return metaAuthor.content.trim();
+                
+                return '';
+            """)
+        
+        if reporter_raw:
+            cleaned = clean_reporter_name(reporter_raw)
+            if cleaned:
+                logger.info(f"[Reporter] Extracted for [{site}]: {cleaned} (raw: {reporter_raw})")
+                return cleaned
+        
+        return ""
+    except Exception as e:
+        logger.debug(f"[Reporter] Extraction failed for {site}: {e}")
+        return ""
 
 # ────────────────────────────────────────────────
 # PDF Generation & Merging
@@ -831,9 +1009,9 @@ def generate_pdf_for_link(driver, link_info, index, total):
     try:
         # 1. Nav to target or print view
         target_url = url
-        if site == "TheBell" and "key=" in url:
-            key = url.split("key=")[1].split("&")[0]
-            target_url = f"https://www.thebell.co.kr/front/NewsPrint.asp?key={key}"
+        if site == "TheBell":
+            # Direct article URL with login session is more stable than print view lately
+            target_url = url
         elif site == "InvestChosun":
             # Handle both old (contid=) and new (html_dir/.../ID.html) URL formats
             if "contid=" in url:
@@ -855,9 +1033,89 @@ def generate_pdf_for_link(driver, link_info, index, total):
         except TimeoutException:
             logger.warning(f"[PDF] Timeout loading {target_url}, stopping and proceeding with partial content")
             driver.execute_script("window.stop();")
+        except UnexpectedAlertPresentException as alert_err:
+            # Handle 중복로그인 (duplicate login) alert from TheBell
+            logger.warning(f"[PDF] Alert during page load for {site}: {alert_err}")
+            try:
+                alert = driver.switch_to.alert
+                alert_text = alert.text
+                logger.warning(f"[PDF] Dismissing alert: {alert_text}")
+                alert.accept()
+                time.sleep(2)
+                
+                # If it's a duplicate login alert, re-login and retry
+                if '중복로그인' in alert_text or '다시 로그인' in alert_text:
+                    logger.info(f"[PDF] Re-logging in to {site} after duplicate login alert...")
+                    creds_key = site.lower().replace('thebell', 'thebell').replace('dealsiteplus', 'dealsiteplus').replace('investchosun', 'investchosun').replace('hankyung', 'hankyung')
+                    # Map site names to config keys
+                    site_to_key = {
+                        'TheBell': 'thebell',
+                        'DealSitePlus': 'dealsiteplus',
+                        'InvestChosun': 'investchosun',
+                        'Hankyung': 'hankyung'
+                    }
+                    config_key = site_to_key.get(site, site.lower())
+                    if config_key in CREDENTIALS:
+                        creds = CREDENTIALS[config_key]
+                        driver.get(creds.get('login_url', ''))
+                        time.sleep(2)
+                        # Simple re-login attempt
+                        try:
+                            if config_key == 'thebell':
+                                for field_id in ['id', 'pw']:
+                                    els = driver.find_elements(By.ID, field_id)
+                                    for el in els:
+                                        if el.is_displayed():
+                                            el.clear()
+                                            val = creds['ids'][0] if field_id == 'id' else creds['pws'][0]
+                                            el.send_keys(val)
+                                            driver.execute_script(f"document.getElementById('{field_id}').value='{val}';")
+                                            break
+                                time.sleep(1)
+                                driver.execute_script("document.getElementById('btn1').click();")
+                            else:
+                                driver.find_element(By.ID, creds['input_id']).send_keys(creds['ids'][0])
+                                driver.find_element(By.ID, creds['input_pw']).send_keys(creds['pws'][0])
+                                btn_sel = creds.get('btn_selector', 'input[type=submit]')
+                                driver.find_element(By.CSS_SELECTOR, btn_sel).click()
+                            time.sleep(3)
+                            # Handle post-login alert
+                            try:
+                                alert2 = driver.switch_to.alert
+                                alert2.accept()
+                            except: pass
+                            logger.info(f"[PDF] Re-login to {site} completed. Retrying page load...")
+                        except Exception as login_err:
+                            logger.warning(f"[PDF] Re-login attempt failed for {site}: {login_err}")
+                    
+                    # Retry loading the target URL
+                    try:
+                        driver.get(target_url)
+                    except TimeoutException:
+                        driver.execute_script("window.stop();")
+                    except UnexpectedAlertPresentException:
+                        try:
+                            driver.switch_to.alert.accept()
+                        except: pass
+            except Exception as inner_err:
+                logger.warning(f"[PDF] Failed to handle alert: {inner_err}")
+        
+        # Dismiss any remaining alerts before proceeding
+        try:
+            alert = driver.switch_to.alert
+            logger.warning(f"[PDF] Remaining alert found, dismissing: {alert.text}")
+            alert.accept()
+            time.sleep(1)
+        except: pass
+        
         # Block window.print() to prevent hang
         driver.execute_script("window.print = function() { console.log('print blocked'); };")
         time.sleep(3)
+        
+        # Extract reporter name BEFORE Readability (which may strip byline elements)
+        reporter = extract_reporter_name(driver, site, link_info)
+        if reporter:
+            link_info['reporter'] = reporter
         
         # Remove unwanted DOM elements before Readability extraction (e.g. 많이본 뉴스, ads, sidebars)
         driver.execute_script("""
@@ -923,6 +1181,10 @@ def generate_pdf_for_link(driver, link_info, index, total):
         content = re.sub(r'^\s*<h[1-6][^>]*>.*?</h[1-6]>\s*', '', content, flags=re.DOTALL)
         
         # Clean CSS to match other sites and remove unwanted bullets/indents
+        # Build reporter display for PDF
+        reporter_display = link_info.get('reporter', '')
+        reporter_html = f' | <span style="color: #333;">{reporter_display}</span>' if reporter_display else ''
+        
         final_html = f"""
         <!DOCTYPE html><html><head><meta charset="utf-8">
         <style>
@@ -938,7 +1200,7 @@ def generate_pdf_for_link(driver, link_info, index, total):
         </style>
         </head><body>
         <div class="h"><div class="t">{e_title}</div>
-        <div class="m"><strong>{site}</strong> | {link_info.get('date','')} | {url}</div></div>
+        <div class="m"><strong>{site}</strong>{reporter_html} | {link_info.get('date','')} | {url}</div></div>
         <div class="c">{content}</div></body></html>
         """
         driver.execute_script("document.open(); document.write(arguments[0]); document.close();", final_html)
@@ -1331,7 +1593,10 @@ def send_teams_notification(webhook_url, site_pdfs, all_links, date_str):
         for link in all_links:
             site = link.get('site')
             if site in grouped:
-                grouped[site].append(link.get('title'))
+                reporter = link.get('reporter', '')
+                title = link.get('title', '')
+                display_text = f"{title} - {reporter}" if reporter else title
+                grouped[site].append(display_text)
 
         start_date_str = (TODAY - timedelta(days=1)).strftime("%m/%d")
         end_date_str = TODAY.strftime("%m/%d")
@@ -1404,6 +1669,63 @@ def forward_logs_to_slack(webhook_url):
     except:
         pass
 
+def send_telegram_log(bot_token, chat_id):
+    """Send execution log to Telegram bot.
+    Sends the log file as a document attachment for complete log preservation."""
+    if not bot_token or not chat_id:
+        logger.debug("[Telegram] No bot_token or chat_id configured. Skipping.")
+        return
+    try:
+        import requests
+        log_filename = f"execution_log_{datetime.now().strftime('%Y-%m-%d')}.txt"
+        
+        # First, get a summary for the text message
+        start_date_str = (TODAY - timedelta(days=1)).strftime("%m/%d")
+        end_date_str = TODAY.strftime("%m/%d")
+        
+        # Read log content
+        content = ""
+        if os.path.exists(log_filename):
+            try:
+                with open(log_filename, "r", encoding="utf-8", errors="replace") as f:
+                    content = f.read()
+            except: pass
+        
+        if not content:
+            logger.warning("[Telegram] No log content available to send.")
+            return
+        
+        # Extract key stats from log
+        total_articles = content.count('[PDF] [')
+        errors = content.count('ERROR')
+        
+        summary_text = (
+            f"📋 *Paywalled News Log ({start_date_str} - {end_date_str})*\n"
+            f"📰 PDF 생성: {total_articles}건\n"
+            f"{'⚠️ 에러: ' + str(errors) + '건' if errors > 0 else '✅ 에러 없음'}\n"
+            f"📄 상세 로그는 첨부파일 참조"
+        )
+        
+        # Send summary message
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        requests.post(url, json={
+            "chat_id": chat_id,
+            "text": summary_text,
+            "parse_mode": "Markdown"
+        }, timeout=10)
+        
+        # Send log file as document
+        doc_url = f"https://api.telegram.org/bot{bot_token}/sendDocument"
+        with open(log_filename, "rb") as f:
+            requests.post(doc_url, data={
+                "chat_id": chat_id,
+                "caption": f"Execution Log - {datetime.now().strftime('%Y-%m-%d')}"
+            }, files={"document": (log_filename, f)}, timeout=30)
+        
+        logger.info(f"[Telegram] Log sent successfully to chat {chat_id}")
+    except Exception as e:
+        logger.error(f"[Telegram] Failed to send log: {e}")
+
 def send_gmail_with_attachments(site_pdf_paths, all_links, date_str):
     """
     Send email via Gmail API with per-site PDF attachments.
@@ -1469,7 +1791,10 @@ def send_gmail_with_attachments(site_pdf_paths, all_links, date_str):
             site = link.get('site', '')
             if site not in grouped:
                 grouped[site] = []
-            grouped[site].append(link.get('title', ''))
+            reporter = link.get('reporter', '')
+            title = link.get('title', '')
+            display_text = f"{title} - {reporter}" if reporter else title
+            grouped[site].append(display_text)
         
         # Prepare attachments with proper naming: 언론사이름_날짜.pdf
         # Check file sizes and group for splitting if needed
@@ -1707,8 +2032,9 @@ def main():
                 merger.close()
                 site_pdf_local_paths[site] = out_name
                 
-                drive_link = upload_to_google_drive(out_name)
-                if drive_link: site_links[site] = drive_link
+                # Google Drive upload disabled - PDFs are sent directly via Gmail attachments
+                # drive_link = upload_to_google_drive(out_name)
+                # if drive_link: site_links[site] = drive_link
         else:
             site_pdf_local_paths = {}
             logger.info("No new unique articles found.")
@@ -1727,8 +2053,9 @@ def main():
         logger.error(f"CRITICAL ERROR in main process: {e}", exc_info=True)
         
     finally:
-        # 6. Log Forwarding (Always try to send logs) - Commented out for now
+        # 6. Log Forwarding
         # forward_logs_to_slack(LOG_SLACK_WEBHOOK_URL)
+        send_telegram_log(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)
         
         logger.info("\n" + "="*60)
         logger.info("Paywalled PDF Generator Complete")
