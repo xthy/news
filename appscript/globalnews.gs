@@ -1402,6 +1402,7 @@ function v110_fetchYahoo(symbol) {
 
     const names = {
       '^GSPC': 'S&P 500', '^DJI': 'Dow Jones', '^IXIC': 'NASDAQ',
+      '^KS11': 'KOSPI', '^KQ11': 'KOSDAQ',
       'GC=F': 'Gold', 'SI=F': 'Silver', 'CL=F': 'Oil (WTI)', 'BTC-USD': 'Bitcoin'
     };
 
