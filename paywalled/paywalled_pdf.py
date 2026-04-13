@@ -157,7 +157,7 @@ def setup_driver():
     options.add_argument("--log-level=3")
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-extensions")
-    options.add_argument("--disable-images")
+    # options.add_argument("--disable-images") # removed to allow images in pdf
     options.page_load_strategy = 'eager'
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
     
@@ -1009,23 +1009,7 @@ def generate_pdf_for_link(driver, link_info, index, total):
     try:
         # 1. Nav to target or print view
         target_url = url
-        if site == "TheBell":
-            # Direct article URL with login session is more stable than print view lately
-            target_url = url
-        elif site == "InvestChosun":
-            # Handle both old (contid=) and new (html_dir/.../ID.html) URL formats
-            if "contid=" in url:
-                contid = url.split("contid=")[1].split("&")[0]
-                target_url = f"https://www.investchosun.com/svc/news/article_print.html?contid={contid}"
-            elif "html_dir" in url:
-                # Extract article ID from URL like .../2026032080075.html
-                art_id_match = re.search(r'/(\d{13,})\.html', url)
-                if art_id_match:
-                    target_url = f"https://www.investchosun.com/svc/news/article_print.html?contid={art_id_match.group(1)}"
-        elif site == "DealSitePlus":
-            # Print URL (/articles/print/{ID}) returns 404; use normal article URL with login session
-            target_url = url
-        elif site == "Hankyung" and "/article/" in url:
+        if site == "Hankyung" and "/article/" in url:
             target_url = url.replace("/article/", "/print/")
 
         try:
@@ -1129,6 +1113,74 @@ def generate_pdf_for_link(driver, link_info, index, total):
             ];
             selectors.forEach(function(sel) {
                 document.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+            });
+            
+            // InvestChosun fix: unwrap article content safely to prevent truncation
+            document.querySelectorAll('#article ul').forEach(function(ul) {
+                var div = document.createElement('div');
+                div.innerHTML = ul.innerHTML;
+                ul.parentNode.replaceChild(div, ul);
+            });
+            document.querySelectorAll('#article li').forEach(function(li) {
+                var p = document.createElement('p');
+                p.innerHTML = li.innerHTML;
+                li.parentNode.replaceChild(p, li);
+            });
+            
+            // InvestChosun fix: images are wrapped in <dl class="img_pop_div"> which Readability drops
+            document.querySelectorAll('#article dl').forEach(function(dl) {
+                var div = document.createElement('div');
+                div.innerHTML = dl.innerHTML;
+                dl.parentNode.replaceChild(div, dl);
+            });
+            document.querySelectorAll('#article dd, #article dt').forEach(function(el) {
+                var p = document.createElement('p');
+                p.innerHTML = el.innerHTML;
+                el.parentNode.replaceChild(p, el);
+            });
+            
+            // Fix lazy-loaded images globally for all sites and ensure they are preserved by Readability
+            var articleDiv = document.querySelector('#article');
+            document.querySelectorAll('img').forEach(function(img) {
+                var attrs = ['data-src', 'lazy-src', 'data-original', 'data-url', 'lazyload'];
+                var foundSrc = false;
+                for (var i = 0; i < attrs.length; i++) {
+                    var val = img.getAttribute(attrs[i]);
+                    if (val && val.length > 5) {
+                        if (!val.startsWith('http')) {
+                            if (val.startsWith('//')) { val = 'https:' + val; }
+                            else if (val.startsWith('/')) { val = window.location.origin + val; }
+                        }
+                        img.src = val;
+                        foundSrc = true;
+                        break;
+                    }
+                }
+                if (foundSrc || (img.src && img.src.length > 5)) {
+                    img.removeAttribute('loading');
+                    img.style.display = 'block';
+                    img.className = '';
+                    
+                    // Move image to be high enough in the article div so Readability doesn't strip it
+                    if (articleDiv && articleDiv.contains(img) && articleDiv !== img.parentNode) {
+                        var ancestor = img;
+                        while (ancestor.parentNode !== articleDiv && ancestor.parentNode !== null) {
+                            ancestor = ancestor.parentNode;
+                        }
+                        if (ancestor.parentNode === articleDiv) {
+                            articleDiv.insertBefore(img, ancestor);
+                        }
+                    }
+                }
+            });
+            
+            // Clean up nested paragraphs that confuse Readability
+            document.querySelectorAll('p p').forEach(function(p) {
+                var parent = p.parentNode;
+                while (p.firstChild) {
+                    parent.insertBefore(p.firstChild, p);
+                }
+                parent.removeChild(p);
             });
         """)
         
@@ -1866,8 +1918,17 @@ def send_gmail_with_attachments(site_pdf_paths, all_links, date_str):
                 
                 body_parts.append(f"  <div style='line-height: 1.6;'>")
                 if titles:
+                    # Keywords to highlight
+                    keywords_to_highlight = ['어피니티', '어피너티', '버거킹', '락앤락', '잡코리아', '요기요', '팀홀튼', '현대캐피탈', 'SK렌터카', '서브원', '유베이스']
                     for t in titles:
-                        body_parts.append(f"    <div>• {t}</div>")
+                        # Check if any keyword is present in the title
+                        is_match = any(kw in t for kw in keywords_to_highlight)
+                        if is_match:
+                            # Highlight entire title in blue and bold if a keyword matches
+                            display_line = f"<span style='color: blue; font-weight: bold;'>{t}</span>"
+                        else:
+                            display_line = t
+                        body_parts.append(f"    <div>• {display_line}</div>")
                 else:
                     # Blockquote styling resembling Slack e.g. > 기사 없음
                     body_parts.append(f"    <div style='color: #888; border-left: 3px solid #ccc; padding-left: 8px;'>기사 없음</div>")
