@@ -1914,20 +1914,19 @@ def send_gmail_with_attachments(site_pdf_paths, all_links, date_str):
         
         logger.info(f"[Gmail] Sending {len(batches)} email(s) with {len(attachment_list)} total attachments")
         
-        # Construct date range for subject
-        start_date_str = (TODAY - timedelta(days=1)).strftime("%m/%d")
-        end_date_str = TODAY.strftime("%m/%d")
+        # Construct date for subject (M/DD format)
+        today_str = TODAY.strftime("%#m/%#d") if os.name == 'nt' else TODAY.strftime("%-m/%-d")
         
         for batch_idx, batch in enumerate(batches):
             # Subject line
             if len(batches) == 1:
-                subject = f"PE & M&A Paywalled News ({start_date_str} - {end_date_str})"
+                subject = f"PE and M&A News ({today_str})"
             else:
-                subject = f"PE & M&A Paywalled News ({start_date_str} - {end_date_str}) [{batch_idx + 1}/{len(batches)}]"
+                subject = f"PE and M&A News ({today_str}) [{batch_idx + 1}/{len(batches)}]"
             
             # Build email body (HTML matching Slack format)
             body_parts = []
-            body_parts.append(f"<h2 style='margin-bottom: 5px;'>PE & M&A Paywalled News ({start_date_str} - {end_date_str})</h2>")
+            body_parts.append(f"<h2 style='margin-bottom: 5px;'>PE and M&A News ({today_str})</h2>")
             
             if len(batches) > 1:
                 batch_sites = ', '.join([item[0] for item in batch])
