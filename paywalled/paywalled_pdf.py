@@ -466,6 +466,15 @@ class TheBellCrawler(BaseCrawler):
                             
                             title = best_link.text.strip().split('\n')[0].strip()
                             
+                            # Check for sub-title in groupBox
+                            try:
+                                group_box = item.find_element(By.CSS_SELECTOR, ".groupBox")
+                                sub_title = group_box.text.strip()
+                                if sub_title and sub_title not in title:
+                                    title = f"{sub_title} - {title}"
+                            except:
+                                pass
+                                
                             href_lower = href.lower()
                             # Standard exclusions
                             if any(x in href_lower for x in ["code=00", "thebell+note", "search.asp", "keywordnews.asp", "newslistshort.asp"]):
@@ -1100,6 +1109,24 @@ def generate_pdf_for_link(driver, link_info, index, total):
         reporter = extract_reporter_name(driver, site, link_info)
         if reporter:
             link_info['reporter'] = reporter
+            
+        # TheBell: Check for sub-title in groupBox on the article page
+        if site == "TheBell":
+            try:
+                sub_title = driver.execute_script("""
+                    var gb = document.querySelector('.groupBox');
+                    if (gb) {
+                        var anchor = gb.querySelector('a');
+                        return anchor ? anchor.textContent.trim() : gb.textContent.trim();
+                    }
+                    return '';
+                """)
+                if sub_title and sub_title not in link_info['title']:
+                    link_info['title'] = f"{sub_title} - {link_info['title']}"
+                    title = link_info['title'] # Update local title variable
+                    logger.info(f"[TheBell] Refined title with sub-title: {title}")
+            except Exception as e:
+                logger.debug(f"[TheBell] Detail sub-title extraction failed: {e}")
         
         # Remove unwanted DOM elements before Readability extraction (e.g. 많이본 뉴스, ads, sidebars)
         driver.execute_script("""
@@ -1918,13 +1945,16 @@ def send_gmail_with_attachments(site_pdf_paths, all_links, date_str):
                 
                 body_parts.append(f"  <div style='line-height: 1.6;'>")
                 if titles:
-                    # Keywords to highlight
-                    keywords_to_highlight = ['어피니티', '어피너티', '버거킹', '락앤락', '잡코리아', '요기요', '팀홀튼', '현대캐피탈', 'SK렌터카', '서브원', '유베이스']
+                    # Keywords to highlight (Company names)
+                    keywords_to_highlight = [
+                        '어피니티', '어피너티', '버거킹', '락앤락', '잡코리아', '요기요', 
+                        '팀홀튼', '현대캐피탈', 'SK렌터카', '서브원', '유베이스', 'Affinity'
+                    ]
                     for t in titles:
-                        # Check if any keyword is present in the title
-                        is_match = any(kw in t for kw in keywords_to_highlight)
+                        # Check if any keyword matches the title (already combined with sub-title) or reporter
+                        is_match = any(kw.lower() in t.lower() for kw in keywords_to_highlight)
                         if is_match:
-                            # Highlight entire title in blue and bold if a keyword matches
+                            # Highlight entire line (Sub-title - Title - Reporter) in bold blue
                             display_line = f"<span style='color: blue; font-weight: bold;'>{t}</span>"
                         else:
                             display_line = t
